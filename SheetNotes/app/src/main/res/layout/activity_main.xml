@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:background="@color/material_deep_teal_500">
+    android:background="@drawable/panda_bakgrunn">
 
     <Button
         android:layout_width="wrap_content"
@@ -21,9 +21,11 @@
         android:layout_height="wrap_content"
         android:text="Record"
         android:id="@+id/recordButton"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="recordAudio" />
+        android:onClick="recordAudio"
+        android:layout_below="@+id/playButton"
+        android:layout_alignLeft="@+id/stopButton"
+        android:layout_alignStart="@+id/stopButton"
+        android:layout_marginTop="114dp" />
 
     <Button
         android:layout_width="wrap_content"
