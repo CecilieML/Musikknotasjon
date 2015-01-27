@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import ddf.minim;
+//import ddf.minim;
 
 import java.io.IOException;
 
@@ -65,11 +65,14 @@ public class MainActivity extends ActionBarActivity {
         playButton.setEnabled(false);
         recordButton.setEnabled(false);
 
+
+
         try {
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             mediaRecorder.setOutputFile(audioFilePath);
+
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             mediaRecorder.prepare();
         } catch (Exception e) {
@@ -84,6 +87,8 @@ public class MainActivity extends ActionBarActivity {
 
         stopButton.setEnabled(false);
         playButton.setEnabled(true);
+
+        System.out.println(audioFilePath.getBytes());
 
         if (isRecording)
         {
