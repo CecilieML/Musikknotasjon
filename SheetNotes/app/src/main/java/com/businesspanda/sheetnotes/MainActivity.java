@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
         recordButton = (Button) findViewById(R.id.recordButton);
         playButton = (Button) findViewById(R.id.playButton);
         stopButton = (Button) findViewById(R.id.stopButton);
-
+        
         if (!hasMicrophone())
         {
             stopButton.setEnabled(false);
