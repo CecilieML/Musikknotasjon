@@ -88,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
         stopButton.setEnabled(false);
         playButton.setEnabled(true);
 
-        System.out.println(audioFilePath.getBytes());
+
 
         if (isRecording)
         {
@@ -109,6 +109,9 @@ public class MainActivity extends ActionBarActivity {
         playButton.setEnabled(false);
         recordButton.setEnabled(false);
         stopButton.setEnabled(true);
+
+        System.out.println("NUMbRS!!!! " + audioFilePath.getBytes());
+        System.out.println("wrds!!!! " + audioFilePath.hashCode());
 
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setDataSource(audioFilePath);
