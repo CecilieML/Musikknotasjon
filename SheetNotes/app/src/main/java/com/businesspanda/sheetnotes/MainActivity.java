@@ -13,6 +13,8 @@ import android.widget.Button;
 
 import java.io.IOException;
 
+import org.jtransforms.fft.DoubleFFT_1D;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -41,7 +43,7 @@ public class MainActivity extends ActionBarActivity {
         recordButton = (Button) findViewById(R.id.recordButton);
         playButton = (Button) findViewById(R.id.playButton);
         stopButton = (Button) findViewById(R.id.stopButton);
-        
+
         if (!hasMicrophone())
         {
             stopButton.setEnabled(false);
@@ -108,6 +110,8 @@ public class MainActivity extends ActionBarActivity {
         mediaPlayer.setDataSource(audioFilePath);
         mediaPlayer.prepare();
         mediaPlayer.start();
+
+        
     }
 
 
