@@ -1,9 +1,11 @@
 package com.businesspanda.sheetnotes;
 
 import android.content.pm.PackageManager;
+import android.media.AudioRecord;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,6 +20,7 @@ import org.jtransforms.fft.DoubleFFT_1D;
 
 public class MainActivity extends ActionBarActivity {
 
+    private static AudioRecord audioRecorder;
     private static MediaRecorder mediaRecorder;
     private static MediaPlayer mediaPlayer;
 
@@ -77,7 +80,31 @@ public class MainActivity extends ActionBarActivity {
             e.printStackTrace();
         }
 
-        mediaRecorder.start();
+
+        /*************************************/
+        int buffersize = 20;
+        byte[] sourceBuffer = new byte[30];
+        double[] fftBuffer = new double[9];
+
+        DoubleFFT_1D fft1d = new DoubleFFT_1D(buffersize / 2);
+
+        audioRecorder.startRecording();
+        while(isRecording){
+            int read = audioRecorder.read(sourceBuffer, 0, buffersize);
+
+            if(read != AudioRecord.ERROR_INVALID_OPERATION){
+                for(int i = 0; i< buffersize && i<read; ++i){
+                    fftBuffer[i] = (double)(sourceBuffer[i]);
+
+
+                }
+            }
+
+
+        }
+        System.out.println("TESSSSSSSSSSSSSSSST!!!!!!!!!!!*****" + fftBuffer);
+        fft1d.realForward(fftBuffer);
+        /*************************************/
     }
 
     public void stopAudio (View view)
@@ -111,7 +138,8 @@ public class MainActivity extends ActionBarActivity {
         mediaPlayer.prepare();
         mediaPlayer.start();
 
-        
+
+
     }
 
 
