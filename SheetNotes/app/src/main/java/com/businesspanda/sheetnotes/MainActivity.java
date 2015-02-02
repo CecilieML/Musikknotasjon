@@ -1,6 +1,7 @@
 package com.businesspanda.sheetnotes;
 
 import android.content.pm.PackageManager;
+import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -69,6 +70,10 @@ public class MainActivity extends ActionBarActivity {
         playButton.setEnabled(false);
         recordButton.setEnabled(false);
 
+        int bufferSize= AudioRecord.getMinBufferSize(8000, AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioFormat.ENCODING_PCM_16BIT)*2;
+
+        audioRecorder = new AudioRecord(MediaRecorder.AudioSource.MIC, 8000, AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioFormat.ENCODING_PCM_16BIT, bufferSize);
+/*
         try {
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -78,22 +83,21 @@ public class MainActivity extends ActionBarActivity {
             mediaRecorder.prepare();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
 
         /*************************************/
-        int buffersize = 20;
-        byte[] sourceBuffer = new byte[30];
-        double[] fftBuffer = new double[9];
+        short[] sourceBuffer = new short[bufferSize];
+        double[] fftBuffer = new double[bufferSize];
 
-        DoubleFFT_1D fft1d = new DoubleFFT_1D(buffersize / 2);
+        DoubleFFT_1D fft1d = new DoubleFFT_1D(bufferSize / 2);
 
         audioRecorder.startRecording();
         while(isRecording){
-            int read = audioRecorder.read(sourceBuffer, 0, buffersize);
+            int read = audioRecorder.read(sourceBuffer, 0, bufferSize);
 
             if(read != AudioRecord.ERROR_INVALID_OPERATION){
-                for(int i = 0; i< buffersize && i<read; ++i){
+                for(int i = 0; i< bufferSize && i<read; ++i){
                     fftBuffer[i] = (double)(sourceBuffer[i]);
 
 
@@ -102,8 +106,8 @@ public class MainActivity extends ActionBarActivity {
 
 
         }
-        System.out.println("TESSSSSSSSSSSSSSSST!!!!!!!!!!!*****" + fftBuffer);
-        fft1d.realForward(fftBuffer);
+        System.out.println("TESSSSSSSSSSSSSSSST!!!!!!!!!!!*****" + fftBuffer+ fft1d);
+        //fft1d.realForward(fftBuffer);
         /*************************************/
     }
 
