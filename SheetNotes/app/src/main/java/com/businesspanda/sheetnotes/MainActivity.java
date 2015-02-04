@@ -234,10 +234,10 @@ public class MainActivity extends Activity {
 
         if (nmb % 2 == 0){
             clickTochange.setTextColor(0xff00ffff);
-            theLayout.setBackgroundColor(0xffff00dd);
+            theLayout.setBackgroundColor(0xffffb1ef);
             nmb++;
         }else {
-            clickTochange.setTextColor(0xffff00dd);
+            clickTochange.setTextColor(0xffffb1ef);
             theLayout.setBackgroundColor(0xff00ffff);
             nmb++;
         }

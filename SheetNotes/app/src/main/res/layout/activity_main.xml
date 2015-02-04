@@ -69,7 +69,7 @@
         android:id="@+id/buttonChangeBack"
         android:layout_below="@+id/startStopButton"
         android:layout_marginTop="88dp"
-        android:textColor="#ffff00dd"
+        android:textColor="#ffffb1ef"
         android:onClick="changeBackColor"
         android:background="#e5001180" />
 
