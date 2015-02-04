@@ -36,4 +36,35 @@
         android:layout_below="@+id/recordButton"
         android:layout_alignLeft="@+id/recordButton"
         android:layout_alignStart="@+id/recordButton" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textToChange"
+        android:editable = "true"
+        android:id="@+id/note"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/startStopButton"
+        android:onClick="startStop"
+        android:editable = "true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/recordButton"
+        android:layout_alignBottom="@+id/recordButton" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/freqText"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/note"
+        android:layout_alignStart="@+id/note" />
 </RelativeLayout>
