@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -39,6 +40,8 @@ public class MainActivity extends Activity {
     TextView tv;                                        // Creates a text view for the frequency
     boolean started = false;
     Button startStopButton;
+
+    int nmb = 0;
 
     //private static AudioRecord audioRecorder;
 
@@ -224,6 +227,23 @@ public class MainActivity extends Activity {
             recordTask.execute();
         }
     }
+
+    public void changeBackColor(View view){
+        final Button clickTochange = (Button) findViewById(R.id.buttonChangeBack);
+        final RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.myLayout);
+
+        if (nmb % 2 == 0){
+            clickTochange.setTextColor(0xff00ffff);
+            theLayout.setBackgroundColor(0xffff00dd);
+            nmb++;
+        }else {
+            clickTochange.setTextColor(0xffff00dd);
+            theLayout.setBackgroundColor(0xff00ffff);
+            nmb++;
+        }
+
+    }
+
 }
 
 

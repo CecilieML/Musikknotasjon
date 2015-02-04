@@ -4,8 +4,10 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:background="#ff2dfff3">
+    android:background="#ff00ffff"
+    android:id="@+id/myLayout">
 
+    <!--
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,7 +37,7 @@
         android:onClick="stopAudio"
         android:layout_below="@+id/recordButton"
         android:layout_alignLeft="@+id/recordButton"
-        android:layout_alignStart="@+id/recordButton" />
+        android:layout_alignStart="@+id/recordButton" /> -->
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,10 +45,11 @@
         android:text="@string/textToChange"
         android:editable = "true"
         android:id="@+id/note"
+        android:textIsSelectable="true"
+        android:textSize="30dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textIsSelectable="true"
-        android:textSize="30dp" />
+        android:layout_marginTop="44dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -55,10 +58,20 @@
         android:id="@+id/startStopButton"
         android:onClick="startStop"
         android:editable = "true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/recordButton"
-        android:layout_alignBottom="@+id/recordButton" />
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Change Background"
+        android:id="@+id/buttonChangeBack"
+        android:layout_below="@+id/startStopButton"
+        android:layout_marginTop="88dp"
+        android:textColor="#ffff00dd"
+        android:onClick="changeBackColor"
+        android:background="#e5001180" />
 
 
 </RelativeLayout>
