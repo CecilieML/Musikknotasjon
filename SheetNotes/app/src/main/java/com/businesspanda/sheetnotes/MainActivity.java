@@ -73,6 +73,12 @@ public class MainActivity extends Activity {
     private class RecordAudio extends AsyncTask<Void, Double, Void> {
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
         protected Void doInBackground(Void... params) {
 
         /*Calculates the fft and frequency of the input*/
@@ -132,22 +138,15 @@ public class MainActivity extends Activity {
                         if (peak < magnitude[i])
                             peak = magnitude[i];
                     }
-                    System.out.println("peak: " + peak);
+
                     // calculated the frequency
                     frequency = (sampleRate * peak) / blockSize;
-                   // final TextView changeNote = (TextView) findViewById(R.id.freqText);
-                    System.out.println("freQ!!!!!!! ->" + frequency);
-
-                    int intFreq = (int)frequency;
-                    String stringFreq = String.valueOf(intFreq);
-                    System.out.println(stringFreq);
-                  //  changeNote.setText("value: " + stringFreq);
-
 
                 /* calls onProgressUpdate
                  * publishes the frequency
                  */
                     publishProgress(frequency);
+                    Thread.sleep(500);
                 }
 
             } catch (Throwable t) {
@@ -156,17 +155,57 @@ public class MainActivity extends Activity {
 
             return null;
         }
+
+        // This should display the Frequency
+        @Override
+        protected void onProgressUpdate(Double... frequency) {
+
+            //print the frequency
+           /** String info = Double.toString(frequency[0]);**/
+
+            String test = findNote(frequency[0]);
+
+            //TextView doubleView = (TextView) findViewById(R.id.DoubleView);
+            tv.setText(test);
+        }
     }
 
 
-    // This should display the Frequency
-    protected void onProgressUpdate(Double... frequency) {
+    public String findNote(double freq){
 
-        //print the frequency
-        String info = Double.toString(frequency[0]);
+        String note = " ";
 
-        //TextView doubleView = (TextView) findViewById(R.id.DoubleView);
-        tv.setText(info);
+        if(freq<130){
+            note = "Less than C3";
+        }else if(freq>130 && freq<138){
+            note = "C3";
+        }else if(freq>138 && freq<146) {
+            note = "C#3";
+        }else if(freq>146 && freq<155){
+            note = "D3";
+        }else if(freq>155 && freq<164) {
+            note = "Eb3";
+        }else if(freq>164 && freq<174){
+            note = "E3";
+        }else if(freq>174 && freq<185) {
+            note = "F3";
+        }else if(freq>185 && freq<196){
+            note = "F#3";
+        }else if(freq>196 && freq<207) {
+            note = "G3";
+        }else if(freq>207 && freq<220){
+            note = "G#3";
+        }else if(freq>220 && freq<233) {
+            note = "A3";
+        }else if(freq>233 && freq<246){
+            note = "Bb3";
+        }else if(freq>246 && freq<261) {
+            note = "B";
+        }else if(freq>261){
+            note = "Higher than C4";
+        }
+        return note;
+
     }
 
 
