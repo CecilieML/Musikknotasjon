@@ -1,24 +1,194 @@
 package com.businesspanda.sheetnotes;
 
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.IOException;
 
 import org.jtransforms.fft.DoubleFFT_1D;
+import pl.edu.icm.jlargearrays.*;
+
+public class MainActivity extends Activity {
+
+    int audioSource = MediaRecorder.AudioSource.MIC;    // Audio source is the device mic
+    int channelConfig = AudioFormat.CHANNEL_IN_MONO;    // Recording in mono
+    int audioEncoding = AudioFormat.ENCODING_PCM_16BIT; // Records in 16bit
 
 
+    private DoubleFFT_1D fft;                           // The fft double array
+    int blockSize = 1024;                               // deal with this many samples at a time
+    int sampleRate = 44100;                              // Sample rate in Hz
+    public double frequency = 0.0;                      // the frequency given
+
+    RecordAudio recordTask;                             // Creates a Record Audio command
+    TextView tv;                                        // Creates a text view for the frequency
+    boolean started = false;
+    Button startStopButton;
+
+    //private static AudioRecord audioRecorder;
+
+    //checks for microphone
+    protected boolean hasMicrophone() {
+        PackageManager pmanager = this.getPackageManager();
+        return pmanager.hasSystemFeature(
+                PackageManager.FEATURE_MICROPHONE);
+    }
+
+    // On Start Up
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        tv = (TextView) findViewById(R.id.note);
+
+        startStopButton = (Button) findViewById(R.id.startStopButton);
+
+        if (!hasMicrophone())
+        {
+            startStopButton.setEnabled(false);
+        }
+
+    }
+
+
+
+
+    // The Record and analysis class
+    private class RecordAudio extends AsyncTask<Void, Double, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+        /*Calculates the fft and frequency of the input*/
+            try {
+
+                int bufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioEncoding);                // Gets the minimum buffer needed
+                AudioRecord audioRecord = new AudioRecord(audioSource, sampleRate, channelConfig, audioEncoding, bufferSize);   // The RAW PCM sample recording
+
+                short[] buffer = new short[blockSize];          // Save the raw PCM samples as short bytes
+                double[] audioDataDoubles = new double[(blockSize * 2)]; // Same values as above, as doubles
+
+                double[] re = new double[blockSize];
+                double[] im = new double[blockSize];
+                double[] magnitude = new double[blockSize];
+
+                audioRecord.startRecording();                   // Start working
+                fft = new DoubleFFT_1D(blockSize);
+
+
+                while (started) {
+                 /* Reads the data from the microphone. it takes in data
+                 * to the size of the window "blockSize". The data is then
+                 * given in to audioRecord. The int returned is the number
+                 * of bytes that were read*/
+
+                    int bufferReadResult = audioRecord.read(buffer, 0, blockSize);
+
+                    // Read in the data from the mic to the array
+                    for (int i = 0; i < blockSize && i < bufferReadResult; i++) {
+
+                    /* dividing the short by 32768.0 gives us the
+                     * result in a range -1.0 to 1.0.
+                     * Data for the compextForward is given back
+                     * as two numbers in sequence. Therefore audioDataDoubles
+                     * needs to be twice as large*/
+
+                        audioDataDoubles[2 * i] = (double) buffer[i] / 32768.0; // signed 16 bit
+                        audioDataDoubles[(2 * i) + 1] = 0.0;
+                    }
+
+                    //audiodataDoubles now holds data to work with
+                    fft.complexForward(audioDataDoubles);
+
+                    // Calculate the Real and imaginary and Magnitude.
+                    for (int i = 0; i < blockSize; i++) {
+                        // real is stored in first part of array
+                        re[i] = audioDataDoubles[i * 2];
+                        // imaginary is stored in the sequential part
+                        im[i] = audioDataDoubles[(i * 2) + 1];
+                        // magnitude is calculated by the square root of (imaginary^2 + real^2)
+                        magnitude[i] = Math.sqrt((re[i] * re[i]) + (im[i] * im[i]));
+                    }
+
+                    double peak = -1.0;
+                    // Get the largest magnitude peak
+                    for (int i = 0; i < blockSize; i++) {
+                        if (peak < magnitude[i])
+                            peak = magnitude[i];
+                    }
+                    System.out.println("peak: " + peak);
+                    // calculated the frequency
+                    frequency = (sampleRate * peak) / blockSize;
+                   // final TextView changeNote = (TextView) findViewById(R.id.freqText);
+                    System.out.println("freQ!!!!!!! ->" + frequency);
+
+                    int intFreq = (int)frequency;
+                    String stringFreq = String.valueOf(intFreq);
+                    System.out.println(stringFreq);
+                  //  changeNote.setText("value: " + stringFreq);
+
+
+                /* calls onProgressUpdate
+                 * publishes the frequency
+                 */
+                    publishProgress(frequency);
+                }
+
+            } catch (Throwable t) {
+                Log.e("AudioRecord", "Recording Failed");
+            }
+
+            return null;
+        }
+    }
+
+
+    // This should display the Frequency
+    protected void onProgressUpdate(Double... frequency) {
+
+        //print the frequency
+        String info = Double.toString(frequency[0]);
+
+        //TextView doubleView = (TextView) findViewById(R.id.DoubleView);
+        tv.setText(info);
+    }
+
+
+    // For the click of the button
+    public void startStop(View v) {
+        if (started) {
+            started = false;
+            startStopButton.setText("Start");
+            startStopButton.setEnabled(false);
+            recordTask.cancel(true);
+        } else {
+            started = true;
+            startStopButton.setText("Stop");
+
+            recordTask = new RecordAudio();
+            recordTask.execute();
+        }
+    }
+}
+
+
+/*
 public class MainActivity extends ActionBarActivity {
 
     private static AudioRecord audioRecorder;
@@ -83,10 +253,10 @@ public class MainActivity extends ActionBarActivity {
             mediaRecorder.prepare();
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
 
 
-        /*************************************/
+
         short[] sourceBuffer = new short[bufferSize];
         double[] fftBuffer = new double[bufferSize];
 
@@ -108,7 +278,7 @@ public class MainActivity extends ActionBarActivity {
         }
         System.out.println("TESSSSSSSSSSSSSSSST!!!!!!!!!!!*****" + fftBuffer+ fft1d);
         //fft1d.realForward(fftBuffer);
-        /*************************************/
+
     }
 
     public void stopAudio (View view)
@@ -153,19 +323,4 @@ public class MainActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-}
+    */
