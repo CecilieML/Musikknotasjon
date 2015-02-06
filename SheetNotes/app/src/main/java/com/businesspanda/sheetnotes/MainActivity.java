@@ -178,33 +178,33 @@ public class MainActivity extends Activity {
 
         String note = " ";
 
-        if(freq<130){
+        if(freq<230){
             note = "Less than C3";
-        }else if(freq>130 && freq<138){
+        }else if(freq>=230 && freq<240){
             note = "C3";
-        }else if(freq>138 && freq<146) {
+        }else if(freq>=240 && freq<250) {
             note = "C#3";
-        }else if(freq>146 && freq<155){
+        }else if(freq>=250 && freq<260){
             note = "D3";
-        }else if(freq>155 && freq<164) {
+        }else if(freq>=260 && freq<270) {
             note = "Eb3";
-        }else if(freq>164 && freq<174){
+        }else if(freq>=270 && freq<280){
             note = "E3";
-        }else if(freq>174 && freq<185) {
+        }else if(freq>=280 && freq<290) {
             note = "F3";
-        }else if(freq>185 && freq<196){
+        }else if(freq>=290 && freq<300){
             note = "F#3";
-        }else if(freq>196 && freq<207) {
+        }else if(freq>=300 && freq<310) {
             note = "G3";
-        }else if(freq>207 && freq<220){
+        }else if(freq>=310 && freq<320){
             note = "G#3";
-        }else if(freq>220 && freq<233) {
+        }else if(freq>=320 && freq<330) {
             note = "A3";
-        }else if(freq>233 && freq<246){
+        }else if(freq>=330 && freq<340){
             note = "Bb3";
-        }else if(freq>246 && freq<261) {
+        }else if(freq>=340 && freq<350) {
             note = "B";
-        }else if(freq>261){
+        }else if(freq>=350){
             note = "Higher than C4";
         }
         return note;
