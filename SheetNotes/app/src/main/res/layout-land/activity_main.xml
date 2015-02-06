@@ -66,11 +66,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonChangeBack"
-        android:layout_below="@+id/startStopButton"
-        android:layout_marginTop="88dp"
         android:textColor="#ffffb1ef"
         android:onClick="changeBackColor"
-        android:background="#e5001180" />
+        android:background="#e5001180"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/startStopButton"
+        android:layout_toStartOf="@+id/startStopButton"
+        android:text="Change Background" />
 
 
 </RelativeLayout>

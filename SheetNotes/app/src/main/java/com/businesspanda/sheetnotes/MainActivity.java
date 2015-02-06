@@ -67,6 +67,8 @@ public class MainActivity extends Activity {
             startStopButton.setEnabled(false);
         }
 
+
+
     }
 
 
@@ -96,6 +98,7 @@ public class MainActivity extends Activity {
                 double[] re = new double[blockSize];
                 double[] im = new double[blockSize];
                 double[] magnitude = new double[blockSize];
+
 
                 audioRecord.startRecording();                   // Start working
                 fft = new DoubleFFT_1D(blockSize);
@@ -164,12 +167,14 @@ public class MainActivity extends Activity {
         protected void onProgressUpdate(Double... frequency) {
 
             //print the frequency
-           /** String info = Double.toString(frequency[0]);**/
+           String info = Double.toString(frequency[0]);
 
-            String test = findNote(frequency[0]);
+            String noteName = findNote(frequency[0]);
+
+
 
             //TextView doubleView = (TextView) findViewById(R.id.DoubleView);
-            tv.setText(test);
+            tv.setText(noteName + "   " + info);
         }
     }
 
@@ -179,33 +184,35 @@ public class MainActivity extends Activity {
         String note = " ";
 
         if(freq<230){
-            note = "Less than C3";
+            note = "Less than C";
         }else if(freq>=230 && freq<240){
-            note = "C3";
+            note = "C";
         }else if(freq>=240 && freq<250) {
-            note = "C#3";
+            note = "C#";
         }else if(freq>=250 && freq<260){
-            note = "D3";
+            note = "D";
         }else if(freq>=260 && freq<270) {
-            note = "Eb3";
+            note = "Eb";
         }else if(freq>=270 && freq<280){
-            note = "E3";
+            note = "E";
         }else if(freq>=280 && freq<290) {
-            note = "F3";
+            note = "F";
         }else if(freq>=290 && freq<300){
-            note = "F#3";
+            note = "F#";
         }else if(freq>=300 && freq<310) {
-            note = "G3";
+            note = "G";
         }else if(freq>=310 && freq<320){
-            note = "G#3";
+            note = "G#";
         }else if(freq>=320 && freq<330) {
-            note = "A3";
+            note = "A";
         }else if(freq>=330 && freq<340){
-            note = "Bb3";
+            note = "Bb";
         }else if(freq>=340 && freq<350) {
             note = "B";
-        }else if(freq>=350){
-            note = "Higher than C4";
+        }else if(freq>=350 && freq<360) {
+            note = "C";
+        }else if(freq>=360){
+            note = "Higher than high C";
         }
         return note;
 
