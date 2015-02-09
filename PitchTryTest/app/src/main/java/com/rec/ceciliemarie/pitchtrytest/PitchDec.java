@@ -15,6 +15,9 @@ import android.media.MediaRecorder.AudioSource;
 import android.os.Handler;
 import android.util.Log;
 
+import org.jtransforms.fft.DoubleFFT_1D;
+import pl.edu.icm.jlargearrays.*;
+
 /**
  * Created by CecilieMarie on 09.02.2015.
  */
@@ -23,17 +26,22 @@ public class PitchDec implements Runnable {
 
     // Currently, only this combination of rate, encoding and channel mode
     // actually works.
-    private final static int RATE = 8000;
-    private final static int CHANNEL_MODE = AudioFormat.CHANNEL_CONFIGURATION_MONO;
+    private final static int RATE = 44100;
+    private final static int CHANNEL_MODE = AudioFormat.CHANNEL_IN_MONO;
     private final static int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 
-    private final static int BUFFER_SIZE_IN_MS = 3000;
-    private final static int CHUNK_SIZE_IN_SAMPLES = 4096; // = 2 ^
+    int bufferSize = AudioRecord.getMinBufferSize(RATE, CHANNEL_MODE, ENCODING); //=4096
+    int SOURCE = AudioSource.MIC;
+
+    private DoubleFFT_1D fft;
+
+    //private final static int BUFFER_SIZE_IN_MS = 3000;
+    private final static int CHUNK_SIZE_IN_SAMPLES = 1024; // = 2 ^
     // CHUNK_SIZE_IN_SAMPLES_POW2
     private final static int CHUNK_SIZE_IN_MS = 1000 * CHUNK_SIZE_IN_SAMPLES
             / RATE;
-    private final static int BUFFER_SIZE_IN_BYTES = RATE * BUFFER_SIZE_IN_MS
-            / 1000 * 2;
+    //private final static int BUFFER_SIZE_IN_BYTES = RATE * BUFFER_SIZE_IN_MS
+    //        / 1000 * 2;
     private final static int CHUNK_SIZE_IN_BYTES = RATE * CHUNK_SIZE_IN_MS
             / 1000 * 2;
 
@@ -52,7 +60,7 @@ public class PitchDec implements Runnable {
 
         parent_ = parent;
         handler_ = handler;
-        System.loadLibrary("fft-jni");
+        //System.loadLibrary("fft-jni");
     }
 
     private static class FreqResult {
@@ -100,6 +108,7 @@ public class PitchDec implements Runnable {
     }
 
     public FreqResult AnalyzeFrequencies(short[] audio_data) {
+        fft = new DoubleFFT_1D(CHUNK_SIZE_IN_SAMPLES);
         FreqResult fr = new FreqResult();
 
         double[] data = new double[CHUNK_SIZE_IN_SAMPLES * 2];
@@ -112,7 +121,9 @@ public class PitchDec implements Runnable {
             data[i * 2] = audio_data[i];
             data[i * 2 + 1] = 0;
         }
-        DoFFT(data, CHUNK_SIZE_IN_SAMPLES);
+        //DoFFT(data, CHUNK_SIZE_IN_SAMPLES);
+
+        fft.complexForward(data);
 
         double best_frequency = min_frequency_fft;
         HashMap<Double, Double> frequencies = new HashMap<Double, Double>();
@@ -227,8 +238,10 @@ public class PitchDec implements Runnable {
 
         android.os.Process
                 .setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
-        recorder_ = new AudioRecord(AudioSource.MIC, RATE, CHANNEL_MODE,
-                ENCODING, 6144);
+
+        recorder_ = new AudioRecord(SOURCE, RATE, CHANNEL_MODE,
+                ENCODING, bufferSize);
+                System.out.println(recorder_.getState());
         if (recorder_.getState() != AudioRecord.STATE_INITIALIZED) {
             ShowError("Can't initialize AudioRecord");
             return;
@@ -236,12 +249,14 @@ public class PitchDec implements Runnable {
 
         recorder_.startRecording();
         while (!Thread.interrupted()) {
-            short[] audio_data = new short[BUFFER_SIZE_IN_BYTES / 2];
+            //short[] audio_data = new short[BUFFER_SIZE_IN_BYTES / 2];
+            short[] audio_data = new short[bufferSize / 2];
             recorder_.read(audio_data, 0, CHUNK_SIZE_IN_BYTES / 2);
             FreqResult fr = AnalyzeFrequencies(audio_data);
             PostToUI(fr.frequencies, fr.best_frequency);
         }
         recorder_.stop();
+        recorder_.release();
     }
 
     private void PostToUI(final HashMap<Double, Double> frequencies,
