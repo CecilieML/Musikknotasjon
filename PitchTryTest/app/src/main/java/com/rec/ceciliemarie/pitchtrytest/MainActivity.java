@@ -12,6 +12,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.widget.TextView;
 
 
 import java.util.HashMap;
@@ -28,9 +29,10 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tv_ = new DrawView(this);
-        //setContentView(R.layout.main);
-        setContentView(tv_);
+      //  tv_ = new DrawView(this);
+        setContentView(R.layout.activity_main);
+        //setContentView(tv_);
+
     }
 
     @Override
@@ -52,9 +54,15 @@ public class MainActivity extends ActionBarActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-    public void ShowPitchDetectionResult(
-            final HashMap<Double, Double> frequencies,
-            final double pitch) {
-        tv_.setFreq(frequencies, pitch);
+    public void ShowPitchDetectionResult( final HashMap<Double, Double> frequencies, final double pitch) {
+       // tv_.setDetectionResults(frequencies, pitch);
+
+        final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
+        String pitchString = Long.toString(Math.round(pitch));
+        System.out.println(pitchString);
+        changeFreq.setText(pitchString);
+
     }
+
+
 }

@@ -46,7 +46,6 @@ public class DrawView extends View {
         frequencies_ = frequencies;
         pitch_ = pitch;
         System.out.println("pitch" + pitch_);
-        System.out.println("freq" + frequencies_);
     }
 
     /*****************************************************************************************/
@@ -62,8 +61,7 @@ public class DrawView extends View {
 
 
     public void setFreq(HashMap freq, double pit){
-        final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
-        //changeFreq.setText(Math.round(representation_.pitch * 10) / 10.0 + " Hz");
+
     }
 
 }
