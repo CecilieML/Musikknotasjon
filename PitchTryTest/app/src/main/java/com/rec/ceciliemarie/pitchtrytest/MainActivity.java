@@ -11,6 +11,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
@@ -54,5 +55,11 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    public void prevNotes(View view){
+        final TextView setPrevNotes = (TextView) findViewById(R.id.prevNotesTextView);
+        String earlierNotes = (String) setPrevNotes.getText();
+        setPrevNotes.setText(earlierNotes + " " + "CURRENT NOTE"); /** CHANGE THIS WHEN ABLE TO GET CURRENT NOTE*/
+        //SHOULD ONLY BE CALLED WHEN NOTE CHANGES??
+    }
 
 }

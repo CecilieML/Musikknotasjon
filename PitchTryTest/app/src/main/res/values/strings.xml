@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
 
     <string name="freq">Large Text</string>
+    <string name="prevNoteString"> ... </string>
 
 </resources>

@@ -17,4 +17,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="43dp"
         android:textColor="#ff2c3c65" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/prevNoteString"
+        android:id="@+id/prevNotesTextView"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/freqTextview"
+        android:layout_alignStart="@+id/freqTextview"
+        android:textColor="#ff0b7c6b" />
 </RelativeLayout>
