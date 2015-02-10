@@ -55,6 +55,6 @@ public class MainActivity extends ActionBarActivity {
     public void ShowPitchDetectionResult(
             final HashMap<Double, Double> frequencies,
             final double pitch) {
-        tv_.setFreq(frequencies, pitch);
+        tv_.setDetectionResults(frequencies, pitch);
     }
 }
