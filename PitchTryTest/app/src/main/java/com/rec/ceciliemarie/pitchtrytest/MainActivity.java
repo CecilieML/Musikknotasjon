@@ -49,26 +49,27 @@ public class MainActivity extends ActionBarActivity {
     public void ShowPitchDetectionResult( final double pitch) {
 
         final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
+        final TextView setPrevNotes = (TextView) findViewById(R.id.prevNotesTextView);
 
         String pitchString = Long.toString(Math.round(pitch));
         System.out.println(pitchString);
 
-        Integer pitchLong = (int)(pitch);
-        System.out.println(pitchLong + " PITCHLONG");
-        String nearestNote = NoteArray.findNearestNote(pitchLong);
+        Integer pitchInt = (int)(pitch);
+        System.out.println(pitchInt + " PITCH INT");
+        String nearestNote = NoteArray.findNearestNote(pitchInt);
 
-        System.out.println(nearestNote + "  jbkhv");
+        System.out.println(nearestNote + "  nearest note :)");
 
 
         changeFreq.setText(nearestNote);
 
+
+        String earlierNotes = (String) setPrevNotes.getText();
+
+        setPrevNotes.setText(earlierNotes + " " + nearestNote);
+
     }
 
-    public void prevNotes(View view){
-        final TextView setPrevNotes = (TextView) findViewById(R.id.prevNotesTextView);
-        String earlierNotes = (String) setPrevNotes.getText();
-        setPrevNotes.setText(earlierNotes + " " + "CURRENT NOTE"); /** CHANGE THIS WHEN ABLE TO GET CURRENT NOTE*/
-        //SHOULD ONLY BE CALLED WHEN NOTE CHANGES??
-    }
+
 
 }
