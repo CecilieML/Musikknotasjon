@@ -263,7 +263,7 @@ public class PitchDec implements Runnable {
                           final double pitch) {
         handler_.post(new Runnable() {
             public void run() {
-                parent_.ShowPitchDetectionResult(frequencies, pitch);
+                parent_.ShowPitchDetectionResult(pitch);
             }
         });
     }
