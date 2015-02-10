@@ -3,7 +3,7 @@ package com.rec.ceciliemarie.pitchtrytest;
 import java.lang.Thread;
 import java.util.HashMap;
 
-import com.rec.ceciliemarie.pitchtrytest.PitchDec;
+import com.rec.ceciliemarie.pitchtrytest.NoteArray;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
@@ -24,7 +24,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        NoteArray.createTable();
     }
 
     @Override
@@ -49,9 +49,18 @@ public class MainActivity extends ActionBarActivity {
     public void ShowPitchDetectionResult( final double pitch) {
 
         final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
+
         String pitchString = Long.toString(Math.round(pitch));
         System.out.println(pitchString);
-        changeFreq.setText(pitchString);
+
+        Integer pitchLong = (int)(pitch);
+        System.out.println(pitchLong + " PITCHLONG");
+        String nearestNote = NoteArray.findNearestNote(pitchLong);
+
+        System.out.println(nearestNote + "  jbkhv");
+
+
+        changeFreq.setText(nearestNote);
 
     }
 
