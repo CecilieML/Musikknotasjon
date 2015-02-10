@@ -2,16 +2,12 @@ package com.rec.ceciliemarie.pitchtrytest;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.os.Handler;
+import android.view.TextureView;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.SortedMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeMap;
@@ -24,6 +20,7 @@ public class DrawView extends View {
     private HashMap<Double, Double> frequencies_;
     private double pitch_;
     private PitchDecRep representation_;
+
     private Handler handler_;
     private Timer timer_;
 
@@ -61,6 +58,7 @@ public class DrawView extends View {
         NotePitches[5][4] = 415.3;
         NotePitches[5][5] = 440;
 
+        /*
         for (int string_no = 0; string_no < 6; string_no++) {
             for (int fret = 0; fret < 6; fret++) {
                 if (NotePitches[string_no][fret] > 0) {
@@ -68,6 +66,7 @@ public class DrawView extends View {
                 }
             }
         }
+        */
 
         // UI update cycle.
         handler_ = new Handler();
@@ -85,6 +84,15 @@ public class DrawView extends View {
                 UI_UPDATE_MS );
     }
 
+    /*****************************************************************************************/
+
+    public void setDetectionResults(final HashMap<Double, Double> frequencies, double pitch) {
+        frequencies_ = frequencies;
+        pitch_ = pitch;
+    }
+
+    /*****************************************************************************************/
+
     // NotePitches[i][j] is the pitch of i-th string on j-th fret. 0th fret means an open fret.
     private double[][] NotePitches = new double[6][6];
     private TreeMap<Double, Integer> NotePitchesMap = new TreeMap<Double, Integer>();
@@ -94,6 +102,7 @@ public class DrawView extends View {
     private final static double MAX_PITCH_DIFF = 20;  // in Hz
     private final static int UI_UPDATE_MS = 100;
 
+    /**
     private int GetFingerboardCoord(double pitch) {
         final SortedMap<Double, Integer> tail_map = NotePitchesMap.tailMap(pitch);
         final SortedMap<Double, Integer> head_map = NotePitchesMap.headMap(pitch);
@@ -104,9 +113,9 @@ public class DrawView extends View {
         } else {
             return NotePitchesMap.get(closest_left);
         }
-    }
+    }*/
 
-    final int FINGERBOARD_PADDING = 10;
+  /*  final int FINGERBOARD_PADDING = 10;
     final static int HEADSTOCK_HEIGHT = 10;
     final static int HEADSTOCK_WIDTH = 50;
     private void DrawFingerboard(Canvas canvas, Rect rect) {
@@ -117,7 +126,7 @@ public class DrawView extends View {
             final int offset = Math.round((rect.height() - FINGERBOARD_PADDING * 2) / 5 * i) + FINGERBOARD_PADDING;
             canvas.drawLine(rect.left, rect.top + offset, rect.right, rect.top + offset, paint);
         }
-        // Draw fingerboard's end.
+       // Draw fingerboard's end.
         canvas.drawRect(rect.right - FINGERBOARD_PADDING, rect.top, rect.right, rect.bottom, paint);
 
         // Draw frets
@@ -152,9 +161,10 @@ public class DrawView extends View {
                             Math.round((rect.height() - FINGERBOARD_PADDING * 2) / 5 * (i - 1)) + FINGERBOARD_PADDING,
                     paint);
         }
-    }
 
-    private long GetAmplitudeScreenHeight(Canvas canvas, double amplitude, Rect histogram_rect) {
+    }*/
+
+   /** private long GetAmplitudeScreenHeight(Canvas canvas, double amplitude, Rect histogram_rect) {
         return Math.round(amplitude / MAX_AMPLITUDE * histogram_rect.height());
     }
 
@@ -209,8 +219,10 @@ public class DrawView extends View {
         message += delta > 0 ? "-" : "+";
         message += Math.round(Math.abs(delta) * 100) / 100.0 + "Hz)";
         canvas.drawText(message, text_point.x + 30, text_point.y + 10, paint);
-    }
+    }*/
 
+
+    /**
     private boolean DrawHistogram(Canvas canvas, Rect rect) {
         if (frequencies_ == null) return false;
         Paint paint = new Paint();
@@ -247,10 +259,11 @@ public class DrawView extends View {
             column_no++;
         }
         return above_threshold;
-    }
+    }*/
 
-    private void DrawCurrentFrequency(Canvas canvas, int x, int y) {
-        if (representation_ == null) {
+
+    private void DrawCurrentFrequency() {
+       /* if (representation_ == null) {
             Paint paint = new Paint();
             paint.setARGB(255, 200, 200, 200);
             paint.setTextSize(18);
@@ -263,11 +276,13 @@ public class DrawView extends View {
         paint.setARGB(alpha, 200, 0, 0);
         paint.setTextSize(35);
 
-        canvas.drawText(Math.round(representation_.pitch * 10) / 10.0 + " Hz", 20, 40, paint);
+        canvas.drawText(Math.round(representation_.pitch * 10) / 10.0 + " Hz", 20, 40, paint);*/
+        final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
+        changeFreq.setText(Math.round(representation_.pitch * 10) / 10.0 + " Hz");
     }
 
     protected void onDraw(Canvas canvas) {
-        final int MARGIN = 20;
+       /** final int MARGIN = 20;
         final int effective_height = canvas.getHeight() - 4 * MARGIN;
         final int effective_width = canvas.getWidth() - 2 * MARGIN;
 
@@ -290,15 +305,13 @@ public class DrawView extends View {
                 representation_ = new PitchDecRep(pitch_);
             }
         }
-
-        DrawCurrentFrequency(canvas, 20, 50);
+*/
+        DrawCurrentFrequency();/*
         //DrawFingerboard(canvas, fingerboard);
         //DrawPitchOnFingerboard(canvas, fingerboard, new Point(20, 80));
+        */
     }
 
-    public void setDetectionResults(final HashMap<Double, Double> frequencies, double pitch) {
-        frequencies_ = frequencies;
-        pitch_ = pitch;
-    }
+
 
 }
