@@ -51,11 +51,11 @@ public class MainActivity extends ActionBarActivity {
         final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
         final TextView setPrevNotes = (TextView) findViewById(R.id.prevNotesTextView);
 
-        String pitchString = Long.toString(Math.round(pitch));
-        System.out.println(pitchString);
+        //String pitchString = Long.toString(Math.round(pitch));
+        //System.out.println(pitchString);
 
         Integer pitchInt = (int)(pitch);
-        System.out.println(pitchInt + " PITCH INT");
+        //System.out.println(pitchInt + " PITCH INT");
         String nearestNote = NoteArray.findNearestNote(pitchInt);
 
         System.out.println(nearestNote + "  nearest note :)");
