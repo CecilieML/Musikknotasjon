@@ -115,7 +115,26 @@ public class NoteArray {
         notes.put(3520, "A7");
         notes.put(7040, "A8");
 
-        28	55	110	220	440	880	1760	3520	7040
+        notes.put(29, "A0#");
+        notes.put(58, "A1#");
+        notes.put(117, "A2#");
+        notes.put(233, "A3#");
+        notes.put(466, "A4#");
+        notes.put(932, "A5#");
+        notes.put(1864, "A6#");
+        notes.put(3729, "A7#");
+        notes.put(7459, "A8#");
+
+        notes.put(31, "B0");
+        notes.put(62, "B1");
+        notes.put(123, "B2");
+        notes.put(247, "B3");
+        notes.put(493, "B4");
+        notes.put(988, "B5");
+        notes.put(1976, "B6");
+        notes.put(3951, "B7");
+        notes.put(7902, "B8");
+
     }
 
     public static String findNearestNote(Integer target) {
