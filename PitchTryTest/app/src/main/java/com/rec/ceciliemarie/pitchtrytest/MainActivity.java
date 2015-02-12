@@ -17,6 +17,7 @@ import android.widget.TextView;
 public class MainActivity extends ActionBarActivity {
 
     Thread pitch_detector_thread_;
+    public String written = " ";
 
     /** Called when the activity is first created. */
     @Override
@@ -54,7 +55,7 @@ public class MainActivity extends ActionBarActivity {
         //String pitchString = Long.toString(Math.round(pitch));
         //System.out.println(pitchString);
 
-        Integer pitchInt = (int)(pitch);
+        Integer pitchInt = (int) (pitch);
         //System.out.println(pitchInt + " PITCH INT");
         String nearestNote = NoteArray.findNearestNote(pitchInt);
 
@@ -63,11 +64,13 @@ public class MainActivity extends ActionBarActivity {
 
         changeFreq.setText(nearestNote);
 
-
         String earlierNotes = (String) setPrevNotes.getText();
 
-        setPrevNotes.setText(earlierNotes + " " + nearestNote);
+        if(!nearestNote.equals(written)){
 
+            setPrevNotes.setText(earlierNotes + " " + nearestNote);
+            written = nearestNote;
+        }
     }
 
 
