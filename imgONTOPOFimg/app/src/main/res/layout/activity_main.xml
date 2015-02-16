@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/stripes"
+        android:background="#ff4ae3ff"
+        android:src="@drawable/stripes"
+        android:layout_alignTop="@+id/noteHigh"
+        android:layout_alignParentEnd="true"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/note"
+        android:background="#ff41ff2e"
+        android:src="@drawable/note"
+        android:layout_alignTop="@+id/stripes"
+        android:layout_toEndOf="@+id/textView"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/noteHigh"
+        android:background="#ffffa0f1"
+        android:src="@drawable/notehigh"
+        android:layout_below="@+id/textView"
+        android:layout_alignEnd="@+id/stripes"
+        android:layout_marginTop="176dp"
+        android:visibility="invisible"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/note"
+        android:layout_marginBottom="84dp"
+        android:layout_toEndOf="@+id/textView"
+        android:src="@drawable/note"
+        android:layout_alignStart="@+id/note"
+        android:onClick="showNote"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton2"
+        android:src="@drawable/notehigh"
+        android:layout_alignTop="@+id/imageButton"
+        android:layout_alignStart="@+id/noteHigh"
+        android:onClick="showHighNote" />
+
+</RelativeLayout>
