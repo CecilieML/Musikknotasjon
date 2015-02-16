@@ -25,14 +25,15 @@ import android.util.Log;
 
 import org.jtransforms.fft.DoubleFFT_1D;
 
+import be.tarsos.dsp.AudioEvent;
+import be.tarsos.dsp.filters.*;
+
 /**
  * Created by CecilieMarie on 09.02.2015.
  */
 public class PitchDec implements Runnable {
     private static String LOG_TAG = "PitchDetector";
 
-    // Currently, only this combination of rate, encoding and channel mode
-    // actually works.
     private final static int RATE = 44100;
     private final static int CHANNEL_MODE = AudioFormat.CHANNEL_IN_MONO;
     private final static int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
@@ -130,6 +131,31 @@ public class PitchDec implements Runnable {
         }
         //DoFFT(data, CHUNK_SIZE_IN_SAMPLES);
 
+        /***/
+        LowPassSP lowpass = null;
+
+        float[] floatArray = new float[data.length];
+        for (int i = 0 ; i < data.length; i++)
+        {
+            floatArray[i] = (float) data[i];
+        }
+
+        for(int i = 0; i < floatArray.length; i++) {
+            lowpass = new LowPassSP(floatArray[i], (float) RATE);
+        }
+
+        Long frame = null;
+        AudioEvent(CHANNEL_MODE, frame);
+
+        lowpass.process();
+
+        double[] dataAfterLP = new double[floatArray.length];
+        for (int i = 0; i < floatArray.length; i++)
+        {
+            dataAfterLP[i] = floatArray[i];
+        }
+
+        /***/
         fft.complexForward(data);
 
         double best_frequency = min_frequency_fft;
