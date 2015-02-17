@@ -8,6 +8,11 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
@@ -84,6 +89,12 @@ public class MainActivity extends ActionBarActivity {
             noteArray.toString()
 
             setPrevNotes.setText(earlierNotes + " " + nearestNote);*/
+
+            ImageView treble = (ImageView) findViewById(R.id.treble);
+            notesOnScreen(treble);
+
+
+            /*                   */
             written = nearestNote;
         }
 
@@ -91,6 +102,19 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    public void notesOnScreen(View view){
+        RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.layout);
 
+        ImageView image = new ImageView(this);
+        LinearLayout.LayoutParams vp = new LinearLayout.LayoutParams(RadioGroup.LayoutParams.FILL_PARENT, RadioGroup.LayoutParams.FILL_PARENT);
+        image.setLayoutParams(vp);
+        image.setMaxHeight(50);
+        image.setMaxWidth(50);
+        image.setBackgroundResource(R.drawable.note);
+        image.animate().x(500).setDuration(500);
+        // other image settings
+       // image.setImageDrawable(draw);
+        theLayout.addView(image);
+    }
 
 }

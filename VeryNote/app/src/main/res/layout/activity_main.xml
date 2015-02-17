@@ -4,7 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:background="#ffccceff">
+    android:background="#ffccceff"
+    android:id="@+id/layout">
 
 
     <TextView
@@ -18,7 +19,7 @@
         android:layout_marginTop="43dp"
         android:textColor="#ff2c3c65" />
 
-    <TextView
+    <!--<TextView
         android:layout_width="450dp"
         android:layout_height="30dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -29,25 +30,32 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="58dp"
-        android:layout_marginStart="58dp" />
+        android:layout_marginStart="58dp" />-->
 
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Switch"
         android:id="@+id/metronomeswitch"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="42dp"
         />
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/clock"
-        android:layout_alignBottom="@+id/freqTextview"
-        android:layout_alignRight="@+id/prevNotesTextView"
-        android:layout_alignEnd="@+id/prevNotesTextView" />
+        android:id="@+id/treble"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/trebleline" />
+
+    <!--  <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="New Text"
+          android:id="@+id/clock"
+          android:layout_alignBottom="@+id/freqTextview"
+          android:layout_alignRight="@+id/prevNotesTextView"
+          android:layout_alignEnd="@+id/prevNotesTextView" />-->
 </RelativeLayout>
 
