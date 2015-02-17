@@ -30,5 +30,24 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="58dp"
         android:layout_marginStart="58dp" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Switch"
+        android:id="@+id/metronomeswitch"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="42dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/clock"
+        android:layout_alignBottom="@+id/freqTextview"
+        android:layout_alignRight="@+id/prevNotesTextView"
+        android:layout_alignEnd="@+id/prevNotesTextView" />
 </RelativeLayout>
 

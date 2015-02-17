@@ -25,16 +25,13 @@ import android.util.Log;
 
 import org.jtransforms.fft.DoubleFFT_1D;
 
-import be.tarsos.dsp.AudioEvent;
-import be.tarsos.dsp.filters.*;
-
 /**
  * Created by CecilieMarie on 09.02.2015.
  */
 public class PitchDec implements Runnable {
     private static String LOG_TAG = "PitchDetector";
 
-    private final static int RATE = 44100;
+    private final static int RATE = 8000; //was 44100
     private final static int CHANNEL_MODE = AudioFormat.CHANNEL_IN_MONO;
     private final static int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 
@@ -60,6 +57,12 @@ public class PitchDec implements Runnable {
     // classical repertoire
 
     private final static int DRAW_FREQUENCY_STEP = 5;
+
+    //lowpassthings
+    public short[] a = new short[2];
+    public short[] b = new short[3];
+    public short[] mem= new short[4];
+    private final static short LOWPASSLIMIT = 1500;
 
     public native void DoFFT(double[] data, int size); // an NDK library
     // 'fft-jni'
@@ -131,31 +134,6 @@ public class PitchDec implements Runnable {
         }
         //DoFFT(data, CHUNK_SIZE_IN_SAMPLES);
 
-        /***/
-        LowPassSP lowpass = null;
-
-        float[] floatArray = new float[data.length];
-        for (int i = 0 ; i < data.length; i++)
-        {
-            floatArray[i] = (float) data[i];
-        }
-
-        for(int i = 0; i < floatArray.length; i++) {
-            lowpass = new LowPassSP(floatArray[i], (float) RATE);
-        }
-
-        Long frame = null;
-        AudioEvent(CHANNEL_MODE, frame);
-
-        lowpass.process();
-
-        double[] dataAfterLP = new double[floatArray.length];
-        for (int i = 0; i < floatArray.length; i++)
-        {
-            dataAfterLP[i] = floatArray[i];
-        }
-
-        /***/
         fft.complexForward(data);
 
         double best_frequency = min_frequency_fft;
@@ -266,6 +244,46 @@ public class PitchDec implements Runnable {
         return fr;
     }
 
+    /***/
+    void computeLowPassParameters( int rate, short f)
+    {
+        float a0;
+        float w0 = 2 * (float)Math.PI * f/rate;
+        float cosw0 = (short)Math.cos(w0);
+        float sinw0 = (short)Math.sin(w0);
+        float alpha = sinw0/2 * (float)Math.sqrt(2);
+
+        a0   = 1 + alpha;
+
+        float tempa0 = (-2*cosw0) / a0;
+        float tempa1 = (1 - alpha) / a0;
+        float tempb0 = ((1-cosw0)/2) / a0;
+        float tempb1 = ( 1-cosw0) / a0;
+
+        a[0] = (short)tempa0;
+        a[1] = (short)tempa1;
+        b[0] = (short)tempb0;
+        b[1] = (short)tempb1;
+        b[2] = b[0];
+    }
+
+    short processFilter( short x)
+    {
+        float tempret = b[0] * x + b[1] * mem[0] + b[2] * mem[1]
+                - a[0] * mem[2] - a[1] * mem[3] ;
+
+        short ret = (short)tempret;
+
+        mem[1] = mem[0];
+        mem[0] = x;
+        mem[3] = mem[2];
+        mem[2] = ret;
+
+        return ret;
+    }
+
+    /***/
+
     public void run() {
         Log.e(LOG_TAG, "starting to detect pitch");
 
@@ -285,7 +303,15 @@ public class PitchDec implements Runnable {
             //short[] audio_data = new short[BUFFER_SIZE_IN_BYTES / 2];
             short[] audio_data = new short[bufferSize / 2];
             recorder_.read(audio_data, 0, CHUNK_SIZE_IN_BYTES / 2);
-            //lavpassfilter her
+
+            //lavpassfilter
+
+            computeLowPassParameters(RATE, LOWPASSLIMIT);
+            for( int j=0; j<CHUNK_SIZE_IN_BYTES; ++j ) {
+                audio_data[j] = processFilter(audio_data[j]);
+            }
+
+            //pitchdetector
             FreqResult fr = AnalyzeFrequencies(audio_data);
             PostToUI(fr.frequencies, fr.best_frequency);
         }
