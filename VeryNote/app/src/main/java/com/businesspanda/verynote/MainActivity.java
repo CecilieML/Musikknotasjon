@@ -20,6 +20,10 @@ public class MainActivity extends ActionBarActivity {
     Thread pitch_detector_thread_;
     public String written = " ";
     public ArrayList<String> noteArray = new ArrayList();
+    public ArrayList<String> allNotes = new ArrayList();
+    public boolean sharp = false;
+    public boolean flat = false;
+    public int y;
 
     /** Called when the activity is first created. */
     @Override
@@ -59,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
     public void ShowPitchDetectionResult( final double pitch) {
 
         final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
-        final TextView setPrevNotes = (TextView) findViewById(R.id.prevNotesTextView);
+      //  final TextView setPrevNotes = (TextView) findViewById(R.id.prevNotesTextView);
 
         //String pitchString = Long.toString(Math.round(pitch));
         //System.out.println(pitchString);
@@ -73,9 +77,13 @@ public class MainActivity extends ActionBarActivity {
         changeFreq.setText(nearestNote);
 
 
-        String earlierNotes = (String) setPrevNotes.getText();
+       // String earlierNotes = (String) setPrevNotes.getText();
 
         if(!nearestNote.equals(written)){
+
+            /***/
+            allNotes.add(nearestNote);
+            /***/
 
             if(noteArray.size() == 14){
                 noteArray.remove(0);
@@ -83,18 +91,31 @@ public class MainActivity extends ActionBarActivity {
             }
 
             noteArray.add(nearestNote);
-            setPrevNotes.setText(noteArray.toString());
+          //  setPrevNotes.setText(noteArray.toString());
 
             /*
             noteArray.toString()
 
             setPrevNotes.setText(earlierNotes + " " + nearestNote);*/
 
-            ImageView treble = (ImageView) findViewById(R.id.treble);
-            notesOnScreen(treble);
+           // ImageView treble = (ImageView) findViewById(R.id.treble);
 
+            String sharpFlat = nearestNote.substring(nearestNote.length()-1);
 
-            /*                   */
+            if(sharpFlat.equals("#")){
+              //  sharp = true;
+            }else {
+                sharp = false;
+            }
+
+            if(sharpFlat.equals("b")){
+                flat = true;
+            }else {
+                flat = false;
+            }
+
+            notesOnScreen();
+
             written = nearestNote;
         }
 
@@ -102,17 +123,43 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    public void notesOnScreen(View view){
+    public void notesOnScreen(){
+
+        int x = 700;
+        int y = 110;
+
         RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.layout);
 
         ImageView image = new ImageView(this);
-        LinearLayout.LayoutParams vp = new LinearLayout.LayoutParams(RadioGroup.LayoutParams.FILL_PARENT, RadioGroup.LayoutParams.FILL_PARENT);
-        image.setLayoutParams(vp);
-        image.setMaxHeight(50);
-        image.setMaxWidth(50);
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(30,60);
+        image.setLayoutParams(params);
+        image.setX(x);
+        image.setY(y);
+        image.setMaxHeight(10);
+        image.setMaxWidth(5);
         image.setBackgroundResource(R.drawable.note);
-        image.animate().x(500).setDuration(500);
-        // other image settings
+        if(sharp){
+            ImageView sharp = new ImageView(this);
+            RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(30,30);
+            sharp.setLayoutParams(para);
+            sharp.setX(x);
+            sharp.setY(y - 10);
+            sharp.setBackgroundResource(R.drawable.ic_launcher);
+            sharp.animate().x(-400).setDuration(10000);
+            theLayout.addView(sharp);
+        }else if(flat){
+            ImageView flat = new ImageView(this);
+            RelativeLayout.LayoutParams paraFlat = new RelativeLayout.LayoutParams(20,20);
+            flat.setLayoutParams(paraFlat);
+            flat.setX(x);
+            flat.setY(y - 10);
+            flat.setBackgroundResource(R.drawable.ic_launcher);
+            flat.animate().x(-400).setDuration(10000);
+            theLayout.addView(flat);
+        }
+        image.animate().x(-400).setDuration(10000);
+
        // image.setImageDrawable(draw);
         theLayout.addView(image);
     }

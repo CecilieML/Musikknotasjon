@@ -83,12 +83,12 @@ public class NoteSearch {
         notes.put(880, "A5");
         notes.put(1760, "A6");
 
-        notes.put(58, "A1#");
-        notes.put(117, "A2#");
-        notes.put(233, "A3#");
-        notes.put(466, "A4#");
-        notes.put(932, "A5#");
-        notes.put(1864, "A6#");
+        notes.put(58, "B1b");
+        notes.put(117, "B2b");
+        notes.put(233, "B3b");
+        notes.put(466, "B4b");
+        notes.put(932, "B5b");
+        notes.put(1864, "B6b");
 
         notes.put(62, "B1");
         notes.put(123, "B2");
