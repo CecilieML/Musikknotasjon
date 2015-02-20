@@ -72,7 +72,8 @@ public class MainActivity extends ActionBarActivity {
         //System.out.println(pitchInt + " PITCH INT");
         String nearestNote = NoteSearch.findNearestNote(pitchInt);
 
-        System.out.println(nearestNote + "  nearest note :)");
+        //System.out.println(nearestNote + "  nearest note :)");
+
 
         changeFreq.setText(nearestNote);
 
@@ -103,7 +104,7 @@ public class MainActivity extends ActionBarActivity {
             String sharpFlat = nearestNote.substring(nearestNote.length()-1);
 
             if(sharpFlat.equals("#")){
-              //  sharp = true;
+                sharp = true;
             }else {
                 sharp = false;
             }
@@ -126,7 +127,7 @@ public class MainActivity extends ActionBarActivity {
     public void notesOnScreen(){
 
         int x = 700;
-        int y = 110;
+        int y = 85; //80 = F
 
         RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.layout);
 
@@ -138,27 +139,27 @@ public class MainActivity extends ActionBarActivity {
         image.setY(y);
         image.setMaxHeight(10);
         image.setMaxWidth(5);
-        image.setBackgroundResource(R.drawable.singleNOTEnoBACKGROUND);
+        image.setBackgroundResource(R.drawable.singlenote);
         if(sharp){
             ImageView sharp = new ImageView(this);
-            RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(30,30);
+            RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(20,30);
             sharp.setLayoutParams(para);
             sharp.setX(x);
-            sharp.setY(y - 10);
-            sharp.setBackgroundResource(R.drawable.sharpNOTEnoBACKGROUND);
-            sharp.animate().x(-400).setDuration(10000);
+            sharp.setY(y + 10);
+            sharp.setBackgroundResource(R.drawable.sharpnote);
+            sharp.animate().x(0).setDuration(4000);
             theLayout.addView(sharp);
         }else if(flat){
             ImageView flat = new ImageView(this);
-            RelativeLayout.LayoutParams paraFlat = new RelativeLayout.LayoutParams(20,20);
+            RelativeLayout.LayoutParams paraFlat = new RelativeLayout.LayoutParams(10,30);
             flat.setLayoutParams(paraFlat);
             flat.setX(x);
-            flat.setY(y - 10);
-            flat.setBackgroundResource(R.drawable.flatNOTEnoBACKGROUND);
-            flat.animate().x(-400).setDuration(10000);
+            flat.setY(y + 5);
+            flat.setBackgroundResource(R.drawable.flatnote);
+            flat.animate().x(0).setDuration(5000);
             theLayout.addView(flat);
         }
-        image.animate().x(-400).setDuration(10000);
+        image.animate().x(0).setDuration(5500);
 
        // image.setImageDrawable(draw);
         theLayout.addView(image);

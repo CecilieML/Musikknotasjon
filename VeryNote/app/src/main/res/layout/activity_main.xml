@@ -14,10 +14,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/freq"
         android:id="@+id/freqTextview"
+        android:textColor="#ff2c3c65"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp"
-        android:textColor="#ff2c3c65" />
+        android:layout_centerHorizontal="true" />
 
     <!--<TextView
         android:layout_width="450dp"
@@ -37,9 +36,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/metronomeswitch"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="42dp"
-        />
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -47,7 +44,7 @@
         android:id="@+id/treble"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/LONGtreblenoBACKGROUND" />
+        android:src="@drawable/treblebackround" />
 
     <!--  <TextView
           android:layout_width="wrap_content"

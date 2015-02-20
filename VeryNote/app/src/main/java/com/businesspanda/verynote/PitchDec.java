@@ -10,6 +10,9 @@ package com.businesspanda.verynote;
  ** implied warranty.
  */
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.Runnable;
 import java.lang.Thread;
 import java.util.ArrayList;
@@ -314,6 +317,11 @@ public class PitchDec implements Runnable {
             //pitchdetector
             FreqResult fr = AnalyzeFrequencies(audio_data);
             PostToUI(fr.frequencies, fr.best_frequency);
+            try {
+                write("outgreatawesomefile.txt", audio_data);
+            } catch(IOException ie) {
+                ie.printStackTrace();
+            }
         }
         recorder_.stop();
         recorder_.release();
@@ -335,6 +343,19 @@ public class PitchDec implements Runnable {
                         .setMessage(msg).show();
             }
         });
+    }
+
+
+    public static void write (String filename, short[]audio_data) throws IOException {
+            BufferedWriter outputWriter = null;
+            outputWriter = new BufferedWriter(new FileWriter(filename));
+            for (int i = 0; i < audio_data.length; i++) {
+                outputWriter.write(audio_data[i]);
+                outputWriter.write(i);
+                outputWriter.newLine();
+            }
+            outputWriter.flush();
+            outputWriter.close();
     }
 
     private MainActivity parent_;
