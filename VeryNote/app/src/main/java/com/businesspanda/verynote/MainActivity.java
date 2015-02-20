@@ -138,14 +138,14 @@ public class MainActivity extends ActionBarActivity {
         image.setY(y);
         image.setMaxHeight(10);
         image.setMaxWidth(5);
-        image.setBackgroundResource(R.drawable.note);
+        image.setBackgroundResource(R.drawable.singleNOTEnoBACKGROUND);
         if(sharp){
             ImageView sharp = new ImageView(this);
             RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(30,30);
             sharp.setLayoutParams(para);
             sharp.setX(x);
             sharp.setY(y - 10);
-            sharp.setBackgroundResource(R.drawable.ic_launcher);
+            sharp.setBackgroundResource(R.drawable.sharpNOTEnoBACKGROUND);
             sharp.animate().x(-400).setDuration(10000);
             theLayout.addView(sharp);
         }else if(flat){
@@ -154,7 +154,7 @@ public class MainActivity extends ActionBarActivity {
             flat.setLayoutParams(paraFlat);
             flat.setX(x);
             flat.setY(y - 10);
-            flat.setBackgroundResource(R.drawable.ic_launcher);
+            flat.setBackgroundResource(R.drawable.flatNOTEnoBACKGROUND);
             flat.animate().x(-400).setDuration(10000);
             theLayout.addView(flat);
         }

@@ -47,7 +47,7 @@
         android:id="@+id/treble"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/trebleline" />
+        android:src="@drawable/LONGtreblenoBACKGROUND" />
 
     <!--  <TextView
           android:layout_width="wrap_content"
