@@ -1,8 +1,16 @@
 package com.businesspanda.verynote;
 
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.Thread;
 import java.util.ArrayList;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -23,7 +31,7 @@ public class MainActivity extends ActionBarActivity {
     public ArrayList<String> allNotes = new ArrayList();
     public boolean sharp = false;
     public boolean flat = false;
-    public int y;
+    public int slowDOWN = 0;
 
     /** Called when the activity is first created. */
     @Override
@@ -63,28 +71,17 @@ public class MainActivity extends ActionBarActivity {
     public void ShowPitchDetectionResult( final double pitch) {
 
         final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
-      //  final TextView setPrevNotes = (TextView) findViewById(R.id.prevNotesTextView);
-
-        //String pitchString = Long.toString(Math.round(pitch));
-        //System.out.println(pitchString);
 
         Integer pitchInt = (int) (pitch);
-        //System.out.println(pitchInt + " PITCH INT");
         String nearestNote = NoteSearch.findNearestNote(pitchInt);
 
         //System.out.println(nearestNote + "  nearest note :)");
 
-
         changeFreq.setText(nearestNote);
-
-
-       // String earlierNotes = (String) setPrevNotes.getText();
 
         if(!nearestNote.equals(written)){
 
-            /***/
             allNotes.add(nearestNote);
-            /***/
 
             if(noteArray.size() == 14){
                 noteArray.remove(0);
@@ -92,42 +89,50 @@ public class MainActivity extends ActionBarActivity {
             }
 
             noteArray.add(nearestNote);
-          //  setPrevNotes.setText(noteArray.toString());
 
-            /*
-            noteArray.toString()
 
-            setPrevNotes.setText(earlierNotes + " " + nearestNote);*/
 
-           // ImageView treble = (ImageView) findViewById(R.id.treble);
-
-            String sharpFlat = nearestNote.substring(nearestNote.length()-1);
-
-            if(sharpFlat.equals("#")){
-                sharp = true;
-            }else {
-                sharp = false;
-            }
-
-            if(sharpFlat.equals("b")){
-                flat = true;
-            }else {
-                flat = false;
-            }
-
-            notesOnScreen();
+            if(slowDOWN%10==0)notesOnScreen();
 
             written = nearestNote;
+            slowDOWN++;
         }
 
 
 
     }
 
+    public void writeToFile(){
+        String theentirearraythingstring = test.toString();
+
+        FileWriter fw;
+        try {
+            File f = this.getFilesDir();
+            String s = f.getCanonicalPath();
+            File file = new File(s+"/awesomefile.txt");
+            if(file.exists()) {
+                file.delete();
+            }
+            file.createNewFile();
+            fw = new FileWriter(file);
+            fw.write(theentirearraythingstring);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public short[] test;
+
+    public void setTest(short[] test) {
+        this.test = test;
+    }
+
     public void notesOnScreen(){
 
         int x = 700;
         int y = 85; //80 = F
+        int pos = 0;
 
         RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.layout);
 
@@ -147,7 +152,7 @@ public class MainActivity extends ActionBarActivity {
             sharp.setX(x);
             sharp.setY(y + 10);
             sharp.setBackgroundResource(R.drawable.sharpnote);
-            sharp.animate().x(0).setDuration(4000);
+            sharp.animate().x(pos).setDuration(5500);
             theLayout.addView(sharp);
         }else if(flat){
             ImageView flat = new ImageView(this);
@@ -156,13 +161,14 @@ public class MainActivity extends ActionBarActivity {
             flat.setX(x);
             flat.setY(y + 5);
             flat.setBackgroundResource(R.drawable.flatnote);
-            flat.animate().x(0).setDuration(5000);
+            flat.animate().x(pos).setDuration(5500);
             theLayout.addView(flat);
         }
-        image.animate().x(0).setDuration(5500);
+        image.animate().x(pos).setDuration(5500);
 
        // image.setImageDrawable(draw);
         theLayout.addView(image);
+        pos++;
     }
 
 }

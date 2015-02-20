@@ -34,12 +34,12 @@ public class NoteSearch {
         notes.put(587, "D5");
         notes.put(1175, "D6");
 
-       // notes.put(39, "D1#");
-       // notes.put(78, "D2#");
-        notes.put(156, "D3#");
-        notes.put(311, "D4#");
-        notes.put(622, "D5#");
-        notes.put(1245, "D6#");
+       // notes.put(39, "E1b");
+       // notes.put(78, "E2b");
+        notes.put(156, "E3b");
+        notes.put(311, "E4b");
+        notes.put(622, "E5b");
+        notes.put(1245, "E6b");
 
        // notes.put(41, "E1");
        // notes.put(82, "E2");

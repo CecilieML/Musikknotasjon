@@ -11,6 +11,9 @@ package com.businesspanda.verynote;
  */
 
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.Runnable;
@@ -20,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.content.ContextWrapper;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -27,6 +31,8 @@ import android.os.Handler;
 import android.util.Log;
 
 import org.jtransforms.fft.DoubleFFT_1D;
+
+import com.businesspanda.verynote.MainActivity;
 
 /**
  * Created by CecilieMarie on 09.02.2015.
@@ -41,7 +47,15 @@ public class PitchDec implements Runnable {
     int bufferSize = AudioRecord.getMinBufferSize(RATE, CHANNEL_MODE, ENCODING); //=4096
     int SOURCE = MediaRecorder.AudioSource.MIC;
 
+    FileOutputStream fos;
+    DataOutputStream dos;
+    BufferedWriter bw;
+
     private DoubleFFT_1D fft;
+
+
+    short[] audio_data;
+
 
     //private final static int BUFFER_SIZE_IN_MS = 3000;
     private final static int CHUNK_SIZE_IN_SAMPLES = 1024; // = 2 ^
@@ -304,24 +318,63 @@ public class PitchDec implements Runnable {
         recorder_.startRecording();
         while (!Thread.interrupted()) {
             //short[] audio_data = new short[BUFFER_SIZE_IN_BYTES / 2];
-            short[] audio_data = new short[bufferSize / 2];
+            /*short[] */audio_data = new short[bufferSize / 2];
+            //recorder_.read(audio_data, 0, bufferSize / 2);
             recorder_.read(audio_data, 0, CHUNK_SIZE_IN_BYTES / 2);
+
+            setTest(audio_data);
 
             //lavpassfilter
 
-            computeLowPassParameters(RATE, LOWPASSLIMIT);
-            for( int j=0; j<CHUNK_SIZE_IN_BYTES; ++j ) {
-                audio_data[j] = processFilter(audio_data[j]);
-            }
+           /* computeLowPassParameters(RATE, LOWPASSLIMIT);
+            for( int j=0; j<audio_data.length; ++j ) {
+
+                    audio_data[j] = processFilter(audio_data[j]);
+
+            }*/
 
             //pitchdetector
-            FreqResult fr = AnalyzeFrequencies(audio_data);
-            PostToUI(fr.frequencies, fr.best_frequency);
+            //silence(audio_data);
+
+
+
+
+            double volume = getAmplitude();
+           // System.out.println(volume);
+            if(volume>300) {
+                FreqResult fr = AnalyzeFrequencies(audio_data);
+                PostToUI(fr.frequencies, fr.best_frequency);
+            }
+
+            //System.out.println(" best freq--> " + value);
+
+
 
         }
         recorder_.stop();
         recorder_.release();
     }
+
+
+
+    public double getAmplitude(/*short[] audio_data*/) {
+        short[] buffer = new short[bufferSize]; /*** Needs fixing ***/
+        recorder_.read(buffer, 0, bufferSize);
+
+       // for(int i = 0; i<buffer.length;i++) {
+       //     System.out.println(i + " HHHHHHHHHHHHHHHELP      " + buffer[i]);
+       // }
+
+        int max = 0;
+        for (short s : buffer){
+            if (Math.abs(s) > max){
+                max = Math.abs(s);
+            }
+        }
+        return max;
+    }
+
+
 
     private void PostToUI(final HashMap<Double, Double> frequencies,
                           final double pitch) {
