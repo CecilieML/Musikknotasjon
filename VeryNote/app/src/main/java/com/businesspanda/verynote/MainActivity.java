@@ -26,9 +26,9 @@ import android.widget.TextView;
 public class MainActivity extends ActionBarActivity {
 
     Thread pitch_detector_thread_;
-    public String written = " ";
-    public ArrayList<String> noteArray = new ArrayList();
-    public ArrayList<String> allNotes = new ArrayList();
+    public Note prevNote = new Note(false, false, 0, 0, " ");
+    public ArrayList<Note> noteArray = new ArrayList();
+    public ArrayList<Note> allNotes = new ArrayList();
     public boolean sharp = false;
     public boolean flat = false;
     public int slowDOWN = 0;
@@ -73,13 +73,13 @@ public class MainActivity extends ActionBarActivity {
         final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
 
         Integer pitchInt = (int) (pitch);
-        String nearestNote = NoteSearch.findNearestNote(pitchInt);
+        Note nearestNote = NoteSearch.findNearestNote(pitchInt);
 
         //System.out.println(nearestNote + "  nearest note :)");
 
-        changeFreq.setText(nearestNote);
+        changeFreq.setText(nearestNote.name);
 
-        if(!nearestNote.equals(written)){
+        if(!nearestNote.name.equals(prevNote.name)){
 
             allNotes.add(nearestNote);
 
@@ -90,20 +90,19 @@ public class MainActivity extends ActionBarActivity {
 
             noteArray.add(nearestNote);
 
+           // if(slowDOWN%10==0)
+            notesOnScreen(nearestNote);
 
-
-            if(slowDOWN%10==0)notesOnScreen();
-
-            written = nearestNote;
-            slowDOWN++;
+            prevNote = nearestNote;
+            //slowDOWN++;
         }
 
 
 
     }
 
-    public void writeToFile(){
-        String theentirearraythingstring = test.toString();
+   /* public void writeToFile(){
+        //String theentirearraythingstring = test.toString();
 
         FileWriter fw;
         try {
@@ -120,18 +119,12 @@ public class MainActivity extends ActionBarActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    public short[] test;
-
-    public void setTest(short[] test) {
-        this.test = test;
-    }
-
-    public void notesOnScreen(){
+    public void notesOnScreen(Note note){
 
         int x = 700;
-        int y = 85; //80 = F
+        int y = note.getyValue();        //85; //80 = F
         int pos = 0;
 
         RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.layout);

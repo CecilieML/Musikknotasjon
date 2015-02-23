@@ -21,26 +21,19 @@ public class Note {
 
     }
 
-   /* public boolean sharp(String sharpFlat) {
-        String noteName = note.getName;
-        sharpFlat = noteName.substring(noteName.length() - 1);
-
-        if (sharpFlat.equals("#")) {
-            sharp = true;
-        } else {
-            sharp = false;
-        }
+    public boolean sharp(String sharpFlat) {
+        return sharp;
     }
 
     public boolean flat(String sharpFlat) {
-        String noteName = note.getName;
-        sharpFlat = noteName.substring(noteName.length() - 1);
+        return flat;
+    }
 
-        if (sharpFlat.equals("b")) {
-            flat = true;
-        } else {
-            flat = false;
-        }
-    }*/
+    public int getyValue() {
+        return yValue;
+    }
 
+    public String getName() {
+        return name;
+    }
 }

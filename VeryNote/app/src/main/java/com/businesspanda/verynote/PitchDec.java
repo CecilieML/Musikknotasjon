@@ -322,7 +322,7 @@ public class PitchDec implements Runnable {
             //recorder_.read(audio_data, 0, bufferSize / 2);
             recorder_.read(audio_data, 0, CHUNK_SIZE_IN_BYTES / 2);
 
-            setTest(audio_data);
+          //  MainActivity.setTest(audio_data);
 
             //lavpassfilter
 
@@ -339,7 +339,7 @@ public class PitchDec implements Runnable {
 
 
 
-            double volume = getAmplitude();
+            double volume = getAmplitude(audio_data);
            // System.out.println(volume);
             if(volume>300) {
                 FreqResult fr = AnalyzeFrequencies(audio_data);
@@ -357,16 +357,16 @@ public class PitchDec implements Runnable {
 
 
 
-    public double getAmplitude(/*short[] audio_data*/) {
-        short[] buffer = new short[bufferSize]; /*** Needs fixing ***/
-        recorder_.read(buffer, 0, bufferSize);
+    public double getAmplitude(short[] audio_data) {
+       // short[] buffer = new short[bufferSize]; /*** Needs fixing ***/
+        recorder_.read(audio_data, 0, bufferSize);
 
        // for(int i = 0; i<buffer.length;i++) {
        //     System.out.println(i + " HHHHHHHHHHHHHHHELP      " + buffer[i]);
        // }
 
         int max = 0;
-        for (short s : buffer){
+        for (short s : audio_data){
             if (Math.abs(s) > max){
                 max = Math.abs(s);
             }
