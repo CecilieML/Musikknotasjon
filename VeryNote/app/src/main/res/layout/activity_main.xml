@@ -58,9 +58,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/background"
             android:src="@drawable/background"
-            android:layout_below="@+id/freqTextview"
-            android:layout_alignLeft="@+id/treble"
-            android:layout_alignStart="@+id/treble" />
+            android:layout_above="@+id/metronomeswitch"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
 
         <ImageView
