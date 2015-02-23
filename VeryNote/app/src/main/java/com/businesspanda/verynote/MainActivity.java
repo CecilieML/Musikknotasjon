@@ -127,7 +127,7 @@ public class MainActivity extends ActionBarActivity {
         int y = note.getyValue();        //85; //80 = F
         int pos = 0;
 
-        RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.layout);
+        RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.lowestLayer);
 
         ImageView image = new ImageView(this);
 

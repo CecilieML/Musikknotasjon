@@ -1,71 +1,87 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:background="#ffbfc0fd"
-    android:id="@+id/layout">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
+
+    <RelativeLayout
+
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/lowestLayer">
+
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+        android:background="#ffbfc0fd"
+        android:id="@+id/layout">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/freq"
-        android:id="@+id/freqTextview"
-        android:textColor="#ff2c3c65"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/freq"
+            android:id="@+id/freqTextview"
+            android:textColor="#ff2c3c65"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
-    <!--<TextView
-        android:layout_width="450dp"
-        android:layout_height="30dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/prevNoteString"
-        android:id="@+id/prevNotesTextView"
-        android:textColor="#ff0b7c6b"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="58dp"
-        android:layout_marginStart="58dp" />-->
+        <!--<TextView
+            android:layout_width="450dp"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/prevNoteString"
+            android:id="@+id/prevNotesTextView"
+            android:textColor="#ff0b7c6b"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="58dp"
+            android:layout_marginStart="58dp" />-->
 
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/metronomeswitch"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/metronomeswitch"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/background"
-        android:src="@drawable/background"
-        android:layout_below="@+id/freqTextview"
-        android:layout_alignLeft="@+id/treble"
-        android:layout_alignStart="@+id/treble" />
-
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/treble"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/treblebackround" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/background"
+            android:src="@drawable/background"
+            android:layout_below="@+id/freqTextview"
+            android:layout_alignLeft="@+id/treble"
+            android:layout_alignStart="@+id/treble" />
 
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/treble"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/treblebackround" />
 
 
-    <!--  <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="New Text"
-          android:id="@+id/clock"
-          android:layout_alignBottom="@+id/freqTextview"
-          android:layout_alignRight="@+id/prevNotesTextView"
-          android:layout_alignEnd="@+id/prevNotesTextView" />-->
-</RelativeLayout>
+
+
+        <!--  <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="New Text"
+              android:id="@+id/clock"
+              android:layout_alignBottom="@+id/freqTextview"
+              android:layout_alignRight="@+id/prevNotesTextView"
+              android:layout_alignEnd="@+id/prevNotesTextView" />-->
+    </RelativeLayout>
+</FrameLayout>
 
