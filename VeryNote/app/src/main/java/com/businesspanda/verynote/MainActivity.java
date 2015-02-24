@@ -15,17 +15,24 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
+
 
 public class MainActivity extends ActionBarActivity {
 
     Thread pitch_detector_thread_;
+    Thread met_thread;
     public Note prevNote = new Note(false, false, 0, 0, " ");
     public ArrayList<Note> noteArray = new ArrayList();
     public ArrayList<Note> allNotes = new ArrayList();
@@ -33,12 +40,13 @@ public class MainActivity extends ActionBarActivity {
     public boolean flat = false;
     public int slowDOWN = 0;
 
+    private Handler mHandler = new Handler();
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         NoteSearch.createTable();
     }
 
@@ -47,6 +55,9 @@ public class MainActivity extends ActionBarActivity {
         super.onStart();
         pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
         pitch_detector_thread_.start();
+        met_thread = new Thread(new Metronome(findViewById(R.id.metronomeswitch)));
+        met_thread.start();
+
     }
 
     @Override
@@ -125,7 +136,17 @@ public class MainActivity extends ActionBarActivity {
 
         int x = 700;
         int y = note.getyValue();        //85; //80 = F
-        int pos = 0;
+        int pos = 25;
+
+
+        /***/
+        System.out.println("NOTE =  " + note.getName());
+        System.out.println("xxxY =  " + y);
+        System.out.println("Freq =  " + note.getFreq());
+        System.out.println(" ");
+        /***/
+
+        LinearInterpolator interpolator = new LinearInterpolator();
 
         RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.lowestLayer);
 
@@ -138,30 +159,29 @@ public class MainActivity extends ActionBarActivity {
         image.setMaxHeight(10);
         image.setMaxWidth(5);
         image.setBackgroundResource(R.drawable.singlenote);
-        if(sharp){
+        if(note.sharp){
             ImageView sharp = new ImageView(this);
             RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(20,30);
             sharp.setLayoutParams(para);
-            sharp.setX(x);
+            sharp.setX(x + 20);
             sharp.setY(y + 10);
             sharp.setBackgroundResource(R.drawable.sharpnote);
-            sharp.animate().x(pos).setDuration(5500);
+            sharp.animate().x(pos + 20).setInterpolator(interpolator).setDuration(5500);
             theLayout.addView(sharp);
-        }else if(flat){
+        }else if(note.flat){
             ImageView flat = new ImageView(this);
             RelativeLayout.LayoutParams paraFlat = new RelativeLayout.LayoutParams(10,30);
             flat.setLayoutParams(paraFlat);
-            flat.setX(x);
+            flat.setX(x + 20);
             flat.setY(y + 5);
             flat.setBackgroundResource(R.drawable.flatnote);
-            flat.animate().x(pos).setDuration(5500);
+            flat.animate().x(pos + 20).setInterpolator(interpolator).setDuration(5500);
             theLayout.addView(flat);
         }
-        image.animate().x(pos).setDuration(5500);
 
-       // image.setImageDrawable(draw);
+        image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
+
         theLayout.addView(image);
-        pos++;
     }
 
 }

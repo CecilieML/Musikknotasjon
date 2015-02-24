@@ -340,8 +340,8 @@ public class PitchDec implements Runnable {
 
 
             double volume = getAmplitude(audio_data);
-           // System.out.println(volume);
-            if(volume>300) {
+            //System.out.println(volume);
+            if(volume>2000) {
                 FreqResult fr = AnalyzeFrequencies(audio_data);
                 PostToUI(fr.frequencies, fr.best_frequency);
             }

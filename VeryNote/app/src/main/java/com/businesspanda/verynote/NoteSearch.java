@@ -56,7 +56,7 @@ public class NoteSearch {
 
         //Eb
         Note E3b = new Note(false, true, 156, 140, "E3b");
-        Note E4b = new Note(false, true, 311, 85, "E4b");
+        Note E4b = new Note(false, true, 311, 105, "E4b");
         Note E5b = new Note(false, true, 622, 50, "E5b");
         Note E6b = new Note(false, true, 1245, 15, "E6b");
 
@@ -68,10 +68,10 @@ public class NoteSearch {
         notes.put(1245, E6b);
 
         //E
-        Note E3 = new Note(false, false, 165, 140, "D3");
-        Note E4 = new Note(false, false, 330, 85, "D3");
-        Note E5 = new Note(false, false, 659, 50, "D3");
-        Note E6 = new Note(false, false, 1319, 15, "D3");
+        Note E3 = new Note(false, false, 165, 140, "E3");
+        Note E4 = new Note(false, false, 330, 105, "E4");
+        Note E5 = new Note(false, false, 659, 50, "E5");
+        Note E6 = new Note(false, false, 1319, 15, "E6");
 
         // notes.put(41, "E1");
         // notes.put(82, "E2");
@@ -81,10 +81,10 @@ public class NoteSearch {
         notes.put(1319, E6);
 
         //F
-        Note F3 = new Note(false, false, 175, 135, "D3");
-        Note F4 = new Note(false, false, 349, 80, "D3");
-        Note F5 = new Note(false, false, 698, 45, "D3");
-        Note F6 = new Note(false, false, 1397, 10, "D3");
+        Note F3 = new Note(false, false, 175, 135, "F3");
+        Note F4 = new Note(false, false, 349, 105, "F4");       //
+        Note F5 = new Note(false, false, 698, 45, "F5");
+        Note F6 = new Note(false, false, 1397, 10, "F6");
 
         // notes.put(44, "F1");
         // notes.put(87, "F2");
@@ -95,7 +95,7 @@ public class NoteSearch {
 
         //F#
         Note F3s = new Note(true, false, 185, 135, "F3#");
-        Note F4s = new Note(true, false, 370, 80, "F4#");
+        Note F4s = new Note(true, false, 370, 105, "F4#");
         Note F5s = new Note(true, false, 740, 45, "F5#");
         Note F6s = new Note(true, false, 1480, 10, "F6#");
 
@@ -147,7 +147,7 @@ public class NoteSearch {
 
         //Bb
         Note B3b = new Note(false, true, 233, 120, "B3b");
-        Note B4b = new Note(false, true, 466, 65, "B4b");
+        Note B4b = new Note(false, true, 466, 85, "B4b");       //X
         Note B5b = new Note(false, true, 932, 30, "B5b");
         Note B6b = new Note(false, true, 1864, -5, "B6b");
 
@@ -160,7 +160,7 @@ public class NoteSearch {
 
         //B
         Note B3 = new Note(false, false, 247, 120, "B3");
-        Note B4 = new Note(false, false, 493, 65, "B4");
+        Note B4 = new Note(false, false, 493, 85, "B4");        //X
         Note B5 = new Note(false, false, 988, 30, "B5");
         Note B6 = new Note(false, false, 1976, -5, "B6");
 

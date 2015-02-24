@@ -33,6 +33,10 @@ public class Note {
         return yValue;
     }
 
+    public int getFreq() {
+        return freq;
+    }
+
     public String getName() {
         return name;
     }
