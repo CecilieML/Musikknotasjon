@@ -52,7 +52,6 @@
             android:id="@+id/metronomeswitch"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:checked="true"
             />
 
         <ImageView

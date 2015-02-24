@@ -44,7 +44,7 @@ public class PitchDec implements Runnable {
     private final static int CHANNEL_MODE = AudioFormat.CHANNEL_IN_MONO;
     private final static int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 
-    int bufferSize = AudioRecord.getMinBufferSize(RATE, CHANNEL_MODE, ENCODING); //=4096
+    int bufferSize = 4096 ;//AudioRecord.getMinBufferSize(RATE, CHANNEL_MODE, ENCODING); //=4096
     int SOURCE = MediaRecorder.AudioSource.MIC;
 
     FileOutputStream fos;
@@ -341,7 +341,7 @@ public class PitchDec implements Runnable {
 
             double volume = getAmplitude(audio_data);
             //System.out.println(volume);
-            if(volume>2000) {
+            if(volume>4400) {
                 FreqResult fr = AnalyzeFrequencies(audio_data);
                 PostToUI(fr.frequencies, fr.best_frequency);
             }

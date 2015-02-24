@@ -36,10 +36,8 @@ public class MainActivity extends ActionBarActivity {
     public Note prevNote = new Note(false, false, 0, 0, " ");
     public ArrayList<Note> noteArray = new ArrayList();
     public ArrayList<Note> allNotes = new ArrayList();
-    public boolean sharp = false;
-    public boolean flat = false;
-    public int slowDOWN = 0;
 
+    public Switch metSwitch;
 
     private Handler mHandler = new Handler();
 
@@ -154,26 +152,12 @@ public class MainActivity extends ActionBarActivity {
         }
     }*/
 
-    public Switch metSwitch;
-
-
-
-
-
 
     public void notesOnScreen(Note note){
 
         int x = 700;
-        int y = note.getyValue();        //85; //80 = F
-        int pos = 25;
-
-
-        /***/
-        System.out.println("NOTE =  " + note.getName());
-        System.out.println("xxxY =  " + y);
-        System.out.println("Freq =  " + note.getFreq());
-        System.out.println(" ");
-        /***/
+        int y = note.getyValue();
+        int pos = 40;
 
         LinearInterpolator interpolator = new LinearInterpolator();
 
@@ -190,21 +174,21 @@ public class MainActivity extends ActionBarActivity {
         image.setBackgroundResource(R.drawable.singlenote);
         if(note.sharp){
             ImageView sharp = new ImageView(this);
-            RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(20,30);
+            RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(20,40);
             sharp.setLayoutParams(para);
-            sharp.setX(x + 20);
-            sharp.setY(y + 10);
+            sharp.setX(x - 15);
+            sharp.setY(y + 32);
             sharp.setBackgroundResource(R.drawable.sharpnote);
-            sharp.animate().x(pos + 20).setInterpolator(interpolator).setDuration(5500);
+            sharp.animate().x(pos - 15).setInterpolator(interpolator).setDuration(5500);
             theLayout.addView(sharp);
         }else if(note.flat){
             ImageView flat = new ImageView(this);
             RelativeLayout.LayoutParams paraFlat = new RelativeLayout.LayoutParams(10,30);
             flat.setLayoutParams(paraFlat);
-            flat.setX(x + 20);
-            flat.setY(y + 5);
+            flat.setX(x - 10);
+            flat.setY(y + 30);
             flat.setBackgroundResource(R.drawable.flatnote);
-            flat.animate().x(pos + 20).setInterpolator(interpolator).setDuration(5500);
+            flat.animate().x(pos - 10).setInterpolator(interpolator).setDuration(5500);
             theLayout.addView(flat);
         }
 
