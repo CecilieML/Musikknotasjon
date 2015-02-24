@@ -40,6 +40,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean flat = false;
     public int slowDOWN = 0;
 
+
     private Handler mHandler = new Handler();
 
     /** Called when the activity is first created. */
@@ -48,6 +49,27 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         NoteSearch.createTable();
+
+
+        metSwitch = (Switch) findViewById(R.id.metronomeswitch);
+
+
+        metSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (buttonView.isChecked()){
+                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    //Vibrate for 500 milliseconds
+                    v.vibrate(500);
+                    System.out.println("ON! ");
+                } else{
+                    System.out.println("OFF!");
+                }
+            }
+        });
+
+
     }
 
     @Override
@@ -131,6 +153,13 @@ public class MainActivity extends ActionBarActivity {
             e.printStackTrace();
         }
     }*/
+
+    public Switch metSwitch;
+
+
+
+
+
 
     public void notesOnScreen(Note note){
 

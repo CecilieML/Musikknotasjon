@@ -37,12 +37,12 @@ public class Metronome implements Runnable {
                 //Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 // Vibrate for 500 milliseconds
                 //v.vibrate(500);
-                System.out.println("ON! " + on);
+                //System.out.println("ON! " + on);
 
             } else {
                 //mHandler.removeCallbacks(metronomeClock);
                 // stop doing things
-                System.out.println("OFF!" + on);
+                //System.out.println("OFF!" + on);
             }
     }
 
