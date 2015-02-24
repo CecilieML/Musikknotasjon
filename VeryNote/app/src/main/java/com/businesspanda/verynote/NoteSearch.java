@@ -1,6 +1,7 @@
 package com.businesspanda.verynote;
 
 import android.provider.ContactsContract;
+import android.widget.RelativeLayout;
 
 import java.util.HashMap;
 
@@ -16,10 +17,10 @@ public class NoteSearch {
         //HashMap to hold hertz values for notes, C1 to B6
 
         //C
-        Note C3 = new Note(false, false, 131, 208, "C3");
-        Note C4 = new Note(false, false, 262, 123, "C4");       //X
-        Note C5 = new Note(false, false, 523, 79, "C5");        //X
-        Note C6 = new Note(false, false, 1047, 35, "C6");       //
+        Note C3 = new Note(false, false, 131, 208, "C3");       //208
+        Note C4 = new Note(false, false, 262, 123, "C4");       //123
+        Note C5 = new Note(false, false, 523, 79, "C5");        //79
+        Note C6 = new Note(false, false, 1047, 35, "C6");       //35
 
         // notes.put(33, "C1");
         // notes.put(65, "C2");
@@ -81,10 +82,10 @@ public class NoteSearch {
         notes.put(1319, E6);
 
         //F
-        Note F3 = new Note(false, false, 175, 190, "F3");
-        Note F4 = new Note(false, false, 349, 104, "F4");       //X
-        Note F5 = new Note(false, false, 698, 60, "F5");        //X
-        Note F6 = new Note(false, false, 1397, 16, "F6");       //
+        Note F3 = new Note(false, false, 175, 190, "F3");       //190
+        Note F4 = new Note(false, false, 349, 104, "F4");       //104
+        Note F5 = new Note(false, false, 698, 60, "F5");        //60
+        Note F6 = new Note(false, false, 1397, 16, "F6");       //16
 
         // notes.put(44, "F1");
         // notes.put(87, "F2");
@@ -94,10 +95,10 @@ public class NoteSearch {
         notes.put(1397, F6);
 
         //F#
-        Note F3s = new Note(true, false, 185, 190, "F3#");
-        Note F4s = new Note(true, false, 370, 104, "F4#");      //X
-        Note F5s = new Note(true, false, 740, 60, "F5#");       //X
-        Note F6s = new Note(true, false, 1480, 16, "F6#");      //
+        Note F3s = new Note(true, false, 185, 190, "F3#");      //190
+        Note F4s = new Note(true, false, 370, 104, "F4#");      //104
+        Note F5s = new Note(true, false, 740, 60, "F5#");       //60
+        Note F6s = new Note(true, false, 1480, 16, "F6#");      //16
 
         // notes.put(46, "F1#");
         // notes.put(93, "F2#");

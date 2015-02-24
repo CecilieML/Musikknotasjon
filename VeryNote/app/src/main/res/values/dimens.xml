@@ -2,4 +2,94 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="sharpHeight">40dp</dimen>
+    <dimen name="sharpWidth">20dp</dimen>
+
+    <dimen name="flatHeight">30dp</dimen>
+    <dimen name="flatWidth">10dp</dimen>
+
+    <dimen name="noteHeight">60dp</dimen>
+    <dimen name="noteWidth">30dp</dimen>
+
+    <dimen name="noteX">700dp</dimen>
+    <dimen name="endPos">40dp</dimen>
+
+    <dimen name="maxHeight">10dp</dimen>
+    <dimen name="maxWidth">5dp</dimen>
+
+    //C
+    <dimen name="C3">5dp</dimen>
+    <dimen name="C4">6dp</dimen>
+    <dimen name="C5">7dp</dimen>
+    <dimen name="C6">8dp</dimen>
+
+    //C#
+    <dimen name="Cs3">8dp</dimen>
+    <dimen name="Cs4">9dp</dimen>
+    <dimen name="Cs5">10dp</dimen>
+    <dimen name="Cs6">11dp</dimen>
+
+    //D
+    <dimen name="D3">12dp</dimen>
+    <dimen name="D4">13dp</dimen>
+    <dimen name="D5">14dp</dimen>
+    <dimen name="D6">15dp</dimen>
+
+    //Eb
+    <dimen name="Eb3">16dp</dimen>
+    <dimen name="Eb4">17dp</dimen>
+    <dimen name="Eb5">18dp</dimen>
+    <dimen name="Eb6">19dp</dimen>
+
+    //E
+    <dimen name="E3">20dp</dimen>
+    <dimen name="E4">21dp</dimen>
+    <dimen name="E5">22dp</dimen>
+    <dimen name="E6">23dp</dimen>
+
+    //F
+    <dimen name="F3">24dp</dimen>
+    <dimen name="F4">25dp</dimen>
+    <dimen name="F5">26dp</dimen>
+    <dimen name="F6">27dp</dimen>
+
+    //F#
+    <dimen name="Fs3">28dp</dimen>
+    <dimen name="Fs4">29dp</dimen>
+    <dimen name="Fs5">30dp</dimen>
+    <dimen name="Fs6">40dp</dimen>
+
+    //G
+    <dimen name="G3">50dp</dimen>
+    <dimen name="G4">60dp</dimen>
+    <dimen name="G5">70dp</dimen>
+    <dimen name="G6">80dp</dimen>
+
+    //G#
+    <dimen name="Gs3">90dp</dimen>
+    <dimen name="Gs4">100dp</dimen>
+    <dimen name="Gs5">110dp</dimen>
+    <dimen name="Gs6">111dp</dimen>
+
+    //A
+    <dimen name="A3">120dp</dimen>
+    <dimen name="A4">200dp</dimen>
+    <dimen name="A5">220dp</dimen>
+    <dimen name="A6">333dp</dimen>
+
+    //Bb
+    <dimen name="Bb3">222dp</dimen>
+    <dimen name="Bb4">343dp</dimen>
+    <dimen name="Bb5">400dp</dimen>
+    <dimen name="Bb6">500dp</dimen>
+
+    //B
+    <dimen name="B3">5001dp</dimen>
+    <dimen name="B4">5043dp</dimen>
+    <dimen name="B5">5783dp</dimen>
+    <dimen name="B6">5085dp</dimen>
+
+
+
 </resources>

@@ -155,26 +155,34 @@ public class MainActivity extends ActionBarActivity {
 
     public void notesOnScreen(Note note){
 
-        int x = 700;
-        int y = note.getyValue();
-        int pos = 40;
-
         LinearInterpolator interpolator = new LinearInterpolator();
 
         RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.lowestLayer);
 
         ImageView image = new ImageView(this);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(30,60);
+        int pos = (int) this.getResources().getDimension(R.dimen.endPos);
+        int x = (int) this.getResources().getDimension(R.dimen.noteX);
+
+        String notename = note.getName();
+        int y = this.getResources().getIdentifier(notename, "id", getPackageName());
+
+        System.out.println("iz gud? O.O -->" + y);
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                (int) this.getResources().getDimension(R.dimen.noteWidth),
+                (int) this.getResources().getDimension(R.dimen.noteHeight));
         image.setLayoutParams(params);
         image.setX(x);
         image.setY(y);
-        image.setMaxHeight(10);
-        image.setMaxWidth(5);
+        image.setMaxHeight((int) this.getResources().getDimension(R.dimen.maxHeight));
+        image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
         image.setBackgroundResource(R.drawable.singlenote);
         if(note.sharp){
             ImageView sharp = new ImageView(this);
-            RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(20,40);
+            RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(
+                    (int) this.getResources().getDimension(R.dimen.sharpWidth),
+                    (int) this.getResources().getDimension(R.dimen.sharpHeight));
             sharp.setLayoutParams(para);
             sharp.setX(x - 15);
             sharp.setY(y + 32);
@@ -183,7 +191,9 @@ public class MainActivity extends ActionBarActivity {
             theLayout.addView(sharp);
         }else if(note.flat){
             ImageView flat = new ImageView(this);
-            RelativeLayout.LayoutParams paraFlat = new RelativeLayout.LayoutParams(10,30);
+            RelativeLayout.LayoutParams paraFlat = new RelativeLayout.LayoutParams(
+                    (int) this.getResources().getDimension(R.dimen.flatWidth),
+                    (int) this.getResources().getDimension(R.dimen.flatHeight));
             flat.setLayoutParams(paraFlat);
             flat.setX(x - 10);
             flat.setY(y + 30);
