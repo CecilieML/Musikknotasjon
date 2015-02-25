@@ -55,24 +55,32 @@
             />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/backgroundWidth"
+            android:layout_height="@dimen/backgroundHeight"
             android:id="@+id/background"
             android:src="@drawable/background"
             android:layout_above="@+id/metronomeswitch"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="-25dp"/>
+            android:layout_marginLeft="-25dp"
+            android:scaleType="centerCrop"/>
 
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/treble"
+
+            android:src="@drawable/treblebackround"
+            android:scaleType="fitCenter"
+
+            android:layout_centerInParent="true"
+            />
+
+        <!--
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/treblebackround" />
-
+            -->
 
 
 

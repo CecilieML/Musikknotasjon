@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -89,6 +90,7 @@ public class MainActivity extends ActionBarActivity {
     public void onStop() {
         super.onStop();
         pitch_detector_thread_.interrupt();
+        mHandler.removeCallbacks(mVibrations);
     }
 
     @Override
@@ -105,6 +107,11 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void ShowPitchDetectionResult( final double pitch) {
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        System.out.println(dm + "   look here");
 
         final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
 

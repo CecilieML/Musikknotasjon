@@ -30,10 +30,10 @@ public class NoteSearch {
         notes.put(1047, C6);
 
         //C#
-        Note C3s = new Note(true, false, 139, 208, "C3#");
-        Note C4s = new Note(true, false, 277, 123, "C4#");      //X
-        Note C5s = new Note(true, false, 554, 79, "C5#");       //X
-        Note C6s = new Note(true, false, 1109, 35, "C6#");      //
+        Note C3s = new Note(true, false, 139, 208, "C3s");
+        Note C4s = new Note(true, false, 277, 123, "C4s");      //X
+        Note C5s = new Note(true, false, 554, 79, "C5s");       //X
+        Note C6s = new Note(true, false, 1109, 35, "C6s");      //
 
         // notes.put(35, "C1#");
         // notes.put(69, "C2#");
@@ -95,10 +95,10 @@ public class NoteSearch {
         notes.put(1397, F6);
 
         //F#
-        Note F3s = new Note(true, false, 185, 190, "F3#");      //190
-        Note F4s = new Note(true, false, 370, 104, "F4#");      //104
-        Note F5s = new Note(true, false, 740, 60, "F5#");       //60
-        Note F6s = new Note(true, false, 1480, 16, "F6#");      //16
+        Note F3s = new Note(true, false, 185, 190, "F3s");      //190
+        Note F4s = new Note(true, false, 370, 104, "F4s");      //104
+        Note F5s = new Note(true, false, 740, 60, "F5s");       //60
+        Note F6s = new Note(true, false, 1480, 16, "F6s");      //16
 
         // notes.put(46, "F1#");
         // notes.put(93, "F2#");
@@ -121,10 +121,10 @@ public class NoteSearch {
         notes.put(1568, G6);
 
         //G#
-        Note G3s = new Note(true, false, 208, 184, "G3#");      //X
-        Note G4s = new Note(true, false, 415, 98, "G4#");       //X
-        Note G5s = new Note(true, false, 831, 54, "G5#");       //X
-        Note G6s = new Note(true, false, 1661, 10, "D6#");      //
+        Note G3s = new Note(true, false, 208, 184, "G3s");      //X
+        Note G4s = new Note(true, false, 415, 98, "G4s");       //X
+        Note G5s = new Note(true, false, 831, 54, "G5s");       //X
+        Note G6s = new Note(true, false, 1661, 10, "D6s");      //
 
         // notes.put(52, "G1#");
         // notes.put(104, "G2#");
