@@ -38,11 +38,14 @@ public class Metronome implements Runnable {
                 // Vibrate for 500 milliseconds
                 //v.vibrate(500);
                 //System.out.println("ON! " + on);
+                mHandler.postDelayed(this, 5000);
+                System.out.println("counting!!!");
 
             } else {
                 //mHandler.removeCallbacks(metronomeClock);
                 // stop doing things
                 //System.out.println("OFF!" + on);
+                mHandler.removeCallbacks(this);
             }
     }
 

@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.CompoundButton;
@@ -47,7 +48,10 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         NoteSearch.createTable();
-
+        //keeps screen on
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        //lets screen turn off again
+        //getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
 
@@ -57,11 +61,10 @@ public class MainActivity extends ActionBarActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (buttonView.isChecked()){
-                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                    //Vibrate for 500 milliseconds
-                    v.vibrate(500);
+                    mHandler.postDelayed(mVibrations, 1000);
                     System.out.println("ON! ");
                 } else{
+                    mHandler.removeCallbacks(mVibrations);
                     System.out.println("OFF!");
                 }
             }
@@ -75,8 +78,8 @@ public class MainActivity extends ActionBarActivity {
         super.onStart();
         pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
         pitch_detector_thread_.start();
-        met_thread = new Thread(new Metronome(findViewById(R.id.metronomeswitch)));
-        met_thread.start();
+        //met_thread = new Thread(new Metronome(findViewById(R.id.metronomeswitch)));
+        //met_thread.start();
 
     }
 
@@ -152,6 +155,15 @@ public class MainActivity extends ActionBarActivity {
         }
     }*/
 
+    private Runnable mVibrations = new Runnable() {
+        public void run() {
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            //Vibrate for 500 milliseconds
+            v.vibrate(250);
+            mHandler.postDelayed(mVibrations, 1000);
+        }
+    };
+
 
     public void notesOnScreen(Note note){
 
@@ -165,9 +177,8 @@ public class MainActivity extends ActionBarActivity {
         int x = (int) this.getResources().getDimension(R.dimen.noteX);
 
         String notename = note.getName();
-        int y = this.getResources().getIdentifier(notename, "id", getPackageName());
-
-        System.out.println("iz gud? O.O -->" + y);
+        int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
+        int y = (int)this.getResources().getDimension(yID);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.noteWidth),
