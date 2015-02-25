@@ -1,4 +1,4 @@
-package com.businesspanda.verynote;
+/*package com.businesspanda.verynote;
 
 import android.content.Context;
 import android.os.Handler;
@@ -9,12 +9,12 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
-import android.widget.TextView;
+import android.widget.TextView; */
 
 /**
  * Created by Helene on 16.02.2015.
  */
-
+/*
 public class Metronome implements Runnable {
 
     Switch metronomeswitch;
@@ -50,3 +50,4 @@ public class Metronome implements Runnable {
     }
 
 }
+*/

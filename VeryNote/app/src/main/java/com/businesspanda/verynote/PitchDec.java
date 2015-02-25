@@ -309,7 +309,7 @@ public class PitchDec implements Runnable {
 
         recorder_ = new AudioRecord(SOURCE, RATE, CHANNEL_MODE,
                 ENCODING, bufferSize);
-        System.out.println(recorder_.getState());
+        //System.out.println(recorder_.getState());
         if (recorder_.getState() != AudioRecord.STATE_INITIALIZED) {
             ShowError("Can't initialize AudioRecord");
             return;

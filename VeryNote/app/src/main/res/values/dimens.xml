@@ -12,13 +12,13 @@
     <dimen name="noteHeight">40dp</dimen>
     <dimen name="noteWidth">20dp</dimen>
 
-    <dimen name="noteX">700dp</dimen>
+    <dimen name="noteX">450dp</dimen>
     <dimen name="endPos">40dp</dimen>
 
     <dimen name="maxHeight">10dp</dimen>
     <dimen name="maxWidth">5dp</dimen>
 
-    <dimen name="backgroundWidth">125dp</dimen>
+    <dimen name="backgroundWidth">90dp</dimen>
     <dimen name="backgroundHeight">500dp</dimen>
 
     <dimen name="trebleWidth">455dp</dimen>
@@ -27,73 +27,73 @@
     <dimen name="marginBottom">0dp</dimen>
 
     //C
-    <dimen name="C3">1dp</dimen>
+    <dimen name="C3">200dp</dimen>
     <dimen name="C4">81dp</dimen>       //x
     <dimen name="C5">53dp</dimen>
     <dimen name="C6">8dp</dimen>
 
     //C#
-    <dimen name="C3s">1dp</dimen>
+    <dimen name="C3s">200dp</dimen>
     <dimen name="C4s">81dp</dimen>      //x
     <dimen name="C5s">53dp</dimen>
     <dimen name="C6s">11dp</dimen>
 
     //D
-    <dimen name="D3">1dp</dimen>
+    <dimen name="D3">200dp</dimen>
     <dimen name="D4">76dp</dimen>       //x
     <dimen name="D5">47dp</dimen>
     <dimen name="D6">15dp</dimen>
 
     //Eb
-    <dimen name="E3b">1dp</dimen>
+    <dimen name="E3b">200dp</dimen>
     <dimen name="E4b">73dp</dimen>      //x
     <dimen name="E5b">18dp</dimen>
     <dimen name="E6b">19dp</dimen>
 
     //E
-    <dimen name="E3">1dp</dimen>
+    <dimen name="E3">200dp</dimen>
     <dimen name="E4">73dp</dimen>       //x
     <dimen name="E5">22dp</dimen>
     <dimen name="E6">23dp</dimen>
 
     //F
-    <dimen name="F3">1dp</dimen>
+    <dimen name="F3">200dp</dimen>
     <dimen name="F4">69dp</dimen>       //x
     <dimen name="F5">26dp</dimen>
     <dimen name="F6">27dp</dimen>
 
     //F#
-    <dimen name="F3s">1dp</dimen>
+    <dimen name="F3s">200dp</dimen>
     <dimen name="F4s">69dp</dimen>      //x
     <dimen name="F5s">30dp</dimen>
     <dimen name="F6s">40dp</dimen>
 
     //G
-    <dimen name="G3">1dp</dimen>
+    <dimen name="G3">200dp</dimen>
     <dimen name="G4">64dp</dimen>       //x
     <dimen name="G5">70dp</dimen>
     <dimen name="G6">80dp</dimen>
 
     //G#
-    <dimen name="G3s">1dp</dimen>
+    <dimen name="G3s">240dp</dimen>
     <dimen name="G4s">64dp</dimen>      //x
     <dimen name="G5s">110dp</dimen>
     <dimen name="G6s">111dp</dimen>
 
     //A
-    <dimen name="A3">1dp</dimen>
+    <dimen name="A3">240dp</dimen>
     <dimen name="A4">59.5dp</dimen>       //x
     <dimen name="A5">140dp</dimen>
     <dimen name="A6">150dp</dimen>
 
     //Bb
-    <dimen name="B3b">1dp</dimen>
+    <dimen name="B3b">250dp</dimen>
     <dimen name="B4b">55.5dp</dimen>      //x
     <dimen name="B5b">180dp</dimen>
     <dimen name="B6b">200dp</dimen>
 
     //B
-    <dimen name="B3">10dp</dimen>
+    <dimen name="B3">250dp</dimen>
     <dimen name="B4">55.5dp</dimen>       //x
     <dimen name="B5">230dp</dimen>
     <dimen name="B6">235dp</dimen>

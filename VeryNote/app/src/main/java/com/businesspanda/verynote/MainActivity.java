@@ -13,13 +13,18 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.media.AudioFormat;
+import android.media.AudioManager;
+import android.media.AudioTrack;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
@@ -41,6 +46,10 @@ public class MainActivity extends ActionBarActivity {
     public ArrayList<Note> noteArray = new ArrayList();
     public ArrayList<Note> allNotes = new ArrayList();
 
+    public int met_int = 1;
+
+    public boolean play = true;
+
     public Switch metSwitch;
 
     private Handler mHandler = new Handler();
@@ -51,8 +60,9 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         NoteSearch.createTable();
+        genTone();
         //keeps screen on
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         //lets screen turn off again
         //getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -61,16 +71,18 @@ public class MainActivity extends ActionBarActivity {
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
 
 
+
         metSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (buttonView.isChecked()){
                     mHandler.postDelayed(mVibrations, 750);
-                    System.out.println("ON! ");
                 } else{
+                    met_int = 1;
+                    TextView text = (TextView) findViewById(R.id.met_text);
+                    text.setText(" ");
                     mHandler.removeCallbacks(mVibrations);
-                    System.out.println("OFF!");
                 }
             }
         });
@@ -81,8 +93,8 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onStart() {
         super.onStart();
-        pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
-        pitch_detector_thread_.start();
+        //pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
+        //pitch_detector_thread_.start();
         //met_thread = new Thread(new Metronome(findViewById(R.id.metronomeswitch)));
         //met_thread.start();
 
@@ -93,6 +105,7 @@ public class MainActivity extends ActionBarActivity {
         super.onStop();
         pitch_detector_thread_.interrupt();
         mHandler.removeCallbacks(mVibrations);
+
     }
 
     @Override
@@ -114,13 +127,16 @@ public class MainActivity extends ActionBarActivity {
 
         float density = getResources().getDisplayMetrics().density;
 
-        System.out.println("yes  " + density);
-
+        //tinyphone = 1.5, other phones = 3.0
         if(density>2){
-            image.setPadding(0, 0, 0, 30);
+            image.setPadding(0, 0, 0, 120);
         }
 
     }
+
+    long lastTime;
+    long newTime;
+    long dur;
 
     public void ShowPitchDetectionResult( final double pitch) {
 
@@ -133,9 +149,19 @@ public class MainActivity extends ActionBarActivity {
 
         changeFreq.setText(nearestNote.name);
 
-        if(!nearestNote.name.equals(prevNote.name)){
+        newTime = System.nanoTime();
+
+        dur = (newTime - lastTime)/1000000;
+
+        if((!nearestNote.name.equals(prevNote.name)) && dur>300){
+
+            lastTime = System.nanoTime();
 
             allNotes.add(nearestNote);
+
+           /* for(int i = 0; i < allNotes.size();i++) {
+                System.out.println("All the notes  " + allNotes.get(i).getName());
+            }*/
 
             if(noteArray.size() == 14){
                 noteArray.remove(0);
@@ -144,11 +170,10 @@ public class MainActivity extends ActionBarActivity {
 
             noteArray.add(nearestNote);
 
-           // if(slowDOWN%10==0)
             notesOnScreen(nearestNote);
 
             prevNote = nearestNote;
-            //slowDOWN++;
+
         }
 
 
@@ -177,6 +202,13 @@ public class MainActivity extends ActionBarActivity {
 
     private Runnable mVibrations = new Runnable() {
         public void run() {
+            TextView text = (TextView) findViewById(R.id.met_text);
+
+            String str_met = Integer.toString(met_int);
+            text.setText(str_met);
+            met_int++;
+            if(met_int>4)met_int=1;
+
             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             //Vibrate for 500 milliseconds
             v.vibrate(50);
@@ -196,9 +228,11 @@ public class MainActivity extends ActionBarActivity {
         int pos = (int) this.getResources().getDimension(R.dimen.endPos);
         int x = (int) this.getResources().getDimension(R.dimen.noteX);
 
-        String notename = note.getName();
-        int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
-        int y = (int)this.getResources().getDimension(yID);
+       // String notename = note.getName();
+        //int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
+       // int y = (int)this.getResources().getDimension(yID);
+
+        int y = note.getyValue();
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.noteWidth),
@@ -216,7 +250,7 @@ public class MainActivity extends ActionBarActivity {
                     (int) this.getResources().getDimension(R.dimen.sharpHeight));
             sharp.setLayoutParams(para);
             sharp.setX(x - 15);
-            sharp.setY(y + 32);
+            sharp.setY(y + 27);
             sharp.setBackgroundResource(R.drawable.sharpnote);
             sharp.animate().x(pos - 15).setInterpolator(interpolator).setDuration(5500);
             theLayout.addView(sharp);
@@ -227,7 +261,7 @@ public class MainActivity extends ActionBarActivity {
                     (int) this.getResources().getDimension(R.dimen.flatHeight));
             flat.setLayoutParams(paraFlat);
             flat.setX(x - 10);
-            flat.setY(y + 30);
+            flat.setY(y + 20);
             flat.setBackgroundResource(R.drawable.flatnote);
             flat.animate().x(pos - 10).setInterpolator(interpolator).setDuration(5500);
             theLayout.addView(flat);
@@ -236,6 +270,74 @@ public class MainActivity extends ActionBarActivity {
         image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
 
         theLayout.addView(image);
+    }
+
+    private final int duration = 3; // seconds
+    private final int sampleRate = 8000;
+    private final int numSamples = duration * sampleRate;
+    private final double sample[] = new double[numSamples];
+    private final double freqOfTone = 440; // hz
+
+    private final byte generatedSnd[] = new byte[2 * numSamples];
+
+    Handler sHandler = new Handler();
+
+    void genTone(){
+        // fill out the array
+        for (int i = 0; i < numSamples; ++i) {
+            sample[i] = Math.sin(2 * Math.PI * i / (sampleRate/freqOfTone));
+        }
+
+        // convert to 16 bit pcm sound array
+        // assumes the sample buffer is normalised.
+        int idx = 0;
+        for (final double dVal : sample) {
+            // scale to maximum amplitude
+            final short val = (short) ((dVal * 32767));
+            // in 16 bit wav PCM, first byte is the low order byte
+            generatedSnd[idx++] = (byte) (val & 0x00ff);
+            generatedSnd[idx++] = (byte) ((val & 0xff00) >>> 8);
+
+        }
+    }
+
+    void playSound(){
+        final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
+                sampleRate, AudioFormat.CHANNEL_OUT_MONO,
+                AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
+                AudioTrack.MODE_STATIC);
+        audioTrack.write(generatedSnd, 0, generatedSnd.length);
+        audioTrack.play();
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_record:
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
+                pitch_detector_thread_.start();
+                return true;
+            case R.id.action_stop:
+                getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                pitch_detector_thread_.interrupt();
+                mHandler.removeCallbacks(mVibrations);
+                return true;
+            case R.id.action_play:
+                if(play) {
+                    item.setIcon(R.drawable.ic_action_pause);
+                    playSound();
+                    play = false;
+                }else{
+                    item.setIcon(R.drawable.ic_action_play);
+                    play = true;
+                }
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
