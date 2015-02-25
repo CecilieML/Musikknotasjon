@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
@@ -61,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (buttonView.isChecked()){
-                    mHandler.postDelayed(mVibrations, 1000);
+                    mHandler.postDelayed(mVibrations, 750);
                     System.out.println("ON! ");
                 } else{
                     mHandler.removeCallbacks(mVibrations);
@@ -159,8 +161,8 @@ public class MainActivity extends ActionBarActivity {
         public void run() {
             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             //Vibrate for 500 milliseconds
-            v.vibrate(250);
-            mHandler.postDelayed(mVibrations, 1000);
+            v.vibrate(50);
+            mHandler.postDelayed(mVibrations, 750);
         }
     };
 
@@ -216,6 +218,14 @@ public class MainActivity extends ActionBarActivity {
         image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
 
         theLayout.addView(image);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
 }
