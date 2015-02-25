@@ -56,6 +56,8 @@ public class MainActivity extends ActionBarActivity {
         //lets screen turn off again
         //getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        fitToScreen();
+
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
 
 
@@ -106,12 +108,21 @@ public class MainActivity extends ActionBarActivity {
                 '}';
     }
 
+    public void fitToScreen() {
+
+        ImageView image = (ImageView)findViewById(R.id.treble);
+
+        float density = getResources().getDisplayMetrics().density;
+
+        System.out.println("yes  " + density);
+
+        if(density>2){
+            image.setPadding(0, 0, 0, 30);
+        }
+
+    }
+
     public void ShowPitchDetectionResult( final double pitch) {
-
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        System.out.println(dm + "   look here");
 
         final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
 

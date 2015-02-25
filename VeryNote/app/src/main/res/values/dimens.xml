@@ -24,8 +24,7 @@
     <dimen name="trebleWidth">455dp</dimen>
     <dimen name="trebleHeight">130dp</dimen>
 
-    <dimen name="marginTop">30dp</dimen>
-    <dimen name="marginLeft">20dp</dimen>
+    <dimen name="marginBottom">0dp</dimen>
 
     //C
     <dimen name="C3">1dp</dimen>
