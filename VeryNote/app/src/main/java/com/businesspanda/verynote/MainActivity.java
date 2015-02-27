@@ -40,11 +40,13 @@ import android.widget.TextView;
 
 import org.jfugue.Player;
 
+import jp.kshoji.javax.sound.midi.UsbMidiSystem;
+
 
 public class MainActivity extends ActionBarActivity {
 
     Thread pitch_detector_thread_;
-    Thread met_thread;
+
     public Note prevNote = new Note(false, false, 0, 0, " ");
     public ArrayList<Note> noteArray = new ArrayList();
     public ArrayList<Note> allNotes = new ArrayList();
@@ -58,6 +60,8 @@ public class MainActivity extends ActionBarActivity {
 
     private Handler mHandler = new Handler();
     private Handler tempolineHandler = new Handler();
+
+    UsbMidiSystem usbMidiSystem;
 
     /** Called when the activity is first created. */
     @Override
@@ -83,6 +87,9 @@ public class MainActivity extends ActionBarActivity {
         image.setY((int) this.getResources().getDimension(R.dimen.trebleY));
         image.setBackgroundResource(R.drawable.treblebackround);
         theLayout.addView(image);
+
+        usbMidiSystem = new UsbMidiSystem(this);
+        usbMidiSystem.initialize();
 
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
 
@@ -119,7 +126,11 @@ public class MainActivity extends ActionBarActivity {
         super.onStop();
         pitch_detector_thread_.interrupt();
         mHandler.removeCallbacks(mVibrations);
+        //playHandler.removeCallbacks(playSoundLoop);
 
+        if (usbMidiSystem != null) {
+            usbMidiSystem.terminate();
+        }
     }
 
     @Override
@@ -340,6 +351,9 @@ public class MainActivity extends ActionBarActivity {
 
     private final byte generatedSnd[] = new byte[2 * numSamples];
 
+
+
+
     void genTone(){
         // fill out the array
         for (int i = 0; i < numSamples; ++i) {
@@ -359,11 +373,15 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+
     void playFancySound() {
         Player player = new Player();
         player.play("C D E F G A B");
     }
 
+
+
+/*
     void playSound(){
         final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
                 sampleRate, AudioFormat.CHANNEL_OUT_MONO,
@@ -373,6 +391,7 @@ public class MainActivity extends ActionBarActivity {
         audioTrack.play();
 
     }
+    */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -405,11 +424,13 @@ public class MainActivity extends ActionBarActivity {
                     playing = false;
                 }
                 return true;
-
+            
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
