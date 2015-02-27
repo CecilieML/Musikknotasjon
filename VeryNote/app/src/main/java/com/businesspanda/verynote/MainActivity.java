@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.lang.Thread;
 import java.util.ArrayList;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.pm.ActivityInfo;
@@ -53,6 +54,7 @@ public class MainActivity extends ActionBarActivity {
     public Switch metSwitch;
 
     private Handler mHandler = new Handler();
+    private Handler tempolineHandler = new Handler();
 
     /** Called when the activity is first created. */
     @Override
@@ -180,6 +182,33 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    private Runnable writeTempoline = new Runnable() {
+        public void run() {
+
+            tempolineOnScreen();
+            tempolineHandler.postDelayed(writeTempoline, 500);
+        }
+    };
+
+    public void tempolineOnScreen(){
+        LinearInterpolator interpolator = new LinearInterpolator();
+        RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.lowestLayer);
+        ImageView image = new ImageView(this);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                (int) this.getResources().getDimension(R.dimen.tempolineWidth),
+                (int) this.getResources().getDimension(R.dimen.tempolineHeight));
+        image.setLayoutParams(params);
+        image.setBackgroundColor(0xFF000000);
+
+        int pos = (int) this.getResources().getDimension(R.dimen.endPos);
+        image.setX(R.dimen.noteX + 50);
+        image.setY(200);
+
+        image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
+
+        theLayout.addView(image);
+    }
+
    /* public void writeToFile(){
         //String theentirearraythingstring = test.toString();
 
@@ -210,12 +239,12 @@ public class MainActivity extends ActionBarActivity {
             if(met_int>4)met_int=1;
 
             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            //Vibrate for 500 milliseconds
+            //Vibrate for 50 milliseconds
             v.vibrate(50);
+            //Wait for 750 ms
             mHandler.postDelayed(mVibrations, 750);
         }
     };
-
 
     public void notesOnScreen(Note note){
 
@@ -229,7 +258,7 @@ public class MainActivity extends ActionBarActivity {
         int x = (int) this.getResources().getDimension(R.dimen.noteX);
 
        // String notename = note.getName();
-        //int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
+       // int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
        // int y = (int)this.getResources().getDimension(yID);
 
         int y = note.getyValue();
@@ -319,11 +348,13 @@ public class MainActivity extends ActionBarActivity {
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
                 pitch_detector_thread_.start();
+                tempolineHandler.post(writeTempoline);
                 return true;
             case R.id.action_stop:
                 getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 pitch_detector_thread_.interrupt();
                 mHandler.removeCallbacks(mVibrations);
+                tempolineHandler.removeCallbacks(writeTempoline);
                 return true;
             case R.id.action_play:
                 if(play) {
@@ -334,6 +365,7 @@ public class MainActivity extends ActionBarActivity {
                     item.setIcon(R.drawable.ic_action_play);
                     play = true;
                 }
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
