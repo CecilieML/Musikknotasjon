@@ -69,11 +69,20 @@ public class MainActivity extends ActionBarActivity {
         //lets screen turn off again
         //getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        fitToScreen();
+        //fitToScreen();
+
+        RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.upperLayout);
+        ImageView image = new ImageView(this);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                (int) this.getResources().getDimension(R.dimen.trebleWidth),
+                (int) this.getResources().getDimension(R.dimen.trebleHeight));
+        image.setLayoutParams(params);
+        image.setX((int) this.getResources().getDimension(R.dimen.trebleX));
+        image.setY((int) this.getResources().getDimension(R.dimen.trebleY));
+        image.setBackgroundResource(R.drawable.treblebackround);
+        theLayout.addView(image);
 
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
-
-
 
         metSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -124,7 +133,7 @@ public class MainActivity extends ActionBarActivity {
                 '}';
     }
 
-    public void fitToScreen() {
+  /*  public void fitToScreen() {
 
         ImageView image = (ImageView)findViewById(R.id.treble);
 
@@ -135,7 +144,7 @@ public class MainActivity extends ActionBarActivity {
             image.setPadding(0, 0, 0, 120);
         }
 
-    }
+    }*/
 
     long lastTime;
     long newTime;
@@ -186,11 +195,19 @@ public class MainActivity extends ActionBarActivity {
     private Runnable writeTempoline = new Runnable() {
         public void run() {
 
-            tempolineOnScreen(109);
-            tempolineOnScreen(221);
+            tempolineOnScreen(getTempoUpperY());
+            tempolineOnScreen(getTempoLowerY());
             tempolineHandler.postDelayed(writeTempoline, 1500);
         }
     };
+
+    public int getTempoUpperY(){
+        return  (int) this.getResources().getDimension(R.dimen.upperTempolineY);
+    }
+
+    public int getTempoLowerY(){
+        return  (int) this.getResources().getDimension(R.dimen.lowerTempolineY);
+    }
 
     public void tempolineOnScreen(int y){
         LinearInterpolator interpolator = new LinearInterpolator();
@@ -202,8 +219,10 @@ public class MainActivity extends ActionBarActivity {
         image.setLayoutParams(params);
         image.setBackgroundColor(0xFF000000);
 
-        int pos = ((int) this.getResources().getDimension(R.dimen.endPos)+60);
-        image.setX((int) this.getResources().getDimension(R.dimen.noteX) + 60);
+        int xOffset = (int) this.getResources().getDimension(R.dimen.tempolineOffsetX);
+
+        int pos = ((int) this.getResources().getDimension(R.dimen.endPos)+ xOffset);
+        image.setX((int) this.getResources().getDimension(R.dimen.noteX) + xOffset);
         image.setY(y);
 
         image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
@@ -259,11 +278,11 @@ public class MainActivity extends ActionBarActivity {
         int pos = (int) this.getResources().getDimension(R.dimen.endPos);
         int x = (int) this.getResources().getDimension(R.dimen.noteX);
 
-       // String notename = note.getName();
-       // int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
-       // int y = (int)this.getResources().getDimension(yID);
+        String notename = note.getName();
+        int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
+        int y = (int)this.getResources().getDimension(yID);
 
-        int y = note.getyValue();
+       // int y = note.getyValue();
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.noteWidth),
@@ -280,10 +299,14 @@ public class MainActivity extends ActionBarActivity {
                     (int) this.getResources().getDimension(R.dimen.sharpWidth),
                     (int) this.getResources().getDimension(R.dimen.sharpHeight));
             sharp.setLayoutParams(para);
-            sharp.setX(x - 15);
-            sharp.setY(y + 27);
+
+            int xOffset = (int) this.getResources().getDimension(R.dimen.sharpOffsetX);
+            int yOffset = (int) this.getResources().getDimension(R.dimen.sharpOffsetY);
+
+            sharp.setX(x - xOffset);
+            sharp.setY(y + yOffset);
             sharp.setBackgroundResource(R.drawable.sharpnote);
-            sharp.animate().x(pos - 15).setInterpolator(interpolator).setDuration(5500);
+            sharp.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
             theLayout.addView(sharp);
         }else if(note.flat){
             ImageView flat = new ImageView(this);
@@ -291,10 +314,14 @@ public class MainActivity extends ActionBarActivity {
                     (int) this.getResources().getDimension(R.dimen.flatWidth),
                     (int) this.getResources().getDimension(R.dimen.flatHeight));
             flat.setLayoutParams(paraFlat);
-            flat.setX(x - 10);
-            flat.setY(y + 20);
+
+            int xOffset = (int) this.getResources().getDimension(R.dimen.flatOffsetX);
+            int yOffset = (int) this.getResources().getDimension(R.dimen.flatOffsetY);
+
+            flat.setX(x - xOffset);
+            flat.setY(y + yOffset);
             flat.setBackgroundResource(R.drawable.flatnote);
-            flat.animate().x(pos - 10).setInterpolator(interpolator).setDuration(5500);
+            flat.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
             theLayout.addView(flat);
         }
 

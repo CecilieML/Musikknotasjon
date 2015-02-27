@@ -24,10 +24,23 @@
     <dimen name="trebleWidth">455dp</dimen>
     <dimen name="trebleHeight">130dp</dimen>
 
+    <dimen name="trebleX">20dp</dimen>
+    <dimen name="trebleY">20dp</dimen>
+
     <dimen name="marginBottom">0dp</dimen>
 
     <dimen name="tempolineWidth">2dp</dimen>
     <dimen name="tempolineHeight">34.5dp</dimen>
+
+    <dimen name="sharpOffsetX">5dp</dimen>
+    <dimen name="sharpOffsetY">5dp</dimen>
+
+    <dimen name="flatOffsetX">5dp</dimen>
+    <dimen name="flatOffsetY">10dp</dimen>
+
+    <dimen name="tempolineOffsetX">50dp</dimen>
+    <dimen name="upperTempolineY">51dp</dimen>
+    <dimen name="lowerTempolineY">124.5dp</dimen>
 
     //C
     <dimen name="C3">200dp</dimen>
