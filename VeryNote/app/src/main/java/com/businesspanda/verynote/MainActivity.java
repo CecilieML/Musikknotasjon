@@ -38,6 +38,8 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import org.jfugue.Player;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -357,6 +359,11 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    void playFancySound() {
+        Player player = new Player();
+        player.play("C D E F G A B");
+    }
+
     void playSound(){
         final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
                 sampleRate, AudioFormat.CHANNEL_OUT_MONO,
@@ -391,7 +398,7 @@ public class MainActivity extends ActionBarActivity {
             case R.id.action_play:
                 if(!playing) {
                     item.setIcon(R.drawable.ic_action_pause);
-                    playSound();
+                    playFancySound();
                     playing = true;
                 }else{
                     item.setIcon(R.drawable.ic_action_play);
