@@ -12,11 +12,6 @@
           android:title="@string/record"
           app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/action_stop"
-          android:icon="@drawable/ic_action_stop"
-          android:title="@string/stop"
-          app:showAsAction="ifRoom" />
-
     <item android:id="@+id/action_play"
           android:icon="@drawable/ic_action_play"
           android:title="@string/play"

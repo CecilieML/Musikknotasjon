@@ -27,7 +27,7 @@
     <dimen name="marginBottom">0dp</dimen>
 
     <dimen name="tempolineWidth">2dp</dimen>
-    <dimen name="tempolineHeight">35dp</dimen>
+    <dimen name="tempolineHeight">34.5dp</dimen>
 
     //C
     <dimen name="C3">200dp</dimen>

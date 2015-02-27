@@ -49,7 +49,8 @@ public class MainActivity extends ActionBarActivity {
 
     public int met_int = 1;
 
-    public boolean play = true;
+    public boolean playing = false;
+    public boolean recording = false;
 
     public Switch metSwitch;
 
@@ -185,12 +186,13 @@ public class MainActivity extends ActionBarActivity {
     private Runnable writeTempoline = new Runnable() {
         public void run() {
 
-            tempolineOnScreen();
-            tempolineHandler.postDelayed(writeTempoline, 500);
+            tempolineOnScreen(109);
+            tempolineOnScreen(221);
+            tempolineHandler.postDelayed(writeTempoline, 1500);
         }
     };
 
-    public void tempolineOnScreen(){
+    public void tempolineOnScreen(int y){
         LinearInterpolator interpolator = new LinearInterpolator();
         RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.lowestLayer);
         ImageView image = new ImageView(this);
@@ -200,9 +202,9 @@ public class MainActivity extends ActionBarActivity {
         image.setLayoutParams(params);
         image.setBackgroundColor(0xFF000000);
 
-        int pos = (int) this.getResources().getDimension(R.dimen.endPos);
-        image.setX(R.dimen.noteX + 50);
-        image.setY(200);
+        int pos = ((int) this.getResources().getDimension(R.dimen.endPos)+60);
+        image.setX((int) this.getResources().getDimension(R.dimen.noteX) + 60);
+        image.setY(y);
 
         image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
 
@@ -309,8 +311,6 @@ public class MainActivity extends ActionBarActivity {
 
     private final byte generatedSnd[] = new byte[2 * numSamples];
 
-    Handler sHandler = new Handler();
-
     void genTone(){
         // fill out the array
         for (int i = 0; i < numSamples; ++i) {
@@ -345,25 +345,30 @@ public class MainActivity extends ActionBarActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_record:
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
-                pitch_detector_thread_.start();
-                tempolineHandler.post(writeTempoline);
-                return true;
-            case R.id.action_stop:
-                getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                pitch_detector_thread_.interrupt();
-                mHandler.removeCallbacks(mVibrations);
-                tempolineHandler.removeCallbacks(writeTempoline);
+                if(!recording) {
+                    item.setIcon(R.drawable.ic_action_stop);
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
+                    pitch_detector_thread_.start();
+                    tempolineHandler.postDelayed(writeTempoline, 1);
+                    recording = true;
+                } else {
+                    item.setIcon(R.drawable.ic_action_mic);
+                    getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    pitch_detector_thread_.interrupt();
+                    mHandler.removeCallbacks(mVibrations);
+                    tempolineHandler.removeCallbacks(writeTempoline);
+                    recording = false;
+                }
                 return true;
             case R.id.action_play:
-                if(play) {
+                if(!playing) {
                     item.setIcon(R.drawable.ic_action_pause);
                     playSound();
-                    play = false;
+                    playing = true;
                 }else{
                     item.setIcon(R.drawable.ic_action_play);
-                    play = true;
+                    playing = false;
                 }
                 return true;
 
