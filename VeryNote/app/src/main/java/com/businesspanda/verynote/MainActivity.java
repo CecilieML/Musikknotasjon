@@ -38,7 +38,7 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import org.jfugue.Player;
+import org.jfugue.*;
 
 import jp.kshoji.javax.sound.midi.UsbMidiSystem;
 
@@ -424,7 +424,7 @@ public class MainActivity extends ActionBarActivity {
                     playing = false;
                 }
                 return true;
-            
+
             default:
                 return super.onOptionsItemSelected(item);
         }
