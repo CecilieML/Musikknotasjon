@@ -14,7 +14,6 @@ import jp.kshoji.javax.sound.midi.UsbMidiSystem;
 
 public class MainActivity extends ActionBarActivity {
 
-    UsbMidiSystem usbMidiSystem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,20 +27,19 @@ public class MainActivity extends ActionBarActivity {
                 // TODO Auto-generated method stub
                 Player player = new Player();
                 player.play("C D E F G A B");
+                System.out.println("sound sound lalalala");
             }
         });
 
-        usbMidiSystem = new UsbMidiSystem(this);
-        usbMidiSystem.initialize();
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        if (usbMidiSystem != null) {
-            usbMidiSystem.terminate();
-        }
+
+
     }
 
 

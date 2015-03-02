@@ -12,8 +12,10 @@
     <dimen name="noteHeight">40dp</dimen>
     <dimen name="noteWidth">20dp</dimen>
 
-    <dimen name="noteX">450dp</dimen>
-    <dimen name="endPos">40dp</dimen>
+    <dimen name="noteX">50dp</dimen>
+
+    <dimen name="endPos">-15dp</dimen>
+    <dimen name="startPos">415dp</dimen>
 
     <dimen name="maxHeight">10dp</dimen>
     <dimen name="maxWidth">5dp</dimen>
@@ -38,9 +40,25 @@
     <dimen name="flatOffsetX">5dp</dimen>
     <dimen name="flatOffsetY">10dp</dimen>
 
-    <dimen name="tempolineOffsetX">50dp</dimen>
-    <dimen name="upperTempolineY">51dp</dimen>
-    <dimen name="lowerTempolineY">124.5dp</dimen>
+    <dimen name="tempolineOffsetX">-50dp</dimen>
+    <dimen name="upperTempolineY">31dp</dimen>
+    <dimen name="lowerTempolineY">104.5dp</dimen>
+
+    <dimen name="boxLeftX">-15dp</dimen>
+    <dimen name="boxLeftY">0dp</dimen>
+
+    <dimen name="boxRightX">475dp</dimen>
+    <dimen name="boxRightY">0dp</dimen>
+
+    <dimen name="boxParamHeight">250dp</dimen>
+    <dimen name="boxParamWidth">80dp</dimen>
+
+    <dimen name="lowestLayerWidth">411dp</dimen>
+    <dimen name="lowestLayerHeight">180dp</dimen>
+
+    <dimen name="linLayX">300dp</dimen>
+
+    <dimen name="Offset">3dp</dimen>
 
     //C
     <dimen name="C3">200dp</dimen>

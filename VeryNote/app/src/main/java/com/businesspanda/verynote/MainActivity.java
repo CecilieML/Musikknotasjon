@@ -9,11 +9,14 @@ import java.io.IOException;
 import java.lang.Thread;
 import java.util.ArrayList;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -23,6 +26,7 @@ import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,6 +42,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ViewAnimator;
 
 import org.jfugue.*;
 
@@ -59,10 +64,11 @@ public class MainActivity extends ActionBarActivity {
 
     private Handler mHandler = new Handler();
     private Handler tempolineHandler = new Handler();
+    private Handler linLayHandler = new Handler();
 
     UsbMidiSystem usbMidiSystem;
 
-    HorizontalScrollView scrollview;
+    RelativeLayout linLayout;
 
     /** Called when the activity is first created. */
     @Override
@@ -74,20 +80,53 @@ public class MainActivity extends ActionBarActivity {
 
         //fitToScreen();
 
-        RelativeLayout lowLayer = (RelativeLayout) findViewById(R.id.lowestLayer);
-        scrollview = (HorizontalScrollView) findViewById(R.id.scrollview);
-        lowLayer.addView(scrollview);
+        HorizontalScrollView scrollView = (HorizontalScrollView) findViewById(R.id.scrollview);
 
-        RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.upperLayout);
+        linLayout = new RelativeLayout(this);
+        RelativeLayout.LayoutParams paramsLinLayout = new RelativeLayout.LayoutParams(
+                (int) this.getResources().getDimension(R.dimen.lowestLayerWidth),
+                (int) this.getResources().getDimension(R.dimen.lowestLayerHeight));
+        linLayout.setLayoutParams(paramsLinLayout);
+
+        linLayout.setBackgroundColor(getResources().getColor(R.color.pink));
+
+        //linLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+        scrollView.addView(linLayout);
+
+        RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.middleLayer);
         ImageView image = new ImageView(this);
+        ImageView boxLeft = new ImageView(this);
+        ImageView boxRight = new ImageView(this);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.trebleWidth),
                 (int) this.getResources().getDimension(R.dimen.trebleHeight));
         image.setLayoutParams(params);
+
+        RelativeLayout.LayoutParams paramsBox = new RelativeLayout.LayoutParams(
+                (int) this.getResources().getDimension(R.dimen.boxParamWidth),
+                (int) this.getResources().getDimension(R.dimen.boxParamHeight));
+        boxLeft.setLayoutParams(paramsBox);
+        boxRight.setLayoutParams(paramsBox);
+
         image.setX((int) this.getResources().getDimension(R.dimen.trebleX));
         image.setY((int) this.getResources().getDimension(R.dimen.trebleY));
+
+        boxLeft.setX((int) this.getResources().getDimension(R.dimen.boxLeftX));
+        boxLeft.setY((int) this.getResources().getDimension(R.dimen.boxLeftY));
+
+        boxRight.setX((int) this.getResources().getDimension(R.dimen.boxRightX));
+        boxRight.setY((int) this.getResources().getDimension(R.dimen.boxRightY));
+
         image.setBackgroundResource(R.drawable.treblebackround);
+        boxRight.setBackgroundColor(getResources().getColor(R.color.lightPurple));
+        boxLeft.setBackgroundColor(getResources().getColor(R.color.lightPurple));
+
+        theLayout.addView(boxLeft);
+        theLayout.addView(boxRight);
         theLayout.addView(image);
+
+
 
         usbMidiSystem = new UsbMidiSystem(this);
         usbMidiSystem.initialize();
@@ -124,8 +163,14 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onStop() {
-        super.onStop();
-        pitch_detector_thread_.interrupt();
+
+        try {
+            super.onStop();
+            pitch_detector_thread_.interrupt();
+        }catch (Exception e){
+            System.err.println("tHE THING HAPPENED AGAIN ");
+        }
+
         mHandler.removeCallbacks(mVibrations);
         //playHandler.removeCallbacks(playSoundLoop);
 
@@ -216,8 +261,8 @@ public class MainActivity extends ActionBarActivity {
 
         int xOffset = (int) this.getResources().getDimension(R.dimen.tempolineOffsetX);
 
-        int pos = ((int) this.getResources().getDimension(R.dimen.endPos)+ xOffset);
-        image.setX((int) this.getResources().getDimension(R.dimen.noteX) + xOffset);
+        int pos = ((int) this.getResources().getDimension(R.dimen.endPos));
+        image.setX((int) this.getResources().getDimension(R.dimen.startPos));
         image.setY(y);
 
         image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
@@ -271,7 +316,9 @@ public class MainActivity extends ActionBarActivity {
         ImageView image = new ImageView(this);
 
         int pos = (int) this.getResources().getDimension(R.dimen.endPos);
-        int x = (int) this.getResources().getDimension(R.dimen.noteX);
+        int x = linLayout.getLayoutParams().width - (int) this.getResources().getDimension(R.dimen.noteX);
+
+                //(int) this.getResources().getDimension(R.dimen.noteX);
 
         String notename = note.getName();
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
@@ -301,8 +348,8 @@ public class MainActivity extends ActionBarActivity {
             sharp.setX(x - xOffset);
             sharp.setY(y + yOffset);
             sharp.setBackgroundResource(R.drawable.sharpnote);
-            sharp.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
-            scrollview.addView(sharp);
+           // sharp.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
+            theLayout.addView(sharp);
         }else if(note.flat){
             ImageView flat = new ImageView(this);
             RelativeLayout.LayoutParams paraFlat = new RelativeLayout.LayoutParams(
@@ -316,13 +363,13 @@ public class MainActivity extends ActionBarActivity {
             flat.setX(x - xOffset);
             flat.setY(y + yOffset);
             flat.setBackgroundResource(R.drawable.flatnote);
-            flat.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
-            scrollview.addView(flat);
+         //   flat.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
+            theLayout.addView(flat);
         }
 
-        image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
+       // image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
 
-        scrollview.addView(image);
+        linLayout.addView(image);
     }
 
     private final int duration = 3; // seconds
@@ -375,6 +422,24 @@ public class MainActivity extends ActionBarActivity {
     }
     */
 
+    public int Offset(){
+        return (int) this.getResources().getDimension(R.dimen.Offset);
+    }
+
+    int x = 0;
+    int speed = 100;
+    private Runnable moveLinLay = new Runnable() {
+        public void run() {
+            LinearInterpolator interpolator = new LinearInterpolator();
+            linLayout.animate().x(x).setInterpolator(interpolator).setDuration(speed);
+            x -= Offset();
+            linLayout.getLayoutParams().width += Offset();
+            linLayout.requestLayout();
+
+            linLayHandler.postDelayed(moveLinLay, speed);
+        }
+    };
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
@@ -386,6 +451,8 @@ public class MainActivity extends ActionBarActivity {
                     pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
                     pitch_detector_thread_.start();
                     tempolineHandler.postDelayed(writeTempoline, 1);
+                    linLayHandler.postDelayed(moveLinLay, 1);
+
                     recording = true;
                 } else {
                     item.setIcon(R.drawable.ic_action_mic);
@@ -393,6 +460,10 @@ public class MainActivity extends ActionBarActivity {
                     pitch_detector_thread_.interrupt();
                     mHandler.removeCallbacks(mVibrations);
                     tempolineHandler.removeCallbacks(writeTempoline);
+                    linLayHandler.removeCallbacks(moveLinLay);
+                    linLayout.clearAnimation();
+                    linLayout.animate().x(0).setDuration(10);
+                    x = 0;
                     recording = false;
                 }
                 return true;
