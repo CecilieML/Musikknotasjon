@@ -31,6 +31,7 @@ import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.CompoundButton;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -47,8 +48,6 @@ public class MainActivity extends ActionBarActivity {
 
     Thread pitch_detector_thread_;
 
-    public Note prevNote = new Note(false, false, 0, 0, " ");
-    public ArrayList<Note> noteArray = new ArrayList();
     public ArrayList<Note> allNotes = new ArrayList();
 
     public int met_int = 1;
@@ -63,6 +62,8 @@ public class MainActivity extends ActionBarActivity {
 
     UsbMidiSystem usbMidiSystem;
 
+    HorizontalScrollView scrollview;
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,12 +71,12 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         NoteSearch.createTable();
         genTone();
-        //keeps screen on
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        //lets screen turn off again
-        //getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //fitToScreen();
+
+        RelativeLayout lowLayer = (RelativeLayout) findViewById(R.id.lowestLayer);
+        scrollview = (HorizontalScrollView) findViewById(R.id.scrollview);
+        lowLayer.addView(scrollview);
 
         RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.upperLayout);
         ImageView image = new ImageView(this);
@@ -139,13 +140,6 @@ public class MainActivity extends ActionBarActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-    @Override
-    public String toString() {
-        return "MainActivity{" +
-                "noteArray=" + noteArray +
-                '}';
-    }
-
   /*  public void fitToScreen() {
 
         ImageView image = (ImageView)findViewById(R.id.treble);
@@ -170,15 +164,13 @@ public class MainActivity extends ActionBarActivity {
         Integer pitchInt = (int) (pitch);
         Note nearestNote = NoteSearch.findNearestNote(pitchInt);
 
-        //System.out.println(nearestNote + "  nearest note :)");
-
         changeFreq.setText(nearestNote.name);
 
         newTime = System.nanoTime();
 
         dur = (newTime - lastTime)/1000000;
 
-        if((!nearestNote.name.equals(prevNote.name)) && dur>300){
+        if(dur>300){
 
             lastTime = System.nanoTime();
 
@@ -188,16 +180,7 @@ public class MainActivity extends ActionBarActivity {
                 System.out.println("All the notes  " + allNotes.get(i).getName());
             }*/
 
-            if(noteArray.size() == 14){
-                noteArray.remove(0);
-                noteArray.trimToSize();
-            }
-
-            noteArray.add(nearestNote);
-
             notesOnScreen(nearestNote);
-
-            prevNote = nearestNote;
 
         }
 
@@ -207,7 +190,6 @@ public class MainActivity extends ActionBarActivity {
 
     private Runnable writeTempoline = new Runnable() {
         public void run() {
-
             tempolineOnScreen(getTempoUpperY());
             tempolineOnScreen(getTempoLowerY());
             tempolineHandler.postDelayed(writeTempoline, 1500);
@@ -320,7 +302,7 @@ public class MainActivity extends ActionBarActivity {
             sharp.setY(y + yOffset);
             sharp.setBackgroundResource(R.drawable.sharpnote);
             sharp.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
-            theLayout.addView(sharp);
+            scrollview.addView(sharp);
         }else if(note.flat){
             ImageView flat = new ImageView(this);
             RelativeLayout.LayoutParams paraFlat = new RelativeLayout.LayoutParams(
@@ -335,12 +317,12 @@ public class MainActivity extends ActionBarActivity {
             flat.setY(y + yOffset);
             flat.setBackgroundResource(R.drawable.flatnote);
             flat.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
-            theLayout.addView(flat);
+            scrollview.addView(flat);
         }
 
         image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
 
-        theLayout.addView(image);
+        scrollview.addView(image);
     }
 
     private final int duration = 3; // seconds
