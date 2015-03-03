@@ -127,6 +127,24 @@ public class MainActivity extends ActionBarActivity {
         theLayout.addView(image);
 
 
+        /*
+        FileOutputStream file = this.openFileOutput("music.xml", MODE_PRIVATE);
+
+        MusicXmlRenderer renderer = new MusicXmlRenderer();
+        MusicStringParser parser = new MusicStringParser();
+        parser.addParserListener(renderer);
+
+        Pattern pattern = new Pattern("C D E F G A B |");
+        parser.parse(pattern);
+
+        Serializer serializer = new Serializer(file, "UTF-8");
+        serializer.setIndent(4);
+        serializer.write(renderer.getMusicXMLDoc());
+
+        file.flush();
+        file.close();
+*/
+
 
         usbMidiSystem = new UsbMidiSystem(this);
         usbMidiSystem.initialize();
@@ -482,6 +500,8 @@ public class MainActivity extends ActionBarActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
 
 
