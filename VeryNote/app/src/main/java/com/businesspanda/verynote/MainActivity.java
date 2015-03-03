@@ -78,6 +78,7 @@ public class MainActivity extends ActionBarActivity  {
     ImageView image;
     Note prevNote;
 
+    HorizontalScrollView scrollView;
 
     /** Called when the activity is first created. */
     @Override
@@ -95,7 +96,7 @@ public class MainActivity extends ActionBarActivity  {
         RelativeLayout really = (RelativeLayout) findViewById(R.id.middleLayer);
         heyListen = new MyTouchListener(really);
 
-        HorizontalScrollView scrollView = (HorizontalScrollView) findViewById(R.id.scrollview);
+        scrollView = (HorizontalScrollView) findViewById(R.id.scrollview);
 
         linLayout = new RelativeLayout(this);
         RelativeLayout.LayoutParams paramsLinLayout = new RelativeLayout.LayoutParams(
@@ -302,7 +303,7 @@ public class MainActivity extends ActionBarActivity  {
         image.setX((int) this.getResources().getDimension(R.dimen.startPos));
         image.setY(y);
 
-        image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
+        //image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
 
         linLayout.addView(image);
     }
@@ -347,12 +348,17 @@ public class MainActivity extends ActionBarActivity  {
 
     public void noteLength(){
 
-
-        if(dur>600) {
-            image.setBackgroundResource(R.drawable.fullnote);
-        }else if(dur<200){
+        if(dur>=100 && dur<200){
+            image.setBackgroundResource(R.drawable.quartenote);
+        }else if(dur>=200 && dur<400){
             image.setBackgroundResource(R.drawable.halfnote);
+        }else if(dur>=400 && dur<600){
+            image.setBackgroundResource(R.drawable.singlenote);
+        }else if(dur>=600 && dur<1000){
+            image.setBackgroundResource(R.drawable.fullnote);
         }
+
+        //image.setBackgroundResource(R.drawable.doublenote);
 
 
     }
@@ -385,7 +391,8 @@ public class MainActivity extends ActionBarActivity  {
         image.setY(y);
         image.setMaxHeight((int) this.getResources().getDimension(R.dimen.maxHeight));
         image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
-        image.setBackgroundResource(R.drawable.singlenote);
+        //image.setBackgroundResource(R.drawable.singlenote);
+        noteLength();
         if(note.sharp){
             ImageView sharp = new ImageView(this);
             RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(
@@ -516,6 +523,7 @@ public class MainActivity extends ActionBarActivity  {
                     linLayout.clearAnimation();
                     linLayout.animate().x(0).setDuration(10);
                     x = 0;
+                    scrollView.computeScroll();
                     recording = false;
                 }
                 return true;

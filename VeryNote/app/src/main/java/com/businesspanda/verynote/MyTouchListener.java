@@ -13,6 +13,13 @@ import android.widget.RelativeLayout;
 /**
  * Created by Helene on 03.03.2015.
  */
+
+/************
+ * http://www.shutterstock.com/cat.mhtml?pl=47643-42764&searchterm=panda
+ *
+ * panda picture site :D
+ */
+
 public class MyTouchListener implements View.OnTouchListener {
 
     boolean oneIsCurrentlyChosen;
@@ -77,11 +84,13 @@ public class MyTouchListener implements View.OnTouchListener {
                     img = (ImageView) v;
                     vibIy(70);
                     createButtons(img);
+                    v.setSelected(true);
                     oneIsCurrentlyChosen = true;
                 }else{
                     if(v==img) {
                         vibIy(30);
                         removeButtons();
+                        v.setSelected(false);
                         oneIsCurrentlyChosen = false;
                     }
                 }
