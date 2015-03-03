@@ -38,4 +38,5 @@ dependencies {
     compile files('C:/Users/Helene/AndroidStudioProjects/Musikknotasjon/VeryNote/libs/jfugue-4.0.3-with-musicxml.jar')
     compile 'jp.kshoji:jfugue-android:4.0.3:@aar'
     compile 'jp.kshoji:midi-driver:0.1.1:@aar'
+    compile files('C:/Users/Helene/AndroidStudioProjects/Musikknotasjon/VeryNote/libs/xom-1.2.10.jar')
 }

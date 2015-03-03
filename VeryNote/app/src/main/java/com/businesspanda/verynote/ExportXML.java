@@ -19,9 +19,9 @@ import nu.xom.Serializer;
  */
 public class ExportXML implements Serializable {
 
-    void export(Context context) {
+    void export() {
         try {
-            FileOutputStream file = context.openFileOutput("music.xml", Context.MODE_PRIVATE);
+            FileOutputStream file = Config.context.openFileOutput("music.xml", Context.MODE_PRIVATE);
 
             MusicXmlRenderer renderer = new MusicXmlRenderer();
             MusicStringParser parser = new MusicStringParser();
@@ -33,6 +33,8 @@ public class ExportXML implements Serializable {
             Serializer serializer = new Serializer(file, "UTF-8");
             serializer.setIndent(4);
             serializer.write(renderer.getMusicXMLDoc());
+
+            System.out.println("var i void :3");
 
             file.flush();
             file.close();

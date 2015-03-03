@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.pm.ActivityInfo;
@@ -25,11 +26,13 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.internal.view.menu.ActionMenuItemView;
+import android.text.method.Touch;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
@@ -49,7 +52,7 @@ import org.jfugue.*;
 import jp.kshoji.javax.sound.midi.UsbMidiSystem;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity  {
 
     Thread pitch_detector_thread_;
 
@@ -79,6 +82,10 @@ public class MainActivity extends ActionBarActivity {
         genTone();
 
         //fitToScreen();
+
+
+        Config.context = this;
+
 
         HorizontalScrollView scrollView = (HorizontalScrollView) findViewById(R.id.scrollview);
 
@@ -325,6 +332,8 @@ public class MainActivity extends ActionBarActivity {
         }
     };
 
+
+
     public void notesOnScreen(Note note){
 
         LinearInterpolator interpolator = new LinearInterpolator();
@@ -386,8 +395,8 @@ public class MainActivity extends ActionBarActivity {
         }
 
        // image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
-
-        linLayout.addView(image);
+        image.setOnTouchListener(heyListen);
+                linLayout.addView(image);
     }
 
     private final int duration = 3; // seconds
@@ -399,7 +408,7 @@ public class MainActivity extends ActionBarActivity {
     private final byte generatedSnd[] = new byte[2 * numSamples];
 
 
-
+     MyTouchListener heyListen = new MyTouchListener();
 
     void genTone(){
         // fill out the array
@@ -458,6 +467,10 @@ public class MainActivity extends ActionBarActivity {
         }
     };
 
+
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
@@ -489,6 +502,8 @@ public class MainActivity extends ActionBarActivity {
                 if(!playing) {
                     item.setIcon(R.drawable.ic_action_pause);
                     playFancySound();
+                    ExportXML exp = new ExportXML();
+                    exp.export();
                     playing = true;
                 }else{
                     item.setIcon(R.drawable.ic_action_play);
