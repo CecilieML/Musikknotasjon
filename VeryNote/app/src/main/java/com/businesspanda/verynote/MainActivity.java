@@ -72,6 +72,7 @@ public class MainActivity extends ActionBarActivity  {
     UsbMidiSystem usbMidiSystem;
 
     RelativeLayout linLayout;
+    MyTouchListener heyListen;
 
     /** Called when the activity is first created. */
     @Override
@@ -86,6 +87,8 @@ public class MainActivity extends ActionBarActivity  {
 
         Config.context = this;
 
+        RelativeLayout really = (RelativeLayout) findViewById(R.id.middleLayer);
+        heyListen = new MyTouchListener(really);
 
         HorizontalScrollView scrollView = (HorizontalScrollView) findViewById(R.id.scrollview);
 
@@ -193,7 +196,7 @@ public class MainActivity extends ActionBarActivity  {
             super.onStop();
             pitch_detector_thread_.interrupt();
         }catch (Exception e){
-            System.err.println("tHE THING HAPPENED AGAIN ");
+            Log.e("Didn't use pitch_detector", "null pointer exception");
         }
 
         mHandler.removeCallbacks(mVibrations);
@@ -407,9 +410,6 @@ public class MainActivity extends ActionBarActivity  {
 
     private final byte generatedSnd[] = new byte[2 * numSamples];
 
-
-     MyTouchListener heyListen = new MyTouchListener();
-
     void genTone(){
         // fill out the array
         for (int i = 0; i < numSamples; ++i) {
@@ -502,8 +502,8 @@ public class MainActivity extends ActionBarActivity  {
                 if(!playing) {
                     item.setIcon(R.drawable.ic_action_pause);
                     playFancySound();
-                    ExportXML exp = new ExportXML();
-                    exp.export();
+                    //ExportXML exp = new ExportXML();
+                    //exp.export();
                     playing = true;
                 }else{
                     item.setIcon(R.drawable.ic_action_play);
