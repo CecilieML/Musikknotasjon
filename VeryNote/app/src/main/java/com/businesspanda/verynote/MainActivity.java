@@ -74,6 +74,11 @@ public class MainActivity extends ActionBarActivity  {
     RelativeLayout linLayout;
     MyTouchListener heyListen;
 
+
+    ImageView image;
+    Note prevNote;
+
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -203,7 +208,7 @@ public class MainActivity extends ActionBarActivity  {
         //playHandler.removeCallbacks(playSoundLoop);
 
         if (usbMidiSystem != null) {
-            usbMidiSystem.terminate();
+//            usbMidiSystem.terminate();
         }
     }
 
@@ -243,7 +248,10 @@ public class MainActivity extends ActionBarActivity  {
 
         dur = (newTime - lastTime)/1000000;
 
-        if(dur>300){
+        if(nearestNote==prevNote)
+            noteLength();
+
+        if(dur>300 && nearestNote!=prevNote){
 
             lastTime = System.nanoTime();
 
@@ -254,6 +262,7 @@ public class MainActivity extends ActionBarActivity  {
             }*/
 
             notesOnScreen(nearestNote);
+            prevNote = nearestNote;
 
         }
 
@@ -279,7 +288,7 @@ public class MainActivity extends ActionBarActivity  {
 
     public void tempolineOnScreen(int y){
         LinearInterpolator interpolator = new LinearInterpolator();
-        RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.lowestLayer);
+      //  RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.lowestLayer);
         ImageView image = new ImageView(this);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.tempolineWidth),
@@ -295,7 +304,7 @@ public class MainActivity extends ActionBarActivity  {
 
         image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
 
-        theLayout.addView(image);
+        linLayout.addView(image);
     }
 
    /* public void writeToFile(){
@@ -336,6 +345,18 @@ public class MainActivity extends ActionBarActivity  {
     };
 
 
+    public void noteLength(){
+
+
+        if(dur>600) {
+            image.setBackgroundResource(R.drawable.fullnote);
+        }else if(dur<200){
+            image.setBackgroundResource(R.drawable.halfnote);
+        }
+
+
+    }
+
 
     public void notesOnScreen(Note note){
 
@@ -343,7 +364,7 @@ public class MainActivity extends ActionBarActivity  {
 
         RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.lowestLayer);
 
-        ImageView image = new ImageView(this);
+        image = new ImageView(this);
 
         int pos = (int) this.getResources().getDimension(R.dimen.endPos);
         int x = linLayout.getLayoutParams().width - (int) this.getResources().getDimension(R.dimen.noteX);

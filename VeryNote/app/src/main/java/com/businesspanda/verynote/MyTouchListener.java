@@ -30,26 +30,26 @@ public class MyTouchListener implements View.OnTouchListener {
 
     public void createButtons(final ImageView imgView){
         btnUp = new Button(Config.context);
-        btnUp.setText("DOWN");
+        btnUp.setText("UP");
         btnUp.setVisibility(View.VISIBLE);
-        btnUp.setY(R.dimen.btnUpY);
-        btnUp.setX(R.dimen.btnUpX);
+        btnUp.setY(Config.context.getResources().getDimension(R.dimen.btnUpY));
+        btnUp.setX(Config.context.getResources().getDimension(R.dimen.btnUpX));
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imgView.setY(imgView.getY()+20);
+                imgView.setY(imgView.getY()-20);
             }
         });
 
         btnDown = new Button(Config.context);
-        btnDown.setText("UP");
+        btnDown.setText("DOWN");
         btnDown.setVisibility(View.VISIBLE);
-        btnDown.setY(R.dimen.btnDownY);
-        btnDown.setX(R.dimen.btnDownX);
+        btnDown.setY(Config.context.getResources().getDimension(R.dimen.btnDownY));
+        btnDown.setX(Config.context.getResources().getDimension(R.dimen.btnDownX));
         btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imgView.setY(imgView.getY()-20);
+                imgView.setY(imgView.getY()+20);
             }
         });
 

@@ -2,12 +2,14 @@ package com.businesspanda.verynote;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 
 import org.jfugue.MusicStringParser;
 import org.jfugue.MusicXmlRenderer;
 import org.jfugue.Pattern;
 import org.jfugue.*;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -45,10 +47,14 @@ public class ExportXML implements Serializable {
     }
 
     void sendToEmail() {
+        String filename = "music.xml";
+        File path = Config.context.getFileStreamPath(filename);
+
+        System.out.println("sdfghjk" + Config.context.getApplication().getFilesDir().toString());
 
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_EMAIL, "music.xml");
+        sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(path));
         sendIntent.setType("application/xml");
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Config.context.startActivity(Intent.createChooser(sendIntent,"Share using"));

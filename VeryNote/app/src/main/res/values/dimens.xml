@@ -60,11 +60,11 @@
 
     <dimen name="Offset">3dp</dimen>
 
-    <dimen name="btnDownY">0dp</dimen>
-    <dimen name="btnDownX">0dp</dimen>
+    <dimen name="btnDownY">170dp</dimen>
+    <dimen name="btnDownX">20dp</dimen>
 
-    <dimen name="btnUpY">10dp</dimen>
-    <dimen name="btnUpX">-120dp</dimen>
+    <dimen name="btnUpY">170dp</dimen>
+    <dimen name="btnUpX">90dp</dimen>
 
     //C
     <dimen name="C3">200dp</dimen>
