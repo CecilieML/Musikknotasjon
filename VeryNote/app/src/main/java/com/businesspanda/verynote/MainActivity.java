@@ -510,7 +510,10 @@ public class MainActivity extends ActionBarActivity  {
                     playing = false;
                 }
                 return true;
-
+            case R.id.action_share:
+                ExportXML exp = new ExportXML();
+                exp.sendToEmail();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

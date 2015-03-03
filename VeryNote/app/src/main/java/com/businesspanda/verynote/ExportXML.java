@@ -1,6 +1,7 @@
 package com.businesspanda.verynote;
 
 import android.content.Context;
+import android.content.Intent;
 
 import org.jfugue.MusicStringParser;
 import org.jfugue.MusicXmlRenderer;
@@ -41,6 +42,17 @@ public class ExportXML implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    void sendToEmail() {
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_EMAIL, "music.xml");
+        sendIntent.setType("application/xml");
+        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Config.context.startActivity(Intent.createChooser(sendIntent,"Share using"));
+
     }
 
 }
