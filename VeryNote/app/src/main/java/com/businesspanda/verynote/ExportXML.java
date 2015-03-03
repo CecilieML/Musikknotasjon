@@ -3,12 +3,14 @@ package com.businesspanda.verynote;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.Toast;
 
 import org.jfugue.MusicStringParser;
 import org.jfugue.MusicXmlRenderer;
 import org.jfugue.Pattern;
 import org.jfugue.*;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,9 +24,12 @@ import nu.xom.Serializer;
  */
 public class ExportXML implements Serializable {
 
+    String filename = "music.xml";
+
     void export() {
         try {
-            FileOutputStream file = Config.context.openFileOutput("music.xml", Context.MODE_PRIVATE);
+
+            FileOutputStream fos = Config.context.openFileOutput(filename, Context.MODE_WORLD_READABLE);
 
             MusicXmlRenderer renderer = new MusicXmlRenderer();
             MusicStringParser parser = new MusicStringParser();
@@ -33,21 +38,21 @@ public class ExportXML implements Serializable {
             Pattern pattern = new Pattern("C D E F G A B |");
             parser.parse(pattern);
 
-            Serializer serializer = new Serializer(file, "UTF-8");
+            Serializer serializer = new Serializer(fos, "UTF-8");
             serializer.setIndent(4);
             serializer.write(renderer.getMusicXMLDoc());
 
             System.out.println("var i void :3");
 
-            file.flush();
-            file.close();
+            fos.flush();
+            fos.close();
         } catch (IOException e) {
+            Toast.makeText(Config.context, "PROBLEMS!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
 
     void sendToEmail() {
-        String filename = "music.xml";
         File path = Config.context.getFileStreamPath(filename);
 
         System.out.println("sdfghjk" + Config.context.getApplication().getFilesDir().toString());
@@ -57,7 +62,7 @@ public class ExportXML implements Serializable {
         sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(path));
         sendIntent.setType("application/xml");
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Config.context.startActivity(Intent.createChooser(sendIntent,"Share using"));
+        Config.context.startActivity(Intent.createChooser(sendIntent, "Share using"));
 
     }
 
