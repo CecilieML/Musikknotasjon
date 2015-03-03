@@ -30,7 +30,10 @@ public class MyTouchListener implements View.OnTouchListener {
 
     public void createButtons(final ImageView imgView){
         btnUp = new Button(Config.context);
-        btnUp.setText("UP");
+        btnUp.setText("DOWN");
+        btnUp.setVisibility(View.VISIBLE);
+        btnUp.setY(R.dimen.btnUpY);
+        btnUp.setX(R.dimen.btnUpX);
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,8 +42,10 @@ public class MyTouchListener implements View.OnTouchListener {
         });
 
         btnDown = new Button(Config.context);
-        btnDown.setText("DOWN");
+        btnDown.setText("UP");
         btnDown.setVisibility(View.VISIBLE);
+        btnDown.setY(R.dimen.btnDownY);
+        btnDown.setX(R.dimen.btnDownX);
         btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,7 +53,8 @@ public class MyTouchListener implements View.OnTouchListener {
             }
         });
 
-
+        really.addView(btnUp);
+        really.addView(btnDown);
 
     }
 

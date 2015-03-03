@@ -196,7 +196,7 @@ public class MainActivity extends ActionBarActivity  {
             super.onStop();
             pitch_detector_thread_.interrupt();
         }catch (Exception e){
-            Log.e("Didn't use pitch_detector", "null pointer exception");
+            Log.e("null pointer exception", "Didn't use pitch_detector");
         }
 
         mHandler.removeCallbacks(mVibrations);
@@ -502,8 +502,8 @@ public class MainActivity extends ActionBarActivity  {
                 if(!playing) {
                     item.setIcon(R.drawable.ic_action_pause);
                     playFancySound();
-                    //ExportXML exp = new ExportXML();
-                    //exp.export();
+                    ExportXML exp = new ExportXML();
+                    exp.export();
                     playing = true;
                 }else{
                     item.setIcon(R.drawable.ic_action_play);
