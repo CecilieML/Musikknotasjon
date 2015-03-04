@@ -366,9 +366,14 @@ public class MainActivity extends ActionBarActivity  {
 
     public void notesOnScreen(Note note){
 
-        LinearInterpolator interpolator = new LinearInterpolator();
+       // LinearInterpolator interpolator = new LinearInterpolator();
 
         RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.lowestLayer);
+        RelativeLayout imgLayout = new RelativeLayout(this);
+
+        RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(
+                (int) this.getResources().getDimension(R.dimen.noteWidth + 10),
+                (int) this.getResources().getDimension(R.dimen.noteHeight) + 10);
 
         image = new ImageView(this);
 
@@ -407,7 +412,7 @@ public class MainActivity extends ActionBarActivity  {
             sharp.setY(y + yOffset);
             sharp.setBackgroundResource(R.drawable.sharpnote);
            // sharp.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
-            theLayout.addView(sharp);
+            imgLayout.addView(sharp);
         }else if(note.flat){
             ImageView flat = new ImageView(this);
             RelativeLayout.LayoutParams paraFlat = new RelativeLayout.LayoutParams(
@@ -422,12 +427,13 @@ public class MainActivity extends ActionBarActivity  {
             flat.setY(y + yOffset);
             flat.setBackgroundResource(R.drawable.flatnote);
          //   flat.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
-            theLayout.addView(flat);
+            imgLayout.addView(flat);
         }
 
        // image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
         image.setOnTouchListener(heyListen);
-                linLayout.addView(image);
+        imgLayout.addView(image);
+        linLayout.addView(imgLayout);
     }
 
     private final int duration = 3; // seconds
