@@ -58,10 +58,10 @@ public class ExportXML implements Serializable {
 
     private void copyFileToInternal() {
         try {
-            InputStream is = Config.context.getAssets().open("file.xml");
+            InputStream is = Config.context.getAssets().open("music.xml");
 
             File cacheDir = Config.context.getCacheDir();
-            File outFile = new File(cacheDir, "file.xml");
+            File outFile = new File(cacheDir, "music.xml");
 
             OutputStream os = new FileOutputStream(outFile.getAbsolutePath());
 
@@ -83,9 +83,7 @@ public class ExportXML implements Serializable {
 
         //File path = Config.context.getFileStreamPath(filename);
 
-        Uri uri = Uri.parse("content://your.package.name/" + filename); //
-
-        System.out.println("sdfghjk" + Config.context.getApplication().getFilesDir().toString());
+        Uri uri = Uri.parse("content://com.businesspanda.verynote/" + filename); //
 
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
