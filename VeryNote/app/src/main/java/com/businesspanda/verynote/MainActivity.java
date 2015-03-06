@@ -365,8 +365,14 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
+    boolean linLayMoving = false;
 
     public void notesOnScreen(Note note){
+
+
+        if(!linLayMoving)linLayHandler.postDelayed(moveLinLay, 1);
+        linLayMoving = true;
+
 
        // LinearInterpolator interpolator = new LinearInterpolator();
 
@@ -375,17 +381,14 @@ public class MainActivity extends ActionBarActivity  {
         RelativeLayout imgLayout = new RelativeLayout(this);
 
         RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(
-                (int) this.getResources().getDimension(R.dimen.noteWidth),
-                (int) this.getResources().getDimension(R.dimen.noteHeight));
+                (int) this.getResources().getDimension(R.dimen.layWidth),
+                (int) this.getResources().getDimension(R.dimen.layHeight));
         imgLayout.setLayoutParams(par);
-
 
         image = new ImageView(this);
 
-        int pos = (int) this.getResources().getDimension(R.dimen.endPos);
-        int x = linLayout.getLayoutParams().width - (int) this.getResources().getDimension(R.dimen.noteX);
-
-                //(int) this.getResources().getDimension(R.dimen.noteX);
+        //int pos = (int) this.getResources().getDimension(R.dimen.endPos);
+        int x = linLayout.getLayoutParams().width - (int) this.getResources().getDimension(R.dimen.noteStartPos);
 
         String notename = note.getName();
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
@@ -400,10 +403,10 @@ public class MainActivity extends ActionBarActivity  {
                 (int) this.getResources().getDimension(R.dimen.noteWidth),
                 (int) this.getResources().getDimension(R.dimen.noteHeight));
         image.setLayoutParams(params);
-        image.setX(0);
+        image.setX(this.getResources().getDimension(R.dimen.noteX));
         image.setY(0);
-        image.setMaxHeight((int) this.getResources().getDimension(R.dimen.maxHeight));
-        image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
+        //image.setMaxHeight((int) this.getResources().getDimension(R.dimen.maxHeight));
+        //image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
         image.setBackgroundResource(R.drawable.quartenote);
 
         if(note.sharp){
@@ -413,11 +416,9 @@ public class MainActivity extends ActionBarActivity  {
                     (int) this.getResources().getDimension(R.dimen.sharpHeight));
             sharp.setLayoutParams(para);
 
-            int xOffset = (int) this.getResources().getDimension(R.dimen.sharpOffsetX);
-            int yOffset = (int) this.getResources().getDimension(R.dimen.sharpOffsetY);
+            sharp.setX((int) this.getResources().getDimension(R.dimen.sharpOffsetX));
+            sharp.setY((int) this.getResources().getDimension(R.dimen.sharpOffsetY));
 
-            sharp.setX(0);
-            sharp.setY(0);
             sharp.setBackgroundResource(R.drawable.sharpnote);
            // sharp.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
             imgLayout.addView(sharp);
@@ -428,11 +429,8 @@ public class MainActivity extends ActionBarActivity  {
                     (int) this.getResources().getDimension(R.dimen.flatHeight));
             flat.setLayoutParams(paraFlat);
 
-            int xOffset = (int) this.getResources().getDimension(R.dimen.flatOffsetX);
-            int yOffset = (int) this.getResources().getDimension(R.dimen.flatOffsetY);
-
-            flat.setX(0);
-            flat.setY(0);
+            flat.setX((int) this.getResources().getDimension(R.dimen.flatOffsetX));
+            flat.setY((int) this.getResources().getDimension(R.dimen.flatOffsetY));
             flat.setBackgroundResource(R.drawable.flatnote);
          //   flat.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
             imgLayout.addView(flat);
@@ -496,6 +494,7 @@ public class MainActivity extends ActionBarActivity  {
     }
 
     int x = 0;
+    int xScroll = 0;
     int speed = 100;
     private Runnable moveLinLay = new Runnable() {
         public void run() {
@@ -524,8 +523,8 @@ public class MainActivity extends ActionBarActivity  {
                     pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
                     pitch_detector_thread_.start();
                     tempolineHandler.postDelayed(writeTempoline, 1);
-                    linLayHandler.postDelayed(moveLinLay, 1);
-
+                    //linLayHandler.postDelayed(moveLinLay, 1);
+                    scrollView.setEnabled(false);
                     recording = true;
                 } else {
                     item.setIcon(R.drawable.ic_action_mic);
@@ -536,10 +535,12 @@ public class MainActivity extends ActionBarActivity  {
                     linLayHandler.removeCallbacks(moveLinLay);
                     linLayout.clearAnimation();
                     linLayout.animate().x(0).setDuration(10);
-                    //x = 0;
-                    int scrolWitdhl = scrollView.getWidth();
-                    System.out.println("scroll number   " + scrolWitdhl + " x " + x + " X+Y " + scrolWitdhl+x);
-                    scrollView.scrollTo(scrolWitdhl-x, 0);
+                    xScroll += x;
+                    int scrollWidth = scrollView.getWidth();
+                    scrollView.scrollTo(scrollWidth - xScroll, 0);
+                    x = 0;
+                    scrollView.setEnabled(true);
+                    linLayMoving = false;
                     recording = false;
                 }
                 return true;
@@ -564,9 +565,9 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
-
-
-
+    public boolean isRecording() {
+        return recording;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

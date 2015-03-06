@@ -17,8 +17,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:measureAllChildren="false"
-                android:id="@+id/scrollview"
-                 android:background="@color/cyan">
+                android:id="@+id/scrollview">
                 <!-- <LinearLayout
                      android:layout_height="fill_parent"
                      android:layout_width="10dp"

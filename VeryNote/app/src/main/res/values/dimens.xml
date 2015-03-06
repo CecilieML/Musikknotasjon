@@ -12,7 +12,11 @@
     <dimen name="noteHeight">40dp</dimen>
     <dimen name="noteWidth">20dp</dimen>
 
-    <dimen name="noteX">50dp</dimen>
+    <dimen name="layHeight">50dp</dimen>
+    <dimen name="layWidth">30dp</dimen>
+
+    <dimen name="noteX">10dp</dimen>
+    <dimen name="noteStartPos">55dp</dimen>
 
     <dimen name="endPos">-15dp</dimen>
     <dimen name="startPos">415dp</dimen>
@@ -34,11 +38,11 @@
     <dimen name="tempolineWidth">2dp</dimen>
     <dimen name="tempolineHeight">34.5dp</dimen>
 
-    <dimen name="sharpOffsetX">1dp</dimen>
-    <dimen name="sharpOffsetY">1dp</dimen>
+    <dimen name="sharpOffsetX">0dp</dimen>
+    <dimen name="sharpOffsetY">20dp</dimen>
 
-    <dimen name="flatOffsetX">5dp</dimen>
-    <dimen name="flatOffsetY">10dp</dimen>
+    <dimen name="flatOffsetX">0dp</dimen>
+    <dimen name="flatOffsetY">16dp</dimen>
 
     <dimen name="tempolineOffsetX">-50dp</dimen>
     <dimen name="upperTempolineY">31dp</dimen>
@@ -61,82 +65,82 @@
     <dimen name="Offset">3dp</dimen>
 
     <dimen name="btnDownY">170dp</dimen>
-    <dimen name="btnDownX">20dp</dimen>
+    <dimen name="btnDownX">10dp</dimen>
 
     <dimen name="btnUpY">170dp</dimen>
     <dimen name="btnUpX">90dp</dimen>
 
     //C
-    <dimen name="C3">200dp</dimen>
-    <dimen name="C4">81dp</dimen>       //x
+    <dimen name="C3">100dp</dimen>
+    <dimen name="C4">35dp</dimen>       //x
     <dimen name="C5">53dp</dimen>
-    <dimen name="C6">8dp</dimen>
+    <dimen name="C6">11dp</dimen>
 
     //C#
-    <dimen name="C3s">200dp</dimen>
-    <dimen name="C4s">81dp</dimen>      //x
-    <dimen name="C5s">53dp</dimen>
-    <dimen name="C6s">11dp</dimen>
+    <dimen name="C3s">109dp</dimen>
+    <dimen name="C4s">34dp</dimen>      //x
+    <dimen name="C5s">22dp</dimen>
+    <dimen name="C6s">10dp</dimen>
 
     //D
-    <dimen name="D3">200dp</dimen>
-    <dimen name="D4">76dp</dimen>       //x
-    <dimen name="D5">47dp</dimen>
-    <dimen name="D6">15dp</dimen>
+    <dimen name="D3">44dp</dimen>
+    <dimen name="D4">33dp</dimen>       //x
+    <dimen name="D5">21dp</dimen>
+    <dimen name="D6">9dp</dimen>
 
     //Eb
-    <dimen name="E3b">200dp</dimen>
-    <dimen name="E4b">73dp</dimen>      //x
-    <dimen name="E5b">18dp</dimen>
-    <dimen name="E6b">19dp</dimen>
+    <dimen name="E3b">43dp</dimen>
+    <dimen name="E4b">32dp</dimen>      //x
+    <dimen name="E5b">20dp</dimen>
+    <dimen name="E6b">8dp</dimen>
 
     //E
-    <dimen name="E3">200dp</dimen>
-    <dimen name="E4">73dp</dimen>       //x
-    <dimen name="E5">22dp</dimen>
-    <dimen name="E6">23dp</dimen>
+    <dimen name="E3">42dp</dimen>
+    <dimen name="E4">31dp</dimen>       //x
+    <dimen name="E5">19dp</dimen>
+    <dimen name="E6">7dp</dimen>
 
     //F
-    <dimen name="F3">200dp</dimen>
-    <dimen name="F4">69dp</dimen>       //x
-    <dimen name="F5">26dp</dimen>
-    <dimen name="F6">27dp</dimen>
+    <dimen name="F3">41dp</dimen>
+    <dimen name="F4">30dp</dimen>       //x
+    <dimen name="F5">18dp</dimen>
+    <dimen name="F6">6dp</dimen>
 
     //F#
-    <dimen name="F3s">200dp</dimen>
-    <dimen name="F4s">69dp</dimen>      //x
-    <dimen name="F5s">30dp</dimen>
-    <dimen name="F6s">40dp</dimen>
+    <dimen name="F3s">40dp</dimen>
+    <dimen name="F4s">29dp</dimen>      //x
+    <dimen name="F5s">17dp</dimen>
+    <dimen name="F6s">5dp</dimen>
 
     //G
-    <dimen name="G3">200dp</dimen>
-    <dimen name="G4">64dp</dimen>       //x
-    <dimen name="G5">70dp</dimen>
-    <dimen name="G6">80dp</dimen>
+    <dimen name="G3">39dp</dimen>
+    <dimen name="G4">28dp</dimen>       //x
+    <dimen name="G5">16dp</dimen>
+    <dimen name="G6">4dp</dimen>
 
     //G#
-    <dimen name="G3s">240dp</dimen>
-    <dimen name="G4s">64dp</dimen>      //x
-    <dimen name="G5s">110dp</dimen>
-    <dimen name="G6s">111dp</dimen>
+    <dimen name="G3s">39dp</dimen>
+    <dimen name="G4s">27dp</dimen>      //x
+    <dimen name="G5s">15dp</dimen>
+    <dimen name="G6s">3dp</dimen>
 
     //A
-    <dimen name="A3">240dp</dimen>
-    <dimen name="A4">59.5dp</dimen>       //x
-    <dimen name="A5">140dp</dimen>
-    <dimen name="A6">150dp</dimen>
+    <dimen name="A3">38dp</dimen>
+    <dimen name="A4">26dp</dimen>       //x
+    <dimen name="A5">14dp</dimen>
+    <dimen name="A6">2dp</dimen>
 
     //Bb
-    <dimen name="B3b">250dp</dimen>
-    <dimen name="B4b">55.5dp</dimen>      //x
-    <dimen name="B5b">180dp</dimen>
-    <dimen name="B6b">200dp</dimen>
+    <dimen name="B3b">37dp</dimen>
+    <dimen name="B4b">25dp</dimen>      //x
+    <dimen name="B5b">13dp</dimen>
+    <dimen name="B6b">1dp</dimen>
 
     //B
-    <dimen name="B3">250dp</dimen>
-    <dimen name="B4">55.5dp</dimen>       //x
-    <dimen name="B5">230dp</dimen>
-    <dimen name="B6">235dp</dimen>
+    <dimen name="B3">36dp</dimen>
+    <dimen name="B4">24dp</dimen>       //x
+    <dimen name="B5">12dp</dimen>
+    <dimen name="B6">0dp</dimen>
 
 
 
