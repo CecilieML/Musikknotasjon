@@ -14,6 +14,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 
 import nu.xom.Serializer;
@@ -46,26 +48,52 @@ public class ExportXML implements Serializable {
 
             fos.flush();
             fos.close();
+
+            copyFileToInternal();
         } catch (IOException e) {
             Toast.makeText(Config.context, "PROBLEMS!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
 
+    private void copyFileToInternal() {
+        try {
+            InputStream is = Config.context.getAssets().open("file.xml");
+
+            File cacheDir = Config.context.getCacheDir();
+            File outFile = new File(cacheDir, "file.xml");
+
+            OutputStream os = new FileOutputStream(outFile.getAbsolutePath());
+
+            byte[] buff = new byte[1024];
+            int len;
+            while ((len = is.read(buff)) > 0) {
+                os.write(buff, 0, len);
+            }
+            os.flush();
+            os.close();
+            is.close();
+
+        } catch (IOException e) {
+            e.printStackTrace(); // TODO: should close streams properly here
+        }
+    }
+
     void sendToEmail() {
+
         File path = Config.context.getFileStreamPath(filename);
 
-        Uri uri = Uri.parse("content://your.package.name/" + filename); //
+        //Uri uri = Uri.parse("content://your.package.name/" + filename); //
 
         System.out.println("sdfghjk" + Config.context.getApplication().getFilesDir().toString());
 
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(path));
-        sendIntent.setDataAndType(uri, "application/xml"); //
+        //sendIntent.setDataAndType(uri, "application/xml"); //
         sendIntent.setType("application/xml");
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Config.context.startActivity(Intent.createChooser(sendIntent, "Share using"));
+        Config.context.startActivity(Intent.createChooser(sendIntent, "Share!"));
 
     }
 
