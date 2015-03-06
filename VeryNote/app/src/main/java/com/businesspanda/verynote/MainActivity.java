@@ -74,6 +74,7 @@ public class MainActivity extends ActionBarActivity  {
     RelativeLayout linLayout;
     MyTouchListener heyListen;
 
+    public ExportXML exp;
 
     ImageView image;
     Note prevNote;
@@ -88,8 +89,10 @@ public class MainActivity extends ActionBarActivity  {
         NoteSearch.createTable();
         genTone();
 
+
         //fitToScreen();
 
+        exp = new ExportXML();
 
         Config.context = this;
 
@@ -470,14 +473,9 @@ public class MainActivity extends ActionBarActivity  {
     }
 
 
-    void playFancySound() {
-        Player player = new Player();
-        player.play("C D E F G A B");
-    }
 
 
 
-/*
     void playSound(){
         final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
                 sampleRate, AudioFormat.CHANNEL_OUT_MONO,
@@ -487,7 +485,7 @@ public class MainActivity extends ActionBarActivity  {
         audioTrack.play();
 
     }
-    */
+
 
     public int Offset(){
         return (int) this.getResources().getDimension(R.dimen.Offset);
@@ -514,6 +512,7 @@ public class MainActivity extends ActionBarActivity  {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_record:
@@ -547,17 +546,17 @@ public class MainActivity extends ActionBarActivity  {
             case R.id.action_play:
                 if(!playing) {
                     item.setIcon(R.drawable.ic_action_pause);
-                    playFancySound();
-                    ExportXML exp = new ExportXML();
-                    exp.export();
+                    playSound();
                     playing = true;
                 }else{
                     item.setIcon(R.drawable.ic_action_play);
                     playing = false;
                 }
                 return true;
+            case R.id.action_save:
+                exp.saveToFile();
+                return true;
             case R.id.action_share:
-                ExportXML exp = new ExportXML();
                 exp.sendToEmail();
                 return true;
             default:
@@ -565,9 +564,6 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
-    public boolean isRecording() {
-        return recording;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

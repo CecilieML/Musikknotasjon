@@ -23,11 +23,6 @@
             </intent-filter>
         </activity>
 
-        <provider
-            android:name="MyProvider"
-            android:authorities="com.businesspanda.verynote"
-            android:exported="true" />
-
     </application>
 
 </manifest>
