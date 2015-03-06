@@ -93,6 +93,7 @@ public class ExportXML implements Serializable {
         //sendIntent.setDataAndType(uri, "application/xml"); //
         sendIntent.setType("application/xml");
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         Config.context.startActivity(Intent.createChooser(sendIntent, "Share!"));
 
     }
