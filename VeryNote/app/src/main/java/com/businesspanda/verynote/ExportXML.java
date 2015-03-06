@@ -29,7 +29,7 @@ public class ExportXML implements Serializable {
     void export() {
         try {
 
-            FileOutputStream fos = Config.context.openFileOutput(filename, Context.MODE_WORLD_READABLE);
+            FileOutputStream fos = Config.context.openFileOutput(filename, Context.MODE_PRIVATE);
 
             MusicXmlRenderer renderer = new MusicXmlRenderer();
             MusicStringParser parser = new MusicStringParser();
@@ -55,11 +55,14 @@ public class ExportXML implements Serializable {
     void sendToEmail() {
         File path = Config.context.getFileStreamPath(filename);
 
+        Uri uri = Uri.parse("content://your.package.name/" + filename); //
+
         System.out.println("sdfghjk" + Config.context.getApplication().getFilesDir().toString());
 
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(path));
+        sendIntent.setDataAndType(uri, "application/xml"); //
         sendIntent.setType("application/xml");
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Config.context.startActivity(Intent.createChooser(sendIntent, "Share using"));
