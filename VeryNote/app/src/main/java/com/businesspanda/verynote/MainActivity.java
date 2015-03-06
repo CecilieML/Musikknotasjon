@@ -79,7 +79,7 @@ public class MainActivity extends ActionBarActivity  {
     ImageView image;
     Note prevNote;
 
-    HorizontalScrollView scrollView;
+    LockableScrollView scrollView;
 
     /** Called when the activity is first created. */
     @Override
@@ -88,7 +88,6 @@ public class MainActivity extends ActionBarActivity  {
         setContentView(R.layout.activity_main);
         NoteSearch.createTable();
         genTone();
-
 
         //fitToScreen();
 
@@ -99,7 +98,7 @@ public class MainActivity extends ActionBarActivity  {
         RelativeLayout really = (RelativeLayout) findViewById(R.id.middleLayer);
         heyListen = new MyTouchListener(really);
 
-        scrollView = (HorizontalScrollView) findViewById(R.id.scrollview);
+        scrollView = (LockableScrollView) findViewById(R.id.scrollview);
 
         linLayout = new RelativeLayout(this);
         RelativeLayout.LayoutParams paramsLinLayout = new RelativeLayout.LayoutParams(
@@ -107,42 +106,20 @@ public class MainActivity extends ActionBarActivity  {
                 (int) this.getResources().getDimension(R.dimen.lowestLayerHeight));
         linLayout.setLayoutParams(paramsLinLayout);
 
-        linLayout.setBackgroundColor(getResources().getColor(R.color.pink));
-
-        //linLayout.setOrientation(LinearLayout.HORIZONTAL);
-
         scrollView.addView(linLayout);
 
         RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.middleLayer);
         ImageView image = new ImageView(this);
-        ImageView boxLeft = new ImageView(this);
-        ImageView boxRight = new ImageView(this);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.trebleWidth),
                 (int) this.getResources().getDimension(R.dimen.trebleHeight));
         image.setLayoutParams(params);
 
-        RelativeLayout.LayoutParams paramsBox = new RelativeLayout.LayoutParams(
-                (int) this.getResources().getDimension(R.dimen.boxParamWidth),
-                (int) this.getResources().getDimension(R.dimen.boxParamHeight));
-        boxLeft.setLayoutParams(paramsBox);
-        boxRight.setLayoutParams(paramsBox);
-
         image.setX((int) this.getResources().getDimension(R.dimen.trebleX));
         image.setY((int) this.getResources().getDimension(R.dimen.trebleY));
 
-        boxLeft.setX((int) this.getResources().getDimension(R.dimen.boxLeftX));
-        boxLeft.setY((int) this.getResources().getDimension(R.dimen.boxLeftY));
-
-        boxRight.setX((int) this.getResources().getDimension(R.dimen.boxRightX));
-        boxRight.setY((int) this.getResources().getDimension(R.dimen.boxRightY));
-
         image.setBackgroundResource(R.drawable.treblebackround);
-        boxRight.setBackgroundColor(getResources().getColor(R.color.lightPurple));
-        boxLeft.setBackgroundColor(getResources().getColor(R.color.lightPurple));
 
-        theLayout.addView(boxLeft);
-        theLayout.addView(boxRight);
         theLayout.addView(image);
 
 
@@ -399,7 +376,7 @@ public class MainActivity extends ActionBarActivity  {
 
         imgLayout.setY(y);
         imgLayout.setX(x);
-        imgLayout.setBackgroundColor(getResources().getColor(R.color.red));
+       // imgLayout.setBackgroundColor(getResources().getColor(R.color.red));
        // int y = note.getyValue();
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
@@ -443,6 +420,7 @@ public class MainActivity extends ActionBarActivity  {
         image.setOnTouchListener(heyListen);
         imgLayout.addView(image);
         linLayout.addView(imgLayout);
+        if(!recording)linLayHandler.removeCallbacks(moveLinLay);
     }
 
     private final int duration = 3; // seconds
@@ -501,7 +479,6 @@ public class MainActivity extends ActionBarActivity  {
             x -= Offset();
             linLayout.getLayoutParams().width += Offset();
             linLayout.requestLayout();
-
             linLayHandler.postDelayed(moveLinLay, speed);
         }
     };
@@ -523,7 +500,7 @@ public class MainActivity extends ActionBarActivity  {
                     pitch_detector_thread_.start();
                     tempolineHandler.postDelayed(writeTempoline, 1);
                     //linLayHandler.postDelayed(moveLinLay, 1);
-                    scrollView.setEnabled(false);
+                    scrollView.setScrollingEnabled(false);
                     recording = true;
                 } else {
                     item.setIcon(R.drawable.ic_action_mic);
@@ -538,7 +515,7 @@ public class MainActivity extends ActionBarActivity  {
                     int scrollWidth = scrollView.getWidth();
                     scrollView.scrollTo(scrollWidth - xScroll, 0);
                     x = 0;
-                    scrollView.setEnabled(true);
+                    scrollView.setScrollingEnabled(true);
                     linLayMoving = false;
                     recording = false;
                 }

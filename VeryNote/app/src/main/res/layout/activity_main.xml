@@ -13,7 +13,7 @@
         android:id="@+id/lowestLayer"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="80dp">
-             <HorizontalScrollView
+             <com.businesspanda.verynote.LockableScrollView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:measureAllChildren="false"
@@ -25,7 +25,7 @@
                      android:id="@+id/linLayout"
                      android:background="#fff862ff"
                      android:orientation="horizontal" />-->
-            </HorizontalScrollView>
+            </com.businesspanda.verynote.LockableScrollView>
     </RelativeLayout>
 
     <RelativeLayout

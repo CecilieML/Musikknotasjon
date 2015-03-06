@@ -44,9 +44,8 @@ public class MyTouchListener implements View.OnTouchListener {
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RelativeLayout dfg = (RelativeLayout) imgView.getParent();
-                dfg.setY(dfg.getY()-20);
-                //imgView.setY(imgView.getY()-20);
+                RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
+                parentLayout.setY(parentLayout.getY()-20);
             }
         });
 
@@ -58,9 +57,8 @@ public class MyTouchListener implements View.OnTouchListener {
         btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RelativeLayout dfg = (RelativeLayout) imgView.getParent();
-                dfg.setY(dfg.getY()+20);
-                //imgView.setY(imgView.getY()+20);
+                RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
+                parentLayout.setY(parentLayout.getY()+20);
             }
         });
 
@@ -89,12 +87,17 @@ public class MyTouchListener implements View.OnTouchListener {
                     vibIy(70);
                     createButtons(img);
                     v.setSelected(true);
+                    RelativeLayout parentLayout = (RelativeLayout) img.getParent();
+                    parentLayout.setBackgroundColor(R.color.red);
+                    System.out.println(v.getBackground());
                     oneIsCurrentlyChosen = true;
                 }else{
                     if(v==img) {
                         vibIy(30);
                         removeButtons();
                         v.setSelected(false);
+                        RelativeLayout parentLayout = (RelativeLayout) img.getParent();
+                        parentLayout.setBackgroundColor(0x00000000);
                         oneIsCurrentlyChosen = false;
                     }
                 }
