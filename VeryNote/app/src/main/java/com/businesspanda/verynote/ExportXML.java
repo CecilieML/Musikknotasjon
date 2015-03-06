@@ -81,15 +81,16 @@ public class ExportXML implements Serializable {
 
     void sendToEmail() {
 
-        File path = Config.context.getFileStreamPath(filename);
+        //File path = Config.context.getFileStreamPath(filename);
 
-        //Uri uri = Uri.parse("content://your.package.name/" + filename); //
+        Uri uri = Uri.parse("content://your.package.name/" + filename); //
 
         System.out.println("sdfghjk" + Config.context.getApplication().getFilesDir().toString());
 
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(path));
+        //sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(path));
+        sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
         //sendIntent.setDataAndType(uri, "application/xml"); //
         sendIntent.setType("application/xml");
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
