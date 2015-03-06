@@ -73,6 +73,7 @@ public class ExportXML implements Serializable {
             os.flush();
             os.close();
             is.close();
+            System.out.println("copied file to cache!!!");
 
         } catch (IOException e) {
             e.printStackTrace(); // TODO: should close streams properly here

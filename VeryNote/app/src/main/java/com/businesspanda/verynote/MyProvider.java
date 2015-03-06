@@ -18,7 +18,7 @@ public class MyProvider extends ContentProvider {
     @Override
     public ParcelFileDescriptor openFile(Uri uri, String mode) throws FileNotFoundException {
         File cacheDir = getContext().getCacheDir();
-        File privateFile = new File(cacheDir, "file.xml");
+        File privateFile = new File(cacheDir, "music.xml");
 
         return ParcelFileDescriptor.open(privateFile, ParcelFileDescriptor.MODE_READ_ONLY);
     }
