@@ -44,7 +44,9 @@ public class MyTouchListener implements View.OnTouchListener {
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imgView.setY(imgView.getY()-20);
+                RelativeLayout dfg = (RelativeLayout) imgView.getParent();
+                dfg.setY(dfg.getY()-20);
+                //imgView.setY(imgView.getY()-20);
             }
         });
 
@@ -56,7 +58,9 @@ public class MyTouchListener implements View.OnTouchListener {
         btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imgView.setY(imgView.getY()+20);
+                RelativeLayout dfg = (RelativeLayout) imgView.getParent();
+                dfg.setY(dfg.getY()+20);
+                //imgView.setY(imgView.getY()+20);
             }
         });
 

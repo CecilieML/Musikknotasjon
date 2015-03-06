@@ -2,6 +2,6 @@
 <resources>
     <color name="lightPurple">#ffbfc0fd</color>
     <color name="cyan">#aa3ffff8</color>
-    <color name="red">#aafd0000</color>
+    <color name="red">#ccfd0000</color>
     <color name="pink">#aaf88fff</color>
 </resources>

@@ -252,7 +252,7 @@ public class MainActivity extends ActionBarActivity  {
         if(nearestNote==prevNote)
             noteLength();
 
-        if(dur>300 && nearestNote!=prevNote){
+        if(dur>200 && nearestNote!=prevNote){
 
             lastTime = System.nanoTime();
 
@@ -356,6 +356,8 @@ public class MainActivity extends ActionBarActivity  {
             image.setBackgroundResource(R.drawable.singlenote);
         }else if(dur>=600 && dur<1000){
             image.setBackgroundResource(R.drawable.fullnote);
+        }else if(dur>=1000){
+            prevNote = new Note(false, false, 0, 0, " ");
         }
 
         //image.setBackgroundResource(R.drawable.doublenote);
@@ -368,12 +370,15 @@ public class MainActivity extends ActionBarActivity  {
 
        // LinearInterpolator interpolator = new LinearInterpolator();
 
-        RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.lowestLayer);
+        //RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.lowestLayer);
+
         RelativeLayout imgLayout = new RelativeLayout(this);
 
         RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(
-                (int) this.getResources().getDimension(R.dimen.noteWidth + 10),
-                (int) this.getResources().getDimension(R.dimen.noteHeight) + 10);
+                (int) this.getResources().getDimension(R.dimen.noteWidth),
+                (int) this.getResources().getDimension(R.dimen.noteHeight));
+        imgLayout.setLayoutParams(par);
+
 
         image = new ImageView(this);
 
@@ -386,18 +391,21 @@ public class MainActivity extends ActionBarActivity  {
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
         int y = (int)this.getResources().getDimension(yID);
 
+        imgLayout.setY(y);
+        imgLayout.setX(x);
+        imgLayout.setBackgroundColor(getResources().getColor(R.color.red));
        // int y = note.getyValue();
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.noteWidth),
                 (int) this.getResources().getDimension(R.dimen.noteHeight));
         image.setLayoutParams(params);
-        image.setX(x);
-        image.setY(y);
+        image.setX(0);
+        image.setY(0);
         image.setMaxHeight((int) this.getResources().getDimension(R.dimen.maxHeight));
         image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
-        //image.setBackgroundResource(R.drawable.singlenote);
-        noteLength();
+        image.setBackgroundResource(R.drawable.quartenote);
+
         if(note.sharp){
             ImageView sharp = new ImageView(this);
             RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(
@@ -408,8 +416,8 @@ public class MainActivity extends ActionBarActivity  {
             int xOffset = (int) this.getResources().getDimension(R.dimen.sharpOffsetX);
             int yOffset = (int) this.getResources().getDimension(R.dimen.sharpOffsetY);
 
-            sharp.setX(x - xOffset);
-            sharp.setY(y + yOffset);
+            sharp.setX(0);
+            sharp.setY(0);
             sharp.setBackgroundResource(R.drawable.sharpnote);
            // sharp.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
             imgLayout.addView(sharp);
@@ -423,8 +431,8 @@ public class MainActivity extends ActionBarActivity  {
             int xOffset = (int) this.getResources().getDimension(R.dimen.flatOffsetX);
             int yOffset = (int) this.getResources().getDimension(R.dimen.flatOffsetY);
 
-            flat.setX(x - xOffset);
-            flat.setY(y + yOffset);
+            flat.setX(0);
+            flat.setY(0);
             flat.setBackgroundResource(R.drawable.flatnote);
          //   flat.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
             imgLayout.addView(flat);
@@ -528,8 +536,10 @@ public class MainActivity extends ActionBarActivity  {
                     linLayHandler.removeCallbacks(moveLinLay);
                     linLayout.clearAnimation();
                     linLayout.animate().x(0).setDuration(10);
-                    x = 0;
-                    scrollView.computeScroll();
+                    //x = 0;
+                    int scrolWitdhl = scrollView.getWidth();
+                    System.out.println("scroll number   " + scrolWitdhl + " x " + x + " X+Y " + scrolWitdhl+x);
+                    scrollView.scrollTo(scrolWitdhl-x, 0);
                     recording = false;
                 }
                 return true;

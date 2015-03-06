@@ -34,8 +34,8 @@
     <dimen name="tempolineWidth">2dp</dimen>
     <dimen name="tempolineHeight">34.5dp</dimen>
 
-    <dimen name="sharpOffsetX">5dp</dimen>
-    <dimen name="sharpOffsetY">5dp</dimen>
+    <dimen name="sharpOffsetX">1dp</dimen>
+    <dimen name="sharpOffsetY">1dp</dimen>
 
     <dimen name="flatOffsetX">5dp</dimen>
     <dimen name="flatOffsetY">10dp</dimen>
