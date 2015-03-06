@@ -24,11 +24,13 @@ import android.media.AudioTrack;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.renderscript.Sampler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.text.method.Touch;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,6 +40,7 @@ import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -75,6 +78,8 @@ public class MainActivity extends ActionBarActivity  {
     MyTouchListener heyListen;
 
     public ExportXML exp;
+
+    public String title = "Untitled";
 
     ImageView image;
     Note prevNote;
@@ -161,6 +166,22 @@ public class MainActivity extends ActionBarActivity  {
                 }
             }
         });
+
+        ActionBar actionBar = getActionBar();
+        // add the custom view to the action bar
+        actionBar.setCustomView(R.layout.edit_text);
+        EditText search = (EditText) actionBar.getCustomView().findViewById(R.id.title_field);
+        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                EditText name = (EditText) findViewById(R.id.title_field);
+                name.setText(title);
+                return false;
+            }
+        });
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
+                | ActionBar.DISPLAY_SHOW_HOME);
 
 
     }
@@ -531,7 +552,7 @@ public class MainActivity extends ActionBarActivity  {
                 }
                 return true;
             case R.id.action_save:
-                exp.saveToFile();
+                //exp.saveToFile();
                 return true;
             case R.id.action_share:
                 exp.sendToEmail();

@@ -26,7 +26,7 @@ public class ExportXML implements Serializable {
 
     String filename = "music.xml";
 
-    void saveToFile() {
+    void saveToFile(Pattern pattern) {
         try {
 
             FileOutputStream fos = Config.context.openFileOutput(filename, Context.MODE_WORLD_READABLE);
@@ -35,7 +35,7 @@ public class ExportXML implements Serializable {
             MusicStringParser parser = new MusicStringParser();
             parser.addParserListener(renderer);
 
-            Pattern pattern = new Pattern("C D E F G A B |");
+            //Pattern pattern = new Pattern("C D E F G A B |");
             parser.parse(pattern);
 
             Serializer serializer = new Serializer(fos, "UTF-8");
