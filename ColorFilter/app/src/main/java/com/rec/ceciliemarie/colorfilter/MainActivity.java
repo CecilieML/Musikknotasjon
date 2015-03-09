@@ -21,7 +21,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void changeColor(View view){
         ImageView rainbow = (ImageView) findViewById(R.id.imageView);
-        ColorFilter filter = new LightingColorFilter(Color.BLUE, Color.CYAN);
+        ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
         rainbow.setColorFilter(filter);
     }
 

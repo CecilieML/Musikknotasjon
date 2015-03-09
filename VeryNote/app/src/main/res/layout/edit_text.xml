@@ -7,6 +7,9 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:inputType="textFilter"
+    android:singleLine="true"
+    android:maxLength="30"
+    android:minEms="7"
     android:text="Untitled">
 
 </EditText>

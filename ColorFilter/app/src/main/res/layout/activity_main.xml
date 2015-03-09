@@ -18,7 +18,7 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp"
-        android:src="@drawable/rainbow" />
+        android:src="@drawable/doublenote" />
 
     <Button
         android:layout_width="wrap_content"

@@ -1,8 +1,12 @@
 package com.businesspanda.verynote;
 
 import android.content.Context;
+import android.graphics.AvoidXfermode;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.LinearGradient;
+import android.graphics.PorterDuff;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
@@ -36,58 +40,6 @@ public class MyTouchListener implements View.OnTouchListener {
 
     public MyTouchListener(RelativeLayout really) {
         this.really = really;
-    }
-
-    public ImageView LeftGradient(){
-        ImageView gradient = new ImageView(Config.context);
-
-        gradient.setBackgroundResource(R.drawable.gradient_left);
-
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, R.dimen.layHeight);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        gradient.setLayoutParams(layoutParams);
-
-        return gradient;
-    }
-
-    public ImageView RightGradient(){
-        ImageView gradient = new ImageView(Config.context);
-
-        gradient.setBackgroundResource(R.drawable.gradient_right);
-
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, R.dimen.layHeight);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        gradient.setLayoutParams(layoutParams);
-
-        return gradient;
-    }
-
-    public ImageView TopGradient(){
-        ImageView gradient = new ImageView(Config.context);
-
-        gradient.setBackgroundResource(R.drawable.gradient_top);
-
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                R.dimen.layWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        gradient.setLayoutParams(layoutParams);
-
-        return gradient;
-    }
-
-    public ImageView BottomGradient(){
-        ImageView gradient = new ImageView(Config.context);
-
-        gradient.setBackgroundResource(R.drawable.gradient_bottom);
-
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                R.dimen.layWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        gradient.setLayoutParams(layoutParams);
-
-        return gradient;
     }
 
     public void vibIy(int dur) {
@@ -148,12 +100,11 @@ public class MyTouchListener implements View.OnTouchListener {
                     createButtons(img);
                     v.setSelected(true);
                     RelativeLayout parentLayout = (RelativeLayout) img.getParent();
-                    //parentLayout.setBackgroundColor(Config.context.getResources().getColor(R.color.darkPurple));
-                    parentLayout.addView(LeftGradient());
-                    parentLayout.addView(RightGradient());
-                    parentLayout.addView(TopGradient());
-                    parentLayout.addView(BottomGradient());
-                    System.out.println(parentLayout.getBackground());
+                   // parentLayout.setBackgroundColor(Config.context.getResources().getColor(R.color.darkPurple));
+
+                    //ColorFilter filter = new ColorFilter(R.color.cyan, PorterDuff.Mode.MULTIPLY);
+                    img.setColorFilter(R.color.cyan, PorterDuff.Mode.MULTIPLY);
+
                     oneIsCurrentlyChosen = true;
                 }else{
                     if(v==img) {
@@ -162,6 +113,7 @@ public class MyTouchListener implements View.OnTouchListener {
                         v.setSelected(false);
                         RelativeLayout parentLayout = (RelativeLayout) img.getParent();
                         parentLayout.setBackgroundColor(0x00000000);
+
                         oneIsCurrentlyChosen = false;
                     }
                 }

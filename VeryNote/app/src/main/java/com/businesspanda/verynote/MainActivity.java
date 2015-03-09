@@ -27,11 +27,14 @@ import android.os.Vibrator;
 import android.renderscript.Sampler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.internal.view.menu.ActionMenuItemView;
+import android.support.v7.widget.PopupMenu;
 import android.text.Layout;
 import android.text.method.Touch;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,15 +43,19 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewAnimator;
 
 import org.jfugue.*;
@@ -60,7 +67,8 @@ public class MainActivity extends ActionBarActivity  {
 
     Thread pitch_detector_thread_;
 
-    public ArrayList<Note> allNotes = new ArrayList();
+    //public ArrayList<String> allNotes = new ArrayList();
+    public String allNotes = "";
 
     public int met_int = 1;
 
@@ -255,11 +263,15 @@ public class MainActivity extends ActionBarActivity  {
         if(nearestNote==prevNote)
             noteLength();
 
-        if(dur>200 && nearestNote!=prevNote){
+        if(dur>300 && nearestNote!=prevNote){
 
             lastTime = System.nanoTime();
 
-            allNotes.add(nearestNote);
+            String arrayNote = nearestNote.getName().replaceAll("s","#");
+
+            //allNotes.add(arrayNote);
+            allNotes = allNotes + " " + arrayNote;
+
 
            /* for(int i = 0; i < allNotes.size();i++) {
                 System.out.println("All the notes  " + allNotes.get(i).getName());
@@ -274,10 +286,12 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
+
     private Runnable writeTempoline = new Runnable() {
         public void run() {
             tempolineOnScreen(getTempoUpperY());
             tempolineOnScreen(getTempoLowerY());
+            allNotes = allNotes + " |";
             tempolineHandler.postDelayed(writeTempoline, 1500);
         }
     };
@@ -355,6 +369,7 @@ public class MainActivity extends ActionBarActivity  {
             image.setBackgroundResource(R.drawable.quartenote);
         }else if(dur>=200 && dur<400){
             image.setBackgroundResource(R.drawable.halfnote);
+
         }else if(dur>=400 && dur<600){
             image.setBackgroundResource(R.drawable.singlenote);
         }else if(dur>=600 && dur<1000){
@@ -373,7 +388,10 @@ public class MainActivity extends ActionBarActivity  {
     public void notesOnScreen(Note note){
 
 
-        if(!linLayMoving)linLayHandler.postDelayed(moveLinLay, 1);
+        if(!linLayMoving){
+            linLayHandler.postDelayed(moveLinLay, 1);
+            tempolineHandler.postDelayed(writeTempoline, 1);
+        }
         linLayMoving = true;
 
 
@@ -389,6 +407,8 @@ public class MainActivity extends ActionBarActivity  {
         imgLayout.setLayoutParams(par);
 
         image = new ImageView(this);
+
+        imgLayout.setFocusable(true);
 
         //int pos = (int) this.getResources().getDimension(R.dimen.endPos);
         int x = linLayout.getLayoutParams().width - (int) this.getResources().getDimension(R.dimen.noteStartPos);
@@ -521,7 +541,6 @@ public class MainActivity extends ActionBarActivity  {
                     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
                     pitch_detector_thread_.start();
-                    tempolineHandler.postDelayed(writeTempoline, 1);
                     int scrollWidth = scrollView.getWidth();
                     scrollView.scrollTo(scrollWidth - xScroll, 0);
                     scrollView.setScrollingEnabled(false);
@@ -555,10 +574,30 @@ public class MainActivity extends ActionBarActivity  {
                 }
                 return true;
             case R.id.action_save:
-                //exp.saveToFile();
+                System.out.println(allNotes);
+                Pattern pattern = new Pattern(allNotes);
+                exp.saveToFile(pattern);
                 return true;
             case R.id.action_share:
                 exp.sendToEmail();
+                return true;
+            case R.id.action_settings:
+                LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = layoutInflater.inflate(R.layout.settings_popup, null);
+                final PopupWindow popupWindow = new PopupWindow(
+                        popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                Button btnDismiss = (Button)popupView.findViewById(R.id.dismiss);
+                btnDismiss.setOnClickListener(new Button.OnClickListener(){
+
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }});
+
+                popupWindow.showAtLocation(this.findViewById(R.id.metronomeswitch), Gravity.CENTER, 0, 0);
+
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
