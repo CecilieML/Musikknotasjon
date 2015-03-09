@@ -88,7 +88,7 @@ public class MyTouchListener implements View.OnTouchListener {
                     createButtons(img);
                     v.setSelected(true);
                     RelativeLayout parentLayout = (RelativeLayout) img.getParent();
-                    parentLayout.setBackgroundColor(R.color.red);
+                    parentLayout.setBackgroundColor(Config.context.getResources().getColor(R.color.darkPurple));
                     System.out.println(v.getBackground());
                     oneIsCurrentlyChosen = true;
                 }else{

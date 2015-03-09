@@ -27,6 +27,7 @@ import android.os.Vibrator;
 import android.renderscript.Sampler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.internal.view.menu.ActionMenuItemView;
+import android.text.Layout;
 import android.text.method.Touch;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -167,7 +168,7 @@ public class MainActivity extends ActionBarActivity  {
             }
         });
 
-        ActionBar actionBar = getActionBar();
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         // add the custom view to the action bar
         actionBar.setCustomView(R.layout.edit_text);
         EditText search = (EditText) actionBar.getCustomView().findViewById(R.id.title_field);
@@ -176,12 +177,11 @@ public class MainActivity extends ActionBarActivity  {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 EditText name = (EditText) findViewById(R.id.title_field);
-                name.setText(title);
+                //name.setText(title);
                 return false;
             }
         });
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
-                | ActionBar.DISPLAY_SHOW_HOME);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
 
     }
