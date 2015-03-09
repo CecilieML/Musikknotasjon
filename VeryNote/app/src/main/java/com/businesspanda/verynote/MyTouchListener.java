@@ -1,6 +1,12 @@
 package com.businesspanda.verynote;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PaintDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.location.LocationManager;
 import android.media.Image;
 import android.os.Vibrator;
@@ -26,8 +32,31 @@ public class MyTouchListener implements View.OnTouchListener {
     ImageView img;
     RelativeLayout really;
 
-    public MyTouchListener(RelativeLayout really){
+    public MyTouchListener(RelativeLayout really) {
         this.really = really;
+    }
+
+    public void gradient(RelativeLayout rellay){
+        ImageView gradient = new ImageView(Config.context);
+        ShapeDrawable.ShaderFactory sf = new ShapeDrawable.ShaderFactory() {
+            @Override
+            public Shader resize(int width, int height) {
+                LinearGradient lg = new LinearGradient(0, 0, 0, img.getHeight(),
+                        new int[]{
+                                Color.GREEN,
+                                Color.WHITE,
+                                Color.BLUE,
+                                Color.RED}, //substitute the correct colors for these
+                        new float[]{
+                                0, 0.45f, 0.55f, 1},
+                        Shader.TileMode.REPEAT);
+                return lg;
+            }
+        };
+        PaintDrawable p = new PaintDrawable();
+        p.setShaderFactory(sf);
+        gradient.setBackgroundDrawable((Drawable)p);
+        rellay.addView(gradient);
     }
 
     public void vibIy(int dur) {
@@ -90,6 +119,7 @@ public class MyTouchListener implements View.OnTouchListener {
                     RelativeLayout parentLayout = (RelativeLayout) img.getParent();
                     parentLayout.setBackgroundColor(Config.context.getResources().getColor(R.color.darkPurple));
                     System.out.println(v.getBackground());
+                    gradient(parentLayout);
                     oneIsCurrentlyChosen = true;
                 }else{
                     if(v==img) {
