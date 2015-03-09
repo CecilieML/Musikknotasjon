@@ -10,8 +10,10 @@ import android.graphics.drawable.ShapeDrawable;
 import android.location.LocationManager;
 import android.media.Image;
 import android.os.Vibrator;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -36,6 +38,57 @@ public class MyTouchListener implements View.OnTouchListener {
         this.really = really;
     }
 
+    public ImageView LeftGradient(){
+        ImageView gradient = new ImageView(Config.context);
+
+        gradient.setBackgroundResource(R.drawable.gradient_left);
+
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, R.dimen.layHeight);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        gradient.setLayoutParams(layoutParams);
+
+        return gradient;
+    }
+
+    public ImageView RightGradient(){
+        ImageView gradient = new ImageView(Config.context);
+
+        gradient.setBackgroundResource(R.drawable.gradient_right);
+
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, R.dimen.layHeight);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        gradient.setLayoutParams(layoutParams);
+
+        return gradient;
+    }
+
+    public ImageView TopGradient(){
+        ImageView gradient = new ImageView(Config.context);
+
+        gradient.setBackgroundResource(R.drawable.gradient_top);
+
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                R.dimen.layWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        gradient.setLayoutParams(layoutParams);
+
+        return gradient;
+    }
+
+    public ImageView BottomGradient(){
+        ImageView gradient = new ImageView(Config.context);
+
+        gradient.setBackgroundResource(R.drawable.gradient_bottom);
+
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                R.dimen.layWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        gradient.setLayoutParams(layoutParams);
+
+        return gradient;
+    }
 
     public void vibIy(int dur) {
         Vibrator vib = (Vibrator) Config.context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -95,8 +148,12 @@ public class MyTouchListener implements View.OnTouchListener {
                     createButtons(img);
                     v.setSelected(true);
                     RelativeLayout parentLayout = (RelativeLayout) img.getParent();
-                    parentLayout.setBackgroundColor(Config.context.getResources().getColor(R.color.darkPurple));
-                    System.out.println(v.getBackground());
+                    //parentLayout.setBackgroundColor(Config.context.getResources().getColor(R.color.darkPurple));
+                    parentLayout.addView(LeftGradient());
+                    parentLayout.addView(RightGradient());
+                    parentLayout.addView(TopGradient());
+                    parentLayout.addView(BottomGradient());
+                    System.out.println(parentLayout.getBackground());
                     oneIsCurrentlyChosen = true;
                 }else{
                     if(v==img) {
