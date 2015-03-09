@@ -276,7 +276,8 @@ public class MainActivity extends ActionBarActivity  {
         public void run() {
             tempolineOnScreen(getTempoUpperY());
             tempolineOnScreen(getTempoLowerY());
-            tempolineHandler.postDelayed(writeTempoline, 1500);
+            System.out.println("running runnable");
+            tempolineHandler.postDelayed(writeTempoline, 500);
         }
     };
 
@@ -289,24 +290,24 @@ public class MainActivity extends ActionBarActivity  {
     }
 
     public void tempolineOnScreen(int y){
-        LinearInterpolator interpolator = new LinearInterpolator();
+      //  LinearInterpolator interpolator = new LinearInterpolator();
       //  RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.lowestLayer);
-        ImageView image = new ImageView(this);
+        ImageView tempo = new ImageView(this);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.tempolineWidth),
                 (int) this.getResources().getDimension(R.dimen.tempolineHeight));
-        image.setLayoutParams(params);
-        image.setBackgroundColor(0xFF000000);
+        tempo.setLayoutParams(params);
+        tempo.setBackgroundColor(0xFF000000);
 
-        int xOffset = (int) this.getResources().getDimension(R.dimen.tempolineOffsetX);
+        //int xOffset = (int) this.getResources().getDimension(R.dimen.tempolineOffsetX);
 
-        int pos = ((int) this.getResources().getDimension(R.dimen.endPos));
-        image.setX((int) this.getResources().getDimension(R.dimen.startPos));
-        image.setY(y);
+       // int pos = ((int) this.getResources().getDimension(R.dimen.endPos));
+        tempo.setX((int) this.getResources().getDimension(R.dimen.startPos));
+        tempo.setY(y);
 
         //image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
-
-        linLayout.addView(image);
+        System.out.println("wrote tempoline once");
+        linLayout.addView(tempo);
     }
 
    /* public void writeToFile(){
@@ -520,7 +521,7 @@ public class MainActivity extends ActionBarActivity  {
                     pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
                     pitch_detector_thread_.start();
                     tempolineHandler.postDelayed(writeTempoline, 1);
-                    //linLayHandler.postDelayed(moveLinLay, 1);
+
                     scrollView.setScrollingEnabled(false);
                     recording = true;
                 } else {
