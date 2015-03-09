@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rec.ceciliemarie.playthething" >
-
-    <uses-feature android:name="android.hardware.usb.host" />
+    package="com.rec.ceciliemarie.colorfilter" >
 
     <application
         android:allowBackup="true"

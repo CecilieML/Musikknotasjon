@@ -1,4 +1,4 @@
-package com.rec.ceciliemarie.playthething;
+package com.rec.ceciliemarie.colorfilter;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

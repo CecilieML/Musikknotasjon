@@ -5,18 +5,28 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+    <TextView
+        android:text="Color Filter"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp"
+        android:src="@drawable/rainbow" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PLAY"
-        android:id="@+id/play"
-        android:layout_below="@+id/textView"
+        android:text="Activate Color Filter"
+        android:id="@+id/button"
+        android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="182dp"
-        android:onClick="playNotes" />
+        android:onClick="changeColor"/>
 
 </RelativeLayout>

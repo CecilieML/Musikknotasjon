@@ -1,47 +1,29 @@
-package com.rec.ceciliemarie.playthething;
+package com.rec.ceciliemarie.colorfilter;
 
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-
-import org.jfugue.Player;
-
-import jp.kshoji.javax.sound.midi.UsbMidiSystem;
+import android.widget.ImageView;
 
 
 public class MainActivity extends ActionBarActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Button button = (Button) findViewById(R.id.play);
-        button.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Player player = new Player();
-                player.play("C D E F G A B");
-                System.out.println("sound sound lalalala");
-            }
-        });
-
-
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-
-
+    public void changeColor(View view){
+        ImageView rainbow = (ImageView) findViewById(R.id.imageView);
+        ColorFilter filter = new LightingColorFilter(Color.BLUE, Color.CYAN);
+        rainbow.setColorFilter(filter);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -49,7 +31,6 @@ public class MainActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
