@@ -176,12 +176,14 @@ public class MainActivity extends ActionBarActivity  {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                EditText name = (EditText) findViewById(R.id.title_field);
-                //name.setText(title);
+                EditText titleField = (EditText) findViewById(R.id.title_field);
+                title = titleField.getText().toString();
+                //removes spaces from title
+                exp.setFilename(title.replaceAll(" ","")+".xml");
                 return false;
             }
         });
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE);
 
 
     }
@@ -276,8 +278,7 @@ public class MainActivity extends ActionBarActivity  {
         public void run() {
             tempolineOnScreen(getTempoUpperY());
             tempolineOnScreen(getTempoLowerY());
-            System.out.println("running runnable");
-            tempolineHandler.postDelayed(writeTempoline, 500);
+            tempolineHandler.postDelayed(writeTempoline, 1500);
         }
     };
 
@@ -302,11 +303,11 @@ public class MainActivity extends ActionBarActivity  {
         //int xOffset = (int) this.getResources().getDimension(R.dimen.tempolineOffsetX);
 
        // int pos = ((int) this.getResources().getDimension(R.dimen.endPos));
-        tempo.setX((int) this.getResources().getDimension(R.dimen.startPos));
+        tempo.setX(linLayout.getLayoutParams().width - (int) this.getResources().getDimension(R.dimen.noteStartPos));
         tempo.setY(y);
 
         //image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
-        System.out.println("wrote tempoline once");
+
         linLayout.addView(tempo);
     }
 
@@ -521,7 +522,8 @@ public class MainActivity extends ActionBarActivity  {
                     pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
                     pitch_detector_thread_.start();
                     tempolineHandler.postDelayed(writeTempoline, 1);
-
+                    int scrollWidth = scrollView.getWidth();
+                    scrollView.scrollTo(scrollWidth - xScroll, 0);
                     scrollView.setScrollingEnabled(false);
                     recording = true;
                 } else {
@@ -562,7 +564,6 @@ public class MainActivity extends ActionBarActivity  {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

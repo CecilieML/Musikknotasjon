@@ -8,5 +8,7 @@
     android:layout_height="match_parent"
     android:inputType="textFilter"
     android:text="Untitled">
+
 </EditText>
+
 </RelativeLayout>

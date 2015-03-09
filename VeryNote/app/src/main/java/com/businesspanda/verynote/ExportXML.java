@@ -24,7 +24,12 @@ import nu.xom.Serializer;
  */
 public class ExportXML implements Serializable {
 
-    String filename = "music.xml";
+    String filename = "untitled";
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
 
     void saveToFile(Pattern pattern) {
         try {

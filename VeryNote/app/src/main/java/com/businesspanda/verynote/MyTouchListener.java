@@ -36,28 +36,6 @@ public class MyTouchListener implements View.OnTouchListener {
         this.really = really;
     }
 
-    public void gradient(RelativeLayout rellay){
-        ImageView gradient = new ImageView(Config.context);
-        ShapeDrawable.ShaderFactory sf = new ShapeDrawable.ShaderFactory() {
-            @Override
-            public Shader resize(int width, int height) {
-                LinearGradient lg = new LinearGradient(0, 0, 0, img.getHeight(),
-                        new int[]{
-                                Color.GREEN,
-                                Color.WHITE,
-                                Color.BLUE,
-                                Color.RED}, //substitute the correct colors for these
-                        new float[]{
-                                0, 0.45f, 0.55f, 1},
-                        Shader.TileMode.REPEAT);
-                return lg;
-            }
-        };
-        PaintDrawable p = new PaintDrawable();
-        p.setShaderFactory(sf);
-        gradient.setBackgroundDrawable((Drawable)p);
-        rellay.addView(gradient);
-    }
 
     public void vibIy(int dur) {
         Vibrator vib = (Vibrator) Config.context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -119,7 +97,6 @@ public class MyTouchListener implements View.OnTouchListener {
                     RelativeLayout parentLayout = (RelativeLayout) img.getParent();
                     parentLayout.setBackgroundColor(Config.context.getResources().getColor(R.color.darkPurple));
                     System.out.println(v.getBackground());
-                    gradient(parentLayout);
                     oneIsCurrentlyChosen = true;
                 }else{
                     if(v==img) {
