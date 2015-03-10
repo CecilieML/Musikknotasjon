@@ -59,22 +59,30 @@ public class ExportXML implements Serializable {
     void saveToSD(Pattern pattern) {
         try {
             if(checkIfSDPresent()) {
+                File file = new File(Environment.getExternalStorageDirectory(),filename);
 
-                FileOutputStream fos = new FileOutputStream(new File(Environment.getExternalStorageDirectory(),filename));
+                if (!file.exists()) {
+                    FileOutputStream fos = new FileOutputStream(file);
 
-                MusicXmlRenderer renderer = new MusicXmlRenderer();
-                MusicStringParser parser = new MusicStringParser();
-                parser.addParserListener(renderer);
+                    MusicXmlRenderer renderer = new MusicXmlRenderer();
+                    MusicStringParser parser = new MusicStringParser();
+                    parser.addParserListener(renderer);
 
-                parser.parse(pattern);
+                    parser.parse(pattern);
 
-                Serializer serializer = new Serializer(fos, "UTF-8");
-                serializer.setIndent(4);
-                serializer.write(renderer.getMusicXMLDoc());
+                    Serializer serializer = new Serializer(fos, "UTF-8");
+                    serializer.setIndent(4);
+                    serializer.write(renderer.getMusicXMLDoc());
 
-                fos.flush();
-                fos.close();
-                Toast.makeText(Config.context, "File saved.", Toast.LENGTH_SHORT).show();
+                    System.out.println("var i den andre void :3");
+
+                    fos.flush();
+                    fos.close();
+
+                    Toast.makeText(Config.context, "File saved.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Config.context, "File with that name already exists!", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(Config.context, "No SD-card found!", Toast.LENGTH_SHORT).show();
             }

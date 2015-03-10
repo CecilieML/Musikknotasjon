@@ -1,34 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
+    android:layout_width="400dp"
+    android:layout_height="200dp"
+    android:orientation="horizontal"
     android:background="@android:color/background_light">
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
         android:layout_margin="1dp"
         android:background="@android:color/darker_gray">
         >
+        <RelativeLayout
+            android:id="@+id/textbox"
+            android:layout_width="fill_parent"
+            android:layout_height="140dp"
+            android:orientation="vertical"
+            android:layout_margin="10dp">
+            <TextView
+                android:id="@+id/settingstext"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings" />
+            <TextView
+                android:id="@+id/speedlabel"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:layout_below="@id/settingstext"
+                android:text="@string/metronome_speed_text"/>
+            <EditText
+                android:id="@+id/speedtext"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:layout_below="@id/settingstext"
+                android:layout_toRightOf="@id/speedlabel"
+                android:text="@string/metronome_speed"/>
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="20dp">
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="It's a PopupWindow" />
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
+            android:orientation="horizontal"
+            android:layout_margin="1dp"
+            android:background="@android:color/darker_gray">
             <Button
-                android:id="@+id/dismiss"
+                android:id="@+id/cancel"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Dismiss" />
+                android:text="@string/action_cancel" />
+            <Button
+                android:id="@+id/ok"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_ok" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
