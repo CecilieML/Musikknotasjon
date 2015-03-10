@@ -76,7 +76,6 @@ public class MyTouchListener implements View.OnTouchListener {
 
         really.addView(btnUp);
         really.addView(btnDown);
-
     }
 
     Button btnUp;
@@ -98,12 +97,16 @@ public class MyTouchListener implements View.OnTouchListener {
                     img = (ImageView) v;
                     vibIy(70);
                     createButtons(img);
-                    v.setSelected(true);
-                    RelativeLayout parentLayout = (RelativeLayout) img.getParent();
-                   // parentLayout.setBackgroundColor(Config.context.getResources().getColor(R.color.darkPurple));
 
-                    //ColorFilter filter = new ColorFilter(R.color.cyan, PorterDuff.Mode.MULTIPLY);
-                    img.setColorFilter(R.color.cyan, PorterDuff.Mode.MULTIPLY);
+                    ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
+
+                    RelativeLayout parentLayout = (RelativeLayout) img.getParent();
+                    for(int i=0;i<parentLayout.getChildCount();i++){
+                        View child = parentLayout.getChildAt(i);
+                        ImageView childView = (ImageView) child;
+                        childView.setColorFilter(filter);
+                    }
+
 
                     oneIsCurrentlyChosen = true;
                 }else{
@@ -111,8 +114,13 @@ public class MyTouchListener implements View.OnTouchListener {
                         vibIy(30);
                         removeButtons();
                         v.setSelected(false);
+
                         RelativeLayout parentLayout = (RelativeLayout) img.getParent();
-                        parentLayout.setBackgroundColor(0x00000000);
+                        for(int i=0;i<parentLayout.getChildCount();i++){
+                            View child = parentLayout.getChildAt(i);
+                            ImageView childView = (ImageView) child;
+                            childView.clearColorFilter();
+                        }
 
                         oneIsCurrentlyChosen = false;
                     }

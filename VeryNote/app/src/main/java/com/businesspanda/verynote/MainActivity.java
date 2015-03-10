@@ -17,6 +17,9 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
 import android.media.AudioFormat;
 import android.media.AudioManager;
@@ -132,10 +135,9 @@ public class MainActivity extends ActionBarActivity  {
         image.setX((int) this.getResources().getDimension(R.dimen.trebleX));
         image.setY((int) this.getResources().getDimension(R.dimen.trebleY));
 
-        image.setBackgroundResource(R.drawable.treblebackround);
+        image.setImageResource(R.drawable.treblebackround);
 
         theLayout.addView(image);
-
 
         /*
         FileOutputStream file = this.openFileOutput("music.xml", MODE_PRIVATE);
@@ -187,7 +189,7 @@ public class MainActivity extends ActionBarActivity  {
                 EditText titleField = (EditText) findViewById(R.id.title_field);
                 title = titleField.getText().toString();
                 //removes spaces from title
-                exp.setFilename(title.replaceAll(" ","")+".xml");
+                exp.setFilename(title.replaceAll(" ",""));
                 return false;
             }
         });
@@ -366,19 +368,19 @@ public class MainActivity extends ActionBarActivity  {
     public void noteLength(){
 
         if(dur>=100 && dur<200){
-            image.setBackgroundResource(R.drawable.quartenote);
+            image.setImageResource(R.drawable.quartenote);
         }else if(dur>=200 && dur<400){
-            image.setBackgroundResource(R.drawable.halfnote);
+            image.setImageResource(R.drawable.halfnote);
 
         }else if(dur>=400 && dur<600){
-            image.setBackgroundResource(R.drawable.singlenote);
+            image.setImageResource(R.drawable.singlenote);
         }else if(dur>=600 && dur<1000){
-            image.setBackgroundResource(R.drawable.fullnote);
+            image.setImageResource(R.drawable.fullnote);
         }else if(dur>=1000){
             prevNote = new Note(false, false, 0, 0, " ");
         }
 
-        //image.setBackgroundResource(R.drawable.doublenote);
+        //image.setImageResourse(R.drawable.doublenote);
 
 
     }
@@ -419,8 +421,6 @@ public class MainActivity extends ActionBarActivity  {
 
         imgLayout.setY(y);
         imgLayout.setX(x);
-       // imgLayout.setBackgroundColor(getResources().getColor(R.color.red));
-       // int y = note.getyValue();
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.noteWidth),
@@ -430,7 +430,7 @@ public class MainActivity extends ActionBarActivity  {
         image.setY(0);
         //image.setMaxHeight((int) this.getResources().getDimension(R.dimen.maxHeight));
         //image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
-        image.setBackgroundResource(R.drawable.quartenote);
+        image.setImageResource(R.drawable.quartenote);
 
         if(note.sharp){
             ImageView sharp = new ImageView(this);
@@ -442,7 +442,7 @@ public class MainActivity extends ActionBarActivity  {
             sharp.setX((int) this.getResources().getDimension(R.dimen.sharpOffsetX));
             sharp.setY((int) this.getResources().getDimension(R.dimen.sharpOffsetY));
 
-            sharp.setBackgroundResource(R.drawable.sharpnote);
+            sharp.setImageResource(R.drawable.sharpnote);
            // sharp.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
             imgLayout.addView(sharp);
         }else if(note.flat){
@@ -454,7 +454,7 @@ public class MainActivity extends ActionBarActivity  {
 
             flat.setX((int) this.getResources().getDimension(R.dimen.flatOffsetX));
             flat.setY((int) this.getResources().getDimension(R.dimen.flatOffsetY));
-            flat.setBackgroundResource(R.drawable.flatnote);
+            flat.setImageResource(R.drawable.flatnote);
          //   flat.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
             imgLayout.addView(flat);
         }
@@ -463,7 +463,10 @@ public class MainActivity extends ActionBarActivity  {
         image.setOnTouchListener(heyListen);
         imgLayout.addView(image);
         linLayout.addView(imgLayout);
-        if(!recording)linLayHandler.removeCallbacks(moveLinLay);
+        if(!recording){
+            linLayHandler.removeCallbacks(moveLinLay);
+            tempolineHandler.removeCallbacks(writeTempoline);
+        }
     }
 
     private final int duration = 3; // seconds

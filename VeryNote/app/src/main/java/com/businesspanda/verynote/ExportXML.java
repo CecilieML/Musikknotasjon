@@ -26,10 +26,10 @@ import nu.xom.Serializer;
  */
 public class ExportXML implements Serializable {
 
-    String filename = "untitled";
+    String filename = "untitled.xml";
 
     public void setFilename(String filename) {
-        this.filename = filename;
+        this.filename = filename + ".xml";
     }
 
 
@@ -51,7 +51,7 @@ public class ExportXML implements Serializable {
             fos.flush();
             fos.close();
         } catch (IOException e) {
-            Toast.makeText(Config.context, "Problem saving XML to phone memory!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Config.context, "Problem exporting XML!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -72,15 +72,14 @@ public class ExportXML implements Serializable {
                 serializer.setIndent(4);
                 serializer.write(renderer.getMusicXMLDoc());
 
-                System.out.println("var i den andre void :3");
-
                 fos.flush();
                 fos.close();
+                Toast.makeText(Config.context, "File saved.", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(Config.context, "No SD-card found!", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
-            Toast.makeText(Config.context, "Problem saving XML to SD-card!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Config.context, "Problem saving XML!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
