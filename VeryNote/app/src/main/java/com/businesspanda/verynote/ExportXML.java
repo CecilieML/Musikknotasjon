@@ -3,6 +3,8 @@ package com.businesspanda.verynote;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.jfugue.MusicStringParser;
@@ -40,21 +42,51 @@ public class ExportXML implements Serializable {
             MusicStringParser parser = new MusicStringParser();
             parser.addParserListener(renderer);
 
-            //Pattern pattern = new Pattern("C D E F G A B |");
             parser.parse(pattern);
 
             Serializer serializer = new Serializer(fos, "UTF-8");
             serializer.setIndent(4);
             serializer.write(renderer.getMusicXMLDoc());
 
-            System.out.println("var i void :3");
-
             fos.flush();
             fos.close();
         } catch (IOException e) {
-            Toast.makeText(Config.context, "PROBLEMS!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Config.context, "Problem saving XML to phone memory!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
+    }
+
+    void saveToSD(Pattern pattern) {
+        try {
+            if(checkIfSDPresent()) {
+
+                FileOutputStream fos = new FileOutputStream(new File(Environment.getExternalStorageDirectory(),filename));
+
+                MusicXmlRenderer renderer = new MusicXmlRenderer();
+                MusicStringParser parser = new MusicStringParser();
+                parser.addParserListener(renderer);
+
+                parser.parse(pattern);
+
+                Serializer serializer = new Serializer(fos, "UTF-8");
+                serializer.setIndent(4);
+                serializer.write(renderer.getMusicXMLDoc());
+
+                System.out.println("var i den andre void :3");
+
+                fos.flush();
+                fos.close();
+            } else {
+                Toast.makeText(Config.context, "No SD-card found!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            Toast.makeText(Config.context, "Problem saving XML to SD-card!", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean checkIfSDPresent() {
+        return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
     }
 
     void sendToEmail() {

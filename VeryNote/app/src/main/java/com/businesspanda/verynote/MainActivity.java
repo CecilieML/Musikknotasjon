@@ -156,8 +156,8 @@ public class MainActivity extends ActionBarActivity  {
 */
 
 
-        usbMidiSystem = new UsbMidiSystem(this);
-        usbMidiSystem.initialize();
+        //usbMidiSystem = new UsbMidiSystem(this);
+        //usbMidiSystem.initialize();
 
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
 
@@ -574,11 +574,13 @@ public class MainActivity extends ActionBarActivity  {
                 }
                 return true;
             case R.id.action_save:
-                System.out.println(allNotes);
-                Pattern pattern = new Pattern(allNotes);
-                exp.saveToFile(pattern);
+                Pattern patternSD = new Pattern(allNotes);
+                exp.saveToSD(patternSD);
                 return true;
             case R.id.action_share:
+                //System.out.println(allNotes);
+                Pattern pattern = new Pattern(allNotes);
+                exp.saveToFile(pattern);
                 exp.sendToEmail();
                 return true;
             case R.id.action_settings:
