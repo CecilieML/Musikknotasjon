@@ -87,7 +87,7 @@ public class yValueSearch {
     }
 
 
-    public int findYValue(int valueToFind) {
+    public static int findYValue(int valueToFind) {
 
         for (int i = 0; i < yValues.length; i++) {
             if (valueToFind == yValues[i]) {

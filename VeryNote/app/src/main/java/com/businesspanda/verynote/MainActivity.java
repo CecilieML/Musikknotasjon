@@ -190,16 +190,20 @@ public class MainActivity extends ActionBarActivity  {
         RelativeLayout trebleBackground = (RelativeLayout) findViewById(R.id.backgroundLayer);
         RelativeLayout scrollLayer = (RelativeLayout) findViewById(R.id.lowestLayer);
         RelativeLayout middleLayer = (RelativeLayout) findViewById(R.id.middleLayer);
-        RelativeLayout upperLayer = (RelativeLayout) findViewById(R.id.upperLayout);
 
         float density = getResources().getDisplayMetrics().density;
 
         //tinyphone = 1.5, other phones = 3.0
         if(density>2){
-            trebleBackground.setPadding(400,125,0,0);
-            scrollLayer.setPadding(400,125,0,0);
-            middleLayer.setPadding(400,125,0,0);
-            //upperLayer.setPadding(120,120,0,0);
+            trebleBackground.setPadding(
+                    (int) this.getResources().getDimension(R.dimen.marginTop),
+                    (int) this.getResources().getDimension(R.dimen.marginLeft),0,0);
+            scrollLayer.setPadding(
+                    (int) this.getResources().getDimension(R.dimen.marginTop),
+                    (int) this.getResources().getDimension(R.dimen.marginLeft),0,0);
+            middleLayer.setPadding(
+                    (int) this.getResources().getDimension(R.dimen.marginTop),
+                    (int) this.getResources().getDimension(R.dimen.marginLeft),0,0);
         }
 
     }
