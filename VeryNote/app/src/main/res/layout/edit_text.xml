@@ -11,7 +11,7 @@
     android:singleLine="true"
     android:maxLength="30"
     android:minEms="7"
-    android:text="Untitled"
+    android:text="@string/filename"
     android:gravity="center">
 </EditText>
 

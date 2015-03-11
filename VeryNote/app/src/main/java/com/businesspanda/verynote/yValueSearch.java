@@ -87,13 +87,15 @@ public class yValueSearch {
     }
 
 
-    public static int findYIndex(int valueToFind) {
+    public static int findYIndex(float valueToFind) {
 
         for (int i = 0; i < yValues.length; i++) {
-            if (valueToFind == yValues[i]) {
+            System.out.println(yValues[i]);
+            if (valueToFind == (float)yValues[i]) {
+
                 return i;
             }
         }
-        return valueToFind;
+        return -1;
     }
 }

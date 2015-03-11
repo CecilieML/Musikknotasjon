@@ -189,7 +189,6 @@ public class MainActivity extends ActionBarActivity  {
 
         RelativeLayout trebleBackground = (RelativeLayout) findViewById(R.id.backgroundLayer);
         RelativeLayout scrollLayer = (RelativeLayout) findViewById(R.id.lowestLayer);
-        RelativeLayout middleLayer = (RelativeLayout) findViewById(R.id.middleLayer);
 
         float density = getResources().getDisplayMetrics().density;
 
@@ -199,9 +198,6 @@ public class MainActivity extends ActionBarActivity  {
                     (int) this.getResources().getDimension(R.dimen.marginLeft),
                     (int) this.getResources().getDimension(R.dimen.marginTop),0,0);
             scrollLayer.setPadding(
-                    (int) this.getResources().getDimension(R.dimen.marginLeft),
-                    (int) this.getResources().getDimension(R.dimen.marginTop),0,0);
-            middleLayer.setPadding(
                     (int) this.getResources().getDimension(R.dimen.marginLeft),
                     (int) this.getResources().getDimension(R.dimen.marginTop),0,0);
         }

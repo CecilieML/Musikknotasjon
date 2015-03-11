@@ -36,6 +36,8 @@
                 android:layout_below="@id/settingstext"
                 android:layout_toRightOf="@id/speedlabel"
                 android:inputType="number"
+                android:maxLength="3"
+                android:minEms="2"
                 android:text="@string/metronome_speed"/>
         </RelativeLayout>
         <RelativeLayout
@@ -45,19 +47,21 @@
             android:layout_margin="1dp"
             android:gravity="center"
             android:layout_gravity="center"
-            android:background="@android:color/darker_gray">
+            android:background="@color/lightGray">
             <Button
                 android:id="@+id/cancel"
-                android:layout_width="70dp"
+                android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="@string/action_cancel" />
+                android:text="@string/action_cancel"
+                style="?android:attr/borderlessButtonStyle"/>
             <Button
                 android:id="@+id/ok"
-                android:layout_width="70dp"
+                android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/action_ok" />
+                android:text="@string/action_ok"
+                style="?android:attr/borderlessButtonStyle"/>
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
