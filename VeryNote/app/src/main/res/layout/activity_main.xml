@@ -37,7 +37,7 @@
             </com.businesspanda.verynote.LockableScrollView>
     </RelativeLayout>
 
-    <RelativeLayout
+    <!--<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -49,7 +49,7 @@
         tools:context=".MainActivity"
         android:id="@+id/middleLayer">
 
-    </RelativeLayout>
+    </RelativeLayout>-->
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"

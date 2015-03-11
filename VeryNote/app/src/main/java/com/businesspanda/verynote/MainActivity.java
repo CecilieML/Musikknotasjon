@@ -87,7 +87,7 @@ public class MainActivity extends ActionBarActivity  {
 
         yValueSearch.createYValues();
 
-        RelativeLayout really = (RelativeLayout) findViewById(R.id.middleLayer);
+        RelativeLayout really = (RelativeLayout) findViewById(R.id.upperLayout);
         heyListen = new MyTouchListener(really);
 
         scrollView = (LockableScrollView) findViewById(R.id.scrollview);
@@ -196,14 +196,14 @@ public class MainActivity extends ActionBarActivity  {
         //tinyphone = 1.5, other phones = 3.0
         if(density>2){
             trebleBackground.setPadding(
-                    (int) this.getResources().getDimension(R.dimen.marginTop),
-                    (int) this.getResources().getDimension(R.dimen.marginLeft),0,0);
+                    (int) this.getResources().getDimension(R.dimen.marginLeft),
+                    (int) this.getResources().getDimension(R.dimen.marginTop),0,0);
             scrollLayer.setPadding(
-                    (int) this.getResources().getDimension(R.dimen.marginTop),
-                    (int) this.getResources().getDimension(R.dimen.marginLeft),0,0);
+                    (int) this.getResources().getDimension(R.dimen.marginLeft),
+                    (int) this.getResources().getDimension(R.dimen.marginTop),0,0);
             middleLayer.setPadding(
-                    (int) this.getResources().getDimension(R.dimen.marginTop),
-                    (int) this.getResources().getDimension(R.dimen.marginLeft),0,0);
+                    (int) this.getResources().getDimension(R.dimen.marginLeft),
+                    (int) this.getResources().getDimension(R.dimen.marginTop),0,0);
         }
 
     }

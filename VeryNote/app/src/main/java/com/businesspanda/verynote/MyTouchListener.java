@@ -58,7 +58,8 @@ public class MyTouchListener implements View.OnTouchListener {
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
                 int y = (int) imgView.getY();
-                int index = yValueSearch.findYValue(y);
+                int index = yValueSearch.findYIndex(y);
+                if(index<=1)index=1;
                 parentLayout.setY(yValueSearch.yValues[index-1]);
                 System.out.println("original " + y + "  new value  " + yValueSearch.yValues[index-1]);
             }
@@ -74,9 +75,11 @@ public class MyTouchListener implements View.OnTouchListener {
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
                 int y = (int) imgView.getY();
-                int index = yValueSearch.findYValue(y);
-                parentLayout.setY(yValueSearch.yValues[index+1]);
-                System.out.println("original " + y + "  new value  " + yValueSearch.yValues[index+1]);
+                int index = yValueSearch.findYIndex(y);
+
+                if(index>=46)index=46;
+                //parentLayout.setY(yValueSearch.yValues[index+1]);
+                System.out.println("original " + y + "  new value  " + yValueSearch.yValues[index]);
             }
         });
 
