@@ -8,9 +8,10 @@ import java.util.HashMap;
  */
 public class yValueSearch {
 
-    public int[] yValues = new int[48];
+    public static int[] yValues = new int[48];
 
-    public int createYValues(){
+    public static void createYValues() {
+
         //C
         yValues[0] = (int) Config.context.getResources().getDimension(R.dimen.C3);
         yValues[1] = (int) Config.context.getResources().getDimension(R.dimen.C4);
@@ -23,13 +24,19 @@ public class yValueSearch {
         yValues[6] = (int) Config.context.getResources().getDimension(R.dimen.Cs5);
         yValues[7] = (int) Config.context.getResources().getDimension(R.dimen.Cs6);
 
-        System.out.println("value is  "+ yValues[3] + "  it should be 11");
+        System.out.println("value is  " + yValues[0] + "  it should be 100");
+        System.out.println("value is  " + yValues[1] + "  it should be 35");
+        System.out.println("value is  " + yValues[2] + "  it should be 53");
+        System.out.println("value is  " + yValues[3] + "  it should be 11");
 
+        System.out.println("this is 100 --->  "+Config.context.getResources().getDimension(R.dimen.C3));
     }
+
+
     public int findYValue(int valueToFind) {
 
-        for(int i = 0; i<yValues.length; i++){
-            if(valueToFind== yValues[i]){
+        for (int i = 0; i < yValues.length; i++) {
+            if (valueToFind == yValues[i]) {
                 return i;
             }
         }

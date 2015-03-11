@@ -85,6 +85,8 @@ public class MainActivity extends ActionBarActivity  {
 
         Config.context = this;
 
+        yValueSearch.createYValues();
+
         RelativeLayout really = (RelativeLayout) findViewById(R.id.middleLayer);
         heyListen = new MyTouchListener(really);
 
