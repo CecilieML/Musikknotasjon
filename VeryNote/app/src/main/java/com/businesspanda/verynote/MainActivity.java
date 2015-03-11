@@ -1,39 +1,18 @@
 package com.businesspanda.verynote;
 
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.Thread;
-import java.util.ArrayList;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.drawable.Drawable;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.renderscript.Sampler;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.internal.view.menu.ActionMenuItemView;
-import android.support.v7.widget.PopupMenu;
-import android.text.Layout;
-import android.text.method.Touch;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -41,25 +20,18 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewAnimator;
 
 import org.jfugue.*;
 
@@ -77,11 +49,12 @@ public class MainActivity extends ActionBarActivity  {
 
     public boolean playing = false;
     public boolean recording = false;
+    public boolean firstRecording = true;
 
     public Switch metSwitch;
 
     private Handler mHandler = new Handler();
-    private Handler tempolineHandler = new Handler();
+    private PauseHandler tempolineHandler = new PauseHandler();
     private Handler linLayHandler = new Handler();
 
     UsbMidiSystem usbMidiSystem;
@@ -125,7 +98,7 @@ public class MainActivity extends ActionBarActivity  {
 
         scrollView.addView(linLayout);
 
-        RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.middleLayer);
+        RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.backgroundLayer);
         ImageView image = new ImageView(this);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.trebleWidth),
@@ -138,28 +111,6 @@ public class MainActivity extends ActionBarActivity  {
         image.setImageResource(R.drawable.treblebackround);
 
         theLayout.addView(image);
-
-        /*
-        FileOutputStream file = this.openFileOutput("music.xml", MODE_PRIVATE);
-
-        MusicXmlRenderer renderer = new MusicXmlRenderer();
-        MusicStringParser parser = new MusicStringParser();
-        parser.addParserListener(renderer);
-
-        Pattern pattern = new Pattern("C D E F G A B |");
-        parser.parse(pattern);
-
-        Serializer serializer = new Serializer(file, "UTF-8");
-        serializer.setIndent(4);
-        serializer.write(renderer.getMusicXMLDoc());
-
-        file.flush();
-        file.close();
-*/
-
-
-        //usbMidiSystem = new UsbMidiSystem(this);
-        //usbMidiSystem.initialize();
 
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
 
@@ -210,7 +161,7 @@ public class MainActivity extends ActionBarActivity  {
 
     @Override
     public void onStop() {
-
+        tempolineHandler.removeCallbacks(writeTempoline);
         try {
             super.onStop();
             pitch_detector_thread_.interrupt();
@@ -284,10 +235,7 @@ public class MainActivity extends ActionBarActivity  {
 
         }
 
-
-
     }
-
 
     private Runnable writeTempoline = new Runnable() {
         public void run() {
@@ -392,10 +340,15 @@ public class MainActivity extends ActionBarActivity  {
 
         if(!linLayMoving){
             linLayHandler.postDelayed(moveLinLay, 1);
-            tempolineHandler.postDelayed(writeTempoline, 1);
+            if(firstRecording){
+                tempolineHandler.postDelayed(writeTempoline, 1);
+            }else{
+                tempolineHandler.resume();
+            }
+
         }
         linLayMoving = true;
-
+        firstRecording = false;
 
        // LinearInterpolator interpolator = new LinearInterpolator();
 
@@ -465,7 +418,7 @@ public class MainActivity extends ActionBarActivity  {
         linLayout.addView(imgLayout);
         if(!recording){
             linLayHandler.removeCallbacks(moveLinLay);
-            tempolineHandler.removeCallbacks(writeTempoline);
+            tempolineHandler.pause();
         }
     }
 
@@ -553,7 +506,7 @@ public class MainActivity extends ActionBarActivity  {
                     getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     pitch_detector_thread_.interrupt();
                     mHandler.removeCallbacks(mVibrations);
-                    tempolineHandler.removeCallbacks(writeTempoline);
+                    tempolineHandler.pause();
                     linLayHandler.removeCallbacks(moveLinLay);
                     linLayout.clearAnimation();
                     linLayout.animate().x(0).setDuration(10);
@@ -592,7 +545,7 @@ public class MainActivity extends ActionBarActivity  {
                 final PopupWindow popupWindow = new PopupWindow(
                         popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-                Button btnDismiss = (Button)popupView.findViewById(R.id.dismiss);
+                Button btnDismiss = (Button)popupView.findViewById(R.id.cancel);
                 btnDismiss.setOnClickListener(new Button.OnClickListener(){
 
                     @Override
