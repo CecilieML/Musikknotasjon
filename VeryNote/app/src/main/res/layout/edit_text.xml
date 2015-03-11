@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
 <EditText
     android:id="@+id/title_field"
     android:layout_width="wrap_content"
@@ -10,8 +11,8 @@
     android:singleLine="true"
     android:maxLength="30"
     android:minEms="7"
-    android:text="Untitled">
-
+    android:text="Untitled"
+    android:gravity="center">
 </EditText>
 
 </RelativeLayout>

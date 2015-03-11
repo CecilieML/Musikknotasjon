@@ -8,7 +8,7 @@ import java.util.HashMap;
  */
 public class yValueSearch {
 
-    public static int[] yValues = new int[47];
+    public static int[] yValues = new int[48];
 
     public static void createYValues() {
 

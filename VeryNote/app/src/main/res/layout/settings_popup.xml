@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="300dp"
+    android:layout_width="400dp"
+    android:layout_height="200dp"
     android:orientation="horizontal"
     android:background="@android:color/background_light">
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
         android:orientation="vertical"
         android:layout_margin="1dp"
         android:background="@android:color/darker_gray">
         <RelativeLayout
             android:id="@+id/textbox"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="140dp"
             android:orientation="horizontal"
             android:layout_margin="10dp">
             <TextView
                 android:id="@+id/settingstext"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/settings" />
+                android:text="@string/settings"
+                android:textSize="23dp"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/speedlabel"
                 android:layout_width="wrap_content"
@@ -33,24 +35,29 @@
                 android:layout_height="17dp"
                 android:layout_below="@id/settingstext"
                 android:layout_toRightOf="@id/speedlabel"
+                android:inputType="number"
                 android:text="@string/metronome_speed"/>
         </RelativeLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_margin="1dp"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:background="@android:color/darker_gray">
             <Button
                 android:id="@+id/cancel"
-                android:layout_width="fill_parent"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:text="@string/action_cancel" />
             <Button
                 android:id="@+id/ok"
-                android:layout_width="fill_parent"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="@string/action_ok" />
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

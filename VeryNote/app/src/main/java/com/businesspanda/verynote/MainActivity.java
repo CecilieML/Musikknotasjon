@@ -196,10 +196,10 @@ public class MainActivity extends ActionBarActivity  {
 
         //tinyphone = 1.5, other phones = 3.0
         if(density>2){
-            trebleBackground.setPadding(120,120,0,0);
-            scrollLayer.setPadding(120,120,0,0);
-            middleLayer.setPadding(120,120,0,0);
-            upperLayer.setPadding(120,120,0,0);
+            trebleBackground.setPadding(400,125,0,0);
+            scrollLayer.setPadding(400,125,0,0);
+            middleLayer.setPadding(400,125,0,0);
+            //upperLayer.setPadding(120,120,0,0);
         }
 
     }
