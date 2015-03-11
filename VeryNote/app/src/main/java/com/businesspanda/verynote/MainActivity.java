@@ -79,7 +79,7 @@ public class MainActivity extends ActionBarActivity  {
         NoteSearch.createTable();
         genTone();
 
-        //fitToScreen();
+        fitToScreen();
 
         exp = new ExportXML();
 
@@ -185,18 +185,24 @@ public class MainActivity extends ActionBarActivity  {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-  /*  public void fitToScreen() {
+    public void fitToScreen() {
 
-        ImageView image = (ImageView)findViewById(R.id.treble);
+        RelativeLayout trebleBackground = (RelativeLayout) findViewById(R.id.backgroundLayer);
+        RelativeLayout scrollLayer = (RelativeLayout) findViewById(R.id.lowestLayer);
+        RelativeLayout middleLayer = (RelativeLayout) findViewById(R.id.middleLayer);
+        RelativeLayout upperLayer = (RelativeLayout) findViewById(R.id.upperLayout);
 
         float density = getResources().getDisplayMetrics().density;
 
         //tinyphone = 1.5, other phones = 3.0
         if(density>2){
-            image.setPadding(0, 0, 0, 120);
+            trebleBackground.setPadding(120,120,0,0);
+            scrollLayer.setPadding(120,120,0,0);
+            middleLayer.setPadding(120,120,0,0);
+            upperLayer.setPadding(120,120,0,0);
         }
 
-    }*/
+    }
 
     long lastTime;
     long newTime;
