@@ -90,9 +90,7 @@ public class yValueSearch {
     public static int findYIndex(float valueToFind) {
 
         for (int i = 0; i < yValues.length; i++) {
-            System.out.println(yValues[i]);
             if (valueToFind == (float)yValues[i]) {
-
                 return i;
             }
         }
