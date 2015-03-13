@@ -58,7 +58,7 @@ public class PitchDec implements Runnable {
 
 
     //private final static int BUFFER_SIZE_IN_MS = 3000;
-    private final static int CHUNK_SIZE_IN_SAMPLES = 3072; // = 2 ^ //////was 1024/////
+    private final static int CHUNK_SIZE_IN_SAMPLES = 1024; // = 2 ^ //////was 1024/////
     // CHUNK_SIZE_IN_SAMPLES_POW2
     private final static int CHUNK_SIZE_IN_MS = 1000 * CHUNK_SIZE_IN_SAMPLES
             / RATE;
@@ -134,6 +134,38 @@ public class PitchDec implements Runnable {
             return "(" + average_frequency + ", " + total_amplitude + ")";
         }
     }
+
+    /****/
+
+
+
+
+
+    short[] windowthing = new short[CHUNK_SIZE_IN_SAMPLES];
+
+
+    short[] buildHanWindow( short[] window, int size )
+    {
+        for( int i=0; i<size; ++i ) {
+            double temp = 0.5 * (1 - Math.cos(2 * Math.PI * i / (size - 1.0)));
+            window[i] = (short) temp;
+        }
+        return window;
+    }
+
+    short[] applyWindow( short[] window, short[] data, int size )
+    {
+        for( int i=0; i<size; ++i ) {
+            data[i] *= window[i];
+        }
+        return data;
+    }
+
+
+
+
+
+    /***/
 
     public FreqResult AnalyzeFrequencies(short[] audio_data) {
         fft = new DoubleFFT_1D(CHUNK_SIZE_IN_SAMPLES);
@@ -334,7 +366,8 @@ public class PitchDec implements Runnable {
 
             //pitchdetector
             //silence(audio_data);
-
+            windowthing = buildHanWindow(windowthing, CHUNK_SIZE_IN_SAMPLES);
+            audio_data = applyWindow(windowthing,audio_data,CHUNK_SIZE_IN_SAMPLES);
 
 
 
