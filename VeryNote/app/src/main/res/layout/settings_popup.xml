@@ -38,7 +38,9 @@
                 android:inputType="textFilter"
                 android:maxLength="3"
                 android:minEms="2"
-                android:text="SPEEEEED"/>
+                android:focusable="true"
+                android:editable="true"
+                android:text="80"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"

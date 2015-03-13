@@ -598,7 +598,7 @@ public class MainActivity extends ActionBarActivity  {
                 return true;
             case R.id.action_settings:
                 LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = layoutInflater.inflate(R.layout.settings_popup, null);
+                final View popupView = layoutInflater.inflate(R.layout.settings_popup, null);
 
                 final PopupWindow popupWindow = new PopupWindow(
                         popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
@@ -622,9 +622,9 @@ public class MainActivity extends ActionBarActivity  {
 
                     @Override
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        EditText speedfield = (EditText) findViewById(R.id.speedtext);
-                        //metSpeed = speedfield.getText().toString();
-                        //System.out.println("metspeed ----->  " + metSpeed);
+                        EditText speedfield = (EditText) popupView.findViewById(R.id.speedtext);
+                        metSpeed = speedfield.getText().toString();
+                        System.out.println("metspeed ----->  " + metSpeed);
                         return false;
                     }
                 });
