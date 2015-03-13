@@ -58,7 +58,7 @@ public class PitchDec implements Runnable {
 
 
     //private final static int BUFFER_SIZE_IN_MS = 3000;
-    private final static int CHUNK_SIZE_IN_SAMPLES = 1024; // = 2 ^
+    private final static int CHUNK_SIZE_IN_SAMPLES = 3072; // = 2 ^ //////was 1024/////
     // CHUNK_SIZE_IN_SAMPLES_POW2
     private final static int CHUNK_SIZE_IN_MS = 1000 * CHUNK_SIZE_IN_SAMPLES
             / RATE;
@@ -174,24 +174,23 @@ public class PitchDec implements Runnable {
                             / DRAW_FREQUENCY_STEP)
                     * DRAW_FREQUENCY_STEP + MIN_FREQUENCY;
 
-            final double current_amplitude = Math.pow(data[i * 2], 2)
-                    + Math.pow(data[i * 2 + 1], 2);
-
+            final double current_amplitude = Math.pow(Math.pow(data[i * 2], 2)
+                    + Math.pow(data[i * 2 + 1], 2), 0.5);
+            /*
             final double normalized_amplitude = current_amplitude
                     * Math.pow(MIN_FREQUENCY * MAX_FREQUENCY, 0.5)
-                    / current_frequency;
+                    / current_frequency;*/
 
             Double current_sum_for_this_slot = frequencies.get(draw_frequency);
             if (current_sum_for_this_slot == null) {
                 current_sum_for_this_slot = 0.0;
             }
 
-            frequencies.put(draw_frequency, Math.pow(current_amplitude, 0.5)
-                    / draw_frequency_step + current_sum_for_this_slot);
+            frequencies.put(draw_frequency, current_amplitude);
 
-            if (normalized_amplitude > best_amplitude) {
+            if (current_amplitude > best_amplitude) {
                 best_frequency = current_frequency;
-                best_amplitude = normalized_amplitude;
+                best_amplitude = current_amplitude;
 
                 best_frequencies.add(current_frequency);
                 best_amps.add(best_amplitude);
