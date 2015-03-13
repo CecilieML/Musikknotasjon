@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="lightPurple">#ffbfc0fd</color>
-    <color name="cyan">#ff3ffff8</color>
-    <color name="red">#fffd0000</color>
+    <color name="cyan">#aa3ffff8</color>
+    <color name="red">#aafd0000</color>
     <color name="pink">#fff88fff</color>
     <color name="yellow">#FFFFF97D</color>
     <color name="darkPurple">#FFE28ECC</color>

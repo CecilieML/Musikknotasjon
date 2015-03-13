@@ -68,7 +68,7 @@ public class MyTouchListener implements View.OnTouchListener {
                 if(index>0)
                     parentLayout.setY(yValueSearch.yValues[index-1]);
                 System.out.println("original " + y + "  new value  " + yValueSearch.yValues[3]);*/
-                parentLayout.setY(parentLayout.getY()-3);
+                parentLayout.setY(parentLayout.getY()-5);
             }
         });
 
@@ -93,7 +93,7 @@ public class MyTouchListener implements View.OnTouchListener {
                 if(index>=46 || index<0)index=46;
                 parentLayout.setY(yValueSearch.yValues[index+1]);
                 System.out.println(" searching for: "+ y +" new value  " + yValueSearch.yValues[index+1]);*/
-                parentLayout.setY(parentLayout.getY()+3);
+                parentLayout.setY(parentLayout.getY()+5);
 
 
 

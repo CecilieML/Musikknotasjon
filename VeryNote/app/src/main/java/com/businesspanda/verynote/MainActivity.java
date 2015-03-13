@@ -219,19 +219,24 @@ public class MainActivity extends ActionBarActivity  {
 
     public void fitToScreen() {
 
-        RelativeLayout trebleBackground = (RelativeLayout) findViewById(R.id.backgroundLayer);
-        RelativeLayout scrollLayer = (RelativeLayout) findViewById(R.id.lowestLayer);
+        //RelativeLayout trebleBackground = (RelativeLayout) findViewById(R.id.backgroundLayer);
+       // RelativeLayout scrollLayer = (RelativeLayout) findViewById(R.id.lowestLayer);
+        FrameLayout frame = (FrameLayout) findViewById(R.id.frame);
 
         float density = getResources().getDisplayMetrics().density;
 
         //tinyphone = 1.5, other phones = 3.0
         if(density>2){
-            trebleBackground.setPadding(
+           /* trebleBackground.setPadding(
                     (int) this.getResources().getDimension(R.dimen.marginLeft),
                     (int) this.getResources().getDimension(R.dimen.marginTop),0,0);
             scrollLayer.setPadding(
                     (int) this.getResources().getDimension(R.dimen.marginLeft),
+                    (int) this.getResources().getDimension(R.dimen.marginTop),0,0);*/
+            frame.setPadding(
+                    (int) this.getResources().getDimension(R.dimen.marginLeft),
                     (int) this.getResources().getDimension(R.dimen.marginTop),0,0);
+
         }
 
     }
@@ -607,18 +612,19 @@ public class MainActivity extends ActionBarActivity  {
                     }});
 
                 popupWindow.showAtLocation(this.findViewById(R.id.metronomeswitch), Gravity.CENTER, 0, 0);
+                popupWindow.setFocusable(true);
 
                 EditText met_speed_field = (EditText) popupView.findViewById(R.id.speedtext);
 
-                met_speed_field.setText("www");
+                //met_speed_field.setText("www");
 
                 met_speed_field.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
                     @Override
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                         EditText speedfield = (EditText) findViewById(R.id.speedtext);
-                        metSpeed = speedfield.getText().toString();
-                        System.out.println("metspeed ----->  " + metSpeed);
+                        //metSpeed = speedfield.getText().toString();
+                        //System.out.println("metspeed ----->  " + metSpeed);
                         return false;
                     }
                 });
