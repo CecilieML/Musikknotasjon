@@ -218,21 +218,13 @@ public class MainActivity extends ActionBarActivity  {
     }
 
     public void fitToScreen() {
-
-        //RelativeLayout trebleBackground = (RelativeLayout) findViewById(R.id.backgroundLayer);
-       // RelativeLayout scrollLayer = (RelativeLayout) findViewById(R.id.lowestLayer);
         FrameLayout frame = (FrameLayout) findViewById(R.id.frame);
 
         float density = getResources().getDisplayMetrics().density;
 
         //tinyphone = 1.5, other phones = 3.0
         if(density>2){
-           /* trebleBackground.setPadding(
-                    (int) this.getResources().getDimension(R.dimen.marginLeft),
-                    (int) this.getResources().getDimension(R.dimen.marginTop),0,0);
-            scrollLayer.setPadding(
-                    (int) this.getResources().getDimension(R.dimen.marginLeft),
-                    (int) this.getResources().getDimension(R.dimen.marginTop),0,0);*/
+
             frame.setPadding(
                     (int) this.getResources().getDimension(R.dimen.marginLeft),
                     (int) this.getResources().getDimension(R.dimen.marginTop),0,0);
