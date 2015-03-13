@@ -6,6 +6,7 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -13,6 +14,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Layout;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -26,6 +29,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -66,10 +70,24 @@ public class MainActivity extends ActionBarActivity  {
 
     public String title = "Untitled";
 
+    public String metSpeed = "750";
+
     ImageView image;
     Note prevNote;
 
     LockableScrollView scrollView;
+
+
+
+    RelativeLayout lowestLayer;
+    FrameLayout mainScreen;
+
+    public int offsetY;
+
+    public int getOffsetY() {
+        return offsetY;
+    }
+
 
     /** Called when the activity is first created. */
     @Override
@@ -78,6 +96,15 @@ public class MainActivity extends ActionBarActivity  {
         setContentView(R.layout.activity_main);
         NoteSearch.createTable();
         genTone();
+
+
+
+        lowestLayer = (RelativeLayout) findViewById(R.id.lowestLayer);
+        mainScreen = (FrameLayout)findViewById(R.id.frame);
+
+
+
+
 
         fitToScreen();
 
@@ -114,6 +141,7 @@ public class MainActivity extends ActionBarActivity  {
 
         theLayout.addView(image);
 
+
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
 
         metSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -134,19 +162,23 @@ public class MainActivity extends ActionBarActivity  {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         // add the custom view to the action bar
         actionBar.setCustomView(R.layout.edit_text);
-        EditText search = (EditText) actionBar.getCustomView().findViewById(R.id.title_field);
-        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        EditText edit_title = (EditText) actionBar.getCustomView().findViewById(R.id.title_field);
+        edit_title.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 EditText titleField = (EditText) findViewById(R.id.title_field);
                 title = titleField.getText().toString();
                 //removes spaces from title
-                exp.setFilename(title.replaceAll(" ",""));
+                exp.setFilename(title.replaceAll(" ", ""));
                 return false;
             }
         });
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE);
+
+
+
+
 
 
     }
@@ -532,6 +564,18 @@ public class MainActivity extends ActionBarActivity  {
                     item.setIcon(R.drawable.ic_action_pause);
                     playSound();
                     playing = true;
+
+
+                    DisplayMetrics displayMetrics = new DisplayMetrics();
+                    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+                    offsetY = displayMetrics.heightPixels - mainScreen.getMeasuredHeight();
+
+                    System.out.println(offsetY + " <---- offsetY(heightpixel-measueredheigh)");
+                    System.out.println(displayMetrics.heightPixels + " <---- heightpixels");
+                    System.out.println(lowestLayer.getMeasuredHeight() + " <---- measuredheight");
+
+
                 }else{
                     item.setIcon(R.drawable.ic_action_play);
                     playing = false;
@@ -550,11 +594,12 @@ public class MainActivity extends ActionBarActivity  {
             case R.id.action_settings:
                 LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = layoutInflater.inflate(R.layout.settings_popup, null);
-                final PopupWindow popupWindow = new PopupWindow(
-                        popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-                Button btnDismiss = (Button)popupView.findViewById(R.id.cancel);
-                btnDismiss.setOnClickListener(new Button.OnClickListener(){
+                final PopupWindow popupWindow = new PopupWindow(
+                        popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+
+                Button btnCancel = (Button)popupView.findViewById(R.id.cancel);
+                btnCancel.setOnClickListener(new Button.OnClickListener(){
 
                     @Override
                     public void onClick(View v) {
@@ -562,6 +607,21 @@ public class MainActivity extends ActionBarActivity  {
                     }});
 
                 popupWindow.showAtLocation(this.findViewById(R.id.metronomeswitch), Gravity.CENTER, 0, 0);
+
+                EditText met_speed_field = (EditText) popupView.findViewById(R.id.speedtext);
+
+                met_speed_field.setText("www");
+
+                met_speed_field.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        EditText speedfield = (EditText) findViewById(R.id.speedtext);
+                        metSpeed = speedfield.getText().toString();
+                        System.out.println("metspeed ----->  " + metSpeed);
+                        return false;
+                    }
+                });
 
 
                 return true;

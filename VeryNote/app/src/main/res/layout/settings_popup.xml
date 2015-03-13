@@ -31,14 +31,14 @@
                 android:text="@string/metronome_speed_text"/>
             <EditText
                 android:id="@+id/speedtext"
-                android:layout_width="wrap_content"
+                android:layout_width="90dp"
                 android:layout_height="17dp"
                 android:layout_below="@id/settingstext"
                 android:layout_toRightOf="@id/speedlabel"
-                android:inputType="number"
+                android:inputType="textFilter"
                 android:maxLength="3"
                 android:minEms="2"
-                android:text="@string/metronome_speed"/>
+                android:text="SPEEEEED"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
