@@ -95,7 +95,17 @@ public class MyTouchListener implements View.OnTouchListener {
                 System.out.println(" searching for: "+ y +" new value  " + yValueSearch.yValues[index+1]);*/
                 parentLayout.setY(parentLayout.getY()+5);
 
+/*
+I have found a solution.
+1st I will get display height:
+WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+Display display = wm.getDefaultDisplay();
+int height = display.getHeight();
+ and then set the height of llImages
+LayoutParams params = llImages.getLayoutParams();
+params.height = (int) (getDisplayHeight() * 0.66);
 
+ */
 
             }
         });
