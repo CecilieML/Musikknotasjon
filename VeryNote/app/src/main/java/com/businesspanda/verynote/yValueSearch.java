@@ -1,5 +1,7 @@
 package com.businesspanda.verynote;
 
+import android.util.TypedValue;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,29 +10,77 @@ import java.util.HashMap;
  */
 public class yValueSearch {
 
-    public static int[] yValues = new int[48];
+    public static float[] yValues = new float[48];
 
     public static void createYValues() {
 
         //C
-        yValues[47] = (int) Config.context.getResources().getDimension(R.dimen.C3);
-        yValues[35] = (int) Config.context.getResources().getDimension(R.dimen.C4);
-        yValues[23] = (int) Config.context.getResources().getDimension(R.dimen.C5);
-        yValues[11] = (int) Config.context.getResources().getDimension(R.dimen.C6);
+        TypedValue c3outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.C3, c3outValue, true);
+        float c3 = c3outValue.getFloat();
+
+        TypedValue c4outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.C4, c4outValue, true);
+        float c4 = c4outValue.getFloat();
+
+        TypedValue c5outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.C5, c5outValue, true);
+        float c5 = c5outValue.getFloat();
+
+        TypedValue c6outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.C6, c6outValue, true);
+        float c6 = c6outValue.getFloat();
+
+        yValues[47] = c3;
+        yValues[35] = c4;
+        yValues[23] = c5;
+        yValues[11] = c6;
 
         //C#
-        yValues[46] = (int) Config.context.getResources().getDimension(R.dimen.Cs3);
-        yValues[34] = (int) Config.context.getResources().getDimension(R.dimen.Cs4);
-        yValues[22] = (int) Config.context.getResources().getDimension(R.dimen.Cs5);
-        yValues[10] = (int) Config.context.getResources().getDimension(R.dimen.Cs6);
+        TypedValue cs3outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Cs3, c3outValue, true);
+        float cs3 = cs3outValue.getFloat();
+
+        TypedValue cs4outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Cs4, c4outValue, true);
+        float cs4 = cs4outValue.getFloat();
+
+        TypedValue cs5outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Cs5, c5outValue, true);
+        float cs5 = cs5outValue.getFloat();
+
+        TypedValue cs6outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Cs6, c6outValue, true);
+        float cs6 = cs6outValue.getFloat();
+
+        yValues[46] = cs3;
+        yValues[34] = cs4;
+        yValues[22] = cs5;
+        yValues[10] = cs6;
 
         //D
-        yValues[45] = (int) Config.context.getResources().getDimension(R.dimen.D3);
-        yValues[33] = (int) Config.context.getResources().getDimension(R.dimen.D4);
-        yValues[21] = (int) Config.context.getResources().getDimension(R.dimen.D5);
-        yValues[9]  = (int) Config.context.getResources().getDimension(R.dimen.D6);
+        TypedValue d3outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.D3, c3outValue, true);
+        float d3 = d3outValue.getFloat();
 
-        //Eb
+        TypedValue d4outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.D4, c4outValue, true);
+        float d4 = d4outValue.getFloat();
+
+        TypedValue d5outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.D5, c5outValue, true);
+        float d5 = d5outValue.getFloat();
+
+        TypedValue d6outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.D6, c6outValue, true);
+        float d6 = d6outValue.getFloat();
+
+        yValues[45] = d3;
+        yValues[33] = d4;
+        yValues[21] = d5;
+        yValues[9]  = d6;
+
+     /*   //Eb
         yValues[44] = (int) Config.context.getResources().getDimension(R.dimen.Eb3);
         yValues[32] = (int) Config.context.getResources().getDimension(R.dimen.Eb4);
         yValues[20] = (int) Config.context.getResources().getDimension(R.dimen.Eb5);
@@ -82,7 +132,7 @@ public class yValueSearch {
         yValues[36] = (int) Config.context.getResources().getDimension(R.dimen.B3);
         yValues[24] = (int) Config.context.getResources().getDimension(R.dimen.B4);
         yValues[12] = (int) Config.context.getResources().getDimension(R.dimen.B5);
-        yValues[0]  = (int) Config.context.getResources().getDimension(R.dimen.B6);
+        yValues[0]  = (int) Config.context.getResources().getDimension(R.dimen.B6);*/
 
     }
 

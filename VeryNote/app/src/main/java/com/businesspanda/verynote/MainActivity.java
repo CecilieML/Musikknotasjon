@@ -2,6 +2,7 @@ package com.businesspanda.verynote;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.Thread;
 
@@ -87,6 +88,8 @@ public class MainActivity extends ActionBarActivity  {
 
     RelativeLayout lowestLayer;
     FrameLayout mainScreen;
+
+    String stringarray;
 
 
     /** Called when the activity is first created. */
@@ -209,6 +212,8 @@ public class MainActivity extends ActionBarActivity  {
         if (usbMidiSystem != null) {
 //            usbMidiSystem.terminate();
         }
+
+
     }
 
     @Override
@@ -244,6 +249,9 @@ public class MainActivity extends ActionBarActivity  {
         Integer pitchInt = (int) (pitch);
         Note nearestNote = NoteSearch.findNearestNote(pitchInt);
 
+        stringarray = stringarray + " " + pitchInt;
+
+
         changeFreq.setText(nearestNote.name);
 
         newTime = System.nanoTime();
@@ -251,7 +259,7 @@ public class MainActivity extends ActionBarActivity  {
         dur = (newTime - lastTime)/1000000;
 
         if(nearestNote==prevNote)
-            noteLength();
+//            noteLength();
 
         if(dur>300 && nearestNote!=prevNote){
 
@@ -267,28 +275,9 @@ public class MainActivity extends ActionBarActivity  {
                 System.out.println("All the notes  " + allNotes.get(i).getName());
             }*/
 
-            try {
-                File file = new File(Environment.getExternalStorageDirectory(), "exportvalues.txt");
-
-                FileOutputStream fos = new FileOutputStream(file);
 
 
-
-                Serializer serializer = new Serializer(fos, "UTF-8");
-                serializer.setIndent(4);
-                serializer.write(renderer.getMusicXMLDoc());
-
-                System.out.println("var i den andre void :3");
-
-                fos.flush();
-                fos.close();
-            } catch (IOException e){
-                Toast.makeText(Config.context, "Problem saving output!", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            }
-
-
-            notesOnScreen(nearestNote);
+//            notesOnScreen(nearestNote);
             prevNote = nearestNote;
 
         }
@@ -333,25 +322,30 @@ public class MainActivity extends ActionBarActivity  {
         linLayout.addView(tempo);
     }
 
-   /* public void writeToFile(){
-        //String theentirearraythingstring = test.toString();
+   public void writeToFile(String stringarray) {
 
-        FileWriter fw;
-        try {
-            File f = this.getFilesDir();
-            String s = f.getCanonicalPath();
-            File file = new File(s+"/awesomefile.txt");
-            if(file.exists()) {
-                file.delete();
-            }
-            file.createNewFile();
-            fw = new FileWriter(file);
-            fw.write(theentirearraythingstring);
+       File file = new File(Environment.getExternalStorageDirectory(),"FileWriter.txt");
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
+       if(file.exists()) {
+           file.delete();
+       }
+
+       FileWriter fr = null;
+       try {
+           fr = new FileWriter(file);
+           fr.write(stringarray);
+       } catch (IOException e) {
+           e.printStackTrace();
+       } finally {
+           //close resources
+           try {
+               fr.close();
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+       }
+   }
+
 
     private Runnable mVibrations = new Runnable() {
         public void run() {
@@ -430,7 +424,7 @@ public class MainActivity extends ActionBarActivity  {
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
         double y = (int)this.getResources().getDimension(yID);
 
-        imgLayout.setY(FitToScreen.returnViewHeight(backgroundImage, y));
+        imgLayout.setY(FitToScreen.returnViewHeight(y));
         imgLayout.setX(x);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
@@ -441,7 +435,7 @@ public class MainActivity extends ActionBarActivity  {
         currentNote.setY(0);
         //image.setMaxHeight((int) this.getResources().getDimension(R.dimen.maxHeight));
         //image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
-        currentNote.setImageResource(R.drawable.quartenote);
+        currentNote.setImageResource(R.drawable.doubletailnote);
 
         if(note.sharp){
             ImageView sharp = new ImageView(this);
@@ -582,6 +576,8 @@ boolean treble = true;
                     item.setIcon(R.drawable.ic_action_pause);
                     playSound();
                     playing = true;
+
+                    writeToFile(stringarray);
 
 
                     DisplayMetrics displayMetrics = new DisplayMetrics();
