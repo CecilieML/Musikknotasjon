@@ -143,6 +143,6 @@
     <dimen name="B5">12dp</dimen>
     <dimen name="B6">0dp</dimen>
 
-
+    <!--important comment!-->
 
 </resources>
