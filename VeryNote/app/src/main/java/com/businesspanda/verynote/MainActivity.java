@@ -72,21 +72,15 @@ public class MainActivity extends ActionBarActivity  {
 
     public String metSpeed = "750";
 
-    ImageView image;
+    ImageView currentNote;
     Note prevNote;
 
     LockableScrollView scrollView;
 
-
+    ImageView backgroundImage;
 
     RelativeLayout lowestLayer;
     FrameLayout mainScreen;
-
-    public int offsetY;
-
-    public int getOffsetY() {
-        return offsetY;
-    }
 
 
     /** Called when the activity is first created. */
@@ -128,18 +122,18 @@ public class MainActivity extends ActionBarActivity  {
         scrollView.addView(linLayout);
 
         RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.backgroundLayer);
-        ImageView image = new ImageView(this);
+        backgroundImage = new ImageView(this);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.trebleWidth),
                 (int) this.getResources().getDimension(R.dimen.trebleHeight));
-        image.setLayoutParams(params);
+        backgroundImage.setLayoutParams(params);
 
-        image.setX((int) this.getResources().getDimension(R.dimen.trebleX));
-        image.setY((int) this.getResources().getDimension(R.dimen.trebleY));
+        backgroundImage.setX((int) this.getResources().getDimension(R.dimen.trebleX));
+        backgroundImage.setY((int) this.getResources().getDimension(R.dimen.trebleY));
 
-        image.setImageResource(R.drawable.treblebackround);
+        backgroundImage.setImageResource(R.drawable.treblebackround);
 
-        theLayout.addView(image);
+        theLayout.addView(backgroundImage);
 
 
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
@@ -353,14 +347,14 @@ public class MainActivity extends ActionBarActivity  {
     public void noteLength(){
 
         if(dur>=100 && dur<200){
-            image.setImageResource(R.drawable.quartenote);
+            currentNote.setImageResource(R.drawable.quartenote);
         }else if(dur>=200 && dur<400){
-            image.setImageResource(R.drawable.halfnote);
+            currentNote.setImageResource(R.drawable.halfnote);
 
         }else if(dur>=400 && dur<600){
-            image.setImageResource(R.drawable.singlenote);
+            currentNote.setImageResource(R.drawable.singlenote);
         }else if(dur>=600 && dur<1000){
-            image.setImageResource(R.drawable.fullnote);
+            currentNote.setImageResource(R.drawable.fullnote);
         }else if(dur>=1000){
             prevNote = new Note(false, false, 0, 0, " ");
         }
@@ -398,7 +392,7 @@ public class MainActivity extends ActionBarActivity  {
                 (int) this.getResources().getDimension(R.dimen.layHeight));
         imgLayout.setLayoutParams(par);
 
-        image = new ImageView(this);
+        currentNote = new ImageView(this);
 
         imgLayout.setFocusable(true);
 
@@ -415,12 +409,12 @@ public class MainActivity extends ActionBarActivity  {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.noteWidth),
                 (int) this.getResources().getDimension(R.dimen.noteHeight));
-        image.setLayoutParams(params);
-        image.setX(this.getResources().getDimension(R.dimen.noteX));
-        image.setY(0);
+        currentNote.setLayoutParams(params);
+        currentNote.setX(this.getResources().getDimension(R.dimen.noteX));
+        currentNote.setY(0);
         //image.setMaxHeight((int) this.getResources().getDimension(R.dimen.maxHeight));
         //image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
-        image.setImageResource(R.drawable.quartenote);
+        currentNote.setImageResource(R.drawable.quartenote);
 
         if(note.sharp){
             ImageView sharp = new ImageView(this);
@@ -450,8 +444,8 @@ public class MainActivity extends ActionBarActivity  {
         }
 
        // image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
-        image.setOnTouchListener(heyListen);
-        imgLayout.addView(image);
+        currentNote.setOnTouchListener(heyListen);
+        imgLayout.addView(currentNote);
         linLayout.addView(imgLayout);
         if(!recording){
             linLayHandler.removeCallbacks(moveLinLay);
@@ -520,7 +514,7 @@ public class MainActivity extends ActionBarActivity  {
     };
 
 
-
+boolean treble = true;
 
 
     @Override
@@ -566,11 +560,11 @@ public class MainActivity extends ActionBarActivity  {
                     DisplayMetrics displayMetrics = new DisplayMetrics();
                     getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-                    offsetY = displayMetrics.heightPixels - mainScreen.getMeasuredHeight();
+                    /*offsetY = displayMetrics.heightPixels - mainScreen.getMeasuredHeight();
 
                     System.out.println(offsetY + " <---- offsetY(heightpixel-measueredheigh)");
                     System.out.println(displayMetrics.heightPixels + " <---- heightpixels");
-                    System.out.println(lowestLayer.getMeasuredHeight() + " <---- measuredheight");
+                    System.out.println(lowestLayer.getMeasuredHeight() + " <---- measuredheight");*/
 
 
                 }else{
@@ -578,6 +572,23 @@ public class MainActivity extends ActionBarActivity  {
                     playing = false;
                 }
                 return true;
+
+
+
+            case R.id.trebleBass:
+                if(treble){
+                    item.setIcon(R.drawable.bass);
+                    backgroundImage.setImageResource(R.drawable.trebleline);
+                    treble = false;
+                }else{
+                    item.setIcon(R.drawable.treble);
+                    backgroundImage.setImageResource(R.drawable.bassline);
+                    treble = true;
+                }
+                return true;
+
+
+
             case R.id.action_save:
                 Pattern patternSD = new Pattern(allNotes);
                 exp.saveToSD(patternSD);

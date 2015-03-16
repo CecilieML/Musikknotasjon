@@ -27,4 +27,11 @@
           android:title="@string/play"
           app:showAsAction="ifRoom" />
 
+    <item android:id="@+id/trebleBass"
+          android:icon="@drawable/treble"
+          android:title="Background"
+          app:showAsAction="ifRoom"
+        />
+
+
 </menu>
