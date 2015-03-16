@@ -261,7 +261,7 @@ public class MainActivity extends ActionBarActivity  {
         if(nearestNote==prevNote)
 //            noteLength();
 
-        if(dur>300 && nearestNote!=prevNote){
+        if(dur>300 && nearestNote!=prevNote){ // something needs to chane HERE
 
             lastTime = System.nanoTime();
 
@@ -286,24 +286,28 @@ public class MainActivity extends ActionBarActivity  {
 
     private Runnable writeTempoline = new Runnable() {
         public void run() {
-            tempolineOnScreen(getTempoUpperY());
-            tempolineOnScreen(getTempoLowerY());
-            allNotes = allNotes + " |";
-            tempolineHandler.postDelayed(writeTempoline, 1500);
+//            tempolineOnScreen(getTempoUpperY());
+//            tempolineOnScreen(getTempoLowerY());
+            tempolineOnScreen(getTempolineY());
+
+            tempolineHandler.postDelayed(writeTempoline, 3000);
         }
     };
 
-    public int getTempoUpperY(){
+ /*   public int getTempoUpperY(){
         return  (int) this.getResources().getDimension(R.dimen.upperTempolineY);
     }
 
     public int getTempoLowerY(){
         return  (int) this.getResources().getDimension(R.dimen.lowerTempolineY);
+    }*/
+
+    public int getTempolineY(){
+        return (int) this.getResources().getDimension(R.dimen.lowerTempolineY);
     }
 
     public void tempolineOnScreen(int y){
-      //  LinearInterpolator interpolator = new LinearInterpolator();
-      //  RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.lowestLayer);
+
         ImageView tempo = new ImageView(this);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.tempolineWidth),
@@ -311,14 +315,10 @@ public class MainActivity extends ActionBarActivity  {
         tempo.setLayoutParams(params);
         tempo.setBackgroundColor(getResources().getColor(R.color.lineColor));
 
-        //int xOffset = (int) this.getResources().getDimension(R.dimen.tempolineOffsetX);
-
-       // int pos = ((int) this.getResources().getDimension(R.dimen.endPos));
         tempo.setX(linLayout.getLayoutParams().width - (int) this.getResources().getDimension(R.dimen.noteStartPos));
         tempo.setY(y);
 
-        //image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
-
+        allNotes = allNotes + " |";
         linLayout.addView(tempo);
     }
 
@@ -360,28 +360,49 @@ public class MainActivity extends ActionBarActivity  {
             //Vibrate for 50 milliseconds
             v.vibrate(50);
             //Wait for 750 ms
-            mHandler.postDelayed(mVibrations, 750);
+            mHandler.postDelayed(mVibrations, metronomNmb);
         }
     };
 
+int metronomNmb = 750;
 
     public void noteLength(){
 
-        if(dur>=100 && dur<200){
+        int fullBar = metronomNmb*4; //4 = tempo
+
+        if(dur < (fullBar/16)) {               //= 1/16 of fullBar
             currentNote.setImageResource(R.drawable.doubletailnote);
-        }else if(dur>=200 && dur<400){
+
+        }else if(dur < (fullBar*3/32)){        //= 3/32 of fullBar
+            currentNote.setImageResource(R.drawable.doubletailnotewdot);
+
+        }else if(dur < (fullBar/8)){           //= 1/8 of fullBar
             currentNote.setImageResource(R.drawable.singeltailnaote);
 
-        }else if(dur>=400 && dur<600){
+        }else if(dur < (fullBar*3/16)){        //= 3/16 of fullBar
+            currentNote.setImageResource(R.drawable.singeltailnaotewdot);
+
+        }else if(dur < (fullBar/4)) {           //= 1/4 of fullBar
             currentNote.setImageResource(R.drawable.note);
-        }else if(dur>=600 && dur<1000){
+
+        }else if(dur < (fullBar*3/8)) {         //= 3/8 of fullBar
+            currentNote.setImageResource(R.drawable.notewdot);
+
+        }else if(dur < (fullBar/2)){            //= 2/4 of fullBar
             currentNote.setImageResource(R.drawable.holownote);
-        }else if(dur>=1000){
+
+        }else if(dur < (fullBar*3/4)){          //= 3/4 of fullBar
+            currentNote.setImageResource(R.drawable.holownotewdot);
+
+        }else if(dur < (fullBar)){              //= 4/4 of fullBar
+            currentNote.setImageResource(R.drawable.notailhollownote);
+
+        }else if(dur < (fullBar*1.5)){          //= 1 1/2 of fullBar
+            currentNote.setImageResource(R.drawable.notailhollownotewdot);
+
+        }else{
             prevNote = new Note(false, false, 0, 0, " ");
         }
-
-        //image.setImageResourse(R.drawable.doublenote);
-
 
     }
 
@@ -435,7 +456,9 @@ public class MainActivity extends ActionBarActivity  {
         currentNote.setY(0);
         //image.setMaxHeight((int) this.getResources().getDimension(R.dimen.maxHeight));
         //image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
-        currentNote.setImageResource(R.drawable.doubletailnote);
+        //currentNote.setImageResource(R.drawable.doubletailnote);
+
+        noteLength();
 
         if(note.sharp){
             ImageView sharp = new ImageView(this);
@@ -447,7 +470,7 @@ public class MainActivity extends ActionBarActivity  {
             sharp.setX((int) this.getResources().getDimension(R.dimen.sharpOffsetX));
             sharp.setY((int) this.getResources().getDimension(R.dimen.sharpOffsetY));
 
-            sharp.setImageResource(R.drawable.sharpnote);
+            sharp.setImageResource(R.drawable.sharpnotenew);
            // sharp.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
             imgLayout.addView(sharp);
         }else if(note.flat){
@@ -459,7 +482,7 @@ public class MainActivity extends ActionBarActivity  {
 
             flat.setX((int) this.getResources().getDimension(R.dimen.flatOffsetX));
             flat.setY((int) this.getResources().getDimension(R.dimen.flatOffsetY));
-            flat.setImageResource(R.drawable.flatnote);
+            flat.setImageResource(R.drawable.flatnotenew);
          //   flat.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
             imgLayout.addView(flat);
         }

@@ -60,19 +60,19 @@ public class yValueSearch {
 
         //D
         TypedValue d3outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.D3, c3outValue, true);
+        Config.context.getResources().getValue(R.dimen.D3, d3outValue, true);
         float d3 = d3outValue.getFloat();
 
         TypedValue d4outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.D4, c4outValue, true);
+        Config.context.getResources().getValue(R.dimen.D4, d4outValue, true);
         float d4 = d4outValue.getFloat();
 
         TypedValue d5outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.D5, c5outValue, true);
+        Config.context.getResources().getValue(R.dimen.D5, d5outValue, true);
         float d5 = d5outValue.getFloat();
 
         TypedValue d6outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.D6, c6outValue, true);
+        Config.context.getResources().getValue(R.dimen.D6, d6outValue, true);
         float d6 = d6outValue.getFloat();
 
         yValues[45] = d3;
@@ -80,59 +80,203 @@ public class yValueSearch {
         yValues[21] = d5;
         yValues[9]  = d6;
 
-     /*   //Eb
-        yValues[44] = (int) Config.context.getResources().getDimension(R.dimen.Eb3);
-        yValues[32] = (int) Config.context.getResources().getDimension(R.dimen.Eb4);
-        yValues[20] = (int) Config.context.getResources().getDimension(R.dimen.Eb5);
-        yValues[8]  = (int) Config.context.getResources().getDimension(R.dimen.Eb6);
+       //Eb
+        TypedValue eb3outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Eb3, eb3outValue, true);
+        float eb3 = eb3outValue.getFloat();
+
+        TypedValue eb4outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Eb4, eb4outValue, true);
+        float eb4 = eb4outValue.getFloat();
+
+        TypedValue eb5outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Eb5, eb5outValue, true);
+        float eb5 = eb5outValue.getFloat();
+
+        TypedValue eb6outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Eb6, eb6outValue, true);
+        float eb6 = eb6outValue.getFloat();
+
+        yValues[44] = eb3;
+        yValues[32] = eb4;
+        yValues[20] = eb5;
+        yValues[8]  = eb6;
 
         //E
-        yValues[43] = (int) Config.context.getResources().getDimension(R.dimen.E3);
-        yValues[31] = (int) Config.context.getResources().getDimension(R.dimen.E4);
-        yValues[19] = (int) Config.context.getResources().getDimension(R.dimen.E5);
-        yValues[7]  = (int) Config.context.getResources().getDimension(R.dimen.E6);
+        TypedValue e3outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.E3, e3outValue, true);
+        float e3 = e3outValue.getFloat();
+
+        TypedValue e4outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.E4, e4outValue, true);
+        float e4 = e4outValue.getFloat();
+
+        TypedValue e5outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.E5, e5outValue, true);
+        float e5 = e5outValue.getFloat();
+
+        TypedValue e6outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.E6, e6outValue, true);
+        float e6 = e6outValue.getFloat();
+
+        yValues[43] = e3;
+        yValues[31] = e4;
+        yValues[19] = e5;
+        yValues[7]  = e6;
 
         //F
-        yValues[42] = (int) Config.context.getResources().getDimension(R.dimen.F3);
-        yValues[30] = (int) Config.context.getResources().getDimension(R.dimen.F4);
-        yValues[18] = (int) Config.context.getResources().getDimension(R.dimen.F5);
-        yValues[6]  = (int) Config.context.getResources().getDimension(R.dimen.F6);
+        TypedValue f3outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.F3, f3outValue, true);
+        float f3 = f3outValue.getFloat();
+
+        TypedValue f4outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.F4, f4outValue, true);
+        float f4 = f4outValue.getFloat();
+
+        TypedValue f5outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.F5, f5outValue, true);
+        float f5 = f5outValue.getFloat();
+
+        TypedValue f6outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.F6, f6outValue, true);
+        float f6 = f6outValue.getFloat();
+
+        yValues[42] = f3;
+        yValues[30] = f4;
+        yValues[18] = f5;
+        yValues[6]  = f6;
 
         //F#
-        yValues[41] = (int) Config.context.getResources().getDimension(R.dimen.Fs3);
-        yValues[29] = (int) Config.context.getResources().getDimension(R.dimen.Fs4);
-        yValues[17] = (int) Config.context.getResources().getDimension(R.dimen.Fs5);
-        yValues[5]  = (int) Config.context.getResources().getDimension(R.dimen.Fs6);
+        TypedValue fs3outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Fs3, fs3outValue, true);
+        float fs3 = fs3outValue.getFloat();
+
+        TypedValue fs4outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Fs4, fs4outValue, true);
+        float fs4 = fs4outValue.getFloat();
+
+        TypedValue fs5outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Fs5, fs5outValue, true);
+        float fs5 = fs5outValue.getFloat();
+
+        TypedValue fs6outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Fs6, fs6outValue, true);
+        float fs6 = fs6outValue.getFloat();
+
+        yValues[41] = fs3;
+        yValues[29] = fs4;
+        yValues[17] = fs5;
+        yValues[5]  = fs6;
 
         //G
-        yValues[40] = (int) Config.context.getResources().getDimension(R.dimen.G3);
-        yValues[28] = (int) Config.context.getResources().getDimension(R.dimen.G4);
-        yValues[16] = (int) Config.context.getResources().getDimension(R.dimen.G5);
-        yValues[4]  = (int) Config.context.getResources().getDimension(R.dimen.G6);
+        TypedValue g3outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.G3, g3outValue, true);
+        float g3 = g3outValue.getFloat();
+
+        TypedValue g4outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.G4, g4outValue, true);
+        float g4 = g4outValue.getFloat();
+
+        TypedValue g5outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.G5, g5outValue, true);
+        float g5 = g5outValue.getFloat();
+
+        TypedValue g6outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.G6, g6outValue, true);
+        float g6 = g6outValue.getFloat();
+
+        yValues[40] = g3;
+        yValues[28] = g4;
+        yValues[16] = g5;
+        yValues[4]  = g6;
 
         //G#
-        yValues[39] = (int) Config.context.getResources().getDimension(R.dimen.Gs3);
-        yValues[27] = (int) Config.context.getResources().getDimension(R.dimen.Gs4);
-        yValues[15] = (int) Config.context.getResources().getDimension(R.dimen.Gs5);
-        yValues[3]  = (int) Config.context.getResources().getDimension(R.dimen.Gs6);
+        TypedValue gs3outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Gs3, gs3outValue, true);
+        float gs3 = gs3outValue.getFloat();
+
+        TypedValue gs4outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Gs4, gs4outValue, true);
+        float gs4 = gs4outValue.getFloat();
+
+        TypedValue gs5outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Gs5, gs5outValue, true);
+        float gs5 = gs5outValue.getFloat();
+
+        TypedValue gs6outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Gs6, gs6outValue, true);
+        float gs6 = gs6outValue.getFloat();
+
+        yValues[39] = gs3;
+        yValues[27] = gs4;
+        yValues[15] = gs5;
+        yValues[3]  = gs6;
 
         //A
-        yValues[38] = (int) Config.context.getResources().getDimension(R.dimen.A3);
-        yValues[26] = (int) Config.context.getResources().getDimension(R.dimen.A4);
-        yValues[14] = (int) Config.context.getResources().getDimension(R.dimen.A5);
-        yValues[2]  = (int) Config.context.getResources().getDimension(R.dimen.A6);
+        TypedValue a3outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.A3, a3outValue, true);
+        float a3 = a3outValue.getFloat();
+
+        TypedValue a4outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.A4, a4outValue, true);
+        float a4 = a4outValue.getFloat();
+
+        TypedValue a5outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.A5, a5outValue, true);
+        float a5 = a5outValue.getFloat();
+
+        TypedValue a6outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.A6, a6outValue, true);
+        float a6 = a6outValue.getFloat();
+
+        yValues[38] = a3;
+        yValues[26] = a4;
+        yValues[14] = a5;
+        yValues[2]  = a6;
 
         //Bb
-        yValues[37] = (int) Config.context.getResources().getDimension(R.dimen.Bb3);
-        yValues[25] = (int) Config.context.getResources().getDimension(R.dimen.Bb4);
-        yValues[13] = (int) Config.context.getResources().getDimension(R.dimen.Bb5);
-        yValues[1]  = (int) Config.context.getResources().getDimension(R.dimen.Bb6);
+        TypedValue bb3outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Bb3, bb3outValue, true);
+        float bb3 = bb3outValue.getFloat();
+
+        TypedValue bb4outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Bb4, bb4outValue, true);
+        float bb4 = bb4outValue.getFloat();
+
+        TypedValue bb5outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Bb5, bb5outValue, true);
+        float bb5 = bb5outValue.getFloat();
+
+        TypedValue bb6outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.Bb6, bb6outValue, true);
+        float bb6 = bb6outValue.getFloat();
+
+        yValues[37] = bb3;
+        yValues[25] = bb4;
+        yValues[13] = bb5;
+        yValues[1]  = bb6;
 
         //B
-        yValues[36] = (int) Config.context.getResources().getDimension(R.dimen.B3);
-        yValues[24] = (int) Config.context.getResources().getDimension(R.dimen.B4);
-        yValues[12] = (int) Config.context.getResources().getDimension(R.dimen.B5);
-        yValues[0]  = (int) Config.context.getResources().getDimension(R.dimen.B6);*/
+        TypedValue b3outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.B3, b3outValue, true);
+        float b3 = b3outValue.getFloat();
+
+        TypedValue b4outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.B4, b4outValue, true);
+        float b4 = b4outValue.getFloat();
+
+        TypedValue b5outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.B5, b5outValue, true);
+        float b5 = b5outValue.getFloat();
+
+        TypedValue b6outValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.B6, b6outValue, true);
+        float b6 = b6outValue.getFloat();
+
+        yValues[36] = b3;
+        yValues[24] = b4;
+        yValues[12] = b5;
+        yValues[0]  = b6;
 
     }
 
