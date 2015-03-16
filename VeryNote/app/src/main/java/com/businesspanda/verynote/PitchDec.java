@@ -366,8 +366,10 @@ public class PitchDec implements Runnable {
 
             //pitchdetector
             //silence(audio_data);
-            windowthing = buildHanWindow(windowthing, CHUNK_SIZE_IN_SAMPLES);
-            audio_data = applyWindow(windowthing,audio_data,CHUNK_SIZE_IN_SAMPLES);
+
+            //windowing functions
+            //windowthing = buildHanWindow(windowthing, CHUNK_SIZE_IN_SAMPLES);
+            //audio_data = applyWindow(windowthing,audio_data,CHUNK_SIZE_IN_SAMPLES);
 
 
 

@@ -580,6 +580,7 @@ boolean treble = true;
                 if(treble){
                     item.setIcon(R.drawable.bass);
                     backgroundImage.setImageResource(R.drawable.trebleline);
+                    backgroundImage.setBackgroundColor(Color.RED);
                     treble = false;
                 }else{
                     item.setIcon(R.drawable.treble);
