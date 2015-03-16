@@ -28,20 +28,20 @@ public class FitToScreen {
         params.width = (int)(height * percentOfScreenCovering);
     }
 
-    public static int returnViewHeight(View view, double percentOfScreenCovering) {
+    public static int returnViewHeight(double percentOfScreen) {
         WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         int height = display.getHeight();
-        ViewGroup.LayoutParams params = view.getLayoutParams();
-        return (int)(height * percentOfScreenCovering);
+        //ViewGroup.LayoutParams params = view.getLayoutParams();
+        return (int)(height * percentOfScreen);
     }
 
-    public static int returnViewWidth(View view, double percentOfScreenCovering) {
+    public static int returnViewWidth(View view, double percentOfScreen) {
         WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         int height = display.getHeight();
         ViewGroup.LayoutParams params = view.getLayoutParams();
-        return (int)(height * percentOfScreenCovering);
+        return (int)(height * percentOfScreen);
     }
 
     /*public static void setRelativeLayoutHeight(RelativeLayout relativeLayout, double percentOfScreenCovering) {
