@@ -8,4 +8,5 @@
     <color name="darkPurple">#FFE28ECC</color>
     <color name="lightERpurple">#FFFDD1FF</color>
     <color name="lightGray">#ffd2d3fd</color>
+    <color name="lineColor">#ff59707e</color>
 </resources>

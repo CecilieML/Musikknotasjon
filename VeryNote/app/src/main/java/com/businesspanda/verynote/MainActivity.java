@@ -1,5 +1,8 @@
 package com.businesspanda.verynote;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.Thread;
 
 import android.app.ActionBar;
@@ -11,6 +14,7 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
@@ -36,10 +40,12 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jfugue.*;
 
 import jp.kshoji.javax.sound.midi.UsbMidiSystem;
+import nu.xom.Serializer;
 
 
 public class MainActivity extends ActionBarActivity  {
@@ -91,16 +97,9 @@ public class MainActivity extends ActionBarActivity  {
         NoteSearch.createTable();
         genTone();
 
-
-
         lowestLayer = (RelativeLayout) findViewById(R.id.lowestLayer);
-        mainScreen = (FrameLayout)findViewById(R.id.frame);
 
-
-
-
-
-        fitToScreen();
+        //fitToScreen();
 
         exp = new ExportXML();
 
@@ -108,8 +107,8 @@ public class MainActivity extends ActionBarActivity  {
 
         yValueSearch.createYValues();
 
-        RelativeLayout really = (RelativeLayout) findViewById(R.id.upperLayout);
-        heyListen = new MyTouchListener(really);
+        RelativeLayout upperLayout = (RelativeLayout) findViewById(R.id.upperLayout);
+        heyListen = new MyTouchListener(upperLayout);
 
         scrollView = (LockableScrollView) findViewById(R.id.scrollview);
 
@@ -121,20 +120,26 @@ public class MainActivity extends ActionBarActivity  {
 
         scrollView.addView(linLayout);
 
-        RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.backgroundLayer);
-        backgroundImage = new ImageView(this);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+        backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
+
+        //RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.backgroundLayer);
+       /* backgroundImage = new ImageView(this);
+
+        backgroundImage.setBackgroundColor(getResources().getColor(R.color.cyan));
+*/
+
+    /*    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.trebleWidth),
                 (int) this.getResources().getDimension(R.dimen.trebleHeight));
-        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+       // params.addRule(RelativeLayout.CENTER_IN_PARENT);
         backgroundImage.setLayoutParams(params);
 
         backgroundImage.setX((int) this.getResources().getDimension(R.dimen.trebleX));
         backgroundImage.setY((int) this.getResources().getDimension(R.dimen.trebleY));
 
-        backgroundImage.setImageResource(R.drawable.treblebackround);
+       /* backgroundImage.setImageResource(R.drawable.trebleline);
 
-        theLayout.addView(backgroundImage);
+        theLayout.addView(backgroundImage);*/
 
 
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
@@ -262,6 +267,27 @@ public class MainActivity extends ActionBarActivity  {
                 System.out.println("All the notes  " + allNotes.get(i).getName());
             }*/
 
+            try {
+                File file = new File(Environment.getExternalStorageDirectory(), "exportvalues.txt");
+
+                FileOutputStream fos = new FileOutputStream(file);
+
+
+
+                Serializer serializer = new Serializer(fos, "UTF-8");
+                serializer.setIndent(4);
+                serializer.write(renderer.getMusicXMLDoc());
+
+                System.out.println("var i den andre void :3");
+
+                fos.flush();
+                fos.close();
+            } catch (IOException e){
+                Toast.makeText(Config.context, "Problem saving output!", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+
+
             notesOnScreen(nearestNote);
             prevNote = nearestNote;
 
@@ -294,7 +320,7 @@ public class MainActivity extends ActionBarActivity  {
                 (int) this.getResources().getDimension(R.dimen.tempolineWidth),
                 (int) this.getResources().getDimension(R.dimen.tempolineHeight));
         tempo.setLayoutParams(params);
-        tempo.setBackgroundColor(0xFF000000);
+        tempo.setBackgroundColor(getResources().getColor(R.color.lineColor));
 
         //int xOffset = (int) this.getResources().getDimension(R.dimen.tempolineOffsetX);
 
@@ -348,14 +374,14 @@ public class MainActivity extends ActionBarActivity  {
     public void noteLength(){
 
         if(dur>=100 && dur<200){
-            currentNote.setImageResource(R.drawable.quartenote);
+            currentNote.setImageResource(R.drawable.doubletailnote);
         }else if(dur>=200 && dur<400){
-            currentNote.setImageResource(R.drawable.halfnote);
+            currentNote.setImageResource(R.drawable.singeltailnaote);
 
         }else if(dur>=400 && dur<600){
-            currentNote.setImageResource(R.drawable.singlenote);
+            currentNote.setImageResource(R.drawable.note);
         }else if(dur>=600 && dur<1000){
-            currentNote.setImageResource(R.drawable.fullnote);
+            currentNote.setImageResource(R.drawable.holownote);
         }else if(dur>=1000){
             prevNote = new Note(false, false, 0, 0, " ");
         }
@@ -402,9 +428,9 @@ public class MainActivity extends ActionBarActivity  {
 
         String notename = note.getName();
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
-        int y = (int)this.getResources().getDimension(yID);
+        double y = (int)this.getResources().getDimension(yID);
 
-        imgLayout.setY(y);
+        imgLayout.setY(FitToScreen.returnViewHeight(backgroundImage, y));
         imgLayout.setX(x);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
@@ -580,7 +606,6 @@ boolean treble = true;
                 if(treble){
                     item.setIcon(R.drawable.bass);
                     backgroundImage.setImageResource(R.drawable.trebleline);
-                    backgroundImage.setBackgroundColor(Color.RED);
                     treble = false;
                 }else{
                     item.setIcon(R.drawable.treble);

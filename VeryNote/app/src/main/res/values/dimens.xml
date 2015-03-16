@@ -72,76 +72,77 @@
     <dimen name="btnUpX">90dp</dimen>
 
     //C
-    <dimen name="C3">100dp</dimen>
-    <dimen name="C4">35dp</dimen>       //x
-    <dimen name="C5">53dp</dimen>
-    <dimen name="C6">11dp</dimen>
+    <item name="C3" format="float" type="dimen">1</item>
+    <item name="C4" format="float" type="dimen">0.65</item>       //x
+    <item name="C5" format="float" type="dimen">0.42</item>
+    <item name="C6" format="float" type="dimen">0.12</item>
 
     //C#
-    <dimen name="Cs3">109dp</dimen>
-    <dimen name="Cs4">34dp</dimen>      //x
-    <dimen name="Cs5">22dp</dimen>
-    <dimen name="Cs6">10dp</dimen>
+    <item name="Cs3" format="float" type="dimen">0.99</item>
+    <item name="Cs4" format="float" type="dimen">0.62</item>      //x
+    <item name="Cs5" format="float" type="dimen">0.41</item>
+    <item name="Cs6" format="float" type="dimen">0.11</item>
 
     //D
-    <dimen name="D3">44dp</dimen>
-    <dimen name="D4">33dp</dimen>       //x
-    <dimen name="D5">21dp</dimen>
-    <dimen name="D6">9dp</dimen>
+    <item name="D3" format="float" type="dimen">0.98</item>
+    <item name="D4" format="float" type="dimen">0.61</item>       //x
+    <item name="D5" format="float" type="dimen">0.4</item>
+    <item name="D6" format="float" type="dimen">0.1</item>
 
     //Eb
-    <dimen name="Eb3">43dp</dimen>
-    <dimen name="Eb4">32dp</dimen>      //x
-    <dimen name="Eb5">20dp</dimen>
-    <dimen name="Eb6">8dp</dimen>
+    <item name="Eb3" format="float" type="dimen">0.97</item>
+    <item name="Eb4" format="float" type="dimen">0.6</item>      //x
+    <item name="Eb5" format="float" type="dimen">0.39</item>
+    <item name="Eb6" format="float" type="dimen">0.09</item>
 
     //E
-    <dimen name="E3">42dp</dimen>
-    <dimen name="E4">31dp</dimen>       //x
-    <dimen name="E5">19dp</dimen>
-    <dimen name="E6">7dp</dimen>
+    <item name="E3" format="float" type="dimen">0.96</item>
+    <item name="E4" format="float" type="dimen">0.59</item>       //x
+    <item name="E5" format="float" type="dimen">0.38</item>
+    <item name="E6" format="float" type="dimen">0.08</item>
 
     //F
-    <dimen name="F3">41dp</dimen>
-    <dimen name="F4">30dp</dimen>       //x
-    <dimen name="F5">18dp</dimen>
-    <dimen name="F6">6dp</dimen>
+    <item name="F3" format="float" type="dimen">0.95</item>
+    <item name="F4" format="float" type="dimen">0.58</item>       //x
+    <item name="F5" format="float" type="dimen">0.37</item>
+    <item name="F6" format="float" type="dimen">0.07</item>
 
     //F#
-    <dimen name="Fs3">40dp</dimen>
-    <dimen name="Fs4">29dp</dimen>      //x
-    <dimen name="Fs5">17dp</dimen>
-    <dimen name="Fs6">5dp</dimen>
+    <item name="Fs3" format="float" type="dimen">0.94</item>
+    <item name="Fs4" format="float" type="dimen">0.57</item>      //x
+    <item name="Fs5" format="float" type="dimen">0.36</item>
+    <item name="Fs6" format="float" type="dimen">0.06</item>
 
     //G
-    <dimen name="G3">39dp</dimen>
-    <dimen name="G4">28dp</dimen>       //x
-    <dimen name="G5">16dp</dimen>
-    <dimen name="G6">4dp</dimen>
+    <item name="G3" format="float" type="dimen">0.93</item>
+    <item name="G4" format="float" type="dimen">0.56</item>       //x
+    <item name="G5" format="float" type="dimen">0.35</item>
+    <item name="G6" format="float" type="dimen">0.05</item>
 
     //G#
-    <dimen name="Gs3">39dp</dimen>
-    <dimen name="Gs4">27dp</dimen>      //x
-    <dimen name="Gs5">15dp</dimen>
-    <dimen name="Gs6">3dp</dimen>
+    <item name="Gs3" format="float" type="dimen">0.92</item>
+    <item name="Gs4" format="float" type="dimen">0.55</item>      //x
+    <item name="Gs5" format="float" type="dimen">0.34</item>
+    <item name="Gs6" format="float" type="dimen">0.04</item>
 
     //A
-    <dimen name="A3">38dp</dimen>
-    <dimen name="A4">26dp</dimen>       //x
-    <dimen name="A5">14dp</dimen>
-    <dimen name="A6">2dp</dimen>
+    <item name="A3" format="float" type="dimen">0.91</item>
+    <item name="A4" format="float" type="dimen">0.53</item>       //x
+    <item name="A5" format="float" type="dimen">0.33</item>
+    <item name="A6" format="float" type="dimen">0.04</item>
 
     //Bb
-    <dimen name="Bb3">37dp</dimen>
-    <dimen name="Bb4">25dp</dimen>      //x
-    <dimen name="Bb5">13dp</dimen>
-    <dimen name="Bb6">1dp</dimen>
+    <item name="Bb3" format="float" type="dimen">0.90</item>
+    <item name="Bb4" format="float" type="dimen">0.52</item>      //x
+    <item name="Bb5" format="float" type="dimen">0.32</item>
+    <item name="Bb6" format="float" type="dimen">0.02</item>
 
     //B
-    <dimen name="B3">36dp</dimen>
-    <dimen name="B4">24dp</dimen>       //x
-    <dimen name="B5">12dp</dimen>
-    <dimen name="B6">0dp</dimen>
+    <item name="B3" format="float" type="dimen">0.89</item>
+    <item name="B4" format="float" type="dimen">0.51</item>       //x
+    <item name="B5" format="float" type="dimen">0.31</item>
+    <item name="B6" format="float" type="dimen">0.01</item>
+
 
     <!--important comment!-->
 
