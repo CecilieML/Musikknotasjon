@@ -126,6 +126,7 @@ public class MainActivity extends ActionBarActivity  {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.trebleWidth),
                 (int) this.getResources().getDimension(R.dimen.trebleHeight));
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
         backgroundImage.setLayoutParams(params);
 
         backgroundImage.setX((int) this.getResources().getDimension(R.dimen.trebleX));
