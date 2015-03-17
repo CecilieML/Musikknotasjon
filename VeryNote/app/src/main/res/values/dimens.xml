@@ -3,7 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-
     <item type="dimen" format="float" name="sharpHeight">0.03</item>
     <item type="dimen" format="float" name="flatHeight">0.03</item>
 
@@ -14,10 +13,7 @@
     <item type="dimen" format="float" name="noteStartPos">0.1</item>
     <item type="dimen" format="float" name="noteX">0.01</item>
 
-
-
-
-    <item type="dimen" format="float" name="lowestLayerWidth">0.7</item>
+    <item type="dimen" format="float" name="lowestLayerWidth">0.75</item>
     <item type="dimen" format="float" name="lowestLayerHeight">0.7</item>
 
     <item type="dimen" format="float" name="tempolineWidth">0.0001</item>

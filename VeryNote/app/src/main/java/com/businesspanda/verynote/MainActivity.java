@@ -88,7 +88,7 @@ public class MainActivity extends ActionBarActivity  {
     ImageView backgroundImage;
 
     RelativeLayout lowestLayer;
-    FrameLayout mainScreen;
+    //FrameLayout mainScreen;
 
     String stringarray;
 
@@ -116,21 +116,31 @@ public class MainActivity extends ActionBarActivity  {
 
         scrollView = (LockableScrollView) findViewById(R.id.scrollview);
 
+        System.out.println(getPercent((R.dimen.lowestLayerWidth)) + "  <--" + FitToScreen.returnViewWidth(getPercent((R.dimen.lowestLayerWidth))));
+
         linLayout = new RelativeLayout(this);
-        RelativeLayout.LayoutParams paramsLinLayout = new RelativeLayout.LayoutParams(
-                FitToScreen.returnViewWidth(getPercent(getResources().getDimension(R.dimen.lowestLayerWidth))),
-                FitToScreen.returnViewHeight(getPercent(getResources().getDimension(R.dimen.lowestLayerHeight))));
+        FrameLayout.LayoutParams paramsLinLayout = new FrameLayout.LayoutParams(
+                FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)),
+                FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
         linLayout.setLayoutParams(paramsLinLayout);
+        scrollView.setBackgroundColor(getResources().getColor(R.color.cyan));
 
         scrollView.addView(linLayout);
 
         backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
+        RelativeLayout.LayoutParams backgroundParams = new RelativeLayout.LayoutParams(
+                FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundWidth)),
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        backgroundImage.setLayoutParams(backgroundParams);
+        //backgroundParams.addRule(Gravity.CENTER);
+        backgroundImage.setBackgroundColor(getResources().getColor(R.color.yellow));
 
-        RelativeLayout.LayoutParams lowestLayerParams = new RelativeLayout.LayoutParams(
-                FitToScreen.returnViewWidth(getPercent(getResources().getDimension(R.dimen.lowestLayerWidth))),
-                FitToScreen.returnViewHeight(getPercent(getResources().getDimension(R.dimen.lowestLayerHeight))));
+        FrameLayout.LayoutParams lowestLayerParams = new FrameLayout.LayoutParams(
+                FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)),
+                FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
+        lowestLayerParams.gravity = Gravity.CENTER;
         lowestLayer.setLayoutParams(lowestLayerParams);
-        lowestLayer.setBackgroundColor(getResources().getColor(R.color.yellow));
+
 
 
         //RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.backgroundLayer);
@@ -139,7 +149,7 @@ public class MainActivity extends ActionBarActivity  {
         backgroundImage.setBackgroundColor(getResources().getColor(R.color.cyan));
 */
 
-    /*    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+    /*    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.trebleWidth),
                 (int) this.getResources().getDimension(R.dimen.trebleHeight));
        // params.addRule(RelativeLayout.CENTER_IN_PARENT);
@@ -199,16 +209,6 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
-
-    public float getPercent(float idFloat){
-        int id = (int) idFloat;
-        TypedValue outValue = new TypedValue();
-        Config.context.getResources().getValue(id, outValue, true);
-        float returnValue = outValue.getFloat();
-        return returnValue;
-    }
-
-
     @Override
     public void onStop() {
         tempolineHandler.removeCallbacks(writeTempoline);
@@ -233,6 +233,13 @@ public class MainActivity extends ActionBarActivity  {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    public float getPercent(int id){
+        TypedValue outValue = new TypedValue();
+        Config.context.getResources().getValue(id, outValue, true);
+        float returnValue = outValue.getFloat();
+        return returnValue;
     }
 
  /*   public void fitToScreen() {
@@ -272,9 +279,9 @@ public class MainActivity extends ActionBarActivity  {
         dur = (newTime - lastTime)/1000000;
 
         if(nearestNote==prevNote)
-//            noteLength();
+            noteLength();
 
-        if(dur>300 && nearestNote!=prevNote){ // something needs to chane HERE
+        if(dur>50 && nearestNote!=prevNote){ // something needs to chane HERE
 
             lastTime = System.nanoTime();
 
@@ -290,7 +297,7 @@ public class MainActivity extends ActionBarActivity  {
 
 
 
-//            notesOnScreen(nearestNote);
+            notesOnScreen(nearestNote);
             prevNote = nearestNote;
 
         }
@@ -322,14 +329,14 @@ public class MainActivity extends ActionBarActivity  {
     public void tempolineOnScreen(int y){
 
         ImageView tempo = new ImageView(this);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                FitToScreen.returnViewWidth(getPercent(getResources().getDimension(R.dimen.tempolineWidth))),
-                FitToScreen.returnViewHeight(getPercent(getResources().getDimension(R.dimen.tempolineHeight))));
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                FitToScreen.returnViewWidth(getPercent(R.dimen.tempolineWidth)),
+                FitToScreen.returnViewHeight(getPercent(R.dimen.tempolineHeight)));
         tempo.setLayoutParams(params);
         tempo.setBackgroundColor(getResources().getColor(R.color.lineColor));
 
         tempo.setX(linLayout.getLayoutParams().width -
-                FitToScreen.returnViewWidth(getPercent(getResources().getDimension(R.dimen.noteStartPos))));
+                FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos)));
         tempo.setY(y);
 
         allNotes = allNotes + " |";
@@ -489,7 +496,7 @@ boolean bass = false;
                 (int) this.getResources().getDimension(R.dimen.layHeight));
         imgLayout.setLayoutParams(par);*/
 
-        RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(
+        FrameLayout.LayoutParams par = new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(0.01),
                 FitToScreen.returnViewHeight(0.02));
 
@@ -503,20 +510,20 @@ boolean bass = false;
 
         //int pos = (int) this.getResources().getDimension(R.dimen.endPos);
         int x = linLayout.getLayoutParams().width -
-                FitToScreen.returnViewWidth(getPercent(getResources().getDimension(R.dimen.noteStartPos)));
+                FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos));
 
         String notename = note.getName();
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
-        float y = FitToScreen.returnViewHeight(getPercent(getResources().getDimension(yID)));
+        float y = FitToScreen.returnViewHeight(getPercent(yID));
 
         imgLayout.setY(y);
         imgLayout.setX(x);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                FitToScreen.returnViewHeight(getPercent(getResources().getDimension(R.dimen.noteHeight))));
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FitToScreen.returnViewHeight(getPercent(R.dimen.noteHeight)));
         currentNote.setLayoutParams(params);
-        currentNote.setX(FitToScreen.returnViewWidth(getPercent(getResources().getDimension(R.dimen.noteX))));
+        currentNote.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.noteX)));
         currentNote.setY(0);
         //image.setMaxHeight((int) this.getResources().getDimension(R.dimen.maxHeight));
         //image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
@@ -526,9 +533,9 @@ boolean bass = false;
 
         if(note.sharp){
             ImageView sharp = new ImageView(this);
-            RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,           /***/
-                    FitToScreen.returnViewHeight(getPercent(getResources().getDimension(R.dimen.sharpHeight))));
+            FrameLayout.LayoutParams para = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,           /***/
+                    FitToScreen.returnViewHeight(getPercent(R.dimen.sharpHeight)));
             sharp.setLayoutParams(para);
 
            // sharp.setX((int) this.getResources().getDimension(R.dimen.sharpOffsetX));
@@ -539,9 +546,9 @@ boolean bass = false;
             imgLayout.addView(sharp);
         }else if(note.flat){
             ImageView flat = new ImageView(this);
-            RelativeLayout.LayoutParams paraFlat = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,           /***/
-                    FitToScreen.returnViewHeight(getPercent(getResources().getDimension(R.dimen.flatHeight))));
+            FrameLayout.LayoutParams paraFlat = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,           /***/
+                    FitToScreen.returnViewHeight(getPercent(R.dimen.flatHeight)));
             flat.setLayoutParams(paraFlat);
 
             //flat.setX((int) this.getResources().getDimension(R.dimen.flatOffsetX));
@@ -604,7 +611,7 @@ boolean bass = false;
     }
 
     public int Offset(){
-        return FitToScreen.returnViewWidth(getPercent(getResources().getDimension(R.dimen.Offset)));
+        return FitToScreen.returnViewWidth(getPercent(R.dimen.Offset));
     }
 
     int x = 0;
@@ -686,14 +693,14 @@ boolean treble = true;
 
 
             case R.id.trebleBass:
-                if(treble){
+                if(bass){
                     item.setIcon(R.drawable.basswhite);
                     backgroundImage.setImageResource(R.drawable.trebleline);
-                    treble = false;
+                    bass = false;
                 }else{
                     item.setIcon(R.drawable.treblewhite);
                     backgroundImage.setImageResource(R.drawable.bassline);
-                    treble = true;
+                    bass = true;
                 }
                 return true;
 

@@ -420,20 +420,25 @@ public class PitchDec implements Runnable {
 
             File file = new File(Environment.getExternalStorageDirectory(),"audiodata.txt");
 
-            DataOutputStream dos = new DataOutputStream(
+            /*DataOutputStream dos = new DataOutputStream(
                     new BufferedOutputStream(
                             new FileOutputStream(file),
                             writerbufferSize)
-            );
+            );*/
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
             try {
                 for (int i = 0; i < audio_datas_for_saving.length; i++) {
+                    bw.write(audio_datas_for_saving[i]);
+                    bw.newLine();
                     //dos.writeShort(audio_datas_for_saving[i]);
                    // System.out.println("IMA WRItinG A FILE");
                 }
                 System.out.println("DONE MAking file!!!");
-                dos.flush();
-                dos.close();
+                bw.close();
+                //dos.flush();
+                //dos.close();
             } catch (IOException e) {
                 System.out.println("Problem doing the arraything!");
                 e.printStackTrace();

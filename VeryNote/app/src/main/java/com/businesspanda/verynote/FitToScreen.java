@@ -39,8 +39,8 @@ public class FitToScreen {
     public static int returnViewWidth(double percentOfScreen) {
         WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
-        int height = display.getHeight();
-        return (int)(height * percentOfScreen);
+        int width = display.getWidth();
+        return (int)(width * percentOfScreen);
     }
 
     /*public static void setRelativeLayoutHeight(RelativeLayout relativeLayout, double percentOfScreenCovering) {

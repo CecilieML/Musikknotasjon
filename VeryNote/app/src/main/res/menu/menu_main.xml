@@ -28,7 +28,7 @@
           app:showAsAction="ifRoom" />
 
     <item android:id="@+id/trebleBass"
-          android:icon="@drawable/treble"
+          android:icon="@drawable/basswhite"
           android:title="Background"
           app:showAsAction="ifRoom"
         />

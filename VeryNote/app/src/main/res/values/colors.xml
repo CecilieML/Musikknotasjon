@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="lightPurple">#ffbfc0fd</color>
+    <color name="lightPurple">#aabfc0fd</color>
     <color name="cyan">#aa3ffff8</color>
     <color name="red">#aafd0000</color>
-    <color name="pink">#fff88fff</color>
-    <color name="yellow">#FFFFF97D</color>
-    <color name="darkPurple">#FFE28ECC</color>
-    <color name="lightERpurple">#FFFDD1FF</color>
-    <color name="lightGray">#ffd2d3fd</color>
-    <color name="lineColor">#ff59707e</color>
+    <color name="pink">#aaf88fff</color>
+    <color name="yellow">#aaFFF97D</color>
+    <color name="darkPurple">#aaE28ECC</color>
+    <color name="lightERpurple">#aaFDD1FF</color>
+    <color name="lightGray">#aad2d3fd</color>
+    <color name="lineColor">#aa59707e</color>
 </resources>
