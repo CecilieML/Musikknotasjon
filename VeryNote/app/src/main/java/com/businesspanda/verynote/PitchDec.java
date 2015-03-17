@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.Runnable;
 import java.lang.Thread;
 import java.util.ArrayList;
@@ -51,9 +52,6 @@ public class PitchDec implements Runnable {
     int bufferSize = 4096 ;//AudioRecord.getMinBufferSize(RATE, CHANNEL_MODE, ENCODING); //=4096
     int SOURCE = MediaRecorder.AudioSource.MIC;
 
-    FileOutputStream fos;
-    DataOutputStream dos;
-    BufferedWriter bw;
 
     private DoubleFFT_1D fft;
 
@@ -426,24 +424,25 @@ public class PitchDec implements Runnable {
                             writerbufferSize)
             );*/
 
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            PrintWriter pw = new PrintWriter(new FileWriter(file));
 
-            try {
+            //try {
                 for (int i = 0; i < audio_datas_for_saving.length; i++) {
-                    bw.write(audio_datas_for_saving[i]);
-                    bw.newLine();
+                    
+                    pw.println(audio_datas_for_saving[i]);
+                    //pw.newLine();
                     //dos.writeShort(audio_datas_for_saving[i]);
                    // System.out.println("IMA WRItinG A FILE");
                 }
                 System.out.println("DONE MAking file!!!");
-                bw.close();
+                pw.close();
                 //dos.flush();
                 //dos.close();
-            } catch (IOException e) {
-                System.out.println("Problem doing the arraything!");
-                e.printStackTrace();
+            //} catch (IOException e) {
+            //    System.out.println("Problem doing the arraything!");
+            //    e.printStackTrace();
 
-            }
+            //}
         } catch (IOException e) {
             System.out.println("PROBLEMS maikng file!");
             e.printStackTrace();
