@@ -10,14 +10,16 @@ public class Note {
     int freq;
     int yValue;
     String name;
+    int height;
 
 
-    public Note(boolean sharp, boolean flat, int freq, int yValue, String name){
+    public Note(boolean sharp, boolean flat, int freq, int yValue, String name, int height){
         this.sharp = sharp;
         this.flat = flat;
         this.freq = freq;
         this.yValue = yValue;
         this.name = name;
+        this.height = height;
 
     }
 
@@ -39,5 +41,9 @@ public class Note {
 
     public String getName() {
         return name;
+    }
+
+    public int getHeight(){
+        return height;
     }
 }

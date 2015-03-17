@@ -365,34 +365,75 @@ public class MainActivity extends ActionBarActivity  {
     };
 
 int metronomNmb = 750;
+boolean bass = false;
 
     public void noteLength(){
 
         int fullBar = metronomNmb*4; //4 = tempo
+        int height = currentNote.getHeight();
+        boolean upSideDown = false;
+
+        if(!bass){
+            if(height >= 20)upSideDown=true;
+        }else{
+            if(height >=10)upSideDown=true;
+        }
 
         if(dur < (fullBar/16)) {               //= 1/16 of fullBar
-            currentNote.setImageResource(R.drawable.doubletailnote);
+            if (upSideDown) {
+                currentNote.setImageResource(R.drawable.upsidedowndoubletailnote);
+            } else{
+                currentNote.setImageResource(R.drawable.doubletailnote);
+            }
 
         }else if(dur < (fullBar*3/32)){        //= 3/32 of fullBar
-            currentNote.setImageResource(R.drawable.doubletailnotewdot);
+            if(upSideDown){
+                currentNote.setImageResource(R.drawable.upsidedowndoubletailnotewdot);
+            }else {
+                currentNote.setImageResource(R.drawable.doubletailnotewdot);
+            }
 
         }else if(dur < (fullBar/8)){           //= 1/8 of fullBar
-            currentNote.setImageResource(R.drawable.singeltailnaote);
+            if(upSideDown){
+                currentNote.setImageResource(R.drawable.upsidedownsingeltailnote);
+            }else {
+                currentNote.setImageResource(R.drawable.singeltailnaote);
+            }
 
         }else if(dur < (fullBar*3/16)){        //= 3/16 of fullBar
-            currentNote.setImageResource(R.drawable.singeltailnaotewdot);
+            if(upSideDown){
+                currentNote.setImageResource(R.drawable.upsidedownsingletaieotewdot);
+            }else {
+                currentNote.setImageResource(R.drawable.singeltailnaotewdot);
+            }
 
         }else if(dur < (fullBar/4)) {           //= 1/4 of fullBar
-            currentNote.setImageResource(R.drawable.note);
+            if(upSideDown){
+                currentNote.setImageResource(R.drawable.upsidedownnote);
+            }else {
+                currentNote.setImageResource(R.drawable.note);
+            }
 
         }else if(dur < (fullBar*3/8)) {         //= 3/8 of fullBar
-            currentNote.setImageResource(R.drawable.notewdot);
+            if(upSideDown){
+                currentNote.setImageResource(R.drawable.upsidedownnotewdot);
+            }else {
+                currentNote.setImageResource(R.drawable.notewdot);
+            }
 
-        }else if(dur < (fullBar/2)){            //= 2/4 of fullBar
-            currentNote.setImageResource(R.drawable.holownote);
+        }else if(dur < (fullBar/2)){            //= 2/4 of
+            if(upSideDown){
+                currentNote.setImageResource(R.drawable.upsidedownhollownote);
+            }else {
+                currentNote.setImageResource(R.drawable.holownote);
+            }
 
         }else if(dur < (fullBar*3/4)){          //= 3/4 of fullBar
-            currentNote.setImageResource(R.drawable.holownotewdot);
+            if(upSideDown){
+                currentNote.setImageResource(R.drawable.upsidedownhollownotewdot);
+            }else {
+                currentNote.setImageResource(R.drawable.holownotewdot);
+            }
 
         }else if(dur < (fullBar)){              //= 4/4 of fullBar
             currentNote.setImageResource(R.drawable.notailhollownote);
@@ -401,7 +442,7 @@ int metronomNmb = 750;
             currentNote.setImageResource(R.drawable.notailhollownotewdot);
 
         }else{
-            prevNote = new Note(false, false, 0, 0, " ");
+            prevNote = new Note(false, false, 0, 0, " ",0);
         }
 
     }
