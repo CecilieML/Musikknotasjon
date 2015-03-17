@@ -24,12 +24,15 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.ContextWrapper;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.jtransforms.fft.DoubleFFT_1D;
 
@@ -373,25 +376,7 @@ public class PitchDec implements Runnable {
             //audio_data = applyWindow(windowthing,audio_data,CHUNK_SIZE_IN_SAMPLES);
 
 
-            int writerbufferSize = 32 * 1024;
-            try {
-                DataOutputStream dos = new DataOutputStream(
-                        new BufferedOutputStream(
-                                new FileOutputStream("audiodata.txt"),
-                                writerbufferSize)
-                );
-                try {
-                    for (int i = 0; i < audio_data.length; i++) {
-                        dos.writeShort(audio_data[i]);
-                    }
-                } catch (IOException e) {
-
-                } finally {
-                    dos.close();
-                }
-            } catch (IOException e) {
-
-            }
+            saveAudiodata(audio_data);
 
 
             double volume = getAmplitude(audio_data);
@@ -427,6 +412,37 @@ public class PitchDec implements Runnable {
             }
         }
         return max;
+    }
+
+    void saveAudiodata(short[] audio_datas_for_saving) {
+        int writerbufferSize = 32 * 1024;
+        try {
+
+            File file = new File(Environment.getExternalStorageDirectory(),"audiodata.txt");
+
+            DataOutputStream dos = new DataOutputStream(
+                    new BufferedOutputStream(
+                            new FileOutputStream(file),
+                            writerbufferSize)
+            );
+
+            try {
+                for (int i = 0; i < audio_datas_for_saving.length; i++) {
+                    //dos.writeShort(audio_datas_for_saving[i]);
+                   // System.out.println("IMA WRItinG A FILE");
+                }
+                System.out.println("DONE MAking file!!!");
+                dos.flush();
+                dos.close();
+            } catch (IOException e) {
+                System.out.println("Problem doing the arraything!");
+                e.printStackTrace();
+
+            }
+        } catch (IOException e) {
+            System.out.println("PROBLEMS maikng file!");
+            e.printStackTrace();
+        }
     }
 
 

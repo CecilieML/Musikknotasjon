@@ -22,6 +22,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -115,10 +116,19 @@ public class MainActivity extends ActionBarActivity  {
 
         scrollView = (LockableScrollView) findViewById(R.id.scrollview);
 
+        TypedValue lowcowoutValue = new TypedValue();
+        Config.context.getResources().getValue(R.dimen.lowestLayerHeight, lowcowoutValue, true);
+        float lowcow = lowcowoutValue.getFloat();
+
+        System.out.println(lowcow + "   sdfghoiuyghn");
+
+        float ww = this.getResources().getDimension(R.dimen.lowestLayerWidth);
+        float xx = this.getResources().getDimension(R.dimen.lowestLayerHeight);
+
         linLayout = new RelativeLayout(this);
         RelativeLayout.LayoutParams paramsLinLayout = new RelativeLayout.LayoutParams(
-                (int) this.getResources().getDimension(R.dimen.lowestLayerWidth),
-                (int) this.getResources().getDimension(R.dimen.lowestLayerHeight));
+                FitToScreen.returnViewWidth(ww),
+                FitToScreen.returnViewHeight(xx));
         linLayout.setLayoutParams(paramsLinLayout);
 
         scrollView.addView(linLayout);
@@ -158,9 +168,9 @@ public class MainActivity extends ActionBarActivity  {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if (buttonView.isChecked()){
+                if (buttonView.isChecked()) {
                     mHandler.postDelayed(mVibrations, 750);
-                } else{
+                } else {
                     met_int = 1;
                     TextView text = (TextView) findViewById(R.id.met_text);
                     text.setText(" ");

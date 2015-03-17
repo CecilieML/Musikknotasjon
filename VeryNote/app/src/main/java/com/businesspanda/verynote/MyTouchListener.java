@@ -54,8 +54,8 @@ public class MyTouchListener implements View.OnTouchListener {
         btnUp = new Button(Config.context);
         btnUp.setText("UP");
         btnUp.setVisibility(View.VISIBLE);
-        btnUp.setY(Config.context.getResources().getDimension(R.dimen.btnUpY));
-        btnUp.setX(Config.context.getResources().getDimension(R.dimen.btnUpX));
+       // btnUp.setY(Config.context.getResources().getDimension(R.dimen.btnUpY));
+       // btnUp.setX(Config.context.getResources().getDimension(R.dimen.btnUpX));
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,8 +79,8 @@ public class MyTouchListener implements View.OnTouchListener {
         btnDown = new Button(Config.context);
         btnDown.setText("DOWN");
         btnDown.setVisibility(View.VISIBLE);
-        btnDown.setY(Config.context.getResources().getDimension(R.dimen.btnDownY));
-        btnDown.setX(Config.context.getResources().getDimension(R.dimen.btnDownX));
+        //btnDown.setY(Config.context.getResources().getDimension(R.dimen.btnDownY));
+       // btnDown.setX(Config.context.getResources().getDimension(R.dimen.btnDownX));
         btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
