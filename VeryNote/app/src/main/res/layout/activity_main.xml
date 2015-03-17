@@ -18,8 +18,8 @@
         tools:context=".MainActivity"
         android:id="@+id/backgroundLayer">
         <ImageView
-            android:layout_width="@dimen/trebleWidth"
-            android:layout_height="@dimen/trebleHeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/trebleline"
             android:layout_centerInParent="true"
             android:id="@+id/backgroundImage"
@@ -30,8 +30,8 @@
     <RelativeLayout
 
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_height="@dimen/lowestLayerHeight"
-        android:layout_width="@dimen/lowestLayerWidth"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:id="@+id/lowestLayer"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="80dp">

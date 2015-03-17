@@ -36,11 +36,10 @@ public class FitToScreen {
         return (int)(height * percentOfScreen);
     }
 
-    public static int returnViewWidth(View view, double percentOfScreen) {
+    public static int returnViewWidth(double percentOfScreen) {
         WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         int height = display.getHeight();
-        ViewGroup.LayoutParams params = view.getLayoutParams();
         return (int)(height * percentOfScreen);
     }
 

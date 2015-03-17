@@ -125,6 +125,13 @@ public class MainActivity extends ActionBarActivity  {
 
         backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
 
+        RelativeLayout.LayoutParams lowestLayerParams = new RelativeLayout.LayoutParams(
+                FitToScreen.returnViewWidth(getResources().getDimension(R.dimen.lowestLayerWidth)),
+                FitToScreen.returnViewHeight(getResources().getDimension(R.dimen.lowestLayerHeight)));
+        lowestLayer.setLayoutParams(lowestLayerParams);
+        lowestLayer.setBackgroundColor(getResources().getColor(R.color.yellow));
+
+
         //RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.backgroundLayer);
        /* backgroundImage = new ImageView(this);
 
@@ -179,11 +186,6 @@ public class MainActivity extends ActionBarActivity  {
         });
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE);
 
-
-
-
-
-
     }
 
     @Override
@@ -222,7 +224,7 @@ public class MainActivity extends ActionBarActivity  {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-    public void fitToScreen() {
+ /*   public void fitToScreen() {
         FrameLayout frame = (FrameLayout) findViewById(R.id.frame);
 
         float density = getResources().getDisplayMetrics().density;
@@ -236,7 +238,7 @@ public class MainActivity extends ActionBarActivity  {
 
         }
 
-    }
+    }*/
 
     long lastTime;
     long newTime;
@@ -303,19 +305,20 @@ public class MainActivity extends ActionBarActivity  {
     }*/
 
     public int getTempolineY(){
-        return (int) this.getResources().getDimension(R.dimen.lowerTempolineY);
+        return 70;//(int) this.getResources().getDimension(R.dimen.lowerTempolineY);
     }
 
     public void tempolineOnScreen(int y){
 
         ImageView tempo = new ImageView(this);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                (int) this.getResources().getDimension(R.dimen.tempolineWidth),
-                (int) this.getResources().getDimension(R.dimen.tempolineHeight));
+                FitToScreen.returnViewWidth(getResources().getDimension(R.dimen.tempolineWidth)),
+                FitToScreen.returnViewHeight(getResources().getDimension(R.dimen.tempolineHeight)));
         tempo.setLayoutParams(params);
         tempo.setBackgroundColor(getResources().getColor(R.color.lineColor));
 
-        tempo.setX(linLayout.getLayoutParams().width - (int) this.getResources().getDimension(R.dimen.noteStartPos));
+        tempo.setX(linLayout.getLayoutParams().width -
+                FitToScreen.returnViewWidth(getResources().getDimension(R.dimen.noteStartPos)));
         tempo.setY(y);
 
         allNotes = allNotes + " |";
@@ -379,69 +382,69 @@ boolean bass = false;
             if(height >=10)upSideDown=true;
         }
 
-        if(dur < (fullBar/16)) {               //= 1/16 of fullBar
+        if(dur > (fullBar/16)) {               //= 1/16 of fullBar
             if (upSideDown) {
                 currentNote.setImageResource(R.drawable.upsidedowndoubletailnote);
             } else{
                 currentNote.setImageResource(R.drawable.doubletailnote);
             }
 
-        }else if(dur < (fullBar*3/32)){        //= 3/32 of fullBar
+        }else if(dur > (fullBar*3/32)){        //= 3/32 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedowndoubletailnotewdot);
             }else {
                 currentNote.setImageResource(R.drawable.doubletailnotewdot);
             }
 
-        }else if(dur < (fullBar/8)){           //= 1/8 of fullBar
+        }else if(dur > (fullBar/8)){           //= 1/8 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownsingeltailnote);
             }else {
                 currentNote.setImageResource(R.drawable.singeltailnaote);
             }
 
-        }else if(dur < (fullBar*3/16)){        //= 3/16 of fullBar
+        }else if(dur > (fullBar*3/16)){        //= 3/16 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownsingletaieotewdot);
             }else {
                 currentNote.setImageResource(R.drawable.singeltailnaotewdot);
             }
 
-        }else if(dur < (fullBar/4)) {           //= 1/4 of fullBar
+        }else if(dur > (fullBar/4)) {           //= 1/4 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownnote);
             }else {
                 currentNote.setImageResource(R.drawable.note);
             }
 
-        }else if(dur < (fullBar*3/8)) {         //= 3/8 of fullBar
+        }else if(dur > (fullBar*3/8)) {         //= 3/8 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownnotewdot);
             }else {
                 currentNote.setImageResource(R.drawable.notewdot);
             }
 
-        }else if(dur < (fullBar/2)){            //= 2/4 of
+        }else if(dur > (fullBar/2)){            //= 2/4 of
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownhollownote);
             }else {
                 currentNote.setImageResource(R.drawable.holownote);
             }
 
-        }else if(dur < (fullBar*3/4)){          //= 3/4 of fullBar
+        }else if(dur > (fullBar*3/4)){          //= 3/4 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownhollownotewdot);
             }else {
                 currentNote.setImageResource(R.drawable.holownotewdot);
             }
 
-        }else if(dur < (fullBar)){              //= 4/4 of fullBar
+        }else if(dur > (fullBar)){              //= 4/4 of fullBar
             currentNote.setImageResource(R.drawable.notailhollownote);
 
-        }else if(dur < (fullBar*1.5)){          //= 1 1/2 of fullBar
+        }else if(dur > (fullBar*1.5)){          //= 1 1/2 of fullBar
             currentNote.setImageResource(R.drawable.notailhollownotewdot);
 
-        }else{
+        }else if(dur > fullBar*2){              // randomly chosen...
             prevNote = new Note(false, false, 0, 0, " ",0);
         }
 
@@ -470,17 +473,26 @@ boolean bass = false;
 
         RelativeLayout imgLayout = new RelativeLayout(this);
 
-        RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(
+      /*  RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(
                 (int) this.getResources().getDimension(R.dimen.layWidth),
                 (int) this.getResources().getDimension(R.dimen.layHeight));
+        imgLayout.setLayoutParams(par);*/
+
+        RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(
+                FitToScreen.returnViewWidth(0.01),
+                FitToScreen.returnViewHeight(0.02));
+
         imgLayout.setLayoutParams(par);
+
+        imgLayout.setBackgroundColor(getResources().getColor(R.color.red));
 
         currentNote = new ImageView(this);
 
         imgLayout.setFocusable(true);
 
         //int pos = (int) this.getResources().getDimension(R.dimen.endPos);
-        int x = linLayout.getLayoutParams().width - (int) this.getResources().getDimension(R.dimen.noteStartPos);
+        int x = linLayout.getLayoutParams().width -
+                FitToScreen.returnViewWidth(this.getResources().getDimension(R.dimen.noteStartPos));
 
         String notename = note.getName();
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
@@ -490,10 +502,10 @@ boolean bass = false;
         imgLayout.setX(x);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                (int) this.getResources().getDimension(R.dimen.noteWidth),
-                (int) this.getResources().getDimension(R.dimen.noteHeight));
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                FitToScreen.returnViewHeight(this.getResources().getDimension(R.dimen.noteHeight)));
         currentNote.setLayoutParams(params);
-        currentNote.setX(this.getResources().getDimension(R.dimen.noteX));
+        currentNote.setX(FitToScreen.returnViewWidth(this.getResources().getDimension(R.dimen.noteX)));
         currentNote.setY(0);
         //image.setMaxHeight((int) this.getResources().getDimension(R.dimen.maxHeight));
         //image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
@@ -504,12 +516,12 @@ boolean bass = false;
         if(note.sharp){
             ImageView sharp = new ImageView(this);
             RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(
-                    (int) this.getResources().getDimension(R.dimen.sharpWidth),
-                    (int) this.getResources().getDimension(R.dimen.sharpHeight));
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,           /***/
+                    FitToScreen.returnViewHeight(getResources().getDimension(R.dimen.sharpHeight)));
             sharp.setLayoutParams(para);
 
-            sharp.setX((int) this.getResources().getDimension(R.dimen.sharpOffsetX));
-            sharp.setY((int) this.getResources().getDimension(R.dimen.sharpOffsetY));
+           // sharp.setX((int) this.getResources().getDimension(R.dimen.sharpOffsetX));
+           // sharp.setY((int) this.getResources().getDimension(R.dimen.sharpOffsetY));
 
             sharp.setImageResource(R.drawable.sharpnotenew);
            // sharp.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
@@ -517,12 +529,13 @@ boolean bass = false;
         }else if(note.flat){
             ImageView flat = new ImageView(this);
             RelativeLayout.LayoutParams paraFlat = new RelativeLayout.LayoutParams(
-                    (int) this.getResources().getDimension(R.dimen.flatWidth),
-                    (int) this.getResources().getDimension(R.dimen.flatHeight));
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,           /***/
+                    FitToScreen.returnViewHeight(getResources().getDimension(R.dimen.flatHeight)));
             flat.setLayoutParams(paraFlat);
 
-            flat.setX((int) this.getResources().getDimension(R.dimen.flatOffsetX));
-            flat.setY((int) this.getResources().getDimension(R.dimen.flatOffsetY));
+            //flat.setX((int) this.getResources().getDimension(R.dimen.flatOffsetX));
+            //flat.setY((int) this.getResources().getDimension(R.dimen.flatOffsetY));
+
             flat.setImageResource(R.drawable.flatnotenew);
          //   flat.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
             imgLayout.addView(flat);
@@ -581,7 +594,7 @@ boolean bass = false;
 
 
     public int Offset(){
-        return (int) this.getResources().getDimension(R.dimen.Offset);
+        return FitToScreen.returnViewWidth(getResources().getDimension(R.dimen.Offset));
     }
 
     int x = 0;
@@ -664,11 +677,11 @@ boolean treble = true;
 
             case R.id.trebleBass:
                 if(treble){
-                    item.setIcon(R.drawable.bass);
+                    item.setIcon(R.drawable.basswhite);
                     backgroundImage.setImageResource(R.drawable.trebleline);
                     treble = false;
                 }else{
-                    item.setIcon(R.drawable.treble);
+                    item.setIcon(R.drawable.treblewhite);
                     backgroundImage.setImageResource(R.drawable.bassline);
                     treble = true;
                 }

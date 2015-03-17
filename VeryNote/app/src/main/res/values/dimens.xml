@@ -3,13 +3,15 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="sharpHeight">30dp</dimen>
-    <dimen name="sharpWidth">10dp</dimen>
 
-    <dimen name="flatHeight">30dp</dimen>
+<!--
+    <item type="dimen" name="sharpHeight">0.30</item>
+    <item type="dimen" name="sharpWidth">0.10</item>
+
+    <item type="dimen" name="flatHeight">0.30</item>
     <dimen name="flatWidth">10dp</dimen>
 
-    <dimen name="noteHeight">40dp</dimen>
+    <item type="dimen" name="noteHeight">0.04</item>
     <dimen name="noteWidth">20dp</dimen>
 
     <dimen name="layHeight">50dp</dimen>
@@ -22,22 +24,33 @@
     <dimen name="startPos">415dp</dimen>
 
     <dimen name="maxHeight">10dp</dimen>
-    <dimen name="maxWidth">5dp</dimen>
+    <dimen name="maxWidth">5dp</dimen> -->
 
-    <dimen name="backgroundWidth">90dp</dimen>
-    <dimen name="backgroundHeight">500dp</dimen>
+    <item type="dimen" format="float" name="sharpHeight">0.03</item>
+    <item type="dimen" format="float" name="flatHeight">0.03</item>
 
-    <dimen name="trebleWidth">455dp</dimen>
-    <dimen name="trebleHeight">130dp</dimen>
+    <item type="dimen" format="float" name="noteHeight">0.04</item>
 
-    <dimen name="trebleX">20dp</dimen>
+    <item type="dimen" format="float" name="backgroundWidth">0.85</item>
+
+    <item type="dimen" format="float" name="noteStartPos">0.1</item>
+    <item type="dimen" format="float" name="noteX">0.01</item>
+
+   <!--
+   <dimen name="backgroundWidth">90dp</dimen>//safecopy
+    <dimen name="backgroundHeight">500dp</dimen>//safecopy
+
+    <dimen name="trebleWidth">455dp</dimen>//safecopy
+    <dimen name="trebleHeight">130dp</dimen>//safecopy
+
+   <dimen name="trebleX">20dp</dimen>
     <dimen name="trebleY">20dp</dimen>
 
     <dimen name="marginTop">40dp</dimen>
     <dimen name="marginLeft">80dp</dimen>
 
-    <dimen name="tempolineWidth">2dp</dimen>
-    <dimen name="tempolineHeight">34.5dp</dimen>
+    <dimen name="tempolineWidth">2dp</dimen> //SAFE
+    <dimen name="tempolineHeight">34.5dp</dimen> //SAFE
 
     <dimen name="sharpOffsetX">0dp</dimen>
     <dimen name="sharpOffsetY">20dp</dimen>
@@ -56,10 +69,19 @@
     <dimen name="boxRightY">0dp</dimen>
 
     <dimen name="boxParamHeight">250dp</dimen>
-    <dimen name="boxParamWidth">80dp</dimen>
+    <dimen name="boxParamWidth">80dp</dimen>-->
 
-    <dimen name="lowestLayerWidth">411dp</dimen>
-    <dimen name="lowestLayerHeight">180dp</dimen>
+    <item type="dimen" format="float" name="lowestLayerWidth">0.7</item>
+    <item type="dimen" format="float" name="lowestLayerHeight">0.7</item>
+
+    <item type="dimen" format="float" name="tempolineWidth">2dp</item>
+    <item type="dimen" format="float" name="tempolineHeight">34.5dp</item>
+
+    <item type="dimen" format="float" name="Offset">0.001</item>
+
+    <!--
+    <dimen name="lowestLayerWidth">411dp</dimen>//safe
+    <dimen name="lowestLayerHeight">180dp</dimen>//safe
 
     <dimen name="linLayX">300dp</dimen>
 
@@ -69,7 +91,7 @@
     <dimen name="btnDownX">10dp</dimen>
 
     <dimen name="btnUpY">170dp</dimen>
-    <dimen name="btnUpX">90dp</dimen>
+    <dimen name="btnUpX">90dp</dimen>-->
 
     //C
     <item name="C3" format="float" type="dimen">1</item>
