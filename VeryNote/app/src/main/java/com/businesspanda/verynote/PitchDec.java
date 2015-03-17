@@ -10,6 +10,7 @@ package com.businesspanda.verynote;
  ** implied warranty.
  */
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -371,6 +372,26 @@ public class PitchDec implements Runnable {
             //windowthing = buildHanWindow(windowthing, CHUNK_SIZE_IN_SAMPLES);
             //audio_data = applyWindow(windowthing,audio_data,CHUNK_SIZE_IN_SAMPLES);
 
+
+            int writerbufferSize = 32 * 1024;
+            try {
+                DataOutputStream dos = new DataOutputStream(
+                        new BufferedOutputStream(
+                                new FileOutputStream("audiodata.txt"),
+                                writerbufferSize)
+                );
+                try {
+                    for (int i = 0; i < audio_data.length; i++) {
+                        dos.writeShort(audio_data[i]);
+                    }
+                } catch (IOException e) {
+
+                } finally {
+                    dos.close();
+                }
+            } catch (IOException e) {
+
+            }
 
 
             double volume = getAmplitude(audio_data);
