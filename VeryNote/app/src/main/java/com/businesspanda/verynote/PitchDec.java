@@ -423,25 +423,25 @@ public class PitchDec implements Runnable {
                             new FileOutputStream(file),
                             writerbufferSize)
             );*/
+            if (!file.exists()) {
+                PrintWriter pw = new PrintWriter(new FileWriter(file));
 
-            PrintWriter pw = new PrintWriter(new FileWriter(file));
-
-            //try {
+                //try {
                 for (int i = 0; i < audio_datas_for_saving.length; i++) {
-                    
+
                     pw.println(audio_datas_for_saving[i]);
                     //pw.newLine();
                     //dos.writeShort(audio_datas_for_saving[i]);
-                   // System.out.println("IMA WRItinG A FILE");
+                    // System.out.println("IMA WRItinG A FILE");
                 }
                 System.out.println("DONE MAking file!!!");
                 pw.close();
                 //dos.flush();
                 //dos.close();
-            //} catch (IOException e) {
-            //    System.out.println("Problem doing the arraything!");
-            //    e.printStackTrace();
-
+                //} catch (IOException e) {
+                //    System.out.println("Problem doing the arraything!");
+                //    e.printStackTrace();
+            }
             //}
         } catch (IOException e) {
             System.out.println("PROBLEMS maikng file!");
