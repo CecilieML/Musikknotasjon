@@ -116,19 +116,10 @@ public class MainActivity extends ActionBarActivity  {
 
         scrollView = (LockableScrollView) findViewById(R.id.scrollview);
 
-        TypedValue lowcowoutValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.lowestLayerHeight, lowcowoutValue, true);
-        float lowcow = lowcowoutValue.getFloat();
-
-        System.out.println(lowcow + "   sdfghoiuyghn");
-
-        float ww = this.getResources().getDimension(R.dimen.lowestLayerWidth);
-        float xx = this.getResources().getDimension(R.dimen.lowestLayerHeight);
-
         linLayout = new RelativeLayout(this);
         RelativeLayout.LayoutParams paramsLinLayout = new RelativeLayout.LayoutParams(
-                FitToScreen.returnViewWidth(ww),
-                FitToScreen.returnViewHeight(xx));
+                FitToScreen.returnViewWidth(getPercent(getResources().getDimension(R.dimen.lowestLayerWidth))),
+                FitToScreen.returnViewHeight(getPercent(getResources().getDimension(R.dimen.lowestLayerHeight))));
         linLayout.setLayoutParams(paramsLinLayout);
 
         scrollView.addView(linLayout);
@@ -136,8 +127,8 @@ public class MainActivity extends ActionBarActivity  {
         backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
 
         RelativeLayout.LayoutParams lowestLayerParams = new RelativeLayout.LayoutParams(
-                FitToScreen.returnViewWidth(getResources().getDimension(R.dimen.lowestLayerWidth)),
-                FitToScreen.returnViewHeight(getResources().getDimension(R.dimen.lowestLayerHeight)));
+                FitToScreen.returnViewWidth(getPercent(getResources().getDimension(R.dimen.lowestLayerWidth))),
+                FitToScreen.returnViewHeight(getPercent(getResources().getDimension(R.dimen.lowestLayerHeight))));
         lowestLayer.setLayoutParams(lowestLayerParams);
         lowestLayer.setBackgroundColor(getResources().getColor(R.color.yellow));
 
@@ -207,6 +198,16 @@ public class MainActivity extends ActionBarActivity  {
         //met_thread.start();
 
     }
+
+
+    public float getPercent(float idFloat){
+        int id = (int) idFloat;
+        TypedValue outValue = new TypedValue();
+        Config.context.getResources().getValue(id, outValue, true);
+        float returnValue = outValue.getFloat();
+        return returnValue;
+    }
+
 
     @Override
     public void onStop() {
@@ -322,13 +323,13 @@ public class MainActivity extends ActionBarActivity  {
 
         ImageView tempo = new ImageView(this);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                FitToScreen.returnViewWidth(getResources().getDimension(R.dimen.tempolineWidth)),
-                FitToScreen.returnViewHeight(getResources().getDimension(R.dimen.tempolineHeight)));
+                FitToScreen.returnViewWidth(getPercent(getResources().getDimension(R.dimen.tempolineWidth))),
+                FitToScreen.returnViewHeight(getPercent(getResources().getDimension(R.dimen.tempolineHeight))));
         tempo.setLayoutParams(params);
         tempo.setBackgroundColor(getResources().getColor(R.color.lineColor));
 
         tempo.setX(linLayout.getLayoutParams().width -
-                FitToScreen.returnViewWidth(getResources().getDimension(R.dimen.noteStartPos)));
+                FitToScreen.returnViewWidth(getPercent(getResources().getDimension(R.dimen.noteStartPos))));
         tempo.setY(y);
 
         allNotes = allNotes + " |";
@@ -502,20 +503,20 @@ boolean bass = false;
 
         //int pos = (int) this.getResources().getDimension(R.dimen.endPos);
         int x = linLayout.getLayoutParams().width -
-                FitToScreen.returnViewWidth(this.getResources().getDimension(R.dimen.noteStartPos));
+                FitToScreen.returnViewWidth(getPercent(getResources().getDimension(R.dimen.noteStartPos)));
 
         String notename = note.getName();
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
-        double y = (int)this.getResources().getDimension(yID);
+        float y = FitToScreen.returnViewHeight(getPercent(getResources().getDimension(yID)));
 
-        imgLayout.setY(FitToScreen.returnViewHeight(y));
+        imgLayout.setY(y);
         imgLayout.setX(x);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
-                FitToScreen.returnViewHeight(this.getResources().getDimension(R.dimen.noteHeight)));
+                FitToScreen.returnViewHeight(getPercent(getResources().getDimension(R.dimen.noteHeight))));
         currentNote.setLayoutParams(params);
-        currentNote.setX(FitToScreen.returnViewWidth(this.getResources().getDimension(R.dimen.noteX)));
+        currentNote.setX(FitToScreen.returnViewWidth(getPercent(getResources().getDimension(R.dimen.noteX))));
         currentNote.setY(0);
         //image.setMaxHeight((int) this.getResources().getDimension(R.dimen.maxHeight));
         //image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
@@ -527,7 +528,7 @@ boolean bass = false;
             ImageView sharp = new ImageView(this);
             RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT,           /***/
-                    FitToScreen.returnViewHeight(getResources().getDimension(R.dimen.sharpHeight)));
+                    FitToScreen.returnViewHeight(getPercent(getResources().getDimension(R.dimen.sharpHeight))));
             sharp.setLayoutParams(para);
 
            // sharp.setX((int) this.getResources().getDimension(R.dimen.sharpOffsetX));
@@ -540,7 +541,7 @@ boolean bass = false;
             ImageView flat = new ImageView(this);
             RelativeLayout.LayoutParams paraFlat = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT,           /***/
-                    FitToScreen.returnViewHeight(getResources().getDimension(R.dimen.flatHeight)));
+                    FitToScreen.returnViewHeight(getPercent(getResources().getDimension(R.dimen.flatHeight))));
             flat.setLayoutParams(paraFlat);
 
             //flat.setX((int) this.getResources().getDimension(R.dimen.flatOffsetX));
@@ -602,9 +603,8 @@ boolean bass = false;
 
     }
 
-
     public int Offset(){
-        return FitToScreen.returnViewWidth(getResources().getDimension(R.dimen.Offset));
+        return FitToScreen.returnViewWidth(getPercent(getResources().getDimension(R.dimen.Offset)));
     }
 
     int x = 0;
