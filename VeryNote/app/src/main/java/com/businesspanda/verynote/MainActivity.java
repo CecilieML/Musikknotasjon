@@ -125,15 +125,15 @@ public class MainActivity extends ActionBarActivity  {
         linLayout.setLayoutParams(paramsLinLayout);
 
         scrollView.addView(linLayout);
-        scrollView.setScrollingEnabled(true);
+        scrollView.setScrollingEnabled(false);
 
         backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
         RelativeLayout.LayoutParams backgroundParams = new RelativeLayout.LayoutParams(
                 FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundWidth)),
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
+                FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundHeight)));
         backgroundImage.setLayoutParams(backgroundParams);
-        //backgroundParams.addRule(Gravity.CENTER);
-        backgroundImage.setBackgroundColor(getResources().getColor(R.color.yellow));
+        backgroundImage.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundX)));
+        backgroundImage.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundY)));
 
         FrameLayout.LayoutParams lowestLayerParams = new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)),
@@ -143,26 +143,6 @@ public class MainActivity extends ActionBarActivity  {
 
 
 
-        //RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.backgroundLayer);
-       /* backgroundImage = new ImageView(this);
-
-        backgroundImage.setBackgroundColor(getResources().getColor(R.color.cyan));
-*/
-
-    /*    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                (int) this.getResources().getDimension(R.dimen.trebleWidth),
-                (int) this.getResources().getDimension(R.dimen.trebleHeight));
-       // params.addRule(RelativeLayout.CENTER_IN_PARENT);
-        backgroundImage.setLayoutParams(params);
-
-        backgroundImage.setX((int) this.getResources().getDimension(R.dimen.trebleX));
-        backgroundImage.setY((int) this.getResources().getDimension(R.dimen.trebleY));
-
-       /* backgroundImage.setImageResource(R.drawable.trebleline);
-
-        theLayout.addView(backgroundImage);*/
-
-
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
 
         metSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -170,7 +150,7 @@ public class MainActivity extends ActionBarActivity  {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (buttonView.isChecked()) {
-                    mHandler.postDelayed(mVibrations, 750);
+                    mHandler.postDelayed(mVibrations, metronomNmb);
                 } else {
                     met_int = 1;
                     TextView text = (TextView) findViewById(R.id.met_text);
@@ -342,7 +322,7 @@ public class MainActivity extends ActionBarActivity  {
         allNotes = allNotes + " |";
         linLayout.addView(tempo);
     }
-
+/* //writes string of pitch values to file
    public void writeToFile(String stringarray) {
 
        File file = new File(Environment.getExternalStorageDirectory(),"FileWriter.txt");
@@ -366,7 +346,7 @@ public class MainActivity extends ActionBarActivity  {
            }
        }
    }
-
+*/
 
     private Runnable mVibrations = new Runnable() {
         public void run() {
@@ -502,7 +482,7 @@ boolean bass = false;
 
         imgLayout.setLayoutParams(par);
 
-        imgLayout.setBackgroundColor(getResources().getColor(R.color.red));
+       // imgLayout.setBackgroundColor(getResources().getColor(R.color.red));
 
         currentNote = new ImageView(this);
 
@@ -672,7 +652,7 @@ boolean treble = true;
                     playSound();
                     playing = true;
 
-                    writeToFile(stringarray);
+                  //  writeToFile(stringarray);
 
 
                     DisplayMetrics displayMetrics = new DisplayMetrics();

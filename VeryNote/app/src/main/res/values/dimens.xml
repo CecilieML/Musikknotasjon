@@ -9,6 +9,9 @@
     <item type="dimen" format="float" name="noteHeight">0.12</item>
 
     <item type="dimen" format="float" name="backgroundWidth">0.85</item>
+    <item type="dimen" format="float" name="backgroundHeight">0.25</item>
+    <item type="dimen" format="float" name="backgroundX">0.05</item>
+    <item type="dimen" format="float" name="backgroundY">0.2</item>
 
     <item type="dimen" format="float" name="noteStartPos">0.1</item>
     <item type="dimen" format="float" name="noteX">0.01</item>
@@ -85,7 +88,8 @@
 
     //A
     <item name="A3" format="float" type="dimen">0.91</item>
-    <item name="A4" format="float" type="dimen">0.53</item>       //x
+    <item name="A4" format="float" type="dimen">0.30
+    </item>       //x
     <item name="A5" format="float" type="dimen">0.33</item>
     <item name="A6" format="float" type="dimen">0.04</item>
 

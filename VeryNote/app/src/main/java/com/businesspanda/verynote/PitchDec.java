@@ -60,7 +60,7 @@ public class PitchDec implements Runnable {
 
 
     //private final static int BUFFER_SIZE_IN_MS = 3000;
-    private final static int CHUNK_SIZE_IN_SAMPLES = 1024; // = 2 ^ //////was 1024/////
+    private final static int CHUNK_SIZE_IN_SAMPLES = 4096; // = 2 ^ //////was 1024/////
     // CHUNK_SIZE_IN_SAMPLES_POW2
     private final static int CHUNK_SIZE_IN_MS = 1000 * CHUNK_SIZE_IN_SAMPLES
             / RATE;
@@ -378,7 +378,7 @@ public class PitchDec implements Runnable {
 
 
             double volume = getAmplitude(audio_data);
-            //System.out.println(volume);
+            System.out.println(volume);
             if(volume>4400) {
                 FreqResult fr = AnalyzeFrequencies(audio_data);
                 PostToUI(fr.frequencies, fr.best_frequency);

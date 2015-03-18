@@ -1,6 +1,7 @@
 package com.businesspanda.verynote;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,12 @@ public class FitToScreen {
     public static int returnViewHeight(double percentOfScreen) {
         WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
-        int height = display.getHeight();
+        //int height = display.getHeight();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        Config.context.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+         int height = displayMetrics.heightPixels;
+
         //ViewGroup.LayoutParams params = view.getLayoutParams();
         return (int)(height * percentOfScreen);
     }
