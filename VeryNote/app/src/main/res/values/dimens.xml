@@ -3,10 +3,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <item type="dimen" format="float" name="sharpHeight">0.03</item>
-    <item type="dimen" format="float" name="flatHeight">0.03</item>
+    <item type="dimen" format="float" name="sharpHeight">0.1</item>
+    <item type="dimen" format="float" name="flatHeight">0.1</item>
 
-    <item type="dimen" format="float" name="noteHeight">0.04</item>
+    <item type="dimen" format="float" name="noteHeight">0.12</item>
 
     <item type="dimen" format="float" name="backgroundWidth">0.85</item>
 
@@ -19,9 +19,15 @@
     <item type="dimen" format="float" name="tempolineWidth">0.0001</item>
     <item type="dimen" format="float" name="tempolineHeight">0.001</item>
 
-    <item type="dimen" format="float" name="Offset">0.001</item>
+    <item type="dimen" format="float" name="Offset">0.01</item>
 
+    <item type="dimen" format="float" name="noteImgWidth">0.08</item>
+    <item type="dimen" format="float" name="noteImgHeight">0.2</item>
 
+    <item type="dimen" format="float" name="btnDownX">0</item>
+    <item type="dimen" format="float" name="btnDownY">0.5</item>
+    <item type="dimen" format="float" name="btnUpX">0.15</item>
+    <item type="dimen" format="float" name="btnUpY">0.5</item>
 
     //C
     <item name="C3" format="float" type="dimen">1</item>

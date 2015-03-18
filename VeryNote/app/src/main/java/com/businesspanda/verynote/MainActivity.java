@@ -116,16 +116,16 @@ public class MainActivity extends ActionBarActivity  {
 
         scrollView = (LockableScrollView) findViewById(R.id.scrollview);
 
-        System.out.println(getPercent((R.dimen.lowestLayerWidth)) + "  <--" + FitToScreen.returnViewWidth(getPercent((R.dimen.lowestLayerWidth))));
+        //System.out.println(getPercent((R.dimen.lowestLayerWidth)) + "  <--" + FitToScreen.returnViewWidth(getPercent((R.dimen.lowestLayerWidth))));
 
         linLayout = new RelativeLayout(this);
         FrameLayout.LayoutParams paramsLinLayout = new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)),
                 FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
         linLayout.setLayoutParams(paramsLinLayout);
-        scrollView.setBackgroundColor(getResources().getColor(R.color.cyan));
 
         scrollView.addView(linLayout);
+        scrollView.setScrollingEnabled(true);
 
         backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
         RelativeLayout.LayoutParams backgroundParams = new RelativeLayout.LayoutParams(
@@ -235,7 +235,7 @@ public class MainActivity extends ActionBarActivity  {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-    public float getPercent(int id){
+    public static float getPercent(int id){
         TypedValue outValue = new TypedValue();
         Config.context.getResources().getValue(id, outValue, true);
         float returnValue = outValue.getFloat();
@@ -400,69 +400,69 @@ boolean bass = false;
             if(height >=10)upSideDown=true;
         }
 
-        if(dur > (fullBar/16)) {               //= 1/16 of fullBar
+        if(dur >= (fullBar/16)) {               //= 1/16 of fullBar
             if (upSideDown) {
                 currentNote.setImageResource(R.drawable.upsidedowndoubletailnote);
             } else{
                 currentNote.setImageResource(R.drawable.doubletailnote);
             }
 
-        }else if(dur > (fullBar*3/32)){        //= 3/32 of fullBar
+        }else if(dur >= (fullBar*3/32)){        //= 3/32 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedowndoubletailnotewdot);
             }else {
                 currentNote.setImageResource(R.drawable.doubletailnotewdot);
             }
 
-        }else if(dur > (fullBar/8)){           //= 1/8 of fullBar
+        }else if(dur >= (fullBar/8)){           //= 1/8 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownsingeltailnote);
             }else {
                 currentNote.setImageResource(R.drawable.singeltailnaote);
             }
 
-        }else if(dur > (fullBar*3/16)){        //= 3/16 of fullBar
+        }else if(dur >= (fullBar*3/16)){        //= 3/16 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownsingletaieotewdot);
             }else {
                 currentNote.setImageResource(R.drawable.singeltailnaotewdot);
             }
 
-        }else if(dur > (fullBar/4)) {           //= 1/4 of fullBar
+        }else if(dur >= (fullBar/4)) {           //= 1/4 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownnote);
             }else {
                 currentNote.setImageResource(R.drawable.note);
             }
 
-        }else if(dur > (fullBar*3/8)) {         //= 3/8 of fullBar
+        }else if(dur >= (fullBar*3/8)) {         //= 3/8 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownnotewdot);
             }else {
                 currentNote.setImageResource(R.drawable.notewdot);
             }
 
-        }else if(dur > (fullBar/2)){            //= 2/4 of
+        }else if(dur >= (fullBar/2)){            //= 2/4 of
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownhollownote);
             }else {
                 currentNote.setImageResource(R.drawable.holownote);
             }
 
-        }else if(dur > (fullBar*3/4)){          //= 3/4 of fullBar
+        }else if(dur >= (fullBar*3/4)){          //= 3/4 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownhollownotewdot);
             }else {
                 currentNote.setImageResource(R.drawable.holownotewdot);
             }
 
-        }else if(dur > (fullBar)){              //= 4/4 of fullBar
+        }else if(dur >= (fullBar)){              //= 4/4 of fullBar
             currentNote.setImageResource(R.drawable.notailhollownote);
 
-        }else if(dur > (fullBar*1.5)){          //= 1 1/2 of fullBar
+        }else if(dur >= (fullBar*1.5)){          //= 1 1/2 of fullBar
             currentNote.setImageResource(R.drawable.notailhollownotewdot);
 
-        }else if(dur > fullBar*2){              // randomly chosen...
+        }else if(dur >= fullBar*2){              // randomly chosen...
             prevNote = new Note(false, false, 0, 0, " ",0);
         }
 
@@ -497,8 +497,8 @@ boolean bass = false;
         imgLayout.setLayoutParams(par);*/
 
         FrameLayout.LayoutParams par = new FrameLayout.LayoutParams(
-                FitToScreen.returnViewWidth(0.01),
-                FitToScreen.returnViewHeight(0.02));
+                FitToScreen.returnViewWidth(getPercent(R.dimen.noteImgWidth)),
+                FitToScreen.returnViewHeight(getPercent(R.dimen.noteImgHeight)));
 
         imgLayout.setLayoutParams(par);
 
@@ -529,6 +529,7 @@ boolean bass = false;
         //image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
         //currentNote.setImageResource(R.drawable.doubletailnote);
 
+        currentNote.setImageResource(R.drawable.notailhollownotewdot);
         noteLength();
 
         if(note.sharp){

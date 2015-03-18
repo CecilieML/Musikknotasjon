@@ -54,14 +54,14 @@ public class MyTouchListener implements View.OnTouchListener {
         btnUp = new Button(Config.context);
         btnUp.setText("UP");
         btnUp.setVisibility(View.VISIBLE);
-       // btnUp.setY(Config.context.getResources().getDimension(R.dimen.btnUpY));
-       // btnUp.setX(Config.context.getResources().getDimension(R.dimen.btnUpX));
+        btnUp.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnUpY)));
+        btnUp.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnUpX)));
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
 
-               int[] xyPos = new int[2];
+              /* int[] xyPos = new int[2];
                 parentLayout.getLocationOnScreen(xyPos);
                 int y = xyPos[1];
                 int index = yValueSearch.findYIndex(y);
@@ -69,18 +69,18 @@ public class MyTouchListener implements View.OnTouchListener {
                 int percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
                 if(index>0)
                     parentLayout.setY(yValueSearch.yValues[index-1]);
-                System.out.println("original " + y + "  new value  " + percent);
+                System.out.println("original " + y + "  new value  " + percent);*/
 
 
-                //parentLayout.setY(parentLayout.getY()-5);
+                parentLayout.setY(parentLayout.getY()-5);
             }
         });
 
         btnDown = new Button(Config.context);
         btnDown.setText("DOWN");
         btnDown.setVisibility(View.VISIBLE);
-        //btnDown.setY(Config.context.getResources().getDimension(R.dimen.btnDownY));
-       // btnDown.setX(Config.context.getResources().getDimension(R.dimen.btnDownX));
+        btnDown.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnDownY)));
+        btnDown.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnDownX)));
         btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,9 +97,9 @@ public class MyTouchListener implements View.OnTouchListener {
                 if(index>=46 || index<0)index=46;
                 parentLayout.setY(yValueSearch.yValues[index+1]);
                 System.out.println(" searching for: "+ y +" new value  " + yValueSearch.yValues[index+1]);*/
-                //parentLayout.setY(parentLayout.getY()+5);
+                parentLayout.setY(parentLayout.getY()+5);
 
-                int[] xyPos = new int[2];
+                /*int[] xyPos = new int[2];
                 parentLayout.getLocationOnScreen(xyPos);
                 int y = xyPos[1];
                 int index = yValueSearch.findYIndex(y);
@@ -107,7 +107,7 @@ public class MyTouchListener implements View.OnTouchListener {
                 int percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);
                 if(index>0)
                     parentLayout.setY(percent);
-                System.out.println("original: " + y + "  new value:  " + percent);
+                System.out.println("original: " + y + "  new value:  " + percent);*/
 
             }
         });
