@@ -132,8 +132,12 @@ public class MainActivity extends ActionBarActivity  {
                 FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundWidth)),
                 FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundHeight)));
         backgroundImage.setLayoutParams(backgroundParams);
-        backgroundImage.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundX)));
+        //backgroundImage.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundX)));
         backgroundImage.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundY)));
+        backgroundImage.setAdjustViewBounds(true);
+
+        ImageView ruler = (ImageView) findViewById(R.id.ruler);
+        ruler.setRotation(270);
 
         FrameLayout.LayoutParams lowestLayerParams = new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)),

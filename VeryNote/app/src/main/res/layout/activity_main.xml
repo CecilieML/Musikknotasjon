@@ -6,6 +6,13 @@
     android:id="@+id/frame"
     >
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:src="@drawable/ruler"
+        android:id="@+id/ruler"
+        />
+
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
