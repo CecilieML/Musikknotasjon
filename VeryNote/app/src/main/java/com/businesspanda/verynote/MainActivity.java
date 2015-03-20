@@ -143,7 +143,6 @@ public class MainActivity extends ActionBarActivity  {
         lowestLayer.setLayoutParams(lowestLayerParams);
 
 
-
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
 
         metSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -257,12 +256,12 @@ public class MainActivity extends ActionBarActivity  {
 
         newTime = System.nanoTime();
 
-        dur = (newTime - lastTime)/1000000;
+        dur = (newTime - lastTime) / 1000000;
 
-        if(nearestNote==prevNote)
+        if (nearestNote == prevNote){
             noteLength();
 
-        if(dur>50 && nearestNote!=prevNote){ // something needs to chane HERE
+        }else {
 
             lastTime = System.nanoTime();
 
@@ -385,66 +384,66 @@ boolean bass = false;
         System.out.println(dur + "      dur");
         System.out.println(fullBar*3/32 + "      fullbar*3/32");
 
-        if(dur >= (fullBar/16)) {               //= 1/16 of fullBar
+        if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {               //= 1/16 of fullBar
             if (upSideDown) {
                 currentNote.setImageResource(R.drawable.upsidedowndoubletailnote);
             } else{
                 currentNote.setImageResource(R.drawable.doubletailnote);
             }
 
-        }else if(dur >= (fullBar*3/32)){        //= 3/32 of fullBar
+        }else if(dur >= (fullBar*3/32) && dur < (fullBar/8)){        //= 3/32 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedowndoubletailnotewdot);
             }else {
                 currentNote.setImageResource(R.drawable.doubletailnotewdot);
             }
 
-        }else if(dur >= (fullBar/8)){           //= 1/8 of fullBar
+        }else if(dur >= (fullBar/8) && dur < (fullBar*3/16)){           //= 1/8 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownsingeltailnote);
             }else {
                 currentNote.setImageResource(R.drawable.singeltailnaote);
             }
 
-        }else if(dur >= (fullBar*3/16)){        //= 3/16 of fullBar
+        }else if(dur >= (fullBar*3/16) && dur < (fullBar/4)){        //= 3/16 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownsingletaieotewdot);
             }else {
                 currentNote.setImageResource(R.drawable.singeltailnaotewdot);
             }
 
-        }else if(dur >= (fullBar/4)) {           //= 1/4 of fullBar
+        }else if(dur >= (fullBar/4) && dur < (fullBar*3/8)) {           //= 1/4 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownnote);
             }else {
                 currentNote.setImageResource(R.drawable.note);
             }
 
-        }else if(dur >= (fullBar*3/8)) {         //= 3/8 of fullBar
+        }else if(dur >= (fullBar*3/8) && dur < (fullBar/2)) {         //= 3/8 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownnotewdot);
             }else {
                 currentNote.setImageResource(R.drawable.notewdot);
             }
 
-        }else if(dur >= (fullBar/2)){            //= 2/4 of
+        }else if(dur >= (fullBar/2) && dur < (fullBar*3/4)){            //= 2/4 of
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownhollownote);
             }else {
                 currentNote.setImageResource(R.drawable.holownote);
             }
 
-        }else if(dur >= (fullBar*3/4)){          //= 3/4 of fullBar
+        }else if(dur >= (fullBar*3/4) && dur < (fullBar)){          //= 3/4 of fullBar
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownhollownotewdot);
             }else {
                 currentNote.setImageResource(R.drawable.holownotewdot);
             }
 
-        }else if(dur >= (fullBar)){              //= 4/4 of fullBar
+        }else if(dur >= (fullBar) && dur < (fullBar*1.5)){              //= 4/4 of fullBar
             currentNote.setImageResource(R.drawable.notailhollownote);
 
-        }else if(dur >= (fullBar*1.5)){          //= 1 1/2 of fullBar
+        }else if(dur >= (fullBar*1.5) && dur < fullBar*2){          //= 1 1/2 of fullBar
             currentNote.setImageResource(R.drawable.notailhollownotewdot);
 
         }else if(dur >= fullBar*2){              // randomly chosen...
