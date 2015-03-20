@@ -19,8 +19,8 @@
     <item type="dimen" format="float" name="lowestLayerWidth">0.75</item>
     <item type="dimen" format="float" name="lowestLayerHeight">0.7</item>
 
-    <item type="dimen" format="float" name="tempolineWidth">0.0001</item>
-    <item type="dimen" format="float" name="tempolineHeight">0.001</item>
+    <item type="dimen" format="float" name="tempolineWidth">0.01</item>
+    <item type="dimen" format="float" name="tempolineHeight">0.2</item>
 
     <item type="dimen" format="float" name="Offset">0.01</item>
 

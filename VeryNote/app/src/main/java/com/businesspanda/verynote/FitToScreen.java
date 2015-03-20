@@ -46,7 +46,7 @@ public class FitToScreen {
         //ViewGroup.LayoutParams params = view.getLayoutParams();
 
         View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
-        Log.d("DISPLAY", content.getWidth() + " x " + content.getHeight());
+        //Log.d("DISPLAY", content.getWidth() + " x " + content.getHeight());
 
         int height = content.getHeight();
 

@@ -299,13 +299,13 @@ public class MainActivity extends ActionBarActivity  {
     private Runnable writeTempoline = new Runnable() {
         public void run() {
             tempolineOnScreen(getTempolineY());
-
+            System.out.println("'ello");
             tempolineHandler.postDelayed(writeTempoline, fullBar);
         }
     };
 
     public int getTempolineY(){
-        return FitToScreen.returnViewHeight(R.dimen.tempolineY);
+        return FitToScreen.returnViewHeight(getPercent(R.dimen.tempolineY));
     }
 
     public void tempolineOnScreen(int y){
@@ -515,7 +515,7 @@ int fullBar = metronomNmb*4; //4 = tempo
         //image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
         //currentNote.setImageResource(R.drawable.doubletailnote);
 
-        currentNote.setImageResource(R.drawable.notailhollownotewdot);
+//        currentNote.setImageResource(R.drawable.notailhollownotewdot);
         noteLength();
 
         if(note.sharp){
