@@ -298,24 +298,14 @@ public class MainActivity extends ActionBarActivity  {
 
     private Runnable writeTempoline = new Runnable() {
         public void run() {
-//            tempolineOnScreen(getTempoUpperY());
-//            tempolineOnScreen(getTempoLowerY());
             tempolineOnScreen(getTempolineY());
 
-            tempolineHandler.postDelayed(writeTempoline, 3000);
+            tempolineHandler.postDelayed(writeTempoline, fullBar);
         }
     };
 
- /*   public int getTempoUpperY(){
-        return  (int) this.getResources().getDimension(R.dimen.upperTempolineY);
-    }
-
-    public int getTempoLowerY(){
-        return  (int) this.getResources().getDimension(R.dimen.lowerTempolineY);
-    }*/
-
     public int getTempolineY(){
-        return 70;//(int) this.getResources().getDimension(R.dimen.lowerTempolineY);
+        return FitToScreen.returnViewHeight(R.dimen.tempolineY);
     }
 
     public void tempolineOnScreen(int y){
@@ -379,11 +369,11 @@ public class MainActivity extends ActionBarActivity  {
 
 int metronomNmb = 750;
 boolean bass = false;
+int fullBar = metronomNmb*4; //4 = tempo
 
     public void noteLength(){
 
-        int fullBar = metronomNmb*3; //4 = tempo
-        int height = currentNote.getHeight();
+       // int height = currentNote.getHeight();
         boolean upSideDown = false;
 
        /* if(!bass){

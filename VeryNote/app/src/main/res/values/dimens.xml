@@ -27,6 +27,8 @@
     <item type="dimen" format="float" name="noteImgWidth">0.08</item>
     <item type="dimen" format="float" name="noteImgHeight">0.2</item>
 
+    <item type="dimen" format="float" name="tempolineY">0.3</item>
+
     <item type="dimen" format="float" name="btnDownX">0</item>
     <item type="dimen" format="float" name="btnDownY">0.5</item>
     <item type="dimen" format="float" name="btnUpX">0.15</item>
