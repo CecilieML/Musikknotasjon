@@ -29,10 +29,11 @@
                 android:layout_height="17dp"
                 android:layout_below="@id/settingstext"
                 android:text="@string/metronome_speed_text"/>
+            <!--
             <EditText
                 android:id="@+id/speedtext"
-                android:layout_width="90dp"
-                android:layout_height="17dp"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
                 android:layout_below="@id/settingstext"
                 android:layout_toRightOf="@id/speedlabel"
                 android:inputType="textFilter"
@@ -40,7 +41,21 @@
                 android:minEms="2"
                 android:focusable="true"
                 android:editable="true"
-                android:text="80"/>
+                android:textSize="9dp"
+                android:text="80"/> -->
+
+            <SeekBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/seekBar"
+                android:layout_below="@+id/speedlabel"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:progress="20"
+                android:secondaryProgress="20"
+                android:max="160"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"

@@ -719,9 +719,9 @@ boolean treble = true;
                 popupWindow.showAtLocation(this.findViewById(R.id.metronomeswitch), Gravity.CENTER, 0, 0);
                 popupWindow.setFocusable(true);
 
-                EditText met_speed_field = (EditText) popupView.findViewById(R.id.speedtext);
+                //EditText met_speed_field = (EditText) popupView.findViewById(R.id.speedtext);
 
-                //met_speed_field.setText("www");
+                /*
 
                 met_speed_field.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
@@ -733,7 +733,7 @@ boolean treble = true;
                         return false;
                     }
                 });
-
+*/
 
                 return true;
             default:
