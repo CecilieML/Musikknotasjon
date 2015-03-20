@@ -3,10 +3,12 @@ package com.businesspanda.verynote;
 import android.content.Context;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -43,23 +45,12 @@ public class FitToScreen {
 
         //ViewGroup.LayoutParams params = view.getLayoutParams();
 
-        Display display = Config.context.getWindowManager().getDefaultDisplay();
-        DisplayMetrics metrics = new DisplayMetrics();
-        display.getMetrics(metrics);
-        int screenHeight = metrics.heightPixels;
+        View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+        Log.d("DISPLAY", content.getWidth() + " x " + content.getHeight());
 
-        TypedValue tv = new TypedValue();
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-        {
-            if (Config.context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
-                screenHeight -= TypedValue.complexToDimensionPixelSize(tv.data, Config.context.getResources().getDisplayMetrics());
-        }
+        int height = content.getHeight();
 
-        int resourceId = Config.context.getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0)
-            screenHeight -= Config.context.getResources().getDimensionPixelSize(resourceId);
-
-        return (int)(screenHeight * percentOfScreen);
+        return (int)(height * percentOfScreen);
     }
 
     public static int returnViewWidth(double percentOfScreen) {
