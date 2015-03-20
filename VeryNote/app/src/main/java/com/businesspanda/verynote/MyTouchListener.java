@@ -72,7 +72,15 @@ public class MyTouchListener implements View.OnTouchListener {
                 System.out.println("original " + y + "  new value  " + percent);*/
 
 
-                parentLayout.setY(parentLayout.getY()-5);
+                //parentLayout.setY(parentLayout.getY()-5);
+
+                int[] xyPos = new int[2];
+                parentLayout.getLocationOnScreen(xyPos);
+                int y = xyPos[1];
+                int index = yValueSearch.findYIndex(y);
+                if(index>0)
+                    parentLayout.setY(yValueSearch.yValues[index-1]);
+
             }
         });
 
@@ -97,17 +105,14 @@ public class MyTouchListener implements View.OnTouchListener {
                 if(index>=46 || index<0)index=46;
                 parentLayout.setY(yValueSearch.yValues[index+1]);
                 System.out.println(" searching for: "+ y +" new value  " + yValueSearch.yValues[index+1]);*/
-                parentLayout.setY(parentLayout.getY()+5);
+                //parentLayout.setY(parentLayout.getY()+5);
 
-                /*int[] xyPos = new int[2];
+                int[] xyPos = new int[2];
                 parentLayout.getLocationOnScreen(xyPos);
                 int y = xyPos[1];
                 int index = yValueSearch.findYIndex(y);
-                System.out.println(index + "  dowwwn");
-                int percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);
                 if(index>0)
-                    parentLayout.setY(percent);
-                System.out.println("original: " + y + "  new value:  " + percent);*/
+                    parentLayout.setY(yValueSearch.yValues[index+1]);
 
             }
         });

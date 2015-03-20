@@ -283,8 +283,10 @@ public class yValueSearch {
 
     public static int findYIndex(float valueToFind) {
 
+        Float percentValue = FitToScreen.returnPercent(valueToFind);
+
         for (int i = 0; i < yValues.length; i++) {
-            if (valueToFind == (float)yValues[i]) {
+            if (percentValue == yValues[i]) {
                 return i;
             }
         }

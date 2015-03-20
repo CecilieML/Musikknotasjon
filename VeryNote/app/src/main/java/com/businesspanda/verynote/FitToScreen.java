@@ -18,36 +18,9 @@ import android.widget.RelativeLayout;
  */
 public class FitToScreen {
 
-    public static void setViewHeight(View view, double percentOfScreenCovering) {
-        WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        int height = display.getHeight();
-        ViewGroup.LayoutParams params = view.getLayoutParams();
-        params.height = (int)(height * percentOfScreenCovering);
-    }
-
-    public static void setViewWidth(View view, double percentOfScreenCovering) {
-        WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        int height = display.getHeight();
-        ViewGroup.LayoutParams params = view.getLayoutParams();
-        params.width = (int)(height * percentOfScreenCovering);
-    }
-
     public static int returnViewHeight(double percentOfScreen) {
-       // WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
-        //Display display = wm.getDefaultDisplay();
-        //int height = display.getHeight();
-        //DisplayMetrics displayMetrics = new DisplayMetrics();
-       // Config.context.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
-         //int height = displayMetrics.heightPixels;
-
-        //ViewGroup.LayoutParams params = view.getLayoutParams();
 
         View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
-        //Log.d("DISPLAY", content.getWidth() + " x " + content.getHeight());
-
         int height = content.getHeight();
 
         return (int)(height * percentOfScreen);
@@ -60,22 +33,12 @@ public class FitToScreen {
         return (int)(width * percentOfScreen);
     }
 
-    /*public static void setRelativeLayoutHeight(RelativeLayout relativeLayout, double percentOfScreenCovering) {
-        WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        int height = display.getHeight();
-        RelativeLayout.LayoutParams params = relativeLayout.getLayoutParams();
-       // RelativeLayout.LayoutParams params = relativeLayout.getLayoutParams();
-        params.height = (int)(height * percentOfScreenCovering);
+    public static float returnPercent(float yValue){
+        View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+        int height = content.getHeight();
+        float percentValue = yValue/height;
+
+        return percentValue;
     }
-
-    public static void setRelativeLayoutWidth(RelativeLayout relativeLayout, double percentOfScreenCovering) {
-        WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        int height = display.getHeight();
-        RelativeLayout.LayoutParams params = relativeLayout.getLayoutParams();
-        params.width = (int)(height * percentOfScreenCovering);
-    }*/
-
 
 }

@@ -6,14 +6,6 @@
     android:id="@+id/frame"
     >
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:src="@drawable/ruler"
-        android:id="@+id/ruler"
-        android:scaleType="centerInside"
-        />
-
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
