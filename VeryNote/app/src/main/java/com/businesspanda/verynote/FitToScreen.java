@@ -6,6 +6,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 /**
@@ -30,15 +31,19 @@ public class FitToScreen {
     }
 
     public static int returnViewHeight(double percentOfScreen) {
-        WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
+       // WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
+        //Display display = wm.getDefaultDisplay();
         //int height = display.getHeight();
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        Config.context.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        //DisplayMetrics displayMetrics = new DisplayMetrics();
+       // Config.context.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-         int height = displayMetrics.heightPixels;
+         //int height = displayMetrics.heightPixels;
 
         //ViewGroup.LayoutParams params = view.getLayoutParams();
+
+        ImageView ruler = (ImageView) Config.context.findViewById(R.id.ruler);
+        int height = ruler.getHeight();
+
         return (int)(height * percentOfScreen);
     }
 
