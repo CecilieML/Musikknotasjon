@@ -136,9 +136,6 @@ public class MainActivity extends ActionBarActivity  {
         backgroundImage.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundY)));
         backgroundImage.setAdjustViewBounds(true);
 
-        ImageView ruler = (ImageView) findViewById(R.id.ruler);
-        ruler.setRotation(270);
-
         FrameLayout.LayoutParams lowestLayerParams = new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)),
                 FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
@@ -374,15 +371,19 @@ boolean bass = false;
 
     public void noteLength(){
 
-        int fullBar = metronomNmb*4; //4 = tempo
+        int fullBar = metronomNmb*3; //4 = tempo
         int height = currentNote.getHeight();
         boolean upSideDown = false;
 
-        if(!bass){
+       /* if(!bass){
             if(height >= 20)upSideDown=true;
         }else{
             if(height >=10)upSideDown=true;
-        }
+        }*/
+
+        System.out.println(fullBar/16 + "      fullbar/16");
+        System.out.println(dur + "      dur");
+        System.out.println(fullBar*3/32 + "      fullbar*3/32");
 
         if(dur >= (fullBar/16)) {               //= 1/16 of fullBar
             if (upSideDown) {

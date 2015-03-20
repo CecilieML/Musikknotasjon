@@ -45,11 +45,11 @@ import com.businesspanda.verynote.MainActivity;
 public class PitchDec implements Runnable {
     private static String LOG_TAG = "PitchDetector";
 
-    private final static int RATE = 8000; //was 44100, then 8000 when it worked
+    private final static int RATE = 16000; //was 44100, then 8000 when it worked
     private final static int CHANNEL_MODE = AudioFormat.CHANNEL_IN_MONO;
     private final static int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 
-    int bufferSize = 4096 ;//AudioRecord.getMinBufferSize(RATE, CHANNEL_MODE, ENCODING); //=4096
+    int bufferSize = 8192 ;//AudioRecord.getMinBufferSize(RATE, CHANNEL_MODE, ENCODING); //=4096
     int SOURCE = MediaRecorder.AudioSource.MIC;
 
 
@@ -378,7 +378,7 @@ public class PitchDec implements Runnable {
 
 
             double volume = getAmplitude(audio_data);
-            System.out.println(volume);
+            //System.out.println(volume);
             if(volume>4400) {
                 FreqResult fr = AnalyzeFrequencies(audio_data);
                 PostToUI(fr.frequencies, fr.best_frequency);
@@ -413,7 +413,7 @@ public class PitchDec implements Runnable {
     }
 
     void saveAudiodata(short[] audio_datas_for_saving) {
-        int writerbufferSize = 32 * 1024;
+
         try {
 
             File file = new File(Environment.getExternalStorageDirectory(),"audiodata.txt");
@@ -429,7 +429,8 @@ public class PitchDec implements Runnable {
                 //try {
                 for (int i = 0; i < audio_datas_for_saving.length; i++) {
 
-                    pw.println(audio_datas_for_saving[i]);
+                    pw.print(audio_datas_for_saving[i]);
+                    pw.print("\n");
                     //pw.newLine();
                     //dos.writeShort(audio_datas_for_saving[i]);
                     // System.out.println("IMA WRItinG A FILE");
