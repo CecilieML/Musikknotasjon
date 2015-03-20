@@ -118,31 +118,6 @@ public class MainActivity extends ActionBarActivity  {
 
         //System.out.println(getPercent((R.dimen.lowestLayerWidth)) + "  <--" + FitToScreen.returnViewWidth(getPercent((R.dimen.lowestLayerWidth))));
 
-        linLayout = new RelativeLayout(this);
-        FrameLayout.LayoutParams paramsLinLayout = new FrameLayout.LayoutParams(
-                FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)),
-                FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
-        linLayout.setLayoutParams(paramsLinLayout);
-
-        scrollView.addView(linLayout);
-        scrollView.setScrollingEnabled(false);
-
-        backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
-        RelativeLayout.LayoutParams backgroundParams = new RelativeLayout.LayoutParams(
-                FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundWidth)),
-                FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundHeight)));
-        backgroundImage.setLayoutParams(backgroundParams);
-        //backgroundImage.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundX)));
-        backgroundImage.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundY)));
-        backgroundImage.setAdjustViewBounds(true);
-
-        FrameLayout.LayoutParams lowestLayerParams = new FrameLayout.LayoutParams(
-                FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)),
-                FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
-        lowestLayerParams.gravity = Gravity.CENTER;
-        lowestLayer.setLayoutParams(lowestLayerParams);
-
-
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
 
         metSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -180,6 +155,41 @@ public class MainActivity extends ActionBarActivity  {
     }
 
     @Override
+    public void onWindowFocusChanged(boolean hasFocus){
+
+        System.out.println("HELLO :3");
+
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+
+            linLayout = new RelativeLayout(this);
+            FrameLayout.LayoutParams paramsLinLayout = new FrameLayout.LayoutParams(
+                    FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)),
+                    FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
+            linLayout.setLayoutParams(paramsLinLayout);
+
+            scrollView.addView(linLayout);
+            scrollView.setScrollingEnabled(false);
+
+            backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
+            RelativeLayout.LayoutParams backgroundParams = new RelativeLayout.LayoutParams(
+                    FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundWidth)),
+                    FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundHeight)));
+            backgroundImage.setLayoutParams(backgroundParams);
+            //backgroundImage.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundX)));
+            backgroundImage.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundY)));
+            backgroundImage.setAdjustViewBounds(true);
+
+            FrameLayout.LayoutParams lowestLayerParams = new FrameLayout.LayoutParams(
+                    FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)),
+                    FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
+            lowestLayerParams.gravity = Gravity.CENTER;
+            lowestLayer.setLayoutParams(lowestLayerParams);
+        }
+    }
+
+
+    @Override
     public void onStart() {
         super.onStart();
         //pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
@@ -214,6 +224,8 @@ public class MainActivity extends ActionBarActivity  {
         super.onConfigurationChanged(newConfig);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
+
+
 
     public static float getPercent(int id){
         TypedValue outValue = new TypedValue();
