@@ -126,7 +126,6 @@ public class MainActivity extends ActionBarActivity  {
         backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
 
 
-
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
 
         metSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -501,10 +500,10 @@ int fullBar = metronomNmb*4; //4 = tempo
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
         float y = FitToScreen.returnViewHeight(getPercent(yID));
 
-        System.out.println(y + " y verdi");
-
         imgLayout.setY(y);
         imgLayout.setX(x);
+
+
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -555,6 +554,16 @@ int fullBar = metronomNmb*4; //4 = tempo
             linLayHandler.removeCallbacks(moveLinLay);
             tempolineHandler.pause();
         }
+
+
+        /***/
+        int[] pos = new int [2];
+        imgLayout.getLocationOnScreen(pos);
+        int yPos = pos[1];
+        /***/
+
+        System.out.println(y + " y verdi + yPos  " + yPos);
+
     }
 
     private final int duration = 3; // seconds
@@ -714,14 +723,11 @@ boolean treble = true;
                 popupWindow.showAtLocation(this.findViewById(R.id.metronomeswitch), Gravity.CENTER, 0, 0);
                 popupWindow.setFocusable(true);
 
-
-                popupWindow.dismiss();
-
-/*
                 final SeekBar seekBar = (SeekBar)popupView.findViewById(R.id.speedBar);
                 final TextView speedText = (TextView)popupView.findViewById(R.id.speedValue);
 
                 speedText.setText(String.valueOf((60000/metronomNmb)));
+                seekBar.setProgress((60000/metronomNmb)-60);
 
                 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -729,6 +735,7 @@ boolean treble = true;
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
                         speedText.setText(String.valueOf(progress+60));
+
                     }
 
                     @Override
@@ -756,12 +763,10 @@ boolean treble = true;
 
                     @Override
                     public void onClick(View v) {
-                        metronomNmb = Integer.parseInt(String.valueOf(speedText.getText()));
+                        metronomNmb = 60000/(Integer.parseInt(String.valueOf(speedText.getText())));
                         popupWindow.dismiss();
                     }});
 
-
-*/
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

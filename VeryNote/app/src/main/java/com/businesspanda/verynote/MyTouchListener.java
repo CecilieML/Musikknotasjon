@@ -15,10 +15,13 @@ import android.location.LocationManager;
 import android.media.Image;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -109,7 +112,7 @@ public class MyTouchListener implements View.OnTouchListener {
                 if(index>=46 || index<0)index=46;
                 parentLayout.setY(yValueSearch.yValues[index+1]);
                 System.out.println(" searching for: "+ y +" new value  " + yValueSearch.yValues[index+1]);*/
-                parentLayout.setY(parentLayout.getY()+20);
+                parentLayout.setY(parentLayout.getY()+56);
 
                /* int[] xyPos = new int[2];
                 parentLayout.getLocationOnScreen(xyPos);
@@ -130,11 +133,23 @@ public class MyTouchListener implements View.OnTouchListener {
             @Override
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
+
+                View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+                int height = content.getHeight();
+
+                WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
+                Display display = wm.getDefaultDisplay();
+                int fullHeight = display.getHeight();
+
+                int latouHeight = parentLayout.getHeight();
+
+                int whatever = fullHeight - height;
+
                 int[] xyPos = new int[2];
-                parentLayout.getLocationInWindow(xyPos);
+                parentLayout.getLocationOnScreen(xyPos);
                 int y = xyPos[1];
-                System.out.println( " kj " + y + "gg");
-                parentLayout.setY(y);
+                System.out.println( " kj " + y + "  gg  " + whatever + "  pare  " + latouHeight);
+                parentLayout.setY(y-whatever);
 
             }
         });
