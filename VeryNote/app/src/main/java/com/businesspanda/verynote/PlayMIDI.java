@@ -7,9 +7,12 @@ import android.widget.Toast;
 
 import org.jfugue.Pattern;
 import org.jfugue.Player;
+import org.jfugue.*;
 
 import java.io.File;
 import java.io.IOException;
+
+import jp.kshoji.javax.sound.midi.InvalidMidiDataException;
 
 /**
  * Created by CecilieMarie on 23.03.2015.
@@ -17,24 +20,37 @@ import java.io.IOException;
 public class PlayMIDI {
 
     public void playMIDI(Pattern pattern) {
-        try {
-            String filepath = Environment.getExternalStorageDirectory().toString();
-            File file = new File(filepath, "music.midi");
+        Player player = new Player();
+        String filepath = Environment.getExternalStorageDirectory().toString();
 
-            Player player = new Player();
+        try {
+
+            File file = new File(filepath, "music.mid");
             player.saveMidi(pattern, file);
+
         } catch (IOException e) {
             Toast.makeText(Config.context, "Problem generating MIDI!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
-        File path = Config.context.getFileStreamPath("music.midi");
+        /*File path = Config.context.getFileStreamPath("music.midi");
 
         MediaPlayer mediaPlayer = MediaPlayer.create(Config.context, Uri.fromFile(path));
         mediaPlayer.start(); // no need to call prepare(); create() does that for you
 
         mediaPlayer.release();
-        mediaPlayer = null;
+        mediaPlayer = null;*/
+
+
+        try {
+            player.playMidiDirectly(new File(filepath, "music.mid"));
+        } catch (IOException e)
+        {
+            // handle IO Exception
+        } catch (InvalidMidiDataException e)
+        {
+            // handle Invalid MIDI Data Exception
+        }
 
     }
 
