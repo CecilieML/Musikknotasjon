@@ -17,6 +17,11 @@
           android:orderInCategory="200"
           app:showAsAction="never" />
 
+    <item android:id="@+id/action_playmidi"
+        android:title="@string/action_playmidi"
+        android:orderInCategory="400"
+        app:showAsAction="never" />
+
     <item android:id="@+id/action_record"
           android:icon="@drawable/ic_action_mic"
           android:title="@string/record"

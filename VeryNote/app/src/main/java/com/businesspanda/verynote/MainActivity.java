@@ -76,6 +76,7 @@ public class MainActivity extends ActionBarActivity  {
     MyTouchListener heyListen;
 
     public ExportXML exp;
+    public PlayMIDI mid;
 
     public String title = "Untitled";
 
@@ -109,6 +110,7 @@ public class MainActivity extends ActionBarActivity  {
         //fitToScreen();
 
         exp = new ExportXML();
+        mid = new PlayMIDI();
 
         Config.context = this;
 
@@ -557,7 +559,7 @@ int fullBar = metronomNmb*4; //4 = tempo
 
     }
 
-    private final int duration = 2; // seconds
+    private final int duration = 1; // seconds
     private final int sampleRate = 8000;
     private final int numSamples = duration * sampleRate;
     private final double sample[] = new double[numSamples];
@@ -670,6 +672,10 @@ boolean treble = true;
                 }
                 return true;
 
+            case R.id.action_playmidi:
+                Pattern patternMIDI = new Pattern(allNotes);
+                mid.playMIDI(patternMIDI);
+                return true;
 
 
             case R.id.action_save:

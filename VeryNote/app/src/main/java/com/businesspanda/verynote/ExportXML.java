@@ -59,7 +59,8 @@ public class ExportXML implements Serializable {
     void saveToSD(Pattern pattern) {
         try {
             if(checkIfSDPresent()) {
-                File file = new File(Environment.getExternalStorageDirectory(),filename);
+                String filepath = Environment.getExternalStorageDirectory().toString()+"/VeryNote/";
+                File file = new File(filepath,filename);
 
                 if (!file.exists()) {
                     FileOutputStream fos = new FileOutputStream(file);

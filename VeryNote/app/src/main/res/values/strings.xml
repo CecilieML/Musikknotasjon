@@ -9,6 +9,7 @@
     <string name="record" size="2em">Record</string>
     <string name="play">Play</string>
     <string name="stop">Stop</string>
+    <string name="action_playmidi">Play MIDI</string>
     <string name="background">Background</string>
 
     <string name="freq"> </string>
