@@ -496,7 +496,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
         imgLayout.setY(y);
 
         /***/
-        imgLayout.setBackgroundColor(getResources().getColor(R.color.cyan));
+        //imgLayout.setBackgroundColor(getResources().getColor(R.color.cyan));
         /***/
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
@@ -539,7 +539,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
             imgLayout.addView(flat);
         }
 
-        currentNote.setBackgroundColor(getResources().getColor(R.color.yellow));
+       // currentNote.setBackgroundColor(getResources().getColor(R.color.yellow));
 
         currentNote.setOnTouchListener(heyListen);
         imgLayout.addView(currentNote);
@@ -731,7 +731,7 @@ boolean treble = true;
                     @Override
                     public void onClick(View v) {
                         metronomNmb = 60000/(Integer.parseInt(String.valueOf(speedText.getText())));
-                        fullBar = metronomNmb*4; 
+                        fullBar = metronomNmb*4;
                         popupWindow.dismiss();
                     }});
 

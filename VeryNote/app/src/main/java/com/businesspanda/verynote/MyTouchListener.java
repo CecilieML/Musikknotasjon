@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -132,15 +133,36 @@ public class MyTouchListener implements View.OnTouchListener {
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
 
-               /* ImageView flat = new ImageView(Config.context);
-                flat.setImageResource(R.drawable.flatnotenew);
-                parentLayout.addView(flat);*/
+                boolean noteIsFlat = false;
 
-                int children = parentLayout.getChildCount();
-                System.out.println("number of children  " + children);
-                if(children>1){
-                    ImageView flatToRemove = (ImageView) Config.context.findViewById(R.id.flat);
-                    flatToRemove.setBackgroundColor(Color.RED);
+                for(int i=0;i<parentLayout.getChildCount();i++) {
+                    View child = parentLayout.getChildAt(i);
+                    if (child.getId() == R.id.flat) {
+                        noteIsFlat=true;
+                    }
+                }
+
+                if(noteIsFlat){
+                    for(int i=0;i<parentLayout.getChildCount();i++){
+                        View child = parentLayout.getChildAt(i);
+                        if(child.getId() == R.id.flat){
+                            child.setVisibility(View.GONE);
+                        }
+                    }
+                }else{
+                    ImageView flat = new ImageView(Config.context);
+                    flat.setImageResource(R.drawable.flatnotenew);
+                    flat.setId(R.id.flat);
+                    FrameLayout.LayoutParams paraFlat = new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.WRAP_CONTENT,
+                            FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatHeight)));
+                    flat.setLayoutParams(paraFlat);
+
+                    ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
+                    flat.setColorFilter(filter);
+
+                    flat.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
+                    parentLayout.addView(flat);
                 }
 
             }

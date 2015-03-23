@@ -6,8 +6,8 @@
     <item type="dimen" format="float" name="sharpHeight">0.1</item>
     <item type="dimen" format="float" name="flatHeight">0.1</item>
 
-    <item type="dimen" format="float" name="flatOffsetY">0.05</item>
-    <item type="dimen" format="float" name="sharpOffsetY">0.05</item>
+    <item type="dimen" format="float" name="flatOffsetY">0.06</item>
+    <item type="dimen" format="float" name="sharpOffsetY">0.08</item>
 
     <item type="dimen" format="float" name="noteHeight">0.15</item>
 
@@ -17,20 +17,20 @@
     <item type="dimen" format="float" name="backgroundY">0.2</item>
 
     <item type="dimen" format="float" name="noteStartPos">0.1</item>
-    <item type="dimen" format="float" name="noteX">0.03</item>
+    <item type="dimen" format="float" name="noteX">0.02</item>
 
     <item type="dimen" format="float" name="lowestLayerWidth">0.75</item>
     <item type="dimen" format="float" name="lowestLayerHeight">1</item>
 
-    <item type="dimen" format="float" name="tempolineWidth">0.01</item>
-    <item type="dimen" format="float" name="tempolineHeight">0.2</item>
+    <item type="dimen" format="float" name="tempolineWidth">0.005</item>
+    <item type="dimen" format="float" name="tempolineHeight">0.15</item>
+
+    <item type="dimen" format="float" name="tempolineY">0.33</item>
 
     <item type="dimen" format="float" name="Offset">0.01</item>
 
     <item type="dimen" format="float" name="noteImgWidth">0.1</item>
     <item type="dimen" format="float" name="noteImgHeight">0.2</item>
-
-    <item type="dimen" format="float" name="tempolineY">0.3</item>
 
     <item type="dimen" format="float" name="btnDownX">0</item>
     <item type="dimen" format="float" name="btnDownY">0.65</item>
