@@ -557,7 +557,7 @@ int fullBar = metronomNmb*4; //4 = tempo
 
     }
 
-    private final int duration = 3; // seconds
+    private final int duration = 2; // seconds
     private final int sampleRate = 8000;
     private final int numSamples = duration * sampleRate;
     private final double sample[] = new double[numSamples];
@@ -653,32 +653,10 @@ boolean treble = true;
                     recording = false;
                 }
                 return true;
+
             case R.id.action_play:
-                if(!playing) {
-                    item.setIcon(R.drawable.ic_action_pause);
                     playSound();
-                    playing = true;
-
-                  //  writeToFile(stringarray);
-
-
-                    DisplayMetrics displayMetrics = new DisplayMetrics();
-                    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
-                    /*offsetY = displayMetrics.heightPixels - mainScreen.getMeasuredHeight();
-
-                    System.out.println(offsetY + " <---- offsetY(heightpixel-measueredheigh)");
-                    System.out.println(displayMetrics.heightPixels + " <---- heightpixels");
-                    System.out.println(lowestLayer.getMeasuredHeight() + " <---- measuredheight");*/
-
-
-                }else{
-                    item.setIcon(R.drawable.ic_action_play);
-                    playing = false;
-                }
                 return true;
-
-
 
             case R.id.trebleBass:
                 if(bass){

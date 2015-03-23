@@ -6,7 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_save">Save MusicXML</string>
     <string name="action_share">Share MusicXML</string>
-    <string name="record">Record</string>
+    <string name="record" size="2em">Record</string>
     <string name="play">Play</string>
     <string name="stop">Stop</string>
     <string name="background">Background</string>

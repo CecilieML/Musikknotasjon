@@ -23,7 +23,7 @@
           app:showAsAction="ifRoom|withText" />
 
     <item android:id="@+id/action_play"
-          android:icon="@drawable/playa4"
+          android:icon="@drawable/a4"
           android:title="@string/play"
           app:showAsAction="ifRoom" />
 
