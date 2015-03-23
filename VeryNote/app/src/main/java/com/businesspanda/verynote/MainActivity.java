@@ -692,6 +692,13 @@ boolean treble = true;
 
                 final SeekBar seekBar = (SeekBar)popupView.findViewById(R.id.speedBar);
                 final TextView speedText = (TextView)popupView.findViewById(R.id.speedValue);
+                final TextView clefText = (TextView)popupView.findViewById(R.id.clef_text);
+
+                if (bass) {
+                    clefText.setText("Bass");
+                }  else {
+                    clefText.setText("Treble");
+                }
 
                 speedText.setText(String.valueOf((60000/metronomNmb)));
                 seekBar.setProgress((60000/metronomNmb)-60);
@@ -716,6 +723,22 @@ boolean treble = true;
                     }
                 });
 
+                Button btnTreble = (Button)popupView.findViewById(R.id.treble);
+                btnTreble.setOnClickListener(new Button.OnClickListener(){
+
+                    @Override
+                    public void onClick(View v) {
+                        clefText.setText("Treble");
+                    }});
+
+                Button btnBass = (Button)popupView.findViewById(R.id.bass);
+                btnBass.setOnClickListener(new Button.OnClickListener(){
+
+                    @Override
+                    public void onClick(View v) {
+                        clefText.setText("Bass");
+                    }});
+
 
                 Button btnCancel = (Button)popupView.findViewById(R.id.cancel);
                 btnCancel.setOnClickListener(new Button.OnClickListener(){
@@ -732,6 +755,13 @@ boolean treble = true;
                     public void onClick(View v) {
                         metronomNmb = 60000/(Integer.parseInt(String.valueOf(speedText.getText())));
                         fullBar = metronomNmb*4;
+
+                        if(clefText.getText() == "Treble") {
+                            bass = false;
+                        } else {
+                            bass = true;
+                        }
+
                         popupWindow.dismiss();
                     }});
 

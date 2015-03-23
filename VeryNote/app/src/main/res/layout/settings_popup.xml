@@ -52,6 +52,46 @@
                 android:progress="20"
                 android:max="60"/>
 
+            <TextView
+                android:id="@+id/cleflabel"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:layout_below="@id/speedBar"
+                android:text="@string/cleflabel_text"/>
+
+            <TextView
+                android:id="@+id/clef_text"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:layout_below="@id/speedBar"
+                android:layout_toRightOf="@+id/cleflabel"
+                android:layout_toEndOf="@+id/cleflabel"
+                android:layout_marginLeft="10dp"
+                android:text="@string/clef_text"/>
+
+            <Button
+                android:id="@+id/treble"
+                android:background="@drawable/treble"
+                android:layout_width="14.2dp"
+                android:layout_height="40dp"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_below="@+id/cleflabel"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"/>
+
+            <Button
+                android:id="@+id/bass"
+                android:background="@drawable/bass"
+                android:layout_width="35.5dp"
+                android:layout_height="40dp"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_below="@+id/cleflabel"
+                android:layout_toRightOf="@+id/treble"
+                android:layout_toEndOf="@+id/treble"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"/>
+
+
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
