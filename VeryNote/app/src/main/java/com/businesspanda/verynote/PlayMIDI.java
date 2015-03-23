@@ -18,7 +18,7 @@ public class PlayMIDI {
 
     public void playMIDI(Pattern pattern) {
         try {
-            String filepath = Environment.getExternalStorageDirectory().toString() + "/VeryNote/";
+            String filepath = Environment.getExternalStorageDirectory().toString();
             File file = new File(filepath, "music.mid");
 
             Player player = new Player();
