@@ -44,6 +44,7 @@ public class PlayMIDI {
 
         try {
             player.playMidiDirectly(new File(filepath, "music.mid"));
+            Toast.makeText(Config.context, "IMA PLAYING THE MIDIS!!!!!", Toast.LENGTH_SHORT).show();
         } catch (IOException e)
         {
             e.printStackTrace();

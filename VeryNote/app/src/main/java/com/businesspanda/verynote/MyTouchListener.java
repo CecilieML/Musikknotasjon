@@ -43,6 +43,9 @@ public class MyTouchListener implements View.OnTouchListener {
     RelativeLayout really;
     Button btnUp;
     Button btnDown;
+    Button btnFlat;
+    Button btnSharp;
+    Button btnNeutral;
 
     public MainActivity mainA;
 
@@ -79,18 +82,11 @@ public class MyTouchListener implements View.OnTouchListener {
                 parentLayout.getLocationOnScreen(xyPos);
                 int y = xyPos[1];
                 int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
-                System.out.println(y-actionAndNotBarHeight + "  hjk  " + index);
-                if(index>0)
-                    parentLayout.setY(yValueSearch.yValues[index-1]);
+                if(index>0){
+                    float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
+                    parentLayout.setY(percent);
+                }
 
-
-              /*
-                int percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
-                if(index>0)
-                    parentLayout.setY(yValueSearch.yValues[index-1]);*/
-
-
-              //  parentLayout.setY(parentLayout.getY()-20);
             }
         });
 
@@ -117,37 +113,76 @@ public class MyTouchListener implements View.OnTouchListener {
                 parentLayout.getLocationOnScreen(xyPos);
                 int y = xyPos[1];
                 int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
-                if(index>0)
-                    parentLayout.setY(yValueSearch.yValues[index+1]);
+              //  System.out.println("final index =  " + index);
+                if(index>0 && index<yValueSearch.yValues.length) {
+                    float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index + 1]);
+                    parentLayout.setY(percent);
+                }
 
             }
         });
 
-        Button btnY = new Button(Config.context);
-        btnY.setText("set Y to Y");
-        btnY.setVisibility(View.VISIBLE);
-        btnY.setY(10);
-        btnY.setX(10);
-        btnY.setOnClickListener(new View.OnClickListener() {
+        btnFlat = new Button(Config.context);
+        btnFlat.setText("b");
+        btnFlat.setVisibility(View.VISIBLE);
+        btnFlat.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnFlatY)));
+        btnFlat.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnFlatX)));
+        btnFlat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
 
+               /* ImageView flat = new ImageView(Config.context);
+                flat.setImageResource(R.drawable.flatnotenew);
+                parentLayout.addView(flat);*/
+
+                int children = parentLayout.getChildCount();
+                System.out.println("number of children  " + children);
+                if(children>1){
+                    ImageView flatToRemove = (ImageView) Config.context.findViewById(R.id.flat);
+                    flatToRemove.setBackgroundColor(Color.RED);
+                }
 
             }
         });
 
-
-
         really.addView(btnUp);
         really.addView(btnDown);
-
-        really.addView(btnY);
+        really.addView(btnFlat);
     }
 
     public void removeButtons(){
         btnDown.setVisibility(View.GONE);
         btnUp.setVisibility(View.GONE);
+        btnFlat.setVisibility(View.GONE);
+    }
+
+    public void onChosenNote(View v){
+        img = (ImageView) v;
+        vibIy(70);
+        createButtons(img);
+
+        ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
+
+        RelativeLayout parentLayout = (RelativeLayout) img.getParent();
+        for(int i=0;i<parentLayout.getChildCount();i++){
+            View child = parentLayout.getChildAt(i);
+            ImageView childView = (ImageView) child;
+            childView.setColorFilter(filter);
+        }
+    }
+
+    public void onUnChosenNote(View v){
+        vibIy(30);
+        removeButtons();
+        v.setSelected(false);
+
+        RelativeLayout parentLayout = (RelativeLayout) v.getParent();
+        for(int i=0;i<parentLayout.getChildCount();i++){
+            View child = parentLayout.getChildAt(i);
+            ImageView childView = (ImageView) child;
+            childView.clearColorFilter();
+        }
     }
 
     public boolean onTouch(View v, MotionEvent event)
@@ -158,35 +193,20 @@ public class MyTouchListener implements View.OnTouchListener {
                 // Here u can write code which is executed after the user touch on the screen
 
                 if (!oneIsCurrentlyChosen){
-                    img = (ImageView) v;
-                    vibIy(70);
-                    createButtons(img);
 
-                    ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
-
-                    RelativeLayout parentLayout = (RelativeLayout) img.getParent();
-                    for(int i=0;i<parentLayout.getChildCount();i++){
-                        View child = parentLayout.getChildAt(i);
-                        ImageView childView = (ImageView) child;
-                        childView.setColorFilter(filter);
-                    }
-
+                    onChosenNote(v);
 
                     oneIsCurrentlyChosen = true;
                 }else{
                     if(v==img) {
-                        vibIy(30);
-                        removeButtons();
-                        v.setSelected(false);
 
-                        RelativeLayout parentLayout = (RelativeLayout) img.getParent();
-                        for(int i=0;i<parentLayout.getChildCount();i++){
-                            View child = parentLayout.getChildAt(i);
-                            ImageView childView = (ImageView) child;
-                            childView.clearColorFilter();
-                        }
+                        onUnChosenNote(img);
 
                         oneIsCurrentlyChosen = false;
+                    }else {
+                        onUnChosenNote(img);
+                        onChosenNote(v);
+                        oneIsCurrentlyChosen = true;
                     }
                 }
 

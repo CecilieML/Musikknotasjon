@@ -283,11 +283,18 @@ public class yValueSearch {
 
     public static int findYIndex(float valueToFind) {
 
-        Float percentValue = FitToScreen.returnPercent(valueToFind);
-        System.out.println(percentValue + " %");
+        float percentValue = FitToScreen.returnPercent(valueToFind);
+
+
+        double roundedOffPercent = Math.round(percentValue * 100.0) / 100.0;
+
+       // System.out.println(percentValue + " %" + " rounded up % " + roundedUpPercent);
+
 
         for (int i = 0; i < yValues.length; i++) {
-            if (percentValue == yValues[i]) {
+            double thisYValue = Math.round(yValues[i] * 100.0) / 100.0;
+           // System.out.println(roundedOffPercent + " == " + yValues[i] + "   i= " + i + "  ?  " + thisYValue);
+            if (roundedOffPercent == thisYValue) {
                 return i;
             }
         }

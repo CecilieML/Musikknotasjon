@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="flat" type="id"/>
+    <item name="sharp" type="id"/>
+    <item name="neutral" type="id"/>
+
+</resources>

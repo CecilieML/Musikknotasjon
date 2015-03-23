@@ -39,7 +39,7 @@ public class FitToScreen {
 
         float percentValue = yValue/height;
 
-        System.out.println(percentValue + " & = " + yValue + " / " + height);
+        //System.out.println(percentValue + " & = " + yValue + " / " + height);
 
         return percentValue;
     }

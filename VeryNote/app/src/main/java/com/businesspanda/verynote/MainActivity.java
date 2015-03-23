@@ -63,6 +63,7 @@ public class MainActivity extends ActionBarActivity  {
     public boolean playing = false;
     public boolean recording = false;
     public boolean firstRecording = true;
+    boolean linLayMoving = false;
 
     public Switch metSwitch;
 
@@ -123,7 +124,7 @@ public class MainActivity extends ActionBarActivity  {
 
         linLayout = new RelativeLayout(this);
         scrollView.addView(linLayout);
-        scrollView.setScrollingEnabled(false);
+        //scrollView.setScrollingEnabled(false);
 
         backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
 
@@ -169,7 +170,6 @@ public class MainActivity extends ActionBarActivity  {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
 
-
             FrameLayout.LayoutParams paramsLinLayout = new FrameLayout.LayoutParams(
                     FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)),
                     FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
@@ -190,6 +190,8 @@ public class MainActivity extends ActionBarActivity  {
                     FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
             lowestLayerParams.gravity = Gravity.CENTER;
             lowestLayer.setLayoutParams(lowestLayerParams);
+
+            scrollView.setScrollingEnabled(true);
 
         }
     }
@@ -364,7 +366,7 @@ public class MainActivity extends ActionBarActivity  {
     };
 
 boolean bass = false;
-int fullBar = metronomNmb*4; //4 = tempo
+int fullBar = metronomNmb*4; //4 = tempo;
 
     public void noteLength(){
 
@@ -445,7 +447,17 @@ int fullBar = metronomNmb*4; //4 = tempo
 
     }
 
-    boolean linLayMoving = false;
+    public void addSharp(ImageView sharp){
+        if(dur >= (fullBar/16)){
+            sharp.setImageResource(R.drawable.sharpnotenew);
+        }
+    }
+
+    public void addFlat(ImageView flat){
+        if(dur >= (fullBar/16)){
+            flat.setImageResource(R.drawable.flatnotenew);
+        }
+    }
 
     public void notesOnScreen(Note note){
 
@@ -462,30 +474,17 @@ int fullBar = metronomNmb*4; //4 = tempo
         linLayMoving = true;
         firstRecording = false;
 
-       // LinearInterpolator interpolator = new LinearInterpolator();
-
-        //RelativeLayout theLayout = (RelativeLayout) findViewById(R.id.lowestLayer);
-
         RelativeLayout imgLayout = new RelativeLayout(this);
-
-      /*  RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(
-                (int) this.getResources().getDimension(R.dimen.layWidth),
-                (int) this.getResources().getDimension(R.dimen.layHeight));
-        imgLayout.setLayoutParams(par);*/
 
         FrameLayout.LayoutParams par = new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteImgWidth)),
                 FitToScreen.returnViewHeight(getPercent(R.dimen.noteImgHeight)));
 
         imgLayout.setLayoutParams(par);
-
-       // imgLayout.setBackgroundColor(getResources().getColor(R.color.red));
+        imgLayout.setFocusable(true);
 
         currentNote = new ImageView(this);
 
-        imgLayout.setFocusable(true);
-
-        //int pos = (int) this.getResources().getDimension(R.dimen.endPos);
         int x = linLayout.getLayoutParams().width -
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos));
 
@@ -493,10 +492,12 @@ int fullBar = metronomNmb*4; //4 = tempo
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
         float y = FitToScreen.returnViewHeight(getPercent(yID));
 
-        imgLayout.setY(y);
         imgLayout.setX(x);
+        imgLayout.setY(y);
 
-
+        /***/
+        imgLayout.setBackgroundColor(getResources().getColor(R.color.cyan));
+        /***/
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -514,32 +515,32 @@ int fullBar = metronomNmb*4; //4 = tempo
         if(note.sharp){
             ImageView sharp = new ImageView(this);
             FrameLayout.LayoutParams para = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,           /***/
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
                     FitToScreen.returnViewHeight(getPercent(R.dimen.sharpHeight)));
             sharp.setLayoutParams(para);
 
            // sharp.setX((int) this.getResources().getDimension(R.dimen.sharpOffsetX));
-           // sharp.setY((int) this.getResources().getDimension(R.dimen.sharpOffsetY));
+           sharp.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY)));
 
-            sharp.setImageResource(R.drawable.sharpnotenew);
-           // sharp.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
+            addSharp(sharp);
             imgLayout.addView(sharp);
         }else if(note.flat){
             ImageView flat = new ImageView(this);
+            flat.setId(R.id.flat);
             FrameLayout.LayoutParams paraFlat = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,           /***/
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
                     FitToScreen.returnViewHeight(getPercent(R.dimen.flatHeight)));
             flat.setLayoutParams(paraFlat);
 
             //flat.setX((int) this.getResources().getDimension(R.dimen.flatOffsetX));
-            //flat.setY((int) this.getResources().getDimension(R.dimen.flatOffsetY));
+            flat.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.flatOffsetY)));
 
-            flat.setImageResource(R.drawable.flatnotenew);
-         //   flat.animate().x(pos - xOffset).setInterpolator(interpolator).setDuration(5500);
+            addFlat(flat);
             imgLayout.addView(flat);
         }
 
-       // image.animate().x(pos).setInterpolator(interpolator).setDuration(5500);
+        currentNote.setBackgroundColor(getResources().getColor(R.color.yellow));
+
         currentNote.setOnTouchListener(heyListen);
         imgLayout.addView(currentNote);
         linLayout.addView(imgLayout);
@@ -547,15 +548,6 @@ int fullBar = metronomNmb*4; //4 = tempo
             linLayHandler.removeCallbacks(moveLinLay);
             tempolineHandler.pause();
         }
-
-
-        /***/
-        int[] pos = new int [2];
-        imgLayout.getLocationOnScreen(pos);
-        int yPos = pos[1];
-        /***/
-
-        System.out.println(y + " y verdi + yPos  " + yPos);
 
     }
 
@@ -739,6 +731,7 @@ boolean treble = true;
                     @Override
                     public void onClick(View v) {
                         metronomNmb = 60000/(Integer.parseInt(String.valueOf(speedText.getText())));
+                        fullBar = metronomNmb*4; 
                         popupWindow.dismiss();
                     }});
 
