@@ -38,6 +38,8 @@ public class MyTouchListener implements View.OnTouchListener {
     boolean oneIsCurrentlyChosen;
     ImageView img;
     RelativeLayout really;
+    Button btnUp;
+    Button btnDown;
 
     public MainActivity mainA;
 
@@ -72,16 +74,16 @@ public class MyTouchListener implements View.OnTouchListener {
                 System.out.println("original " + y + "  new value  " + percent);*/
 
 
-                //parentLayout.setY(parentLayout.getY()-5);
+                parentLayout.setY(parentLayout.getY()-20);
 
-                int[] xyPos = new int[2];
+               /* int[] xyPos = new int[2];
                 parentLayout.getLocationInWindow(xyPos);
                 int y = xyPos[1];
-               /*int index = yValueSearch.findYIndex(y);
+               int index = yValueSearch.findYIndex(y);
                 if(index>0)
-                    parentLayout.setY(yValueSearch.yValues[index-1]);*/
+                    parentLayout.setY(yValueSearch.yValues[index-1]);
                 System.out.println( " kj " + y + "gg");
-                parentLayout.setY(y);
+                parentLayout.setY(y);*/
 
             }
         });
@@ -107,24 +109,43 @@ public class MyTouchListener implements View.OnTouchListener {
                 if(index>=46 || index<0)index=46;
                 parentLayout.setY(yValueSearch.yValues[index+1]);
                 System.out.println(" searching for: "+ y +" new value  " + yValueSearch.yValues[index+1]);*/
-                //parentLayout.setY(parentLayout.getY()+5);
+                parentLayout.setY(parentLayout.getY()+20);
 
-                int[] xyPos = new int[2];
+               /* int[] xyPos = new int[2];
                 parentLayout.getLocationOnScreen(xyPos);
                 int y = xyPos[1];
                 int index = yValueSearch.findYIndex(y);
                 if(index>0)
-                    parentLayout.setY(yValueSearch.yValues[index+1]);
+                    parentLayout.setY(yValueSearch.yValues[index+1]);*/
 
             }
         });
 
+        Button btnY = new Button(Config.context);
+        btnY.setText("set Y to Y");
+        btnY.setVisibility(View.VISIBLE);
+        btnY.setY(10);
+        btnY.setX(10);
+        btnY.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
+                int[] xyPos = new int[2];
+                parentLayout.getLocationInWindow(xyPos);
+                int y = xyPos[1];
+                System.out.println( " kj " + y + "gg");
+                parentLayout.setY(y);
+
+            }
+        });
+
+
+
         really.addView(btnUp);
         really.addView(btnDown);
-    }
 
-    Button btnUp;
-    Button btnDown;
+        really.addView(btnY);
+    }
 
     public void removeButtons(){
         btnDown.setVisibility(View.GONE);
