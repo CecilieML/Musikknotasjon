@@ -47,6 +47,7 @@ public class MyTouchListener implements View.OnTouchListener {
     Button btnFlat;
     Button btnSharp;
     Button btnNeutral;
+    Button btnRemoveAll;
 
     public MainActivity mainA;
 
@@ -135,6 +136,8 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 boolean noteIsFlat = false;
 
+                int children = parentLayout.getChildCount();
+
                 for(int i=0;i<parentLayout.getChildCount();i++) {
                     View child = parentLayout.getChildAt(i);
                     if (child.getId() == R.id.flat) {
@@ -146,10 +149,22 @@ public class MyTouchListener implements View.OnTouchListener {
                     for(int i=0;i<parentLayout.getChildCount();i++){
                         View child = parentLayout.getChildAt(i);
                         if(child.getId() == R.id.flat){
-                            child.setVisibility(View.GONE);
+                            parentLayout.removeView(child);
                         }
                     }
                 }else{
+                    if(children>1){
+                        for(int i=0;i<parentLayout.getChildCount();i++){
+                            View child = parentLayout.getChildAt(i);
+                            if(child.getId() == R.id.sharp) {
+                                parentLayout.removeView(child);
+                            }
+                            if(child.getId() == R.id.neutral) {
+                                parentLayout.removeView(child);
+                            }
+                        }
+                    }
+
                     ImageView flat = new ImageView(Config.context);
                     flat.setImageResource(R.drawable.flatnotenew);
                     flat.setId(R.id.flat);
@@ -168,15 +183,153 @@ public class MyTouchListener implements View.OnTouchListener {
             }
         });
 
+        btnSharp = new Button(Config.context);
+        btnSharp.setText("#");
+        btnSharp.setVisibility(View.VISIBLE);
+        btnSharp.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnSharpY)));
+        btnSharp.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnSharpX)));
+        btnSharp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
+
+                boolean noteIsSharp = false;
+
+                int children = parentLayout.getChildCount();
+
+                for(int i=0;i<parentLayout.getChildCount();i++) {
+                    View child = parentLayout.getChildAt(i);
+                    if (child.getId() == R.id.sharp) {
+                        noteIsSharp=true;
+                    }
+                }
+
+                if(noteIsSharp){
+                    for(int i=0;i<parentLayout.getChildCount();i++){
+                        View child = parentLayout.getChildAt(i);
+                        if(child.getId() == R.id.sharp){
+                            parentLayout.removeView(child);
+                        }
+                    }
+                }else{
+                    if(children>1){
+                        for(int i=0;i<parentLayout.getChildCount();i++){
+                            View child = parentLayout.getChildAt(i);
+                            if(child.getId() == R.id.flat) {
+                                parentLayout.removeView(child);
+                            }
+                            if(child.getId() == R.id.neutral) {
+                                parentLayout.removeView(child);
+                            }
+                        }
+                    }
+
+                    ImageView sharp = new ImageView(Config.context);
+                    sharp.setImageResource(R.drawable.sharpnotenew);
+                    sharp.setId(R.id.sharp);
+                    FrameLayout.LayoutParams paraSharp = new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.WRAP_CONTENT,
+                            FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpHeight)));
+                    sharp.setLayoutParams(paraSharp);
+
+                    ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
+                    sharp.setColorFilter(filter);
+
+                    sharp.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
+                    parentLayout.addView(sharp);
+                }
+
+            }
+        });
+
+        btnNeutral = new Button(Config.context);
+        btnNeutral.setText("n");
+        btnNeutral.setVisibility(View.VISIBLE);
+        btnNeutral.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnNeutralY)));
+        btnNeutral.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnNeutralX)));
+        btnNeutral.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
+
+                boolean noteIsNeutral = false;
+
+                int children = parentLayout.getChildCount();
+
+                for(int i=0;i<parentLayout.getChildCount();i++) {
+                    View child = parentLayout.getChildAt(i);
+                    if (child.getId() == R.id.neutral) {
+                        noteIsNeutral=true;
+                    }
+                }
+
+                if(noteIsNeutral){
+                    for(int i=0;i<parentLayout.getChildCount();i++){
+                        View child = parentLayout.getChildAt(i);
+                        if(child.getId() == R.id.neutral){
+                            parentLayout.removeView(child);
+                        }
+                    }
+                }else{
+                    if(children>1){
+                        for(int i=0;i<parentLayout.getChildCount();i++){
+                            View child = parentLayout.getChildAt(i);
+                            if(child.getId() == R.id.flat) {
+                                parentLayout.removeView(child);
+                            }
+                            if(child.getId() == R.id.sharp) {
+                                parentLayout.removeView(child);
+                            }
+                        }
+                    }
+
+                    ImageView neutral = new ImageView(Config.context);
+                    neutral.setImageResource(R.drawable.naturalnote);
+                    neutral.setId(R.id.neutral);
+                    FrameLayout.LayoutParams paraNeutral = new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.WRAP_CONTENT,
+                            FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpHeight)));
+                    neutral.setLayoutParams(paraNeutral);
+
+                    ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
+                    neutral.setColorFilter(filter);
+
+                    neutral.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
+                    parentLayout.addView(neutral);
+                }
+
+            }
+        });
+
+        btnRemoveAll = new Button(Config.context);
+        btnRemoveAll.setText("X");
+        btnRemoveAll.setTextColor(Color.RED);
+        btnRemoveAll.setVisibility(View.VISIBLE);
+        btnRemoveAll.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnRemoveAllY)));
+        btnRemoveAll.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnRemoveAllX)));
+        btnRemoveAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
+                parentLayout.removeAllViews();
+            }
+        });
+
         really.addView(btnUp);
         really.addView(btnDown);
         really.addView(btnFlat);
+        really.addView(btnSharp);
+        really.addView(btnNeutral);
+        really.addView(btnRemoveAll);
     }
 
     public void removeButtons(){
         btnDown.setVisibility(View.GONE);
         btnUp.setVisibility(View.GONE);
         btnFlat.setVisibility(View.GONE);
+        btnSharp.setVisibility(View.GONE);
+        btnNeutral.setVisibility(View.GONE);
+        btnRemoveAll.setVisibility(View.GONE);
     }
 
     public void onChosenNote(View v){

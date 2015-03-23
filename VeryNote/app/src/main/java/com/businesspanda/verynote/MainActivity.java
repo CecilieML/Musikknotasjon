@@ -85,6 +85,7 @@ public class MainActivity extends ActionBarActivity  {
 
     ImageView currentNote;
     Note prevNote;
+    Note nearestNote;
 
     LockableScrollView scrollView;
 
@@ -258,7 +259,7 @@ public class MainActivity extends ActionBarActivity  {
         final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
 
         Integer pitchInt = (int) (pitch);
-        Note nearestNote = NoteSearch.findNearestNote(pitchInt);
+        nearestNote = NoteSearch.findNearestNote(pitchInt);
 
         stringarray = stringarray + " " + pitchInt;
 
@@ -514,6 +515,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
 
         if(note.sharp){
             ImageView sharp = new ImageView(this);
+            sharp.setId(R.id.sharp);
             FrameLayout.LayoutParams para = new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.WRAP_CONTENT,
                     FitToScreen.returnViewHeight(getPercent(R.dimen.sharpHeight)));
@@ -652,16 +654,8 @@ boolean treble = true;
                     playSound();
                 return true;
 
-            case R.id.trebleBass:
-                if(bass){
-                    item.setIcon(R.drawable.basswhite);
-                    backgroundImage.setImageResource(R.drawable.trebleline);
-                    bass = false;
-                }else{
-                    item.setIcon(R.drawable.treblewhite);
-                    backgroundImage.setImageResource(R.drawable.bassline);
-                    bass = true;
-                }
+            case R.id.action_new:
+                    //new things here!
                 return true;
 
             case R.id.action_playmidi:
@@ -757,8 +751,10 @@ boolean treble = true;
                         fullBar = metronomNmb*4;
 
                         if(clefText.getText() == "Treble") {
+                            backgroundImage.setImageResource(R.drawable.trebleline);
                             bass = false;
                         } else {
+                            backgroundImage.setImageResource(R.drawable.bassline);
                             bass = true;
                         }
 

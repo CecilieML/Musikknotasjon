@@ -37,8 +37,17 @@
     <item type="dimen" format="float" name="btnUpX">0.15</item>
     <item type="dimen" format="float" name="btnUpY">0.65</item>
 
-    <item type="dimen" format="float" name="btnFlatX">0.6</item>
+    <item type="dimen" format="float" name="btnFlatX">0.58</item>
     <item type="dimen" format="float" name="btnFlatY">0.65</item>
+
+    <item type="dimen" format="float" name="btnSharpX">0.7</item>
+    <item type="dimen" format="float" name="btnSharpY">0.65</item>
+
+    <item type="dimen" format="float" name="btnNeutralX">0.82</item>
+    <item type="dimen" format="float" name="btnNeutralY">0.65</item>
+
+    <item type="dimen" format="float" name="btnRemoveAllX">0.2</item>
+    <item type="dimen" format="float" name="btnRemoveAllY">0.3</item>
 
     //C
     <item name="C3" format="float" type="dimen">1</item>
