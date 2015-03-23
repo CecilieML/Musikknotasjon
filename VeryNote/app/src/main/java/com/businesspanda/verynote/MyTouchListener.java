@@ -66,28 +66,31 @@ public class MyTouchListener implements View.OnTouchListener {
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
 
-              /* int[] xyPos = new int[2];
+                View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+                int height = content.getHeight();
+
+                WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
+                Display display = wm.getDefaultDisplay();
+                int fullHeight = display.getHeight();
+
+                int actionAndNotBarHeight = fullHeight - height;
+
+                int[] xyPos = new int[2];
                 parentLayout.getLocationOnScreen(xyPos);
                 int y = xyPos[1];
-                int index = yValueSearch.findYIndex(y);
-                System.out.println(index + "  uppp");
+                int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
+                System.out.println(y-actionAndNotBarHeight + "  hjk  " + index);
+                if(index>0)
+                    parentLayout.setY(yValueSearch.yValues[index-1]);
+
+
+              /*
                 int percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
                 if(index>0)
-                    parentLayout.setY(yValueSearch.yValues[index-1]);
-                System.out.println("original " + y + "  new value  " + percent);*/
+                    parentLayout.setY(yValueSearch.yValues[index-1]);*/
 
 
-                parentLayout.setY(parentLayout.getY()-20);
-
-               /* int[] xyPos = new int[2];
-                parentLayout.getLocationInWindow(xyPos);
-                int y = xyPos[1];
-               int index = yValueSearch.findYIndex(y);
-                if(index>0)
-                    parentLayout.setY(yValueSearch.yValues[index-1]);
-                System.out.println( " kj " + y + "gg");
-                parentLayout.setY(y);*/
-
+              //  parentLayout.setY(parentLayout.getY()-20);
             }
         });
 
@@ -100,26 +103,22 @@ public class MyTouchListener implements View.OnTouchListener {
             @Override
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
-               /* int[] xyPos = new int[2];
-                parentLayout.getLocationInWindow(xyPos);
 
-                //mainA = new MainActivity();
-                int y = xyPos[1]-146;
+                View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+                int height = content.getHeight();
 
+                WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
+                Display display = wm.getDefaultDisplay();
+                int fullHeight = display.getHeight();
 
-                int index = yValueSearch.findYIndex(y);
-                System.out.println(index + "  dowwwwn");
-                if(index>=46 || index<0)index=46;
-                parentLayout.setY(yValueSearch.yValues[index+1]);
-                System.out.println(" searching for: "+ y +" new value  " + yValueSearch.yValues[index+1]);*/
-                parentLayout.setY(parentLayout.getY()+56);
+                int actionAndNotBarHeight = fullHeight - height;
 
-               /* int[] xyPos = new int[2];
+                int[] xyPos = new int[2];
                 parentLayout.getLocationOnScreen(xyPos);
                 int y = xyPos[1];
-                int index = yValueSearch.findYIndex(y);
+                int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
                 if(index>0)
-                    parentLayout.setY(yValueSearch.yValues[index+1]);*/
+                    parentLayout.setY(yValueSearch.yValues[index+1]);
 
             }
         });
@@ -134,22 +133,6 @@ public class MyTouchListener implements View.OnTouchListener {
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
 
-                View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
-                int height = content.getHeight();
-
-                WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
-                Display display = wm.getDefaultDisplay();
-                int fullHeight = display.getHeight();
-
-                int latouHeight = parentLayout.getHeight();
-
-                int whatever = fullHeight - height;
-
-                int[] xyPos = new int[2];
-                parentLayout.getLocationOnScreen(xyPos);
-                int y = xyPos[1];
-                System.out.println( " kj " + y + "  gg  " + whatever + "  pare  " + latouHeight);
-                parentLayout.setY(y-whatever);
 
             }
         });

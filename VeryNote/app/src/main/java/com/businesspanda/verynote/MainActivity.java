@@ -125,7 +125,6 @@ public class MainActivity extends ActionBarActivity  {
 
         backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
 
-
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
 
         metSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -189,6 +188,7 @@ public class MainActivity extends ActionBarActivity  {
                     FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
             lowestLayerParams.gravity = Gravity.CENTER;
             lowestLayer.setLayoutParams(lowestLayerParams);
+
         }
     }
 
@@ -238,20 +238,11 @@ public class MainActivity extends ActionBarActivity  {
         return returnValue;
     }
 
- /*   public void fitToScreen() {
-        FrameLayout frame = (FrameLayout) findViewById(R.id.frame);
 
-        float density = getResources().getDisplayMetrics().density;
 
-        //tinyphone = 1.5, other phones = 3.0
-        if(density>2){
-
-            frame.setPadding(
-                    (int) this.getResources().getDimension(R.dimen.marginLeft),
-                    (int) this.getResources().getDimension(R.dimen.marginTop),0,0);
-
-        }
-
+   /* public static float getScrollViewTop(){
+        //int[] XYpos = new int[2];
+        return scrollY;
     }*/
 
     long lastTime;

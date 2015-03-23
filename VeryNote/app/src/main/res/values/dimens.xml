@@ -17,7 +17,7 @@
     <item type="dimen" format="float" name="noteX">0.01</item>
 
     <item type="dimen" format="float" name="lowestLayerWidth">0.75</item>
-    <item type="dimen" format="float" name="lowestLayerHeight">0.7</item>
+    <item type="dimen" format="float" name="lowestLayerHeight">1</item>
 
     <item type="dimen" format="float" name="tempolineWidth">0.01</item>
     <item type="dimen" format="float" name="tempolineHeight">0.2</item>
@@ -28,6 +28,9 @@
     <item type="dimen" format="float" name="noteImgHeight">0.2</item>
 
     <item type="dimen" format="float" name="tempolineY">0.3</item>
+
+    <!--<item type="dimen" format="float" name="scrollViewParentMarginTop">0</item>
+    <item type="dimen" format="float" name="scrollViewParentMarginLeft">0</item>-->
 
     <item type="dimen" format="float" name="btnDownX">0</item>
     <item type="dimen" format="float" name="btnDownY">0.5</item>
