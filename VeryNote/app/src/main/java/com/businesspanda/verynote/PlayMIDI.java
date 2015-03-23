@@ -46,10 +46,12 @@ public class PlayMIDI {
             player.playMidiDirectly(new File(filepath, "music.mid"));
         } catch (IOException e)
         {
-            // handle IO Exception
+            e.printStackTrace();
+            Toast.makeText(Config.context, "IOEXceotion", Toast.LENGTH_SHORT).show();
         } catch (InvalidMidiDataException e)
         {
-            // handle Invalid MIDI Data Exception
+            e.printStackTrace();
+            Toast.makeText(Config.context, "invalidmidiexception", Toast.LENGTH_SHORT).show();
         }
 
     }
