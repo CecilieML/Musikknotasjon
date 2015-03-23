@@ -36,7 +36,10 @@ public class FitToScreen {
     public static float returnPercent(float yValue){
         View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
         int height = content.getHeight();
+
         float percentValue = yValue/height;
+
+        System.out.println(percentValue + " & = " + yValue + " / " + height);
 
         return percentValue;
     }

@@ -90,8 +90,7 @@
 
     //A
     <item name="A3" format="float" type="dimen">0.91</item>
-    <item name="A4" format="float" type="dimen">0.30
-    </item>       //x
+    <item name="A4" format="float" type="dimen">0.30</item>       //x
     <item name="A5" format="float" type="dimen">0.33</item>
     <item name="A6" format="float" type="dimen">0.04</item>
 

@@ -40,6 +40,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -91,6 +92,8 @@ public class MainActivity extends ActionBarActivity  {
     //FrameLayout mainScreen;
 
     String stringarray;
+
+    int metronomNmb = 750;
 
 
     /** Called when the activity is first created. */
@@ -299,7 +302,6 @@ public class MainActivity extends ActionBarActivity  {
     private Runnable writeTempoline = new Runnable() {
         public void run() {
             tempolineOnScreen(getTempolineY());
-            System.out.println("'ello");
             tempolineHandler.postDelayed(writeTempoline, fullBar);
         }
     };
@@ -367,7 +369,6 @@ public class MainActivity extends ActionBarActivity  {
         }
     };
 
-int metronomNmb = 750;
 boolean bass = false;
 int fullBar = metronomNmb*4; //4 = tempo
 
@@ -381,10 +382,6 @@ int fullBar = metronomNmb*4; //4 = tempo
         }else{
             if(height >=10)upSideDown=true;
         }*/
-
-        System.out.println(fullBar/16 + "      fullbar/16");
-        System.out.println(dur + "      dur");
-        System.out.println(fullBar*3/32 + "      fullbar*3/32");
 
         if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {               //= 1/16 of fullBar
             if (upSideDown) {
@@ -501,6 +498,8 @@ int fullBar = metronomNmb*4; //4 = tempo
         String notename = note.getName();
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
         float y = FitToScreen.returnViewHeight(getPercent(yID));
+
+        System.out.println(y + " y verdi");
 
         imgLayout.setY(y);
         imgLayout.setX(x);
@@ -708,7 +707,39 @@ boolean treble = true;
                 final View popupView = layoutInflater.inflate(R.layout.settings_popup, null);
 
                 final PopupWindow popupWindow = new PopupWindow(
-                        popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+                popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+
+                popupWindow.showAtLocation(this.findViewById(R.id.metronomeswitch), Gravity.CENTER, 0, 0);
+                popupWindow.setFocusable(true);
+
+
+                popupWindow.dismiss();
+
+/*
+                final SeekBar seekBar = (SeekBar)popupView.findViewById(R.id.speedBar);
+                final TextView speedText = (TextView)popupView.findViewById(R.id.speedValue);
+
+                speedText.setText(String.valueOf((60000/metronomNmb)));
+
+                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                        speedText.setText(String.valueOf(progress+60));
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                });
+
 
                 Button btnCancel = (Button)popupView.findViewById(R.id.cancel);
                 btnCancel.setOnClickListener(new Button.OnClickListener(){
@@ -718,25 +749,17 @@ boolean treble = true;
                         popupWindow.dismiss();
                     }});
 
-                popupWindow.showAtLocation(this.findViewById(R.id.metronomeswitch), Gravity.CENTER, 0, 0);
-                popupWindow.setFocusable(true);
-
-                //EditText met_speed_field = (EditText) popupView.findViewById(R.id.speedtext);
-
-                /*
-
-                met_speed_field.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                Button btnOk = (Button)popupView.findViewById(R.id.ok);
+                btnOk.setOnClickListener(new Button.OnClickListener(){
 
                     @Override
-                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        EditText speedfield = (EditText) popupView.findViewById(R.id.speedtext);
-                        metSpeed = speedfield.getText().toString();
-                        System.out.println("metspeed ----->  " + metSpeed);
-                        return false;
-                    }
-                });
-*/
+                    public void onClick(View v) {
+                        metronomNmb = Integer.parseInt(String.valueOf(speedText.getText()));
+                        popupWindow.dismiss();
+                    }});
 
+
+*/
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

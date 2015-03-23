@@ -75,11 +75,12 @@ public class MyTouchListener implements View.OnTouchListener {
                 //parentLayout.setY(parentLayout.getY()-5);
 
                 int[] xyPos = new int[2];
-                parentLayout.getLocationOnScreen(xyPos);
+                parentLayout.getLocationInWindow(xyPos);
                 int y = xyPos[1];
                 int index = yValueSearch.findYIndex(y);
                 if(index>0)
                     parentLayout.setY(yValueSearch.yValues[index-1]);
+                System.out.println( " kj " + y + "gg");
 
             }
         });
