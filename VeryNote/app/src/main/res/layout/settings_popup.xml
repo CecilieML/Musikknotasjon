@@ -9,7 +9,7 @@
         android:layout_height="200dp"
         android:orientation="vertical"
         android:layout_margin="1dp"
-        android:background="@android:color/darker_gray">
+        android:background="@color/lightGray">
         <RelativeLayout
             android:id="@+id/textbox"
             android:layout_width="fill_parent"
@@ -63,14 +63,14 @@
             android:background="@color/lightGray">
             <Button
                 android:id="@+id/cancel"
-                android:layout_width="85dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/action_cancel"
                 style="?android:attr/borderlessButtonStyle"/>
             <Button
                 android:id="@+id/ok"
-                android:layout_width="85dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/action_ok"

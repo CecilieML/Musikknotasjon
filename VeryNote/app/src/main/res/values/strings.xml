@@ -22,6 +22,6 @@
     <string name="action_ok">OK</string>
     <string name="action_cancel">Cancel</string>
     <string name="metronome_speed_text">Metronome Speed (BPM):</string>
-    <string name="metronome_speed">    80</string>
+    <string name="metronome_speed">80</string>
 
 </resources>
