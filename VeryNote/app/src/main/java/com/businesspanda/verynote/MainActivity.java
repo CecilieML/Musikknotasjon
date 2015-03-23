@@ -656,6 +656,22 @@ boolean treble = true;
 
             case R.id.action_new:
                     //new things here!
+                exp.setFilename("untitled");
+                allNotes = "";
+
+                if(recording) {
+                    item.setIcon(R.drawable.ic_action_mic);
+                    getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    pitch_detector_thread_.interrupt();
+                    mHandler.removeCallbacks(mVibrations);
+                    tempolineHandler.removeCallbacks(writeTempoline);
+                    linLayHandler.removeCallbacks(moveLinLay);
+                    recording = false;
+                }
+
+                scrollView.removeView(linLayout);
+                linLayout = new RelativeLayout(this);
+                scrollView.addView(linLayout);
                 return true;
 
             case R.id.action_playmidi:
