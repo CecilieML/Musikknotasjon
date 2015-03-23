@@ -19,7 +19,7 @@ public class PlayMIDI {
     public void playMIDI(Pattern pattern) {
         try {
             String filepath = Environment.getExternalStorageDirectory().toString();
-            File file = new File(filepath, "music.mid");
+            File file = new File(filepath, "music.midi");
 
             Player player = new Player();
             player.saveMidi(pattern, file);
@@ -28,7 +28,7 @@ public class PlayMIDI {
             e.printStackTrace();
         }
 
-        File path = Config.context.getFileStreamPath("music.mid");
+        File path = Config.context.getFileStreamPath("music.midi");
 
         MediaPlayer mediaPlayer = MediaPlayer.create(Config.context, Uri.fromFile(path));
         mediaPlayer.start(); // no need to call prepare(); create() does that for you
