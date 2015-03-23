@@ -119,7 +119,13 @@ public class MainActivity extends ActionBarActivity  {
 
         scrollView = (LockableScrollView) findViewById(R.id.scrollview);
 
-        //System.out.println(getPercent((R.dimen.lowestLayerWidth)) + "  <--" + FitToScreen.returnViewWidth(getPercent((R.dimen.lowestLayerWidth))));
+        linLayout = new RelativeLayout(this);
+        scrollView.addView(linLayout);
+        scrollView.setScrollingEnabled(false);
+
+        backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
+
+
 
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
 
@@ -160,27 +166,23 @@ public class MainActivity extends ActionBarActivity  {
     @Override
     public void onWindowFocusChanged(boolean hasFocus){
 
-        System.out.println("HELLO :3");
-
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
 
-            linLayout = new RelativeLayout(this);
+
             FrameLayout.LayoutParams paramsLinLayout = new FrameLayout.LayoutParams(
                     FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)),
                     FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
             linLayout.setLayoutParams(paramsLinLayout);
 
-            scrollView.addView(linLayout);
-            scrollView.setScrollingEnabled(false);
-
-            backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
             RelativeLayout.LayoutParams backgroundParams = new RelativeLayout.LayoutParams(
                     FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundWidth)),
                     FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundHeight)));
             backgroundImage.setLayoutParams(backgroundParams);
-            //backgroundImage.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundX)));
             backgroundImage.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundY)));
+
+           //backgroundImage.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundX)));
+
             backgroundImage.setAdjustViewBounds(true);
 
             FrameLayout.LayoutParams lowestLayerParams = new FrameLayout.LayoutParams(
