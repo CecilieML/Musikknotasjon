@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.lang.Thread;
 
 import android.app.ActionBar;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -635,7 +636,7 @@ boolean treble = true;
                     item.setIcon(R.drawable.ic_action_mic);
                     getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     pitch_detector_thread_.interrupt();
-                    mHandler.removeCallbacks(mVibrations);
+                    //mHandler.removeCallbacks(mVibrations);
                     tempolineHandler.pause();
                     linLayHandler.removeCallbacks(moveLinLay);
                     linLayout.clearAnimation();
@@ -655,15 +656,21 @@ boolean treble = true;
                 return true;
 
             case R.id.action_new:
-                    //new things here!
+                EditText titleField = (EditText) findViewById(R.id.title_field);
+                titleField.setText("Untitled");
                 exp.setFilename("untitled");
+
+
                 allNotes = "";
 
+                TextView noteView = (TextView) findViewById(R.id.freqTextview);
+                noteView.setText("");
+
                 if(recording) {
-                    item.setIcon(R.drawable.ic_action_mic);
+                    android.support.v7.internal.view.menu.ActionMenuItemView recBtn =(android.support.v7.internal.view.menu.ActionMenuItemView) findViewById(R.id.action_record);
+                    recBtn.setIcon(getResources().getDrawable(R.drawable.ic_action_mic));
                     getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     pitch_detector_thread_.interrupt();
-                    mHandler.removeCallbacks(mVibrations);
                     tempolineHandler.removeCallbacks(writeTempoline);
                     linLayHandler.removeCallbacks(moveLinLay);
                     recording = false;
@@ -742,12 +749,13 @@ boolean treble = true;
                     }});
 
                 Button btnBass = (Button)popupView.findViewById(R.id.bass);
-                btnBass.setOnClickListener(new Button.OnClickListener(){
+                btnBass.setOnClickListener(new Button.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
                         clefText.setText("Bass");
-                    }});
+                    }
+                });
 
 
                 Button btnCancel = (Button)popupView.findViewById(R.id.cancel);

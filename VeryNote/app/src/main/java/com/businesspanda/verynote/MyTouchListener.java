@@ -312,6 +312,10 @@ public class MyTouchListener implements View.OnTouchListener {
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
                 parentLayout.removeAllViews();
+
+                removeButtons();
+                v.setSelected(false);
+                oneIsCurrentlyChosen = false;
             }
         });
 
