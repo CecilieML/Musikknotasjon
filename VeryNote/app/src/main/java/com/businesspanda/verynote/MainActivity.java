@@ -299,17 +299,12 @@ public class MainActivity extends ActionBarActivity  {
 
     private Runnable writeTempoline = new Runnable() {
         public void run() {
-            tempolineOnScreen(getTempolineY());
+            tempolineOnScreen();
             tempolineHandler.postDelayed(writeTempoline, fullBar);
         }
     };
 
-    public int getTempolineY(){
-        return FitToScreen.returnViewHeight(getPercent(R.dimen.tempolineY));
-    }
-
-    public void tempolineOnScreen(int y){
-
+    public void tempolineOnScreen(){
         ImageView tempo = new ImageView(this);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(getPercent(R.dimen.tempolineWidth)),
@@ -319,11 +314,26 @@ public class MainActivity extends ActionBarActivity  {
 
         tempo.setX(linLayout.getLayoutParams().width -
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos)));
-        tempo.setY(y);
+        tempo.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.tempolineY)));
 
         allNotes = allNotes + " |";
         linLayout.addView(tempo);
+        lastTempolineWasWritten = System.nanoTime();
+
     }
+
+    long lastTempolineWasWritten = 0;
+    long tempoStop;
+
+    public void firstTempoLine() {
+        long usedTime = (tempoStop - lastTempolineWasWritten) / 1000000;
+        long writeAt = fullBar - usedTime;
+
+        System.out.println(writeAt + " writeAt,   first tempo line,   usedTime " + usedTime);
+
+        tempolineHandler.postDelayed(writeTempoline, writeAt);
+    }
+
 /* //writes string of pitch values to file
    public void writeToFile(String stringarray) {
 
@@ -466,15 +476,10 @@ int fullBar = metronomNmb*4; //4 = tempo;
 
         if(!linLayMoving){
             linLayHandler.postDelayed(moveLinLay, 1);
-            if(firstRecording){
-                tempolineHandler.postDelayed(writeTempoline, 1);
-            }else{
-                tempolineHandler.resume();
-            }
-
+            firstTempoLine();
         }
         linLayMoving = true;
-        firstRecording = false;
+
 
         RelativeLayout imgLayout = new RelativeLayout(this);
 
@@ -547,6 +552,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
         currentNote.setOnTouchListener(heyListen);
         imgLayout.addView(currentNote);
         linLayout.addView(imgLayout);
+
         if(!recording){
             linLayHandler.removeCallbacks(moveLinLay);
             tempolineHandler.pause();
@@ -631,13 +637,23 @@ boolean treble = true;
                     int scrollWidth = scrollView.getWidth();
                     scrollView.scrollTo(scrollWidth - xScroll, 0);
                     scrollView.setScrollingEnabled(false);
+
+                    /*if(firstRecording){
+                        tempolineHandler.postDelayed(writeTempoline, 1);
+                    }else{
+                        tempolineHandler.resume();
+                    }
+                    firstRecording = false;*/
+
+
                     recording = true;
                 } else {
                     item.setIcon(R.drawable.ic_action_mic);
                     getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     pitch_detector_thread_.interrupt();
                     //mHandler.removeCallbacks(mVibrations);
-                    tempolineHandler.pause();
+                    tempolineHandler.removeCallbacks(writeTempoline);
+                    tempoStop = System.nanoTime();
                     linLayHandler.removeCallbacks(moveLinLay);
                     linLayout.clearAnimation();
                     linLayout.animate().x(0).setDuration(10);
@@ -648,6 +664,7 @@ boolean treble = true;
                     scrollView.setScrollingEnabled(true);
                     linLayMoving = false;
                     recording = false;
+
                 }
                 return true;
 

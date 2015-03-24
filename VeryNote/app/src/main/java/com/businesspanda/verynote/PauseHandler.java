@@ -11,14 +11,16 @@ import java.util.Stack;
 public class PauseHandler extends Handler{
 
         Stack<Message> s = new Stack<Message>();
-        boolean is_paused = false;
+        public boolean is_paused = false;
 
         public synchronized void pause() {
             is_paused = true;
+            System.out.println(is_paused + " is_paused is true <--");
         }
 
         public synchronized void resume() {
             is_paused = false;
+            System.out.println(is_paused + " is_paused is s'posed to be false now");
             while (!s.empty()) {
                 sendMessageAtFrontOfQueue(s.pop());
             }
@@ -28,9 +30,10 @@ public class PauseHandler extends Handler{
         public void handleMessage(Message msg) {
             if (is_paused) {
                 s.push(Message.obtain(msg));
+                System.out.println(is_paused + " is_paused is true + msg " + msg);
                 return;
             }
-
+            System.out.println(is_paused + " normal handling");
             // otherwise handle message as normal
             // ...
         }
