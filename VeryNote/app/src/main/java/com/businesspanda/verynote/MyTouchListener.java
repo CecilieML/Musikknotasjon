@@ -63,6 +63,7 @@ public class MyTouchListener implements View.OnTouchListener {
     public void createButtons(final ImageView imgView){
         btnUp = new Button(Config.context);
         btnUp.setText("UP");
+        btnUp.setBackgroundResource(R.drawable.fancy_buttons);
         btnUp.setVisibility(View.VISIBLE);
         btnUp.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnUpY)));
         btnUp.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnUpX)));
