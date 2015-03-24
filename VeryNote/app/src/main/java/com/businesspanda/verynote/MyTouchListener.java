@@ -95,6 +95,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
         btnDown = new Button(Config.context);
         btnDown.setText("DOWN");
+        btnDown.setBackgroundResource(R.drawable.fancy_buttons);
         btnDown.setVisibility(View.VISIBLE);
         btnDown.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnDownY)));
         btnDown.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnDownX)));
@@ -127,6 +128,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
         btnFlat = new Button(Config.context);
         btnFlat.setText("b");
+        btnFlat.setBackgroundResource(R.drawable.fancy_buttons);
         btnFlat.setVisibility(View.VISIBLE);
         btnFlat.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnFlatY)));
         btnFlat.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnFlatX)));
@@ -186,6 +188,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
         btnSharp = new Button(Config.context);
         btnSharp.setText("#");
+        btnSharp.setBackgroundResource(R.drawable.fancy_buttons);
         btnSharp.setVisibility(View.VISIBLE);
         btnSharp.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnSharpY)));
         btnSharp.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnSharpX)));
@@ -245,6 +248,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
         btnNeutral = new Button(Config.context);
         btnNeutral.setText("n");
+        btnNeutral.setBackgroundResource(R.drawable.fancy_buttons);
         btnNeutral.setVisibility(View.VISIBLE);
         btnNeutral.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnNeutralY)));
         btnNeutral.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnNeutralX)));
@@ -304,6 +308,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
         btnRemoveAll = new Button(Config.context);
         btnRemoveAll.setText("X");
+        btnRemoveAll.setBackgroundResource(R.drawable.fancy_buttons);
         btnRemoveAll.setTextColor(Color.RED);
         btnRemoveAll.setVisibility(View.VISIBLE);
         btnRemoveAll.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnRemoveAllY)));
