@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity  {
     public boolean playing = false;
     public boolean recording = false;
     public boolean firstRecording = true;
-    boolean linLayMoving = false;
+    boolean linLayMoving; //= false;
 
     public Switch metSwitch;
 
@@ -192,7 +192,8 @@ public class MainActivity extends ActionBarActivity  {
             lowestLayer.setLayoutParams(lowestLayerParams);
 
             scrollView.setScrollingEnabled(true);
-
+            int scrollWidth = scrollView.getWidth();
+            scrollView.scrollTo(linLayout.getWidth(), 0);
         }
     }
 
@@ -269,6 +270,8 @@ public class MainActivity extends ActionBarActivity  {
 
         dur = (newTime - lastTime) / 1000000;
 
+        if(dur>fullBar*2)dur=0;
+
         if (nearestNote == prevNote){
             noteLength();
 
@@ -285,8 +288,6 @@ public class MainActivity extends ActionBarActivity  {
            /* for(int i = 0; i < allNotes.size();i++) {
                 System.out.println("All the notes  " + allNotes.get(i).getName());
             }*/
-
-
 
             notesOnScreen(nearestNote);
             prevNote = nearestNote;
@@ -327,7 +328,7 @@ public class MainActivity extends ActionBarActivity  {
         long usedTime = (tempoStop - lastTempolineWasWritten) / 1000000;
         long writeAt = fullBar - usedTime;
 
-        System.out.println(writeAt + " writeAt,   first tempo line,   usedTime " + usedTime);
+        //System.out.println(writeAt + " writeAt,   first tempo line,   usedTime " + usedTime);
 
         tempolineHandler.postDelayed(writeTempoline, writeAt);
     }
@@ -457,26 +458,13 @@ int fullBar = metronomNmb*4; //4 = tempo;
 
     }
 
-    public void addSharp(ImageView sharp){
-        if(dur >= (fullBar/16)){
-            sharp.setImageResource(R.drawable.sharpnotenew);
-        }
-    }
-
-    public void addFlat(ImageView flat){
-        if(dur >= (fullBar/16)){
-            flat.setImageResource(R.drawable.flatnotenew);
-        }
-    }
-
     public void notesOnScreen(Note note){
-
 
         if(!linLayMoving){
             linLayHandler.postDelayed(moveLinLay, 1);
             firstTempoLine();
+            linLayMoving = true;
         }
-        linLayMoving = true;
 
 
         RelativeLayout imgLayout = new RelativeLayout(this);
@@ -528,7 +516,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
            // sharp.setX((int) this.getResources().getDimension(R.dimen.sharpOffsetX));
            sharp.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY)));
 
-            addSharp(sharp);
+            sharp.setImageResource(R.drawable.sharpnotenew);
             imgLayout.addView(sharp);
         }else if(note.flat){
             ImageView flat = new ImageView(this);
@@ -541,7 +529,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
             //flat.setX((int) this.getResources().getDimension(R.dimen.flatOffsetX));
             flat.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.flatOffsetY)));
 
-            addFlat(flat);
+            flat.setImageResource(R.drawable.flatnotenew);
             imgLayout.addView(flat);
         }
 
@@ -553,7 +541,8 @@ int fullBar = metronomNmb*4; //4 = tempo;
 
         if(!recording){
             linLayHandler.removeCallbacks(moveLinLay);
-            tempolineHandler.pause();
+            tempolineHandler.removeCallbacks(writeTempoline);
+            //tempolineHandler.pause();
         }
 
     }
@@ -617,10 +606,6 @@ int fullBar = metronomNmb*4; //4 = tempo;
         }
     };
 
-
-boolean treble = true;
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -635,20 +620,15 @@ boolean treble = true;
                     int scrollWidth = scrollView.getWidth();
                     scrollView.scrollTo(scrollWidth - xScroll, 0);
                     scrollView.setScrollingEnabled(false);
-
-                    /*if(firstRecording){
-                        tempolineHandler.postDelayed(writeTempoline, 1);
-                    }else{
-                        tempolineHandler.resume();
-                    }
-                    firstRecording = false;*/
-
-
+                    linLayMoving = false;
                     recording = true;
+
                 } else {
                     item.setIcon(R.drawable.ic_action_mic);
                     getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     pitch_detector_thread_.interrupt();
+                    System.out.println("FALSE!!!" + pitch_detector_thread_.isInterrupted());
+//                    pitch_detector_thread_.destroy();
                     //mHandler.removeCallbacks(mVibrations);
                     tempolineHandler.removeCallbacks(writeTempoline);
                     tempoStop = System.nanoTime();
@@ -660,6 +640,7 @@ boolean treble = true;
                     scrollView.scrollTo(scrollWidth - xScroll, 0);
                     x = 0;
                     scrollView.setScrollingEnabled(true);
+                    prevNote = new Note(false, false, 0, 0, " ", 0);
                     linLayMoving = false;
                     recording = false;
 
