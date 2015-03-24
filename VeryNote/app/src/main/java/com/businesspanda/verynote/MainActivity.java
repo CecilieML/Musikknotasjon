@@ -82,8 +82,6 @@ public class MainActivity extends ActionBarActivity  {
 
     public String title = "Untitled";
 
-    public String metSpeed = "750";
-
     ImageView currentNote;
     Note prevNote;
     Note nearestNote;
