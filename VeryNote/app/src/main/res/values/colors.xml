@@ -10,5 +10,6 @@
     <color name="lightGray">#aad2d3fd</color>
     <color name="black">#ff000000</color>
     <color name="white">#ffffffff</color>
+    <color name="transp_white">#aaffffff</color>
     <color name="lineColor">#aa59707e</color>
 </resources>
