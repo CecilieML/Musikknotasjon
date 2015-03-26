@@ -43,7 +43,7 @@ public class Note {
         return name;
     }
 
-    public int getHeight(){
+    public int getNoteHeight(){
         return height;
     }
 }

@@ -274,7 +274,6 @@ public class MainActivity extends ActionBarActivity  {
             noteLength();
 
         }else {
-
             lastTime = System.nanoTime();
 
             String arrayNote = nearestNote.getName().replaceAll("s","#");
@@ -379,13 +378,20 @@ int fullBar = metronomNmb*4; //4 = tempo;
 
     public void noteLength(){
 
-        int height = nearestNote.getHeight() ; //NOTES ARE DANCING ON THE CEILING
+        int height = nearestNote.getNoteHeight() ; //NOTES ARE DANCING ON THE CEILING
         boolean upSideDown = false;
+        int currentY;
 
-        if(!bass){
-            if(height >= 20)upSideDown=true;
+        if(bass){
+            if(height <= 20)upSideDown=true;
         }else{
-            if(height >=10)upSideDown=true;
+            if(height <= 10)upSideDown=true;
+           /* int[] xyPos = new int [2];
+            imgLayout.getLocationInWindow(xyPos);
+            currentY = xyPos[1];
+
+            System.out.println("did the thing  ......" + currentY + "    " + FitToScreen.returnPercent(currentY) + " " +nearestNote.getName());
+            imgLayout.setY(currentY);*/
         }
 
         if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {               //= 1/16 of fullBar
@@ -456,6 +462,8 @@ int fullBar = metronomNmb*4; //4 = tempo;
 
     }
 
+    RelativeLayout imgLayout;
+
     public void notesOnScreen(Note note){
 
         if(!linLayMoving){
@@ -465,7 +473,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
         }
 
 
-        RelativeLayout imgLayout = new RelativeLayout(this);
+        imgLayout = new RelativeLayout(this);
 
         FrameLayout.LayoutParams par = new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteImgWidth)),
