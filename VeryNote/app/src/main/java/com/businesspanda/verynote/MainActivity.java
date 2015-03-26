@@ -69,7 +69,7 @@ public class MainActivity extends ActionBarActivity  {
     public Switch metSwitch;
 
     private Handler mHandler = new Handler();
-    private PauseHandler tempolineHandler = new PauseHandler();
+    private Handler tempolineHandler = new Handler();
     private Handler linLayHandler = new Handler();
 
     UsbMidiSystem usbMidiSystem;
@@ -96,6 +96,7 @@ public class MainActivity extends ActionBarActivity  {
     String stringarray;
 
     int metronomNmb = 750;
+    public int currentLinLayWidth;
 
 
     /** Called when the activity is first created. */
@@ -181,8 +182,6 @@ public class MainActivity extends ActionBarActivity  {
             backgroundImage.setLayoutParams(backgroundParams);
             backgroundImage.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundY)));
 
-           //backgroundImage.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundX)));
-
             backgroundImage.setAdjustViewBounds(true);
 
             FrameLayout.LayoutParams lowestLayerParams = new FrameLayout.LayoutParams(
@@ -191,12 +190,11 @@ public class MainActivity extends ActionBarActivity  {
             lowestLayerParams.gravity = Gravity.CENTER;
             lowestLayer.setLayoutParams(lowestLayerParams);
 
-            scrollView.setScrollingEnabled(true);
-            int scrollWidth = scrollView.getWidth();
-            scrollView.scrollTo(linLayout.getWidth(), 0);
+            if(currentLinLayWidth>FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth))){
+                linLayout.getLayoutParams().width = currentLinLayWidth;
+            }
         }
     }
-
 
     @Override
     public void onStart() {
@@ -381,14 +379,14 @@ int fullBar = metronomNmb*4; //4 = tempo;
 
     public void noteLength(){
 
-       // int height = currentNote.getHeight();
+        int height = nearestNote.getHeight() ; //NOTES ARE DANCING ON THE CEILING
         boolean upSideDown = false;
 
-       /* if(!bass){
+        if(!bass){
             if(height >= 20)upSideDown=true;
         }else{
             if(height >=10)upSideDown=true;
-        }*/
+        }
 
         if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {               //= 1/16 of fullBar
             if (upSideDown) {
@@ -542,7 +540,6 @@ int fullBar = metronomNmb*4; //4 = tempo;
         if(!recording){
             linLayHandler.removeCallbacks(moveLinLay);
             tempolineHandler.removeCallbacks(writeTempoline);
-            //tempolineHandler.pause();
         }
 
     }
@@ -635,6 +632,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
                     linLayHandler.removeCallbacks(moveLinLay);
                     linLayout.clearAnimation();
                     linLayout.animate().x(0).setDuration(10);
+                    currentLinLayWidth = linLayout.getWidth();
                     xScroll += x;
                     int scrollWidth = scrollView.getWidth();
                     scrollView.scrollTo(scrollWidth - xScroll, 0);
@@ -651,13 +649,14 @@ int fullBar = metronomNmb*4; //4 = tempo;
                     playSound();
                 return true;
 
-            case R.id.action_new:
+          /*  case R.id.action_new:
                 EditText titleField = (EditText) findViewById(R.id.title_field);
                 titleField.setText("Untitled");
                 exp.setFilename("untitled");
 
-
                 allNotes = "";
+
+                linLayout.getLayoutParams().width = FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth));
 
                 TextView noteView = (TextView) findViewById(R.id.freqTextview);
                 noteView.setText("");
@@ -675,7 +674,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
                 scrollView.removeView(linLayout);
                 linLayout = new RelativeLayout(this);
                 scrollView.addView(linLayout);
-                return true;
+                return true;*/
 
             case R.id.action_playmidi:
                 Pattern patternMIDI = new Pattern(allNotes);
