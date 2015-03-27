@@ -33,6 +33,8 @@ import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.jtransforms.fft.DoubleFFT_1D;
@@ -185,7 +187,7 @@ public class PitchDec implements Runnable {
         }
         //DoFFT(data, CHUNK_SIZE_IN_SAMPLES);
 
-        fft.complexForward(data);
+        if(MainActivity.runFFT)fft.complexForward(data);
 
         double best_frequency = min_frequency_fft;
         HashMap<Double, Double> frequencies = new HashMap<Double, Double>();
@@ -382,6 +384,9 @@ public class PitchDec implements Runnable {
             if(volume>4400) {
                 FreqResult fr = AnalyzeFrequencies(audio_data);
                 PostToUI(fr.frequencies, fr.best_frequency);
+            }else{
+                PostPandaToUI();
+                System.out.println("whoooooooooooooooooooooooooho");
             }
 
             //System.out.println(" best freq--> " + value);
@@ -448,6 +453,14 @@ public class PitchDec implements Runnable {
             System.out.println("PROBLEMS maikng file!");
             e.printStackTrace();
         }
+    }
+
+    private void PostPandaToUI() {
+        handler_.post(new Runnable() {
+            public void run() {
+                parent_.writePause();
+            }
+        });
     }
 
 

@@ -65,6 +65,7 @@ public class MainActivity extends ActionBarActivity  {
     public boolean recording = false;
     public boolean firstRecording = true;
     boolean linLayMoving; //= false;
+    public static boolean editable;
 
     public Switch metSwitch;
 
@@ -262,18 +263,22 @@ public class MainActivity extends ActionBarActivity  {
         stringarray = stringarray + " " + pitchInt;
 
 
-        changeFreq.setText(nearestNote.name);
+        changeFreq.setText(nearestNote.name); //remember to remove
 
         newTime = System.nanoTime();
 
         dur = (newTime - lastTime) / 1000000;
 
-        if(dur>fullBar*2)dur=0;
+        System.out.println(dur + "   durrrrrrrrr " + fullBar/16 + "  " + fullBar*2);
+
+        if(dur>(fullBar*2))lastTime = System.nanoTime();
+
+
 
         if (nearestNote == prevNote){
             noteLength();
 
-        }else {
+        }else if(dur>(fullBar/16)){
             lastTime = System.nanoTime();
 
             String arrayNote = nearestNote.getName().replaceAll("s","#");
@@ -291,6 +296,23 @@ public class MainActivity extends ActionBarActivity  {
 
         }
 
+    }
+
+    public void writePause(){
+        ImageView pauseImg = new ImageView(this);
+        FrameLayout.LayoutParams pauseParams= new FrameLayout.LayoutParams(
+                FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnWidth)),
+                FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnHeight)));
+
+        if(dur>fullBar/4){
+            pauseImg.setImageResource(R.drawable.panda_pic);
+            pauseImg.setLayoutParams(pauseParams);
+            pauseImg.setX(linLayout.getLayoutParams().width -
+                    FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos)));
+            linLayout.addView(pauseImg);
+
+
+        }
     }
 
     private Runnable writeTempoline = new Runnable() {
@@ -494,6 +516,9 @@ int fullBar = metronomNmb*4; //4 = tempo;
         imgLayout.setX(x);
         imgLayout.setY(y);
 
+        int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
+        currentNote.setId(noteID);
+
         /***/
         //imgLayout.setBackgroundColor(getResources().getColor(R.color.cyan));
         /***/
@@ -611,6 +636,8 @@ int fullBar = metronomNmb*4; //4 = tempo;
         }
     };
 
+    public static boolean runFFT = true;
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -627,11 +654,14 @@ int fullBar = metronomNmb*4; //4 = tempo;
                     scrollView.setScrollingEnabled(false);
                     linLayMoving = false;
                     recording = true;
-
+                    runFFT = true;
+                    editable = false;
+                    lastTime = System.nanoTime();
                 } else {
                     item.setIcon(R.drawable.ic_action_mic);
                     getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     pitch_detector_thread_.interrupt();
+                    runFFT = false;
                     System.out.println("FALSE!!!" + pitch_detector_thread_.isInterrupted());
 //                    pitch_detector_thread_.destroy();
                     //mHandler.removeCallbacks(mVibrations);
@@ -649,7 +679,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
                     prevNote = new Note(false, false, 0, 0, " ", 0);
                     linLayMoving = false;
                     recording = false;
-
+                    editable = true;
                 }
                 return true;
 
@@ -657,7 +687,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
                     playSound();
                 return true;
 
-          /*  case R.id.action_new:
+            case R.id.action_new:
                 EditText titleField = (EditText) findViewById(R.id.title_field);
                 titleField.setText("Untitled");
                 exp.setFilename("untitled");
@@ -682,7 +712,10 @@ int fullBar = metronomNmb*4; //4 = tempo;
                 scrollView.removeView(linLayout);
                 linLayout = new RelativeLayout(this);
                 scrollView.addView(linLayout);
-                return true;*/
+
+                //missing stuff..
+
+                return true;
 
             case R.id.action_playmidi:
                 Pattern patternMIDI = new Pattern(allNotes);

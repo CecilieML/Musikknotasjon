@@ -47,6 +47,9 @@
     <item type="dimen" format="float" name="btnRemoveAllX">0.0</item>
     <item type="dimen" format="float" name="btnRemoveAllY">0.0</item>
 
+    <item type="dimen" format="float" name="btnHeight">0.18</item>
+    <item type="dimen" format="float" name="btnWidth">0.1</item>
+
     <item type="dimen" format="float" name="upSideDownNoteX">0.001</item>
 
     //C

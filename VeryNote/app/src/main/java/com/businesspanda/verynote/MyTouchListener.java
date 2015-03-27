@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 /**
  * Created by Helene on 03.03.2015.
@@ -49,7 +50,8 @@ public class MyTouchListener implements View.OnTouchListener {
     Button btnNeutral;
     Button btnRemoveAll;
 
-    public MainActivity mainA;
+    int shortVib = 50;
+    int longVib = 100;
 
     public MyTouchListener(RelativeLayout really) {
         this.really = really;
@@ -61,8 +63,14 @@ public class MyTouchListener implements View.OnTouchListener {
     }
 
     public void createButtons(final ImageView imgView){
+
+        FrameLayout.LayoutParams btnParams= new FrameLayout.LayoutParams(
+                FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnWidth)),
+                FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnHeight)));
+
         btnUp = new Button(Config.context);
         btnUp.setText("UP");
+        btnUp.setLayoutParams(btnParams);
         btnUp.setBackgroundResource(R.drawable.fancy_buttons);
         btnUp.setVisibility(View.VISIBLE);
         btnUp.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnUpY)));
@@ -89,12 +97,14 @@ public class MyTouchListener implements View.OnTouchListener {
                     float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
                     parentLayout.setY(percent);
                 }
+                vibIy(shortVib);
 
             }
         });
 
         btnDown = new Button(Config.context);
         btnDown.setText("DOWN");
+        btnDown.setLayoutParams(btnParams);
         btnDown.setBackgroundResource(R.drawable.fancy_buttons);
         btnDown.setVisibility(View.VISIBLE);
         btnDown.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnDownY)));
@@ -123,11 +133,13 @@ public class MyTouchListener implements View.OnTouchListener {
                     parentLayout.setY(percent);
                 }
 
+                vibIy(shortVib);
             }
         });
 
         btnFlat = new Button(Config.context);
         btnFlat.setText("b");
+        btnFlat.setLayoutParams(btnParams);
         btnFlat.setBackgroundResource(R.drawable.fancy_buttons);
         btnFlat.setVisibility(View.VISIBLE);
         btnFlat.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnFlatY)));
@@ -182,12 +194,14 @@ public class MyTouchListener implements View.OnTouchListener {
                     flat.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
                     parentLayout.addView(flat);
                 }
+                vibIy(shortVib);
 
             }
         });
 
         btnSharp = new Button(Config.context);
         btnSharp.setText("#");
+        btnSharp.setLayoutParams(btnParams);
         btnSharp.setBackgroundResource(R.drawable.fancy_buttons);
         btnSharp.setVisibility(View.VISIBLE);
         btnSharp.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnSharpY)));
@@ -243,11 +257,15 @@ public class MyTouchListener implements View.OnTouchListener {
                     parentLayout.addView(sharp);
                 }
 
+                vibIy(shortVib);
             }
         });
 
         btnNeutral = new Button(Config.context);
         btnNeutral.setText("n");
+
+        btnNeutral.setLayoutParams(btnParams);
+
         btnNeutral.setBackgroundResource(R.drawable.fancy_buttons);
         btnNeutral.setVisibility(View.VISIBLE);
         btnNeutral.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnNeutralY)));
@@ -303,11 +321,15 @@ public class MyTouchListener implements View.OnTouchListener {
                     parentLayout.addView(neutral);
                 }
 
+                vibIy(shortVib);
             }
         });
 
         btnRemoveAll = new Button(Config.context);
         btnRemoveAll.setText("X");
+
+        btnRemoveAll.setLayoutParams(btnParams);
+
         btnRemoveAll.setBackgroundResource(R.drawable.fancy_buttons);
         btnRemoveAll.setTextColor(Color.RED);
         btnRemoveAll.setVisibility(View.VISIBLE);
@@ -319,9 +341,14 @@ public class MyTouchListener implements View.OnTouchListener {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
                 parentLayout.removeAllViews();
 
+                TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
+                freqText.setText("");
+
                 removeButtons();
                 v.setSelected(false);
                 oneIsCurrentlyChosen = false;
+
+                vibIy(longVib);
             }
         });
 
@@ -355,6 +382,19 @@ public class MyTouchListener implements View.OnTouchListener {
             ImageView childView = (ImageView) child;
             childView.setColorFilter(filter);
         }
+
+        TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
+        for(int i=0;i<parentLayout.getChildCount();i++){
+            View child = parentLayout.getChildAt(i);
+            String noteName = Config.context.getResources().getResourceEntryName(child.getId());
+            if(noteName.length() <= 3){
+                noteName = noteName.replaceAll(""," ");
+                noteName = noteName.replaceAll(" s","#");
+                noteName = noteName.replaceAll(" b","b");
+                freqText.setText(noteName);
+            }
+        }
+
     }
 
     public void onUnChosenNote(View v){
@@ -368,6 +408,8 @@ public class MyTouchListener implements View.OnTouchListener {
             ImageView childView = (ImageView) child;
             childView.clearColorFilter();
         }
+        TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
+        freqText.setText("");
     }
 
     public boolean onTouch(View v, MotionEvent event)
@@ -378,10 +420,11 @@ public class MyTouchListener implements View.OnTouchListener {
                 // Here u can write code which is executed after the user touch on the screen
 
                 if (!oneIsCurrentlyChosen){
+                    if(MainActivity.editable) {
+                        onChosenNote(v);
+                        oneIsCurrentlyChosen = true;
+                    }
 
-                    onChosenNote(v);
-
-                    oneIsCurrentlyChosen = true;
                 }else{
                     if(v==img) {
 
