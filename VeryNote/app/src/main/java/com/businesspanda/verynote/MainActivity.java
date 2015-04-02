@@ -24,6 +24,7 @@ import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -31,6 +32,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
@@ -181,7 +184,8 @@ public class MainActivity extends ActionBarActivity  {
                     FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundWidth)),
                     FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundHeight)));
             backgroundImage.setLayoutParams(backgroundParams);
-            backgroundImage.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundY)));
+            backgroundImage.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundTrebleY)));
+            if(bass)backgroundImage.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundBassY)));
 
             backgroundImage.setAdjustViewBounds(true);
 
@@ -309,9 +313,40 @@ public class MainActivity extends ActionBarActivity  {
             pauseImg.setLayoutParams(pauseParams);
             pauseImg.setX(linLayout.getLayoutParams().width -
                     FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos)));
-            linLayout.addView(pauseImg);
+          //  linLayout.addView(pauseImg);
 
 
+        }
+    }
+
+    public void notesOutOfBoundsLines(int nmbOfLines, int height){
+        FrameLayout.LayoutParams notelineParams= new FrameLayout.LayoutParams(
+                FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.noteLineWidth)),
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        int x = linLayout.getLayoutParams().width -
+                FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos) );
+        //FitToScreen.returnViewWidth(getPercent(R.dimen.noteLineOffset)
+
+        boolean linesUnder;                     //
+        if(height<10)linesUnder = false;        //needs to be fixed/implemented
+        System.out.println(height);             //
+
+        for(int i=0; i<nmbOfLines; i++){
+            ImageView lineForNote = new ImageView(this);
+
+            lineForNote.setAdjustViewBounds(true);
+
+            lineForNote.setLayoutParams(notelineParams);
+            lineForNote.setImageResource(R.drawable.goodline);
+            lineForNote.setX(x);
+            if(i==0)lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYI)));
+            if(i==1)lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYII)));
+            if(i==2)lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYIII)));
+            if(i==3)lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYIV)));
+            if(i==4)lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYV)));
+            if(i==5)lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYVI)));
+            linLayout.addView(lineForNote);
         }
     }
 
@@ -333,6 +368,7 @@ public class MainActivity extends ActionBarActivity  {
         tempo.setX(linLayout.getLayoutParams().width -
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos)));
         tempo.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.tempolineY)));
+        if(bass)tempo.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.bassTempolineY)));
 
         allNotes = allNotes + " |";
         linLayout.addView(tempo);
@@ -397,23 +433,24 @@ public class MainActivity extends ActionBarActivity  {
 
 boolean bass = false;
 int fullBar = metronomNmb*4; //4 = tempo;
+    int addToY = 0;
 
     public void noteLength(){
 
-        int height = nearestNote.getNoteHeight() ; //NOTES ARE DANCING ON THE CEILING
+        int height = nearestNote.getNoteHeight();
         boolean upSideDown = false;
-        int currentY;
-
+        addToY = 0;
         if(bass){
-            if(height <= 20)upSideDown=true;
+            if(height <= 39){
+                upSideDown=true;
+                addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
+            }
         }else{
-            if(height <= 10)upSideDown=true;
-           /* int[] xyPos = new int [2];
-            imgLayout.getLocationInWindow(xyPos);
-            currentY = xyPos[1];
+            if(height <= 10) {
+                upSideDown = true;
+                addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
+            }
 
-            System.out.println("did the thing  ......" + currentY + "    " + FitToScreen.returnPercent(currentY) + " " +nearestNote.getName());
-            imgLayout.setY(currentY);*/
         }
 
         if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {               //= 1/16 of fullBar
@@ -479,7 +516,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
             currentNote.setImageResource(R.drawable.notailhollownotewdot);
 
         }else if(dur >= fullBar*2){              // randomly chosen...
-            prevNote = new Note(false, false, 0, 0, " ",0);
+            prevNote = new Note(false, false, 0, 0, " ",0 ,0, 0);
         }
 
     }
@@ -506,6 +543,8 @@ int fullBar = metronomNmb*4; //4 = tempo;
 
         currentNote = new ImageView(this);
 
+        noteLength();
+
         int x = linLayout.getLayoutParams().width -
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos));
 
@@ -514,13 +553,13 @@ int fullBar = metronomNmb*4; //4 = tempo;
         float y = FitToScreen.returnViewHeight(getPercent(yID));
 
         imgLayout.setX(x);
-        imgLayout.setY(y);
+        imgLayout.setY(y + addToY);
 
         int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
         currentNote.setId(noteID);
 
         /***/
-        //imgLayout.setBackgroundColor(getResources().getColor(R.color.cyan));
+        notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNoteHeight());
         /***/
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
@@ -534,7 +573,6 @@ int fullBar = metronomNmb*4; //4 = tempo;
         //currentNote.setImageResource(R.drawable.doubletailnote);
 
 //        currentNote.setImageResource(R.drawable.notailhollownotewdot);
-        noteLength();
 
         if(note.sharp){
             ImageView sharp = new ImageView(this);
@@ -676,7 +714,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
                     scrollView.scrollTo(scrollWidth - xScroll, 0);
                     x = 0;
                     scrollView.setScrollingEnabled(true);
-                    prevNote = new Note(false, false, 0, 0, " ", 0);
+                    prevNote = new Note(false, false, 0, 0, " ", 0, 0, 0);
                     linLayMoving = false;
                     recording = false;
                     editable = true;
@@ -812,9 +850,11 @@ int fullBar = metronomNmb*4; //4 = tempo;
 
                         if(clefText.getText() == "Treble") {
                             backgroundImage.setImageResource(R.drawable.trebleline);
+                            backgroundImage.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundTrebleY)));
                             bass = false;
                         } else {
                             backgroundImage.setImageResource(R.drawable.bassline);
+                            backgroundImage.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundBassY)));
                             bass = true;
                         }
 

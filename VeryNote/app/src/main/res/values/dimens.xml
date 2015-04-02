@@ -14,7 +14,8 @@
     <item type="dimen" format="float" name="backgroundWidth">0.90</item>
     <item type="dimen" format="float" name="backgroundHeight">0.4</item>
     <item type="dimen" format="float" name="backgroundX">0.05</item>
-    <item type="dimen" format="float" name="backgroundY">0.2</item>
+    <item type="dimen" format="float" name="backgroundBassY">0.423</item>
+    <item type="dimen" format="float" name="backgroundTrebleY">0.2</item>
 
     <item type="dimen" format="float" name="noteStartPos">0.1</item>
     <item type="dimen" format="float" name="noteX">0.02</item>
@@ -26,6 +27,7 @@
     <item type="dimen" format="float" name="tempolineHeight">0.15</item>
 
     <item type="dimen" format="float" name="tempolineY">0.33</item>
+    <item type="dimen" format="float" name="bassTempolineY">0.552</item>
 
     <item type="dimen" format="float" name="Offset">0.01</item>
 
@@ -50,18 +52,28 @@
     <item type="dimen" format="float" name="btnHeight">0.18</item>
     <item type="dimen" format="float" name="btnWidth">0.1</item>
 
-    <item type="dimen" format="float" name="upSideDownNoteX">0.001</item>
+    <item type="dimen" format="float" name="upSideDownNoteX">0.1159</item>
+
+    <item type="dimen" format="float" name="noteLineWidth">0.03</item>
+    <item type="dimen" format="float" name="noteLineOffset">0.1</item>
+
+    <item type="dimen" format="float" name="noteLineYI">0.51</item> //3.5 between each; 0.475 current lowest line
+    <item type="dimen" format="float" name="noteLineYII">0.545</item>
+    <item type="dimen" format="float" name="noteLineYIII">0.58</item>
+    <item type="dimen" format="float" name="noteLineYIV">0.615</item>
+    <item type="dimen" format="float" name="noteLineYV">0.65</item>
+    <item type="dimen" format="float" name="noteLineYVI">0.685</item>
 
     //C
     <item name="C3" format="float" type="dimen">0.475</item>
     <item name="C4" format="float" type="dimen">0.38</item>
-    <item name="C5" format="float" type="dimen">0.285</item>
+    <item name="C5" format="float" type="dimen">0.253</item>        //x
     <item name="C6" format="float" type="dimen">0.19</item>
 
     //C#
     <item name="Cs3" format="float" type="dimen">0.475</item>
     <item name="Cs4" format="float" type="dimen">0.38</item>
-    <item name="Cs5" format="float" type="dimen">0.285</item>
+    <item name="Cs5" format="float" type="dimen">0.253</item>       //x
     <item name="Cs6" format="float" type="dimen">0.19</item>
 
     //D

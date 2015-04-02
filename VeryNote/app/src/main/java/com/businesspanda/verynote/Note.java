@@ -11,15 +11,19 @@ public class Note {
     int yValue;
     String name;
     int height;
+    int nmbOfLinesTreble;
+    int nmbOfLinesBass;
 
 
-    public Note(boolean sharp, boolean flat, int freq, int yValue, String name, int height){
+    public Note(boolean sharp, boolean flat, int freq, int yValue, String name, int height, int nmbOfLinesTreble, int nmbOfLinesBass){
         this.sharp = sharp;
         this.flat = flat;
         this.freq = freq;
         this.yValue = yValue;
         this.name = name;
         this.height = height;
+        this.nmbOfLinesTreble = nmbOfLinesTreble;
+        this.nmbOfLinesBass = nmbOfLinesBass;
 
     }
 
@@ -45,5 +49,9 @@ public class Note {
 
     public int getNoteHeight(){
         return height;
+    }
+
+    public int getNmbOfLinesTreble() {
+        return nmbOfLinesTreble;
     }
 }

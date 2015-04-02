@@ -285,19 +285,20 @@ public class yValueSearch {
 
         float percentValue = FitToScreen.returnPercent(valueToFind);
 
+        double minDiff = Double.MAX_VALUE;
 
-        double roundedOffPercent = Math.round(percentValue * 100.0) / 100.0;
+        int indexOfValueToFind = -1; //never return -1 I don't know how to fix this ...
 
-       // System.out.println(percentValue + " %" + " rounded up % " + roundedUpPercent);
-
+        //also this should be slightly different for notes that are up side down :(
 
         for (int i = 0; i < yValues.length; i++) {
-            double thisYValue = Math.round(yValues[i] * 100.0) / 100.0;
-           // System.out.println(roundedOffPercent + " == " + yValues[i] + "   i= " + i + "  ?  " + thisYValue);
-            if (roundedOffPercent == thisYValue) {
-                return i;
+            double diff = Math.abs(percentValue - yValues[i]);
+            if (diff < minDiff) {
+                indexOfValueToFind = i;
+                minDiff = diff;
             }
         }
-        return -1;
+        System.out.println(indexOfValueToFind + "  <--- index  " + minDiff);
+        return indexOfValueToFind;
     }
 }
