@@ -1,13 +1,18 @@
 package com.businesspanda.verynote;
 
+/** Copyright (C) 2015 by BusinessPanda.
+ **
+ ** Permission to use, copy, modify, and distribute this software and its
+ ** documentation for any purpose and without fee is hereby granted, provided
+ ** that the above copyright notice appear in all copies and that both that
+ ** copyright notice and this permission notice appear in supporting
+ ** documentation.  This software is provided "as is" without express or
+ ** implied warranty.
+ */
+
 import android.util.TypedValue;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 
-/**
- * Created by CecilieMarie on 11.03.2015.
- */
 public class yValueSearch {
 
     public static float[] yValues = new float[48];
@@ -284,6 +289,9 @@ public class yValueSearch {
     public static int findYIndex(float valueToFind) {
 
         float percentValue = FitToScreen.returnPercent(valueToFind);
+
+        System.out.println(valueToFind + "   valuetofind");
+        System.out.println(percentValue + "   percentvalue");
 
         double minDiff = Double.MAX_VALUE;
 
