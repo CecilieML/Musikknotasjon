@@ -1,18 +1,25 @@
 package com.businesspanda.verynote;
 
+/** Copyright (C) 2015 by BusinessPanda.
+ **
+ ** Permission to use, copy, modify, and distribute this software and its
+ ** documentation for any purpose and without fee is hereby granted, provided
+ ** that the above copyright notice appear in all copies and that both that
+ ** copyright notice and this permission notice appear in supporting
+ ** documentation.  This software is provided "as is" without express or
+ ** implied warranty.
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.jfugue.MusicStringParser;
 import org.jfugue.MusicXmlRenderer;
 import org.jfugue.Pattern;
-import org.jfugue.*;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,9 +28,6 @@ import java.io.Serializable;
 import nu.xom.Serializer;
 
 
-/**
- * Created by CecilieMarie on 03.03.2015.
- */
 public class ExportXML implements Serializable {
 
     String filename = "untitled.xml";
@@ -32,8 +36,9 @@ public class ExportXML implements Serializable {
         this.filename = filename + ".xml";
     }
 
-
     void saveToFile(Pattern pattern) {
+        //Parses current pattern and temporarily saves to phone internal memory.
+
         try {
 
             FileOutputStream fos = Config.context.openFileOutput(filename, Context.MODE_WORLD_READABLE);
@@ -51,12 +56,14 @@ public class ExportXML implements Serializable {
             fos.flush();
             fos.close();
         } catch (IOException e) {
-            Toast.makeText(Config.context, "Problem exporting XML!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Config.context, "Problem exporting XML.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
 
     void saveToSD(Pattern pattern) {
+        //Parses current pattern and temporarily saves to phone SD memory (either external or partition of internal memory).
+
         try {
             if(checkIfSDPresent()) {
                 String filepath = Environment.getExternalStorageDirectory().toString();
@@ -75,20 +82,18 @@ public class ExportXML implements Serializable {
                     serializer.setIndent(4);
                     serializer.write(renderer.getMusicXMLDoc());
 
-                    System.out.println("var i den andre void :3");
-
                     fos.flush();
                     fos.close();
 
                     Toast.makeText(Config.context, "File saved.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(Config.context, "File with that name already exists!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Config.context, "File with that name already exists.", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(Config.context, "No SD-card found!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Config.context, "No SD-card found.", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
-            Toast.makeText(Config.context, "Problem saving XML!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Config.context, "Problem saving XML.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -98,6 +103,9 @@ public class ExportXML implements Serializable {
     }
 
     void sendToEmail() {
+        //Opens the dialog to share the XML-file via mainly email, but other channels such as GoogleDisk will
+        //appear if installed on phone.
+
         File path = Config.context.getFileStreamPath(filename);
 
         Intent sendIntent = new Intent();

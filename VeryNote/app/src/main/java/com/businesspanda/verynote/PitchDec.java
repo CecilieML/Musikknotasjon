@@ -10,11 +10,7 @@ package com.businesspanda.verynote;
  ** implied warranty.
  */
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,26 +21,17 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import org.jtransforms.fft.DoubleFFT_1D;
 
-import com.businesspanda.verynote.MainActivity;
-
-/**
- * Created by CecilieMarie on 09.02.2015.
- */
 public class PitchDec implements Runnable {
+
     private static String LOG_TAG = "PitchDetector";
 
     private final static int RATE = 16000; //was 44100, then 8000 when it worked
