@@ -55,8 +55,16 @@
     <item type="dimen" format="float" name="upSideDownNoteX">0.1159</item>
 
     <item type="dimen" format="float" name="noteLineWidth">0.03</item>
-    <item type="dimen" format="float" name="noteLineOffset">0.1</item>
+    <item type="dimen" format="float" name="noteLineOffset">0.033</item>
 
+    <item type="dimen" format="float" name="noteLineYmXIV">0.045</item>
+    <item type="dimen" format="float" name="noteLineYmXIII">0.08</item>
+    <item type="dimen" format="float" name="noteLineYmXII">0.115</item>
+    <item type="dimen" format="float" name="noteLineYmXI">0.255</item>
+    <item type="dimen" format="float" name="noteLineYmX">0.15</item>
+    <item type="dimen" format="float" name="noteLineYmIX">0.185</item>
+    <item type="dimen" format="float" name="noteLineYmVIII">0.22</item>
+    <item type="dimen" format="float" name="noteLineYmVII">0.255</item>
     <item type="dimen" format="float" name="noteLineYmVI">0.29</item>
     <item type="dimen" format="float" name="noteLineYmV">0.325</item>    /*
     <item type="dimen" format="float" name="noteLineYmIV">0.36</item>    *

@@ -44,4 +44,7 @@ public class Note {
         return nmbOfLinesTreble;
     }
 
+    public int getNmbOfLinesBass() {
+        return nmbOfLinesBass;
+    }
 }
