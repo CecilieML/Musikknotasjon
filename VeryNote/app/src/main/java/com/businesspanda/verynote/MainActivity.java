@@ -214,6 +214,7 @@ public class MainActivity extends ActionBarActivity  {
     @Override
     public void onStop() {
         tempolineHandler.removeCallbacks(writeTempoline);
+        runFFT = false;
         try {
             super.onStop();
             pitch_detector_thread_.interrupt();
@@ -254,7 +255,7 @@ public class MainActivity extends ActionBarActivity  {
     }*/
 
     long lastTime;
-    long newTime;
+    long nowTime;
     long dur;
 
     public void ShowPitchDetectionResult( final double pitch) {
@@ -269,9 +270,9 @@ public class MainActivity extends ActionBarActivity  {
 
         changeFreq.setText(nearestNote.name); //remember to remove
 
-        newTime = System.nanoTime();
+        nowTime = System.nanoTime();
 
-        dur = (newTime - lastTime) / 1000000;
+        dur = (nowTime - lastTime) / 1000000;
 
         System.out.println(dur + "   durrrrrrrrr " + fullBar/16 + "  " + fullBar*2);
 
@@ -302,20 +303,34 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
+    long durationOfPause;
+    long lastPauseWritten;
+    long firstPause;
+
+    ImageView pauseImg;
+
     public void writePause(){
-        ImageView pauseImg = new ImageView(this);
-        FrameLayout.LayoutParams pauseParams= new FrameLayout.LayoutParams(
-                FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnWidth)),
-                FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnHeight)));
-
-        if(dur>fullBar/4){
-            pauseImg.setImageResource(R.drawable.panda_pic);
-            pauseImg.setLayoutParams(pauseParams);
-            pauseImg.setX(linLayout.getLayoutParams().width -
-                    FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos)));
-          //  linLayout.addView(pauseImg);
-
-
+        if(linLayMoving) {
+            FrameLayout.LayoutParams pauseParams = new FrameLayout.LayoutParams(
+                    FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnWidth)),
+                    FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnHeight)));
+            firstPause = System.nanoTime();
+            durationOfPause = (firstPause - lastTime) / 1000000;
+            System.out.println(durationOfPause + "  pause duration");
+            if (durationOfPause < fullBar / 4) {
+                pauseImg = new ImageView(this);
+                pauseImg.setLayoutParams(pauseParams);
+                pauseImg.setX(linLayout.getLayoutParams().width -
+                        FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos)));
+                linLayout.addView(pauseImg);
+            }
+            if (durationOfPause > fullBar / 4 && durationOfPause < fullBar / 2) {
+                pauseImg.setImageResource(R.drawable.panda_pic);
+                // lastPauseWritten = System.nanoTime();
+            } else if (durationOfPause > fullBar / 2) {
+                pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.A3)));
+                System.out.println("sdfghkk");
+            }
         }
     }
 

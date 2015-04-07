@@ -57,12 +57,18 @@
     <item type="dimen" format="float" name="noteLineWidth">0.03</item>
     <item type="dimen" format="float" name="noteLineOffset">0.1</item>
 
-    <item type="dimen" format="float" name="noteLineYI">0.51</item> //3.5 between each; 0.475 current lowest line
-    <item type="dimen" format="float" name="noteLineYII">0.545</item>
-    <item type="dimen" format="float" name="noteLineYIII">0.58</item>
-    <item type="dimen" format="float" name="noteLineYIV">0.615</item>
-    <item type="dimen" format="float" name="noteLineYV">0.65</item>
-    <item type="dimen" format="float" name="noteLineYVI">0.685</item>
+    <item type="dimen" format="float" name="noteLineYmVI">0.29</item>
+    <item type="dimen" format="float" name="noteLineYmV">0.325</item>    /*
+    <item type="dimen" format="float" name="noteLineYmIV">0.36</item>    *
+    <item type="dimen" format="float" name="noteLineYmIII">0.40</item>    *   tebleline lines
+    <item type="dimen" format="float" name="noteLineYmII">0.44</item>     *
+    <item type="dimen" format="float" name="noteLineYmI">0.475</item>    */
+    <item type="dimen" format="float" name="noteLineYMiddleC">0.51</item>       //middleC (*p = plus, m = minus)
+    <item type="dimen" format="float" name="noteLineYpI">0.545</item>      /*
+    <item type="dimen" format="float" name="noteLineYpII">0.58</item>    *
+    <item type="dimen" format="float" name="noteLineYpIII">0.615</item> *   basslines
+    <item type="dimen" format="float" name="noteLineYpIV">0.65</item>    *
+    <item type="dimen" format="float" name="noteLineYpV">0.685</item>      */
 
     //C
     <item name="C3" format="float" type="dimen">0.475</item>
