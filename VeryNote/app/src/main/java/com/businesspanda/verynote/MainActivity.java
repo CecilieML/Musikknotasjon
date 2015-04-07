@@ -1,30 +1,19 @@
 package com.businesspanda.verynote;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.Thread;
-
 import android.app.ActionBar;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Layout;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -33,7 +22,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
@@ -47,13 +35,9 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.jfugue.*;
-
 import jp.kshoji.javax.sound.midi.UsbMidiSystem;
-import nu.xom.Serializer;
-
 
 public class MainActivity extends ActionBarActivity  {
 
@@ -274,7 +258,7 @@ public class MainActivity extends ActionBarActivity  {
 
         dur = (nowTime - lastTime) / 1000000;
 
-        System.out.println(dur + "   durrrrrrrrr " + fullBar/16 + "  " + fullBar*2);
+      //  System.out.println(dur + "   durrrrrrrrr " + fullBar/16 + "  " + fullBar*2);
 
         if(dur>(fullBar*2))lastTime = System.nanoTime();
 
@@ -334,34 +318,95 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
-    public void notesOutOfBoundsLines(int nmbOfLines, int height){
+    public void notesOutOfBoundsLines(int nmbOfLines, int nmbOfBassLines, int height){
         FrameLayout.LayoutParams notelineParams= new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.noteLineWidth)),
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        int x = linLayout.getLayoutParams().width -
+        int NoteImgX = linLayout.getLayoutParams().width -
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos) );
-        //FitToScreen.returnViewWidth(getPercent(R.dimen.noteLineOffset)
+        int addToX = FitToScreen.returnViewWidth(getPercent(R.dimen.noteLineOffset));
+        int x = NoteImgX + addToX;
+        System.out.println(NoteImgX + "  <--noteX + addToX--> " + addToX + " x--> " + x);
 
-        boolean linesUnder;                     //
-        if(height<10)linesUnder = false;        //needs to be fixed/implemented
-        System.out.println(height);             //
+        if(bass) {
+            for (int i = 0; i < nmbOfBassLines; i++) {
+                ImageView lineForNote = new ImageView(this);
 
-        for(int i=0; i<nmbOfLines; i++){
-            ImageView lineForNote = new ImageView(this);
+                lineForNote.setAdjustViewBounds(true);
 
-            lineForNote.setAdjustViewBounds(true);
+                lineForNote.setLayoutParams(notelineParams);
+                lineForNote.setImageResource(R.drawable.goodline);
+                lineForNote.setX(x);
+                if (i == 0)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYMiddleC)));
+                if (i == 1)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmI)));
+                if (i == 2)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmII)));
+                if (i == 3)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmIII)));
+                if (i == 4)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmIV)));
+                if (i == 5)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmV)));
+                if (i>5)System.out.println("need moar lines BASS");
+                linLayout.addView(lineForNote);
+            }
+        }else if(height<26){
+            for (int i = 0; i < nmbOfLines; i++) {
+                ImageView lineForNote = new ImageView(this);
 
-            lineForNote.setLayoutParams(notelineParams);
-            lineForNote.setImageResource(R.drawable.goodline);
-            lineForNote.setX(x);
-            if(i==0)lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYI)));
-            if(i==1)lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYII)));
-            if(i==2)lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYIII)));
-            if(i==3)lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYIV)));
-            if(i==4)lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYV)));
-            if(i==5)lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYVI)));
-            linLayout.addView(lineForNote);
+                lineForNote.setAdjustViewBounds(true);
+
+                lineForNote.setLayoutParams(notelineParams);
+                lineForNote.setImageResource(R.drawable.goodline);
+                lineForNote.setX(x);
+                if (i == 0)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmVI)));
+                if (i == 1)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmVII)));
+                if (i == 2)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmVIII)));
+                if (i == 3)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmIX)));
+                if (i == 4)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmX)));
+                if (i == 5)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmXI)));
+                if (i == 6)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmXII)));
+                if (i == 7)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmXIII)));
+                if (i == 8)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmXIV)));
+                if (i>8)System.out.println("need moar lines -----");
+                linLayout.addView(lineForNote);
+            }
+        }else if(height>26){
+            for (int i = 0; i < nmbOfLines; i++) {
+                ImageView lineForNote = new ImageView(this);
+
+                lineForNote.setAdjustViewBounds(true);
+
+                lineForNote.setLayoutParams(notelineParams);
+                lineForNote.setImageResource(R.drawable.goodline);
+                lineForNote.setX(x);
+                if (i == 0)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYMiddleC)));
+                if (i == 1)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYpI)));
+                if (i == 2)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYpII)));
+                if (i == 3)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYpIII)));
+                if (i == 4)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYpIV)));
+                if (i == 5)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYpV)));
+                if (i>5)System.out.println("need moar lines ++12");
+                linLayout.addView(lineForNote);
+            }
         }
     }
 
@@ -531,7 +576,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
             currentNote.setImageResource(R.drawable.notailhollownotewdot);
 
         }else if(dur >= fullBar*2){              // randomly chosen...
-            prevNote = new Note(false, false, 0, 0, " ",0 ,0, 0);
+            prevNote = new Note(false, false, 0, " ",0 ,0, 0);
         }
 
     }
@@ -573,9 +618,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
         int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
         currentNote.setId(noteID);
 
-        /***/
-        notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNoteHeight());
-        /***/
+        notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNmbOfLinesBass(), nearestNote.getNoteHeight());
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -729,7 +772,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
                     scrollView.scrollTo(scrollWidth - xScroll, 0);
                     x = 0;
                     scrollView.setScrollingEnabled(true);
-                    prevNote = new Note(false, false, 0, 0, " ", 0, 0, 0);
+                    prevNote = new Note(false, false, 0, " ", 0, 0, 0);
                     linLayMoving = false;
                     recording = false;
                     editable = true;
