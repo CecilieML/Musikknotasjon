@@ -34,52 +34,49 @@ public class PitchDec implements Runnable {
 
     private static String LOG_TAG = "PitchDetector";
 
-    private final static int RATE = 16000; //was 44100, then 8000 when it worked
+    /* Numbers that work:
+        RATE: 8000      BUFFERSIZE: 4096        CHUNK_SIZE_IN_SAMPLES: 1024 (128)
+        RATE: 8000      BUFFERSIZE: 8192        CHUNK_SIZE_IN_SAMPLES: 4096 (512)
+        RATE: 16000     BUFFERSIZE: 8192        CHUNK_SIZE_IN_SAMPLES: 4096 (256)
+        RATE: 16000     BUFFERSIZE: 16384       CHUNK_SIZE_IN_SAMPLES: 8192 (512)
+        RATE: 44100     BUFFERSIZE: 4096        CHUNK_SIZE_IN_SAMPLES: 1024 (...)
+     */
+
+    private final static int RATE = 16000;
     private final static int CHANNEL_MODE = AudioFormat.CHANNEL_IN_MONO;
     private final static int ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 
-    int bufferSize = 8192 ;//AudioRecord.getMinBufferSize(RATE, CHANNEL_MODE, ENCODING); //=4096
+    int BUFFERSIZE = 8192 ;//AudioRecord.getMinBufferSize(RATE, CHANNEL_MODE, ENCODING);
     int SOURCE = MediaRecorder.AudioSource.MIC;
-
 
     private DoubleFFT_1D fft;
 
-
     short[] audio_data;
 
+    private final static int CHUNK_SIZE_IN_SAMPLES = 4096;
 
-    //private final static int BUFFER_SIZE_IN_MS = 3000;
-    private final static int CHUNK_SIZE_IN_SAMPLES = 4096; // = 2 ^ //////was 1024/////
-    // CHUNK_SIZE_IN_SAMPLES_POW2
-    private final static int CHUNK_SIZE_IN_MS = 1000 * CHUNK_SIZE_IN_SAMPLES
-            / RATE;
-    //private final static int BUFFER_SIZE_IN_BYTES = RATE * BUFFER_SIZE_IN_MS
-    //        / 1000 * 2;
-    private final static int CHUNK_SIZE_IN_BYTES = RATE * CHUNK_SIZE_IN_MS
-            / 1000 * 2;
+    private final static int CHUNK_SIZE_IN_MS = 1000 * CHUNK_SIZE_IN_SAMPLES / RATE;
+
+    private final static int CHUNK_SIZE_IN_BYTES = RATE * CHUNK_SIZE_IN_MS / 1000 * 2;
 
     private final static int MIN_FREQUENCY = 100; // 49.0 HZ of G1 - lowest note
     // for crazy Russian choir.
     private final static int MAX_FREQUENCY = 1568; // 1567.98 HZ of G6 - highest
-    // demanded note in the
-    // classical repertoire
+    // demanded note in the classical repertoire
 
     private final static int DRAW_FREQUENCY_STEP = 5;
 
-    //lowpassthings
+    //lowpassvariables
+    /*
     public short[] a = new short[2];
     public short[] b = new short[3];
     public short[] mem= new short[4];
     private final static short LOWPASSLIMIT = 1500;
-
-    public native void DoFFT(double[] data, int size); // an NDK library
-    // 'fft-jni'
+    */
 
     public PitchDec(MainActivity parent, Handler handler) {
-
         parent_ = parent;
         handler_ = handler;
-        //System.loadLibrary("fft-jni");
     }
 
     private static class FreqResult {
@@ -117,46 +114,11 @@ public class PitchDec implements Runnable {
             }
         }
 
-        public void addHarmony(double freq, double amp) {
-            total_amplitude += amp;
-        }
-
         @Override public String toString() {
             return "(" + average_frequency + ", " + total_amplitude + ")";
         }
     }
 
-    /****/
-
-
-
-
-
-    short[] windowthing = new short[CHUNK_SIZE_IN_SAMPLES];
-
-
-    short[] buildHanWindow( short[] window, int size )
-    {
-        for( int i=0; i<size; ++i ) {
-            double temp = 0.5 * (1 - Math.cos(2 * Math.PI * i / (size - 1.0)));
-            window[i] = (short) temp;
-        }
-        return window;
-    }
-
-    short[] applyWindow( short[] window, short[] data, int size )
-    {
-        for( int i=0; i<size; ++i ) {
-            data[i] *= window[i];
-        }
-        return data;
-    }
-
-
-
-
-
-    /***/
 
     public FreqResult AnalyzeFrequencies(short[] audio_data) {
         fft = new DoubleFFT_1D(CHUNK_SIZE_IN_SAMPLES);
@@ -172,18 +134,13 @@ public class PitchDec implements Runnable {
             data[i * 2] = audio_data[i];
             data[i * 2 + 1] = 0;
         }
-        //DoFFT(data, CHUNK_SIZE_IN_SAMPLES);
 
         if(MainActivity.runFFT)fft.complexForward(data);
 
         double best_frequency = min_frequency_fft;
         HashMap<Double, Double> frequencies = new HashMap<Double, Double>();
 
-        //best_frequency = min_frequency_fft;
-        //fr.frequencies = new HashMap<Double, Double>();
-
         double best_amplitude = 0;
-        final double draw_frequency_step = 1.0 * RATE / CHUNK_SIZE_IN_SAMPLES;
 
         List<Double> best_frequencies = new ArrayList<Double>();
         List<Double> best_amps = new ArrayList<Double>();
@@ -199,15 +156,6 @@ public class PitchDec implements Runnable {
 
             final double current_amplitude = Math.pow(Math.pow(data[i * 2], 2)
                     + Math.pow(data[i * 2 + 1], 2), 0.5);
-            /*
-            final double normalized_amplitude = current_amplitude
-                    * Math.pow(MIN_FREQUENCY * MAX_FREQUENCY, 0.5)
-                    / current_frequency;*/
-
-            Double current_sum_for_this_slot = frequencies.get(draw_frequency);
-            if (current_sum_for_this_slot == null) {
-                current_sum_for_this_slot = 0.0;
-            }
 
             frequencies.put(draw_frequency, current_amplitude);
 
@@ -230,7 +178,6 @@ public class PitchDec implements Runnable {
         List<FrequencyCluster> clusters = new ArrayList<FrequencyCluster>();
         FrequencyCluster currentCluster = new FrequencyCluster();
         clusters.add(currentCluster);
-        FrequencyCluster bestCluster = currentCluster;
 
 
         if (best_frequencies.size() > 0)
@@ -283,7 +230,7 @@ public class PitchDec implements Runnable {
         return fr;
     }
 
-    /***/
+    /*
     void computeLowPassParameters( int rate, short f)
     {
         float a0;
@@ -321,7 +268,7 @@ public class PitchDec implements Runnable {
         return ret;
     }
 
-    /***/
+    */
 
     public void run() {
         Log.e(LOG_TAG, "starting to detect pitch");
@@ -330,8 +277,8 @@ public class PitchDec implements Runnable {
                 .setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
 
         recorder_ = new AudioRecord(SOURCE, RATE, CHANNEL_MODE,
-                ENCODING, bufferSize);
-        //System.out.println(recorder_.getState());
+                ENCODING, BUFFERSIZE);
+
         if (recorder_.getState() != AudioRecord.STATE_INITIALIZED) {
             ShowError("Can't initialize AudioRecord");
             return;
@@ -339,12 +286,9 @@ public class PitchDec implements Runnable {
 
         recorder_.startRecording();
         while (!Thread.interrupted()) {
-            //short[] audio_data = new short[BUFFER_SIZE_IN_BYTES / 2];
-            /*short[] */audio_data = new short[bufferSize / 2];
-            //recorder_.read(audio_data, 0, bufferSize / 2);
-            recorder_.read(audio_data, 0, CHUNK_SIZE_IN_BYTES / 2);
 
-          //  MainActivity.setTest(audio_data);
+            audio_data = new short[BUFFERSIZE / 2];
+            recorder_.read(audio_data, 0, CHUNK_SIZE_IN_BYTES / 2);
 
             //lavpassfilter
 
@@ -355,30 +299,18 @@ public class PitchDec implements Runnable {
 
             }*/
 
+
+            saveAudiodata(audio_data); //saves audiodatafile to phone
+
             //pitchdetector
-            //silence(audio_data);
-
-            //windowing functions
-            //windowthing = buildHanWindow(windowthing, CHUNK_SIZE_IN_SAMPLES);
-            //audio_data = applyWindow(windowthing,audio_data,CHUNK_SIZE_IN_SAMPLES);
-
-
-            saveAudiodata(audio_data);
-
-
             double volume = getAmplitude(audio_data);
-            //System.out.println(volume);
+
             if(volume>4400) {
                 FreqResult fr = AnalyzeFrequencies(audio_data);
-                PostToUI(fr.frequencies, fr.best_frequency);
+                PostToUI(fr.best_frequency);
             }else{
-                PostPandaToUI();
-                System.out.println("whoooooooooooooooooooooooooho");
+                PostPauseToUI();
             }
-
-            //System.out.println(" best freq--> " + value);
-
-
 
         }
         recorder_.stop();
@@ -386,14 +318,10 @@ public class PitchDec implements Runnable {
     }
 
 
-
     public double getAmplitude(short[] audio_data) {
-       // short[] buffer = new short[bufferSize]; /*** Needs fixing ***/
-        recorder_.read(audio_data, 0, bufferSize);
 
-       // for(int i = 0; i<buffer.length;i++) {
-       //     System.out.println(i + " HHHHHHHHHHHHHHHELP      " + buffer[i]);
-       // }
+        //Returns amplitude of sound from recorder reading, used to avoid picking up background noise.
+        recorder_.read(audio_data, 0, BUFFERSIZE);
 
         int max = 0;
         for (short s : audio_data){
@@ -406,43 +334,28 @@ public class PitchDec implements Runnable {
 
     void saveAudiodata(short[] audio_datas_for_saving) {
 
+        //Saves a file of audiodata read to phone memory.
+
         try {
 
             File file = new File(Environment.getExternalStorageDirectory(),"audiodata.txt");
 
-            /*DataOutputStream dos = new DataOutputStream(
-                    new BufferedOutputStream(
-                            new FileOutputStream(file),
-                            writerbufferSize)
-            );*/
             if (!file.exists()) {
                 PrintWriter pw = new PrintWriter(new FileWriter(file));
 
-                //try {
                 for (int i = 0; i < audio_datas_for_saving.length; i++) {
-
                     pw.print(audio_datas_for_saving[i]);
                     pw.print("\n");
-                    //pw.newLine();
-                    //dos.writeShort(audio_datas_for_saving[i]);
-                    // System.out.println("IMA WRItinG A FILE");
                 }
-                System.out.println("DONE MAking file!!!");
+
                 pw.close();
-                //dos.flush();
-                //dos.close();
-                //} catch (IOException e) {
-                //    System.out.println("Problem doing the arraything!");
-                //    e.printStackTrace();
             }
-            //}
         } catch (IOException e) {
-            System.out.println("PROBLEMS maikng file!");
             e.printStackTrace();
         }
     }
 
-    private void PostPandaToUI() {
+    private void PostPauseToUI() {
         handler_.post(new Runnable() {
             public void run() {
                 parent_.writePause();
@@ -450,10 +363,7 @@ public class PitchDec implements Runnable {
         });
     }
 
-
-
-    private void PostToUI(final HashMap<Double, Double> frequencies,
-                          final double pitch) {
+    private void PostToUI(final double pitch) {
         handler_.post(new Runnable() {
             public void run() {
                 parent_.ShowPitchDetectionResult(pitch);
@@ -464,12 +374,11 @@ public class PitchDec implements Runnable {
     private void ShowError(final String msg) {
         handler_.post(new Runnable() {
             public void run() {
-                new AlertDialog.Builder(parent_).setTitle("SheetNotes")
+                new AlertDialog.Builder(parent_).setTitle("VeryNote")
                         .setMessage(msg).show();
             }
         });
     }
-
 
     private MainActivity parent_;
     private AudioRecord recorder_;
