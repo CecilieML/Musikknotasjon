@@ -119,7 +119,6 @@ public class PitchDec implements Runnable {
         }
     }
 
-
     public FreqResult AnalyzeFrequencies(short[] audio_data) {
         fft = new DoubleFFT_1D(CHUNK_SIZE_IN_SAMPLES);
         FreqResult fr = new FreqResult();

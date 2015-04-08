@@ -43,19 +43,19 @@ public class yValueSearch {
 
         //C#
         TypedValue cs3outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Cs3, c3outValue, true);
+        Config.context.getResources().getValue(R.dimen.Cs3, cs3outValue, true);
         float cs3 = cs3outValue.getFloat();
 
         TypedValue cs4outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Cs4, c4outValue, true);
+        Config.context.getResources().getValue(R.dimen.Cs4, cs4outValue, true);
         float cs4 = cs4outValue.getFloat();
 
         TypedValue cs5outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Cs5, c5outValue, true);
+        Config.context.getResources().getValue(R.dimen.Cs5, cs5outValue, true);
         float cs5 = cs5outValue.getFloat();
 
         TypedValue cs6outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Cs6, c6outValue, true);
+        Config.context.getResources().getValue(R.dimen.Cs6, cs6outValue, true);
         float cs6 = cs6outValue.getFloat();
 
         yValues[46] = cs3;
@@ -291,6 +291,7 @@ public class yValueSearch {
         float percentValue = FitToScreen.returnPercent(valueToFind);
 
         System.out.println(valueToFind + "   valuetofind");
+
         System.out.println(percentValue + "   percentvalue");
 
         double minDiff = Double.MAX_VALUE;
@@ -306,6 +307,8 @@ public class yValueSearch {
                 minDiff = diff;
             }
         }
+        System.out.println(yValues[22]  + "   is this 0?");
+        System.out.println(yValues[indexOfValueToFind] + " yvalues at index");
         System.out.println(indexOfValueToFind + "  <--- index  " + minDiff);
         return indexOfValueToFind;
     }

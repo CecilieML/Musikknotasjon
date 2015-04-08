@@ -93,9 +93,11 @@ public class MyTouchListener implements View.OnTouchListener {
                 parentLayout.getLocationOnScreen(xyPos);
                 int y = xyPos[1];
                 int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
+                System.out.println(index + "  index in mytouchlstener");
                 if(index>0){
                     float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
                     parentLayout.setY(percent);
+                    System.out.println(percent + "   percentvalue from mytouchlistenrnehjsurhgdf");
                 }
                 vibIy(shortVib);
 
@@ -127,11 +129,9 @@ public class MyTouchListener implements View.OnTouchListener {
                 parentLayout.getLocationOnScreen(xyPos);
                 int y = xyPos[1];
                 int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
-              //  System.out.println("final index =  " + index);
-                if(index>0 && index<yValueSearch.yValues.length) {
-                    float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index + 1]);
+                System.out.println("indrx-----  " + index);
+                    float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);
                     parentLayout.setY(percent);
-                }
 
                 vibIy(shortVib);
             }

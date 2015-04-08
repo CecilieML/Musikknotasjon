@@ -327,7 +327,7 @@ public class MainActivity extends ActionBarActivity  {
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos) );
         int addToX = FitToScreen.returnViewWidth(getPercent(R.dimen.noteLineOffset));
         int x = NoteImgX + addToX;
-        System.out.println(NoteImgX + "  <--noteX + addToX--> " + addToX + " x--> " + x);
+      //  System.out.println(NoteImgX + "  <--noteX + addToX--> " + addToX + " x--> " + x);
 
         if(bass) {
             for (int i = 0; i < nmbOfBassLines; i++) {
