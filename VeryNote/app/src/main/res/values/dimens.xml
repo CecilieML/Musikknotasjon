@@ -57,10 +57,13 @@
     <item type="dimen" format="float" name="noteLineWidth">0.03</item>
     <item type="dimen" format="float" name="noteLineOffset">0.033</item>
 
-    <item type="dimen" format="float" name="pauseWidth">0.07</item>
-    <item type="dimen" format="float" name="pauseHeight">0.03</item>
-    <item type="dimen" format="float" name="pauseYI">0.3</item>
-    <item type="dimen" format="float" name="pauseYII">0.4</item>
+    <item type="dimen" format="float" name="pauseWidth">0.045</item>
+    <item type="dimen" format="float" name="pauseHeight">0.02</item>
+    <item type="dimen" format="float" name="pauseYHalfRest">0.381</item>//litt mer ned
+    <item type="dimen" format="float" name="pauseYWholeRest">0.402</item>// litt mer ned
+    <item type="dimen" format="float" name="pauseXHalfRest">0.</item>
+    <item type="dimen" format="float" name="pauseXWholeRest">0.</item>
+
 
     <item type="dimen" format="float" name="noteLineYmXIV">0.045</item>
     <item type="dimen" format="float" name="noteLineYmXIII">0.08</item>

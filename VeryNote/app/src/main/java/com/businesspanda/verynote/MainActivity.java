@@ -5,6 +5,7 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -238,7 +239,7 @@ public class MainActivity extends ActionBarActivity  {
         return scrollY;
     }*/
 
-    long lastTime;
+    long lastNote;
     long nowTime;
     long dur;
 
@@ -256,11 +257,11 @@ public class MainActivity extends ActionBarActivity  {
 
         nowTime = System.nanoTime();
 
-        dur = (nowTime - lastTime) / 1000000;
+        dur = (nowTime - lastNote) / 1000000;
 
       //  System.out.println(dur + "   durrrrrrrrr " + fullBar/16 + "  " + fullBar*2);
 
-        if(dur>(fullBar*2))lastTime = System.nanoTime();
+        if(dur>(fullBar*2))lastNote = System.nanoTime();
 
 
 
@@ -268,7 +269,7 @@ public class MainActivity extends ActionBarActivity  {
             noteLength();
 
         }else if(dur>(fullBar/16)){
-            lastTime = System.nanoTime();
+            lastNote = System.nanoTime();
 
             String arrayNote = nearestNote.getName().replaceAll("s","#");
 
@@ -299,7 +300,7 @@ public class MainActivity extends ActionBarActivity  {
                     FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.pauseWidth)),
                     FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.pauseHeight)));
             firstPause = System.nanoTime();
-            durationOfPause = (firstPause - lastTime) / 1000000; //change last time to lasttime pasue written
+            durationOfPause = (firstPause - lastNote) / 1000000; //change last note to last pasue written
             System.out.println(durationOfPause + "  pause duration");
             if (durationOfPause < fullBar / 4) {
                 pauseImg = new ImageView(this);
@@ -308,12 +309,13 @@ public class MainActivity extends ActionBarActivity  {
                         FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos)));
                 linLayout.addView(pauseImg);
             }
-            if (durationOfPause > fullBar / 4 && durationOfPause < fullBar / 2) {
-                pauseImg.setBackgroundColor(getResources().getColor(R.color.lineColor));
-                pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYII)));
-            } else if (durationOfPause > fullBar / 2) {
-                pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYII)));
-                // lastPauseWritten = System.nanoTime(); needs to be on last pause
+            if (durationOfPause > fullBar / 2 && durationOfPause < fullBar) {
+                pauseImg.setBackgroundColor(Color.BLACK);
+                pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYHalfRest)));
+            } else if (durationOfPause > fullBar) {
+                pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYWholeRest)));
+                 lastPauseWritten = System.nanoTime();
+
             }
         }
     }
@@ -753,7 +755,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
                     recording = true;
                     runFFT = true;
                     editable = false;
-                    lastTime = System.nanoTime();
+                    lastNote = System.nanoTime();
                 } else {
                     item.setIcon(R.drawable.ic_action_mic);
                     getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
