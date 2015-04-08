@@ -296,10 +296,10 @@ public class MainActivity extends ActionBarActivity  {
     public void writePause(){
         if(linLayMoving) {
             FrameLayout.LayoutParams pauseParams = new FrameLayout.LayoutParams(
-                    FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnWidth)),
-                    FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnHeight)));
+                    FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.pauseWidth)),
+                    FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.pauseHeight)));
             firstPause = System.nanoTime();
-            durationOfPause = (firstPause - lastTime) / 1000000;
+            durationOfPause = (firstPause - lastTime) / 1000000; //change last time to lasttime pasue written
             System.out.println(durationOfPause + "  pause duration");
             if (durationOfPause < fullBar / 4) {
                 pauseImg = new ImageView(this);
@@ -309,14 +309,15 @@ public class MainActivity extends ActionBarActivity  {
                 linLayout.addView(pauseImg);
             }
             if (durationOfPause > fullBar / 4 && durationOfPause < fullBar / 2) {
-                pauseImg.setImageResource(R.drawable.panda_pic);
-                // lastPauseWritten = System.nanoTime();
+                pauseImg.setBackgroundColor(getResources().getColor(R.color.lineColor));
+                pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYII)));
             } else if (durationOfPause > fullBar / 2) {
-                pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.A3)));
-                System.out.println("sdfghkk");
+                pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYII)));
+                // lastPauseWritten = System.nanoTime(); needs to be on last pause
             }
         }
     }
+
 
     public void notesOutOfBoundsLines(int nmbOfLines, int nmbOfBassLines, int height){
         FrameLayout.LayoutParams notelineParams= new FrameLayout.LayoutParams(
@@ -720,7 +721,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
 
     int x = 0;
     int xScroll = 0;
-    int speed = 100;
+    int speed = 70;
     private Runnable moveLinLay = new Runnable() {
         public void run() {
             LinearInterpolator interpolator = new LinearInterpolator();
