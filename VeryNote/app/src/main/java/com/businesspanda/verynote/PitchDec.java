@@ -37,7 +37,7 @@ public class PitchDec implements Runnable {
     /* Numbers that work:
         RATE: 8000      BUFFERSIZE: 4096        CHUNK_SIZE_IN_SAMPLES: 1024 (128)
         RATE: 8000      BUFFERSIZE: 8192        CHUNK_SIZE_IN_SAMPLES: 4096 (512)
-        RATE: 16000     BUFFERSIZE: 8192        CHUNK_SIZE_IN_SAMPLES: 4096 (256)
+        RATE: 16000     BUFFERSIZE: 8192        CHUNK_SIZE_IN_SAMPLES: 4096 (256) *
         RATE: 16000     BUFFERSIZE: 16384       CHUNK_SIZE_IN_SAMPLES: 8192 (512)
         RATE: 44100     BUFFERSIZE: 4096        CHUNK_SIZE_IN_SAMPLES: 1024 (...)
      */
@@ -65,6 +65,9 @@ public class PitchDec implements Runnable {
     // demanded note in the classical repertoire
 
     private final static int DRAW_FREQUENCY_STEP = 5;
+
+    int saveCounter = 0;
+    int filesToSave = 8;
 
     //lowpassvariables
     /*
@@ -134,7 +137,16 @@ public class PitchDec implements Runnable {
             data[i * 2 + 1] = 0;
         }
 
+
         if(MainActivity.runFFT)fft.complexForward(data);
+
+        if(saveCounter<filesToSave) {
+            saveAudiodata_afterFFT(data);
+            saveCounter++;
+        }
+
+
+
 
         double best_frequency = min_frequency_fft;
         HashMap<Double, Double> frequencies = new HashMap<Double, Double>();
@@ -298,8 +310,9 @@ public class PitchDec implements Runnable {
 
             }*/
 
-
-            saveAudiodata(audio_data); //saves audiodatafile to phone
+            if(saveCounter<filesToSave) {
+                saveAudiodata(audio_data); //saves audiodatafile to
+            }
 
             //pitchdetector
             double volume = getAmplitude(audio_data);
@@ -337,7 +350,30 @@ public class PitchDec implements Runnable {
 
         try {
 
-            File file = new File(Environment.getExternalStorageDirectory(),"audiodata.txt");
+            File file = new File(Environment.getExternalStorageDirectory(),"audiodata" + saveCounter + ".txt");
+
+            if (!file.exists()) {
+                PrintWriter pw = new PrintWriter(new FileWriter(file));
+
+                for (int i = 0; i < audio_datas_for_saving.length; i++) {
+                    pw.print(audio_datas_for_saving[i]);
+                    pw.print("\n");
+                }
+
+                pw.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void saveAudiodata_afterFFT (double[] audio_datas_for_saving) {
+
+        //Saves a file of audiodata read to phone memory.
+
+        try {
+
+            File file = new File(Environment.getExternalStorageDirectory(),"audiodata_afterFFT" + saveCounter + ".txt");
 
             if (!file.exists()) {
                 PrintWriter pw = new PrintWriter(new FileWriter(file));

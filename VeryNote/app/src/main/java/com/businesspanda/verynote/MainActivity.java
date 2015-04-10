@@ -321,26 +321,21 @@ public class MainActivity extends ActionBarActivity  {
                 pauseImg.setLayoutParams(pauseParams);
                 linLayout.addView(pauseImg);
 
-            }else if(durationOfPause > fullBar / 4 && durationOfPause < fullBar / 2){
-                pauseImg.setBackgroundColor(Color.RED);
-                pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYHalfRest)));
-                pauseImg.setX(linLayout.getLayoutParams().width -
-                        FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos)));
-                linLayout.addView(pauseImg); //maybe remove?
+            }
 
-            } else if (durationOfPause > fullBar / 2 && durationOfPause < fullBar) {
+            if (durationOfPause > fullBar / 2 && durationOfPause < fullBar) {
                 pauseImg.setBackgroundColor(Color.BLACK);
                 pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYHalfRest)));
                 pauseImg.setX(linLayout.getLayoutParams().width -
-                        FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXHalfRest)));
-                linLayout.addView(pauseImg);
+                        FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXHalfRest)));//fix repeated calls
+
 
             } else if (durationOfPause > fullBar) {
                 pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYWholeRest)));
                  lastPauseWritten = System.nanoTime();
                 pauseImg.setX(linLayout.getLayoutParams().width -
                         FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXWholeRest)));
-                linLayout.addView(pauseImg);
+
 
             }
         }
