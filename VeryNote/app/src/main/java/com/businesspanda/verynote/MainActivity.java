@@ -261,7 +261,10 @@ public class MainActivity extends ActionBarActivity  {
 
       //  System.out.println(dur + "   durrrrrrrrr " + fullBar/16 + "  " + fullBar*2);
 
-        if(dur>(fullBar*2))lastNote = System.nanoTime();
+        if(dur>(fullBar*2)){
+            lastNote = System.nanoTime();
+            useLastPauseWritten = false;
+        }
 
 
 
@@ -270,6 +273,7 @@ public class MainActivity extends ActionBarActivity  {
 
         }else if(dur>(fullBar/16)){
             lastNote = System.nanoTime();
+            useLastPauseWritten = false;
 
             String arrayNote = nearestNote.getName().replaceAll("s","#");
 
@@ -294,27 +298,49 @@ public class MainActivity extends ActionBarActivity  {
 
     ImageView pauseImg;
 
+    boolean useLastPauseWritten;
+
     public void writePause(){
         if(linLayMoving) {
             FrameLayout.LayoutParams pauseParams = new FrameLayout.LayoutParams(
                     FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.pauseWidth)),
                     FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.pauseHeight)));
             firstPause = System.nanoTime();
-            durationOfPause = (firstPause - lastNote) / 1000000; //change last note to last pasue written
+
+            if (!useLastPauseWritten) {
+                durationOfPause = (firstPause - lastNote) / 1000000; //change last note to last pasue written
+                useLastPauseWritten = true;
+            } else {
+                durationOfPause = (firstPause - lastPauseWritten) / 1000000; //change last note to last pasue written
+            }
+
+
             System.out.println(durationOfPause + "  pause duration");
             if (durationOfPause < fullBar / 4) {
                 pauseImg = new ImageView(this);
                 pauseImg.setLayoutParams(pauseParams);
+                linLayout.addView(pauseImg);
+
+            }else if(durationOfPause > fullBar / 4 && durationOfPause < fullBar / 2){
+                pauseImg.setBackgroundColor(Color.RED);
+                pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYHalfRest)));
                 pauseImg.setX(linLayout.getLayoutParams().width -
                         FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos)));
-                linLayout.addView(pauseImg);
-            }
-            if (durationOfPause > fullBar / 2 && durationOfPause < fullBar) {
+                linLayout.addView(pauseImg); //maybe remove?
+
+            } else if (durationOfPause > fullBar / 2 && durationOfPause < fullBar) {
                 pauseImg.setBackgroundColor(Color.BLACK);
                 pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYHalfRest)));
+                pauseImg.setX(linLayout.getLayoutParams().width -
+                        FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXHalfRest)));
+                linLayout.addView(pauseImg);
+
             } else if (durationOfPause > fullBar) {
                 pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYWholeRest)));
                  lastPauseWritten = System.nanoTime();
+                pauseImg.setX(linLayout.getLayoutParams().width -
+                        FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXWholeRest)));
+                linLayout.addView(pauseImg);
 
             }
         }
@@ -756,6 +782,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
                     runFFT = true;
                     editable = false;
                     lastNote = System.nanoTime();
+                    useLastPauseWritten = false;
                 } else {
                     item.setIcon(R.drawable.ic_action_mic);
                     getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
