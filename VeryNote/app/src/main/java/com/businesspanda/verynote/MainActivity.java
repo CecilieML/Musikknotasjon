@@ -341,7 +341,7 @@ public class MainActivity extends ActionBarActivity  {
 
 
             } else if (durationOfPause > fullBar) {
-                pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYWholeRest)));
+                if(pauseImg!=null)pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYWholeRest)));
                  lastPauseWritten = System.nanoTime();
                 pauseImg.setX(linLayout.getLayoutParams().width -
                         FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXWholeRest)));
@@ -540,7 +540,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
             }
         }else{
-            if(height <= 10) {
+            if(height <= 20) {
                 upSideDown = true;
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
             }
