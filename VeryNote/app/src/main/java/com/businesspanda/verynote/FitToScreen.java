@@ -1,21 +1,21 @@
 package com.businesspanda.verynote;
 
+/** Copyright (C) 2015 by BusinessPanda.
+ **
+ ** Permission to use, copy, modify, and distribute this software and its
+ ** documentation for any purpose and without fee is hereby granted, provided
+ ** that the above copyright notice appear in all copies and that both that
+ ** copyright notice and this permission notice appear in supporting
+ ** documentation.  This software is provided "as is" without express or
+ ** implied warranty.
+ */
+
 import android.content.Context;
-import android.os.Build;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
-/**
- * Created by Helene on 13.03.2015.
- */
 public class FitToScreen {
 
     public static int returnViewHeight(double percentOfScreen) {

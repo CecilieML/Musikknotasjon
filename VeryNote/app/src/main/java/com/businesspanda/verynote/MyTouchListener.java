@@ -1,25 +1,23 @@
 package com.businesspanda.verynote;
 
+/** Copyright (C) 2015 by BusinessPanda.
+ **
+ ** Permission to use, copy, modify, and distribute this software and its
+ ** documentation for any purpose and without fee is hereby granted, provided
+ ** that the above copyright notice appear in all copies and that both that
+ ** copyright notice and this permission notice appear in supporting
+ ** documentation.  This software is provided "as is" without express or
+ ** implied warranty.
+ */
+
 import android.content.Context;
-import android.graphics.AvoidXfermode;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
-import android.graphics.LinearGradient;
-import android.graphics.PorterDuff;
-import android.graphics.Shader;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.PaintDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.location.LocationManager;
-import android.media.Image;
 import android.os.Vibrator;
-import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -28,9 +26,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-/**
- * Created by Helene on 03.03.2015.
- */
 
 /************
  * http://www.shutterstock.com/cat.mhtml?pl=47643-42764&searchterm=panda

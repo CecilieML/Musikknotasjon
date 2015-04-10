@@ -140,10 +140,11 @@ public class PitchDec implements Runnable {
 
         if(MainActivity.runFFT)fft.complexForward(data);
 
+        /*
         if(saveCounter<filesToSave) {
             saveAudiodata_afterFFT(data);
             saveCounter++;
-        }
+        }*/
 
 
 
@@ -310,10 +311,11 @@ public class PitchDec implements Runnable {
 
             }*/
 
+            /*
             if(saveCounter<filesToSave) {
                 saveAudiodata(audio_data); //saves audiodatafile to
             }
-
+            */
             //pitchdetector
             double volume = getAmplitude(audio_data);
 

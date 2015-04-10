@@ -1,14 +1,21 @@
 package com.businesspanda.verynote;
 
+/** Copyright (C) 2015 by BusinessPanda.
+ **
+ ** Permission to use, copy, modify, and distribute this software and its
+ ** documentation for any purpose and without fee is hereby granted, provided
+ ** that the above copyright notice appear in all copies and that both that
+ ** copyright notice and this permission notice appear in supporting
+ ** documentation.  This software is provided "as is" without express or
+ ** implied warranty.
+ */
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.HorizontalScrollView;
-import android.widget.ScrollView;
 
-/**
- * Created by Helene on 06.03.2015.
- */
+
 public class LockableScrollView extends HorizontalScrollView {
 
     private boolean Scrollable = true;
