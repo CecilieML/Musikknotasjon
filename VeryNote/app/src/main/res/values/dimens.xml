@@ -54,16 +54,17 @@
 
     <item type="dimen" format="float" name="upSideDownNoteX">0.1159</item>
 
-    <item type="dimen" format="float" name="noteLineWidth">0.03</item>
-    <item type="dimen" format="float" name="noteLineOffset">0.033</item>
+    <item type="dimen" format="float" name="noteLineWidth">0.035</item> //
+    <item type="dimen" format="float" name="noteLineOffset">0.026</item> //
 
-    <item type="dimen" format="float" name="pauseWidth">0.045</item>
+    <item type="dimen" format="float" name="pauseWidth">0.04</item> <!--changed-->
     <item type="dimen" format="float" name="pauseHeight">0.02</item>
-    <item type="dimen" format="float" name="pauseYHalfRest">0.383</item>//changed
-    <item type="dimen" format="float" name="pauseYWholeRest">0.403</item>//changed
+    <item type="dimen" format="float" name="pauseYHalfRest">0.383</item>
+    <item type="dimen" format="float" name="pauseYWholeRest">0.403</item>
+    <item type="dimen" format="float" name="pauseBassYHalfRest">0.15</item>
+    <item type="dimen" format="float" name="pauseBassYWholeRest">0.22</item>
     <item type="dimen" format="float" name="pauseXHalfRest">0.15</item>
     <item type="dimen" format="float" name="pauseXWholeRest">0.22</item>
-
 
     <item type="dimen" format="float" name="noteLineYmXIV">0.045</item>
     <item type="dimen" format="float" name="noteLineYmXIII">0.08</item>
@@ -77,7 +78,7 @@
     <item type="dimen" format="float" name="noteLineYmV">0.325</item>       /*
     <item type="dimen" format="float" name="noteLineYmIV">0.36</item>        *
     <item type="dimen" format="float" name="noteLineYmIII">0.40</item>       *   tebleline lines
-    <item type="dimen" format="float" name="noteLineYmII">0.44</item>        *
+    <item type="dimen" format="float" name="noteLineYmII">0.435</item>        *
     <item type="dimen" format="float" name="noteLineYmI">0.475</item>        */
     <item type="dimen" format="float" name="noteLineYMiddleC">0.51</item>       //middleC (*p = plus, m = minus)
     <item type="dimen" format="float" name="noteLineYpI">0.545</item>       /*
@@ -87,76 +88,76 @@
     <item type="dimen" format="float" name="noteLineYpV">0.685</item>        */
 
     //C
-    <item name="C3" format="float" type="dimen">0.475</item>
-    <item name="C4" format="float" type="dimen">0.385</item>        //x
-    <item name="C5" format="float" type="dimen">0.255</item>        //x
-    <item name="C6" format="float" type="dimen">0.19</item>
+    <item name="C3" format="float" type="dimen">0.514</item>
+    <item name="C4" format="float" type="dimen">0.385</item>
+    <item name="C5" format="float" type="dimen">0.255</item>
+    <item name="C6" format="float" type="dimen">0.13</item>
 
     //C#
-    <item name="Cs3" format="float" type="dimen">0.475</item>
-    <item name="Cs4" format="float" type="dimen">0.385</item>       //x
-    <item name="Cs5" format="float" type="dimen">0.255</item>       //x
-    <item name="Cs6" format="float" type="dimen">0.19</item>
+    <item name="Cs3" format="float" type="dimen">0.514</item>
+    <item name="Cs4" format="float" type="dimen">0.385</item>
+    <item name="Cs5" format="float" type="dimen">0.255</item>
+    <item name="Cs6" format="float" type="dimen">0.13</item>
 
     //D
-    <item name="D3" format="float" type="dimen">0.46</item>
-    <item name="D4" format="float" type="dimen">0.364</item>       //X
-    <item name="D5" format="float" type="dimen">0.238</item>       //x
-    <item name="D6" format="float" type="dimen">0.175</item>
+    <item name="D3" format="float" type="dimen">0.492</item>
+    <item name="D4" format="float" type="dimen">0.364</item>
+    <item name="D5" format="float" type="dimen">0.236</item>
+    <item name="D6" format="float" type="dimen">0.115</item>
 
     //Eb
-    <item name="Eb3" format="float" type="dimen">0.445</item>
-    <item name="Eb4" format="float" type="dimen">0.348</item>      //X
-    <item name="Eb5" format="float" type="dimen">0.255</item>
-    <item name="Eb6" format="float" type="dimen">0.16</item>
+    <item name="Eb3" format="float" type="dimen">0.475</item>
+    <item name="Eb4" format="float" type="dimen">0.348</item>
+    <item name="Eb5" format="float" type="dimen">0.214</item>
+    <item name="Eb6" format="float" type="dimen">0.095</item>
 
     //E
-    <item name="E3" format="float" type="dimen">0.445</item>
-    <item name="E4" format="float" type="dimen">0.348</item>       //X
-    <item name="E5" format="float" type="dimen">0.255</item>
-    <item name="E6" format="float" type="dimen">0.16</item>
+    <item name="E3" format="float" type="dimen">0.475</item>
+    <item name="E4" format="float" type="dimen">0.348</item>
+    <item name="E5" format="float" type="dimen">0.214</item>
+    <item name="E6" format="float" type="dimen">0.095</item>
 
     //F
-    <item name="F3" format="float" type="dimen">0.425</item>
-    <item name="F4" format="float" type="dimen">0.329</item>       //X
-    <item name="F5" format="float" type="dimen">0.21</item>
-    <item name="F6" format="float" type="dimen">0.14</item>
+    <item name="F3" format="float" type="dimen">0.458</item>
+    <item name="F4" format="float" type="dimen">0.329</item>
+    <item name="F5" format="float" type="dimen">0.196</item>
+    <item name="F6" format="float" type="dimen">0.082</item>
 
     //F#
-    <item name="Fs3" format="float" type="dimen">0.425</item>
-    <item name="Fs4" format="float" type="dimen">0.329</item>      //X
-    <item name="Fs5" format="float" type="dimen">0.20</item>
-    <item name="Fs6" format="float" type="dimen">0.14</item>
+    <item name="Fs3" format="float" type="dimen">0.458</item>
+    <item name="Fs4" format="float" type="dimen">0.329</item>
+    <item name="Fs5" format="float" type="dimen">0.1955</item>
+    <item name="Fs6" format="float" type="dimen">0.082</item>
 
     //G
-    <item name="G3" format="float" type="dimen">0.405</item>
-    <item name="G4" format="float" type="dimen">0.31</item>       //X
-    <item name="G5" format="float" type="dimen">0.215</item>
-    <item name="G6" format="float" type="dimen">0.12</item>
+    <item name="G3" format="float" type="dimen">0.437</item>
+    <item name="G4" format="float" type="dimen">0.31</item>
+    <item name="G5" format="float" type="dimen">0.184</item>
+    <item name="G6" format="float" type="dimen">0.06</item>
 
     //G#
-    <item name="Gs3" format="float" type="dimen">0.405</item>
-    <item name="Gs4" format="float" type="dimen">0.31</item>      //X
-    <item name="Gs5" format="float" type="dimen">0.215</item>
-    <item name="Gs6" format="float" type="dimen">0.12</item>
+    <item name="Gs3" format="float" type="dimen">0.437</item>
+    <item name="Gs4" format="float" type="dimen">0.31</item>
+    <item name="Gs5" format="float" type="dimen">0.184</item>
+    <item name="Gs6" format="float" type="dimen">0.06</item>       //wont register
 
     //A
-    <item name="A3" format="float" type="dimen">0.395</item>
-    <item name="A4" format="float" type="dimen">0.2915</item>       //X
-    <item name="A5" format="float" type="dimen">0.205</item>
-    <item name="A6" format="float" type="dimen">0.11</item>
+    <item name="A3" format="float" type="dimen">0.42</item>
+    <item name="A4" format="float" type="dimen">0.2915</item>
+    <item name="A5" format="float" type="dimen">0.164</item>
+    <item name="A6" format="float" type="dimen">0.045</item>        //wont register
 
     //Bb
-    <item name="Bb3" format="float" type="dimen">0.37</item>
-    <item name="Bb4" format="float" type="dimen">0.273</item>      //X
-    <item name="Bb5" format="float" type="dimen">0.18</item>
-    <item name="Bb6" format="float" type="dimen">0.085</item>
+    <item name="Bb3" format="float" type="dimen">0.404</item>
+    <item name="Bb4" format="float" type="dimen">0.273</item>
+    <item name="Bb5" format="float" type="dimen">0.149</item>
+    <item name="Bb6" format="float" type="dimen">0.025</item>       //wont register
 
     //B
-    <item name="B3" format="float" type="dimen">0.37</item>
-    <item name="B4" format="float" type="dimen">0.273</item>       //X
-    <item name="B5" format="float" type="dimen">0.18</item>
-    <item name="B6" format="float" type="dimen">0.085</item>
+    <item name="B3" format="float" type="dimen">0.404</item>
+    <item name="B4" format="float" type="dimen">0.273</item>
+    <item name="B5" format="float" type="dimen">0.149</item>
+    <item name="B6" format="float" type="dimen">0.025</item>         //wont register
 
 
     <!--important comment!-->

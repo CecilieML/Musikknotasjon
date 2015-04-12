@@ -271,17 +271,17 @@ public class MainActivity extends ActionBarActivity  {
 
       //  System.out.println(dur + "   durrrrrrrrr " + fullBar/16 + "  " + fullBar*2);
 
-        if(dur>(fullBar*2)){
+      /*  if(dur>(fullBar*2)){
             lastNote = System.nanoTime();
             useLastPauseWritten = false;
-        }
+        }*/
 
 
-
-        if (nearestNote == prevNote){
+        if (nearestNote == prevNote && !newNote){
             noteLength();
 
         }else if(dur>(fullBar/16)){
+            newNote = false;
             lastNote = System.nanoTime();
             useLastPauseWritten = false;
 
@@ -309,9 +309,12 @@ public class MainActivity extends ActionBarActivity  {
     ImageView pauseImg;
 
     boolean useLastPauseWritten;
+    boolean setHalfRestX;
+    boolean newNote;
 
     public void writePause(){
         if(linLayMoving) {
+            newNote = true;
             FrameLayout.LayoutParams pauseParams = new FrameLayout.LayoutParams(
                     FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.pauseWidth)),
                     FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.pauseHeight)));
@@ -324,27 +327,33 @@ public class MainActivity extends ActionBarActivity  {
                 durationOfPause = (firstPause - lastPauseWritten) / 1000000; //change last note to last pasue written
             }
 
+            lastNote = System.nanoTime();
 
-            System.out.println(durationOfPause + "  pause duration");
             if (durationOfPause < fullBar / 4) {
                 pauseImg = new ImageView(this);
                 pauseImg.setLayoutParams(pauseParams);
                 linLayout.addView(pauseImg);
-
+               setHalfRestX = true;
             }
 
             if (durationOfPause > fullBar / 2 && durationOfPause < fullBar) {
-                pauseImg.setBackgroundColor(Color.BLACK);
-                pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYHalfRest)));
-                pauseImg.setX(linLayout.getLayoutParams().width -
-                        FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXHalfRest)));//fix repeated calls
-
+                if(pauseImg!=null) {
+                    pauseImg.setBackgroundColor(Color.BLACK);
+                    pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYHalfRest)));
+                    if(setHalfRestX){
+                        pauseImg.setX(linLayout.getLayoutParams().width -
+                                FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXHalfRest)));//fix repeated calls
+                        setHalfRestX = false;
+                    }
+                }
 
             } else if (durationOfPause > fullBar) {
-                if(pauseImg!=null)pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYWholeRest)));
-                 lastPauseWritten = System.nanoTime();
-                pauseImg.setX(linLayout.getLayoutParams().width -
-                        FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXWholeRest)));
+                if(pauseImg!=null) {
+                    pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYWholeRest)));
+                    lastPauseWritten = System.nanoTime();
+                    pauseImg.setX(linLayout.getLayoutParams().width -
+                            FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXWholeRest)));
+                }
 
 
             }
@@ -384,7 +393,16 @@ public class MainActivity extends ActionBarActivity  {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmIV)));
                 if (i == 5)
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmV)));
-                if (i>5)System.out.println("need moar lines BASS");
+                if (i == 6)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmVI)));
+                if (i == 7)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmVII)));
+                if (i == 8)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmVIII)));
+                if (i == 9)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmIX)));
+                if (i == 10)
+                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmX)));
                 linLayout.addView(lineForNote);
             }
         }else if(height<26){
@@ -604,12 +622,21 @@ int fullBar = metronomNmb*4; //4 = tempo;
             }
 
         }else if(dur >= (fullBar) && dur < (fullBar*1.5)){              //= 4/4 of fullBar
-            currentNote.setImageResource(R.drawable.notailhollownote);
+            if(upSideDown){
+                currentNote.setImageResource(R.drawable.upsidedownnotailhollownote);
+            }else {
+                currentNote.setImageResource(R.drawable.notailhollownote);
+            }
 
-        }else if(dur >= (fullBar*1.5) && dur < fullBar*2){          //= 1 1/2 of fullBar
+        }else if(dur >= (fullBar*1.5) && dur < fullBar*1.6){          //= 1 1/2 of fullBar
             currentNote.setImageResource(R.drawable.notailhollownotewdot);
+            if(upSideDown){
+                currentNote.setImageResource(R.drawable.upsidedownnotailhollownotewdot);
+            }else {
+                currentNote.setImageResource(R.drawable.notailhollownotewdot);
+            }
 
-        }else if(dur >= fullBar*2){              // randomly chosen...
+        }else if(dur >= fullBar*1.6){              // randomly chosen...
             prevNote = new Note(false, false, 0, " ",0 ,0, 0);
         }
 
@@ -767,6 +794,11 @@ int fullBar = metronomNmb*4; //4 = tempo;
     };
 
     public static boolean runFFT = true;
+
+    public void resetAll(){
+
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
