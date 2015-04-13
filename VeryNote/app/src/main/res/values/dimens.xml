@@ -33,7 +33,7 @@
 
     <item type="dimen" format="float" name="noteImgWidth">0.1</item>
     <item type="dimen" format="float" name="noteImgHeight">0.2</item>
-    <item type="dimen" format="float" name="noteImgINTERMIDIEATHeight">1</item>
+    <item type="dimen" format="float" name="noteImgFULLHeight">1</item>
 
     <item type="dimen" format="float" name="btnDownX">0</item>
     <item type="dimen" format="float" name="btnDownY">0.68</item>

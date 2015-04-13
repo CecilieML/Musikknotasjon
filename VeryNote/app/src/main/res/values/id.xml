@@ -5,6 +5,18 @@
     <item name="sharp" type="id"/>
     <item name="neutral" type="id"/>
 
+    <item name="lineI" type="id"/>
+    <item name="lineII" type="id"/>
+    <item name="lineIII" type="id"/>
+    <item name="lineIV" type="id"/>
+    <item name="lineV" type="id"/>
+    <item name="lineVI" type="id"/>
+    <item name="lineVII" type="id"/>
+    <item name="lineVIII" type="id"/>
+    <item name="lineIX" type="id"/>
+    <item name="lineX" type="id"/>
+    <item name="lineXI" type="id"/>
+
     <item name="C3" type="id"/>
     <item name="C4" type="id"/>
     <item name="C5" type="id"/>
