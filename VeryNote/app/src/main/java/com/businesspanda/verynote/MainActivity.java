@@ -546,24 +546,30 @@ public class MainActivity extends ActionBarActivity  {
 boolean bass = false;
 int fullBar = metronomNmb*4; //4 = tempo;
     int addToY = 0;
+    int addToSharpFlat = 0;
 
     public void noteLength(){
 
         int height = nearestNote.getNoteHeight();
         boolean upSideDown = false;
         addToY = 0;
+        addToSharpFlat = 0;
         if(bass){
             if(height <= 37){
                 upSideDown=true;
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
+                addToSharpFlat = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteSharpFlat));
             }
         }else{
             if(height <= 20) {
                 upSideDown = true;
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
+                addToSharpFlat = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteSharpFlat));
             }
 
         }
+
+        if(dur >= (fullBar/16))sharpFlat(nearestNote);
 
         if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {               //= 1/16 of fullBar
             if (upSideDown) {
@@ -643,6 +649,36 @@ int fullBar = metronomNmb*4; //4 = tempo;
     }
 
     RelativeLayout imgLayout;
+    ImageView sharp;
+    ImageView flat;
+
+    public void sharpFlat(Note note) {
+        if (note.sharp) {
+            sharp = new ImageView(this);
+            sharp.setId(R.id.sharp);
+            FrameLayout.LayoutParams para = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FitToScreen.returnViewHeight(getPercent(R.dimen.sharpHeight)));
+            sharp.setLayoutParams(para);
+
+            sharp.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY)) + addToSharpFlat);
+
+            sharp.setImageResource(R.drawable.sharpnotenew);
+            imgLayout.addView(sharp);
+        } else if (note.flat) {
+            flat = new ImageView(this);
+            flat.setId(R.id.flat);
+            FrameLayout.LayoutParams paraFlat = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FitToScreen.returnViewHeight(getPercent(R.dimen.flatHeight)));
+            flat.setLayoutParams(paraFlat);
+
+            flat.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.flatOffsetY)) + addToSharpFlat);
+
+            flat.setImageResource(R.drawable.flatnotenew);
+            imgLayout.addView(flat);
+        }
+    }
 
     public void notesOnScreen(Note note){
 
@@ -687,27 +723,23 @@ int fullBar = metronomNmb*4; //4 = tempo;
         currentNote.setLayoutParams(params);
         currentNote.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.noteX)));
         currentNote.setY(0);
-        //image.setMaxHeight((int) this.getResources().getDimension(R.dimen.maxHeight));
-        //image.setMaxWidth((int) this.getResources().getDimension(R.dimen.maxWidth));
-        //currentNote.setImageResource(R.drawable.doubletailnote);
 
-//        currentNote.setImageResource(R.drawable.notailhollownotewdot);
-
-        if(note.sharp){
-            ImageView sharp = new ImageView(this);
+      /*  if(note.sharp){
+            //ImageView
+            sharp = new ImageView(this);
             sharp.setId(R.id.sharp);
             FrameLayout.LayoutParams para = new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.WRAP_CONTENT,
                     FitToScreen.returnViewHeight(getPercent(R.dimen.sharpHeight)));
             sharp.setLayoutParams(para);
 
-           // sharp.setX((int) this.getResources().getDimension(R.dimen.sharpOffsetX));
-           sharp.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY)));
+            sharp.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY)));
 
             sharp.setImageResource(R.drawable.sharpnotenew);
             imgLayout.addView(sharp);
         }else if(note.flat){
-            ImageView flat = new ImageView(this);
+           // ImageView
+            flat = new ImageView(this);
             flat.setId(R.id.flat);
             FrameLayout.LayoutParams paraFlat = new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -719,7 +751,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
 
             flat.setImageResource(R.drawable.flatnotenew);
             imgLayout.addView(flat);
-        }
+        }*/
 
        // currentNote.setBackgroundColor(getResources().getColor(R.color.yellow));
 
@@ -825,12 +857,10 @@ int fullBar = metronomNmb*4; //4 = tempo;
                     getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     pitch_detector_thread_.interrupt();
                     runFFT = false;
-                    System.out.println("FALSE!!!" + pitch_detector_thread_.isInterrupted());
-//                    pitch_detector_thread_.destroy();
-                    //mHandler.removeCallbacks(mVibrations);
                     tempolineHandler.removeCallbacks(writeTempoline);
                     tempoStop = System.nanoTime();
                     linLayHandler.removeCallbacks(moveLinLay);
+                    linLayout.getLayoutParams().width += 3*Offset();
                     linLayout.clearAnimation();
                     linLayout.animate().x(0).setDuration(10);
                     currentLinLayWidth = linLayout.getWidth();

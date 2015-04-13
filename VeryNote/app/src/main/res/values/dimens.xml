@@ -53,6 +53,7 @@
     <item type="dimen" format="float" name="btnWidth">0.1</item>
 
     <item type="dimen" format="float" name="upSideDownNoteX">0.1159</item>
+    <item type="dimen" format="float" name="upSideDownNoteSharpFlat">0.1155</item>
 
     <item type="dimen" format="float" name="noteLineWidth">0.035</item> //
     <item type="dimen" format="float" name="noteLineOffset">0.026</item> //
