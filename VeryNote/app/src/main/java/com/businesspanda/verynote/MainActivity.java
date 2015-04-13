@@ -394,7 +394,7 @@ public class MainActivity extends ActionBarActivity  {
 
                 lineForNote.setLayoutParams(notelineParams);
                 lineForNote.setImageResource(R.drawable.goodline);
-                lineForNote.setX(x);
+                lineForNote.setX(0);
                 if (i == 0)
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYMiddleC)));
                 if (i == 1)
@@ -649,7 +649,7 @@ public class MainActivity extends ActionBarActivity  {
                     FitToScreen.returnViewHeight(getPercent(R.dimen.sharpHeight)));
             sharp.setLayoutParams(para);
 
-            sharp.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY)) + noteY - addToSharpFlat);
+            sharp.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY)) + noteY + addToSharpFlat);
 
             sharp.setImageResource(R.drawable.sharpnotenew);
             imgLayout.addView(sharp);
@@ -661,7 +661,7 @@ public class MainActivity extends ActionBarActivity  {
                     FitToScreen.returnViewHeight(getPercent(R.dimen.flatHeight)));
             flat.setLayoutParams(paraFlat);
 
-            flat.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.flatOffsetY))+ noteY - addToSharpFlat);
+            flat.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.flatOffsetY))+ noteY + addToSharpFlat);
 
             flat.setImageResource(R.drawable.flatnotenew);
             imgLayout.addView(flat);
@@ -687,7 +687,7 @@ public class MainActivity extends ActionBarActivity  {
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteImgWidth)),
                 FitToScreen.returnViewHeight(getPercent(R.dimen.noteImgINTERMIDIEATHeight)));
 
-        imgLayout.setBackgroundColor(getResources().getColor(R.color.yellow));
+        //imgLayout.setBackgroundColor(getResources().getColor(R.color.yellow));
 
         imgLayout.setLayoutParams(par);
         imgLayout.setFocusable(true);
