@@ -97,6 +97,11 @@ public class MainActivity extends ActionBarActivity  {
     int metronomNmb = 750;
     public int currentLinLayWidth;
 
+    boolean bass = false;
+    int fullBar = metronomNmb*4; //4 = tempo;
+    int addToY = 0;
+    int addToSharpFlat = 0;
+
 
     /** Called when the activity is first created. */
     @Override
@@ -339,7 +344,11 @@ public class MainActivity extends ActionBarActivity  {
             if (durationOfPause > fullBar / 2 && durationOfPause < fullBar) {
                 if(pauseImg!=null) {
                     pauseImg.setBackgroundColor(Color.BLACK);
-                    pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYHalfRest)));
+                    if(bass) {
+                        pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseBassYHalfRest)));
+                    }else{
+                        pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYHalfRest)));
+                    }
                     if(setHalfRestX){
                         pauseImg.setX(linLayout.getLayoutParams().width -
                                 FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXHalfRest)));//fix repeated calls
@@ -349,7 +358,12 @@ public class MainActivity extends ActionBarActivity  {
 
             } else if (durationOfPause > fullBar) {
                 if(pauseImg!=null) {
-                    pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYWholeRest)));
+                    if(bass) {
+                        pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseBassYWholeRest)));
+                    }else{
+                        pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYWholeRest)));
+                    }
+
                     lastPauseWritten = System.nanoTime();
                     pauseImg.setX(linLayout.getLayoutParams().width -
                             FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXWholeRest)));
@@ -403,7 +417,7 @@ public class MainActivity extends ActionBarActivity  {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmIX)));
                 if (i == 10)
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmX)));
-                linLayout.addView(lineForNote);
+                imgLayout.addView(lineForNote);
             }
         }else if(height<26){
             for (int i = 0; i < nmbOfLines; i++) {
@@ -433,7 +447,7 @@ public class MainActivity extends ActionBarActivity  {
                 if (i == 8)
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmXIV)));
                 if (i>8)System.out.println("need moar lines -----");
-                linLayout.addView(lineForNote);
+                imgLayout.addView(lineForNote);
             }
         }else if(height>26){
             for (int i = 0; i < nmbOfLines; i++) {
@@ -457,7 +471,7 @@ public class MainActivity extends ActionBarActivity  {
                 if (i == 5)
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYpV)));
                 if (i>5)System.out.println("need moar lines ++12");
-                linLayout.addView(lineForNote);
+                imgLayout.addView(lineForNote);
             }
         }
     }
@@ -500,32 +514,6 @@ public class MainActivity extends ActionBarActivity  {
         tempolineHandler.postDelayed(writeTempoline, writeAt);
     }
 
-/* //writes string of pitch values to file
-   public void writeToFile(String stringarray) {
-
-       File file = new File(Environment.getExternalStorageDirectory(),"FileWriter.txt");
-
-       if(file.exists()) {
-           file.delete();
-       }
-
-       FileWriter fr = null;
-       try {
-           fr = new FileWriter(file);
-           fr.write(stringarray);
-       } catch (IOException e) {
-           e.printStackTrace();
-       } finally {
-           //close resources
-           try {
-               fr.close();
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
-       }
-   }
-*/
-
     private Runnable mVibrations = new Runnable() {
         public void run() {
             TextView text = (TextView) findViewById(R.id.met_text);
@@ -542,11 +530,6 @@ public class MainActivity extends ActionBarActivity  {
             mHandler.postDelayed(mVibrations, metronomNmb);
         }
     };
-
-boolean bass = false;
-int fullBar = metronomNmb*4; //4 = tempo;
-    int addToY = 0;
-    int addToSharpFlat = 0;
 
     public void noteLength(){
 
@@ -653,6 +636,11 @@ int fullBar = metronomNmb*4; //4 = tempo;
     ImageView flat;
 
     public void sharpFlat(Note note) {
+
+        String noteName = note.getName();
+        int yID = this.getResources().getIdentifier(noteName, "dimen", getPackageName());
+        float noteY = FitToScreen.returnViewHeight(getPercent(yID));
+
         if (note.sharp) {
             sharp = new ImageView(this);
             sharp.setId(R.id.sharp);
@@ -661,7 +649,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
                     FitToScreen.returnViewHeight(getPercent(R.dimen.sharpHeight)));
             sharp.setLayoutParams(para);
 
-            sharp.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY)) + addToSharpFlat);
+            sharp.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY)) + noteY - addToSharpFlat);
 
             sharp.setImageResource(R.drawable.sharpnotenew);
             imgLayout.addView(sharp);
@@ -673,7 +661,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
                     FitToScreen.returnViewHeight(getPercent(R.dimen.flatHeight)));
             flat.setLayoutParams(paraFlat);
 
-            flat.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.flatOffsetY)) + addToSharpFlat);
+            flat.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.flatOffsetY))+ noteY - addToSharpFlat);
 
             flat.setImageResource(R.drawable.flatnotenew);
             imgLayout.addView(flat);
@@ -691,9 +679,15 @@ int fullBar = metronomNmb*4; //4 = tempo;
 
         imgLayout = new RelativeLayout(this);
 
+        /*FrameLayout.LayoutParams par = new FrameLayout.LayoutParams(
+                FitToScreen.returnViewWidth(getPercent(R.dimen.noteImgWidth)),
+                FitToScreen.returnViewHeight(getPercent(R.dimen.noteImgHeight))); this works (kinda)*/
+
         FrameLayout.LayoutParams par = new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteImgWidth)),
-                FitToScreen.returnViewHeight(getPercent(R.dimen.noteImgHeight)));
+                FitToScreen.returnViewHeight(getPercent(R.dimen.noteImgINTERMIDIEATHeight)));
+
+        imgLayout.setBackgroundColor(getResources().getColor(R.color.yellow));
 
         imgLayout.setLayoutParams(par);
         imgLayout.setFocusable(true);
@@ -710,7 +704,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
         float y = FitToScreen.returnViewHeight(getPercent(yID));
 
         imgLayout.setX(x);
-        imgLayout.setY(y + addToY);
+      //  imgLayout.setY(y + addToY);
 
         int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
         currentNote.setId(noteID);
@@ -722,38 +716,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
                 FitToScreen.returnViewHeight(getPercent(R.dimen.noteHeight)));
         currentNote.setLayoutParams(params);
         currentNote.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.noteX)));
-        currentNote.setY(0);
-
-      /*  if(note.sharp){
-            //ImageView
-            sharp = new ImageView(this);
-            sharp.setId(R.id.sharp);
-            FrameLayout.LayoutParams para = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    FitToScreen.returnViewHeight(getPercent(R.dimen.sharpHeight)));
-            sharp.setLayoutParams(para);
-
-            sharp.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY)));
-
-            sharp.setImageResource(R.drawable.sharpnotenew);
-            imgLayout.addView(sharp);
-        }else if(note.flat){
-           // ImageView
-            flat = new ImageView(this);
-            flat.setId(R.id.flat);
-            FrameLayout.LayoutParams paraFlat = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    FitToScreen.returnViewHeight(getPercent(R.dimen.flatHeight)));
-            flat.setLayoutParams(paraFlat);
-
-            //flat.setX((int) this.getResources().getDimension(R.dimen.flatOffsetX));
-            flat.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.flatOffsetY)));
-
-            flat.setImageResource(R.drawable.flatnotenew);
-            imgLayout.addView(flat);
-        }*/
-
-       // currentNote.setBackgroundColor(getResources().getColor(R.color.yellow));
+        currentNote.setY(y + addToY);
 
         currentNote.setOnTouchListener(heyListen);
         imgLayout.addView(currentNote);
