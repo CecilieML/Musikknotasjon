@@ -697,7 +697,7 @@ public class MainActivity extends ActionBarActivity  {
                     FitToScreen.returnViewHeight(getPercent(R.dimen.sharpHeight)));
             sharp.setLayoutParams(para);
 
-            sharp.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY)) + noteY + addToSharpFlat);
+            sharp.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY)) + noteY);
 
             sharp.setImageResource(R.drawable.sharpnotenew);
             imgLayout.addView(sharp);
@@ -709,7 +709,7 @@ public class MainActivity extends ActionBarActivity  {
                     FitToScreen.returnViewHeight(getPercent(R.dimen.flatHeight)));
             flat.setLayoutParams(paraFlat);
 
-            flat.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.flatOffsetY))+ noteY + addToSharpFlat);
+            flat.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.flatOffsetY))+ noteY);
 
             flat.setImageResource(R.drawable.flatnotenew);
             imgLayout.addView(flat);

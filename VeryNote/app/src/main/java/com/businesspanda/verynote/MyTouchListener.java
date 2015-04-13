@@ -381,13 +381,13 @@ public class MyTouchListener implements View.OnTouchListener {
         TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
         for(int i=0;i<parentLayout.getChildCount();i++){
             View child = parentLayout.getChildAt(i);
-/*            String noteName = Config.context.getResources().getResourceEntryName(child.getId());
+            String noteName = Config.context.getResources().getResourceEntryName(child.getId());
             if(noteName.length() <= 3){
                 noteName = noteName.replaceAll(""," ");
                 noteName = noteName.replaceAll(" s","#");
                 noteName = noteName.replaceAll(" b","b");
                 freqText.setText(noteName);
-            }*/
+            }
         }
 
     }
