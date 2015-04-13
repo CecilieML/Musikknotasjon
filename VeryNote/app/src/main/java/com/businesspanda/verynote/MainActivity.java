@@ -553,7 +553,7 @@ int fullBar = metronomNmb*4; //4 = tempo;
         boolean upSideDown = false;
         addToY = 0;
         if(bass){
-            if(height <= 39){
+            if(height <= 37){
                 upSideDown=true;
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
             }

@@ -83,12 +83,12 @@
     <item type="dimen" format="float" name="noteLineYMiddleC">0.51</item>       //middleC (*p = plus, m = minus)
     <item type="dimen" format="float" name="noteLineYpI">0.545</item>       /*
     <item type="dimen" format="float" name="noteLineYpII">0.58</item>        *
-    <item type="dimen" format="float" name="noteLineYpIII">0.615</item>      *   basslines
+    <item type="dimen" format="float" name="noteLineYpIII">0.617</item>      *   basslines
     <item type="dimen" format="float" name="noteLineYpIV">0.65</item>        *
     <item type="dimen" format="float" name="noteLineYpV">0.685</item>        */
 
     //C
-    <item name="C3" format="float" type="dimen">0.514</item>
+    <item name="C3" format="float" type="dimen">0.513</item>
     <item name="C4" format="float" type="dimen">0.385</item>
     <item name="C5" format="float" type="dimen">0.255</item>
     <item name="C6" format="float" type="dimen">0.13</item>

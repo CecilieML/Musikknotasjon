@@ -100,7 +100,7 @@ public class NoteSearch {
         notes.put(1480, F6s);
 
         //G
-        Note G3 = new Note(false, false, 196, "G3", 40, 3, 0);
+        Note G3 = new Note(false, false, 196, "G3", 40, 2, 0);
         Note G4 = new Note(false, false, 392, "G4", 28, 0, 3);
         Note G5 = new Note(false, false, 784, "G5", 16, 0, 6);
         Note G6 = new Note(false, false, 1568, "G6", 4, 4, 10);
@@ -111,7 +111,7 @@ public class NoteSearch {
         notes.put(1568, G6);
 
         //G#
-        Note G3s = new Note(true, false, 208, "Gs3", 39, 3, 0);
+        Note G3s = new Note(true, false, 208, "Gs3", 39, 2, 0);
         Note G4s = new Note(true, false, 415, "Gs4", 27, 0, 3);
         Note G5s = new Note(true, false, 831, "Gs5", 15, 0, 6);
         Note G6s = new Note(true, false, 1661, "Ds6", 3, 4, 10);
