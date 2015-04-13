@@ -36,12 +36,12 @@ public class yValueSearch {
         Config.context.getResources().getValue(R.dimen.C6, c6outValue, true);
         float c6 = c6outValue.getFloat();
 
-        yValues[47] = c3;
-        yValues[35] = c4;
-        yValues[23] = c5;
-        yValues[11] = c6;
+        yValues[27] = c3;
+        yValues[20] = c4;
+        yValues[13] = c5;
+        yValues[6] = c6;
 
-        //C#
+        /*//C#
         TypedValue cs3outValue = new TypedValue();
         Config.context.getResources().getValue(R.dimen.Cs3, cs3outValue, true);
         float cs3 = cs3outValue.getFloat();
@@ -61,7 +61,7 @@ public class yValueSearch {
         yValues[46] = cs3;
         yValues[34] = cs4;
         yValues[22] = cs5;
-        yValues[10] = cs6;
+        yValues[10] = cs6;*/
 
         //D
         TypedValue d3outValue = new TypedValue();
@@ -80,12 +80,12 @@ public class yValueSearch {
         Config.context.getResources().getValue(R.dimen.D6, d6outValue, true);
         float d6 = d6outValue.getFloat();
 
-        yValues[45] = d3;
-        yValues[33] = d4;
-        yValues[21] = d5;
-        yValues[9]  = d6;
+        yValues[26] = d3;
+        yValues[19] = d4;
+        yValues[12] = d5;
+        yValues[5]  = d6;
 
-       //Eb
+       /*//Eb
         TypedValue eb3outValue = new TypedValue();
         Config.context.getResources().getValue(R.dimen.Eb3, eb3outValue, true);
         float eb3 = eb3outValue.getFloat();
@@ -105,7 +105,7 @@ public class yValueSearch {
         yValues[44] = eb3;
         yValues[32] = eb4;
         yValues[20] = eb5;
-        yValues[8]  = eb6;
+        yValues[8]  = eb6;*/
 
         //E
         TypedValue e3outValue = new TypedValue();
@@ -124,10 +124,10 @@ public class yValueSearch {
         Config.context.getResources().getValue(R.dimen.E6, e6outValue, true);
         float e6 = e6outValue.getFloat();
 
-        yValues[43] = e3;
-        yValues[31] = e4;
-        yValues[19] = e5;
-        yValues[7]  = e6;
+        yValues[25] = e3;
+        yValues[18] = e4;
+        yValues[11] = e5;
+        yValues[4]  = e6;
 
         //F
         TypedValue f3outValue = new TypedValue();
@@ -146,12 +146,12 @@ public class yValueSearch {
         Config.context.getResources().getValue(R.dimen.F6, f6outValue, true);
         float f6 = f6outValue.getFloat();
 
-        yValues[42] = f3;
-        yValues[30] = f4;
-        yValues[18] = f5;
-        yValues[6]  = f6;
+        yValues[24] = f3;
+        yValues[17] = f4;
+        yValues[10] = f5;
+        yValues[3]  = f6;
 
-        //F#
+        /*//F#
         TypedValue fs3outValue = new TypedValue();
         Config.context.getResources().getValue(R.dimen.Fs3, fs3outValue, true);
         float fs3 = fs3outValue.getFloat();
@@ -171,7 +171,7 @@ public class yValueSearch {
         yValues[41] = fs3;
         yValues[29] = fs4;
         yValues[17] = fs5;
-        yValues[5]  = fs6;
+        yValues[5]  = fs6;*/
 
         //G
         TypedValue g3outValue = new TypedValue();
@@ -190,12 +190,12 @@ public class yValueSearch {
         Config.context.getResources().getValue(R.dimen.G6, g6outValue, true);
         float g6 = g6outValue.getFloat();
 
-        yValues[40] = g3;
-        yValues[28] = g4;
-        yValues[16] = g5;
-        yValues[4]  = g6;
+        yValues[23] = g3;
+        yValues[16] = g4;
+        yValues[9]  = g5;
+        yValues[2]  = g6;
 
-        //G#
+        /*//G#
         TypedValue gs3outValue = new TypedValue();
         Config.context.getResources().getValue(R.dimen.Gs3, gs3outValue, true);
         float gs3 = gs3outValue.getFloat();
@@ -215,7 +215,7 @@ public class yValueSearch {
         yValues[39] = gs3;
         yValues[27] = gs4;
         yValues[15] = gs5;
-        yValues[3]  = gs6;
+        yValues[3]  = gs6;*/
 
         //A
         TypedValue a3outValue = new TypedValue();
@@ -234,12 +234,12 @@ public class yValueSearch {
         Config.context.getResources().getValue(R.dimen.A6, a6outValue, true);
         float a6 = a6outValue.getFloat();
 
-        yValues[38] = a3;
-        yValues[26] = a4;
-        yValues[14] = a5;
-        yValues[2]  = a6;
+        yValues[22] = a3;
+        yValues[15] = a4;
+        yValues[8]  = a5;
+        yValues[1]  = a6;
 
-        //Bb
+       /* //Bb
         TypedValue bb3outValue = new TypedValue();
         Config.context.getResources().getValue(R.dimen.Bb3, bb3outValue, true);
         float bb3 = bb3outValue.getFloat();
@@ -259,7 +259,7 @@ public class yValueSearch {
         yValues[37] = bb3;
         yValues[25] = bb4;
         yValues[13] = bb5;
-        yValues[1]  = bb6;
+        yValues[1]  = bb6;*/
 
         //B
         TypedValue b3outValue = new TypedValue();
@@ -278,9 +278,9 @@ public class yValueSearch {
         Config.context.getResources().getValue(R.dimen.B6, b6outValue, true);
         float b6 = b6outValue.getFloat();
 
-        yValues[36] = b3;
-        yValues[24] = b4;
-        yValues[12] = b5;
+        yValues[21] = b3;
+        yValues[14] = b4;
+        yValues[7] = b5;
         yValues[0]  = b6;
 
     }
