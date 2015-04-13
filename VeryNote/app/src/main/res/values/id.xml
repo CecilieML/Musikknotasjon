@@ -5,6 +5,8 @@
     <item name="sharp" type="id"/>
     <item name="neutral" type="id"/>
 
+    <item name="upsideDown" type="id"/>
+
     <item name="lineI" type="id"/>
     <item name="lineII" type="id"/>
     <item name="lineIII" type="id"/>

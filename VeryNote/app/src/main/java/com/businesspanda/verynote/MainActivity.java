@@ -588,14 +588,14 @@ public class MainActivity extends ActionBarActivity  {
         if(bass){
             if(height <= 37){
                 upSideDown=true;
+                currentNote.setId(R.id.upsideDown);
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
-                addToSharpFlat = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteSharpFlat));
             }
         }else{
             if(height <= 20) {
                 upSideDown = true;
+                currentNote.setId(R.id.upsideDown);
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
-                addToSharpFlat = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteSharpFlat));
             }
 
         }

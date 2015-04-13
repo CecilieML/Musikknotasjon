@@ -286,6 +286,42 @@ public class yValueSearch {
     }
 
 
+    public static int returnNext(float valueToFind){
+        float percentValue = FitToScreen.returnPercent(valueToFind);
+
+        double minDiff = Double.MAX_VALUE;
+
+        int indexOfValueToFind = 0;
+
+        for (int i = 0; i < yValues.length; i++) {
+            double diff = Math.abs(percentValue - yValues[i]);
+            if (diff < minDiff) {
+                indexOfValueToFind = i;
+                minDiff = diff;
+            }
+        }
+        return indexOfValueToFind - 1;
+
+    }
+
+    public static int returnPrev(float valueToFind){
+        float percentValue = FitToScreen.returnPercent(valueToFind);
+
+        double minDiff = Double.MAX_VALUE;
+
+        int indexOfValueToFind = 0;
+
+        for (int i = 0; i < yValues.length; i++) {
+            double diff = Math.abs(percentValue - yValues[i]);
+            if (diff < minDiff) {
+                indexOfValueToFind = i;
+                minDiff = diff;
+            }
+        }
+        return indexOfValueToFind - 1;
+    }
+
+
     public static int findYIndex(float valueToFind) {
 
         float percentValue = FitToScreen.returnPercent(valueToFind);

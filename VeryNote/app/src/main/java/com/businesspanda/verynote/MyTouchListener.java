@@ -36,6 +36,7 @@ import android.widget.TextView;
 public class MyTouchListener implements View.OnTouchListener {
 
     boolean oneIsCurrentlyChosen;
+    boolean upSideDownNote; //true = note is flipped
     ImageView img;
     RelativeLayout really;
     Button btnUp;
@@ -55,6 +56,22 @@ public class MyTouchListener implements View.OnTouchListener {
     public void vibIy(int dur) {
         Vibrator vib = (Vibrator) Config.context.getSystemService(Context.VIBRATOR_SERVICE);
         vib.vibrate(dur);
+    }
+
+    public void removeLines(){
+
+    }
+
+    public void addLines(){
+
+    }
+
+    public boolean isNoteUpSideDown(RelativeLayout parentLayout){
+        if(parentLayout.getId() == R.id.upsideDown){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public void createButtons(final ImageView imgView){
@@ -87,13 +104,32 @@ public class MyTouchListener implements View.OnTouchListener {
                 int[] xyPos = new int[2];
                 parentLayout.getLocationOnScreen(xyPos);
                 int y = xyPos[1];
-                int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
+
+
+                upSideDownNote = isNoteUpSideDown(parentLayout);
+                if(upSideDownNote) y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
+
+
+                /*int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
                 System.out.println(index + "  index in mytouchlstener");
-                if(index>0){
-                    float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
-                    parentLayout.setY(percent);
+                if(index>0){}
+                    float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);*/
+
+                int index = yValueSearch.returnPrev(y - actionAndNotBarHeight);
+
+                float percent = FitToScreen.returnPercent(yValueSearch.yValues[index]);
+
+                if(upSideDownNote) percent += FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
+
+                    for(int i=0;i<parentLayout.getChildCount();i++) {
+                        View child = parentLayout.getChildAt(i);
+                        if (child.getId() == R.id.flat) {
+                            child.setY(percent);
+                        }
+                    }
+
                     System.out.println(percent + "   percentvalue from mytouchlistenrnehjsurhgdf");
-                }
+
                 vibIy(shortVib);
 
             }
@@ -123,10 +159,29 @@ public class MyTouchListener implements View.OnTouchListener {
                 int[] xyPos = new int[2];
                 parentLayout.getLocationOnScreen(xyPos);
                 int y = xyPos[1];
-                int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
+
+
+                upSideDownNote = isNoteUpSideDown(parentLayout);
+                if(upSideDownNote) y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
+
+
+                /*int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
                 System.out.println("indrx-----  " + index);
-                    float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);
-                    parentLayout.setY(percent);
+
+                float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);*/
+
+                int index = yValueSearch.returnNext(y - actionAndNotBarHeight);
+
+                float percent = FitToScreen.returnPercent(yValueSearch.yValues[index]);
+
+                if(upSideDownNote) percent += FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
+
+                for(int i=0;i<parentLayout.getChildCount();i++) {
+                    View child = parentLayout.getChildAt(i);
+                    if (child.getId() == R.id.flat) {
+                        child.setY(percent);
+                    }
+                }
 
                 vibIy(shortVib);
             }
@@ -321,7 +376,7 @@ public class MyTouchListener implements View.OnTouchListener {
         });
 
         btnRemoveAll = new Button(Config.context);
-        btnRemoveAll.setText("X");
+        btnRemoveAll.setText("Delete note");
 
         btnRemoveAll.setLayoutParams(btnParams);
 
