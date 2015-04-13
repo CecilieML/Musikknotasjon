@@ -91,6 +91,20 @@ public class MyTouchListener implements View.OnTouchListener {
             @Override
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
+                View note;
+
+                int y = 0;
+
+                for(int i=0;i<parentLayout.getChildCount();i++){
+                    View child = parentLayout.getChildAt(i);
+                    String noteName = Config.context.getResources().getResourceEntryName(child.getId());
+                    if(noteName.length() <= 3){
+                        note = child;
+                        int[] xyPos = new int[2];
+                        note.getLocationOnScreen(xyPos);
+                        y = xyPos[1];
+                    }
+                }
 
                 View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
                 int height = content.getHeight();
@@ -101,10 +115,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 int actionAndNotBarHeight = fullHeight - height;
 
-                int[] xyPos = new int[2];
-                parentLayout.getLocationOnScreen(xyPos);
-                int y = xyPos[1];
-
+                /***/
 
                 upSideDownNote = isNoteUpSideDown(parentLayout);
                 if(upSideDownNote) y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
@@ -116,19 +127,18 @@ public class MyTouchListener implements View.OnTouchListener {
                     float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);*/
 
                 int index = yValueSearch.returnPrev(y - actionAndNotBarHeight);
+                float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index]);
 
-                float percent = FitToScreen.returnPercent(yValueSearch.yValues[index]);
+                System.out.println(index + " <-- index, percent --> " + percent + " wat? --> " + yValueSearch.yValues[index]);
 
                 if(upSideDownNote) percent += FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
 
                     for(int i=0;i<parentLayout.getChildCount();i++) {
                         View child = parentLayout.getChildAt(i);
-                        if (child.getId() == R.id.flat) {
-                            child.setY(percent);
-                        }
-                    }
+                        child.setY(percent);
+                        System.out.println("did the thing!!");
 
-                    System.out.println(percent + "   percentvalue from mytouchlistenrnehjsurhgdf");
+                    }
 
                 vibIy(shortVib);
 
@@ -146,6 +156,20 @@ public class MyTouchListener implements View.OnTouchListener {
             @Override
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
+                View note;
+
+                int y = 0;
+
+                for(int i=0;i<parentLayout.getChildCount();i++){
+                    View child = parentLayout.getChildAt(i);
+                    String noteName = Config.context.getResources().getResourceEntryName(child.getId());
+                    if(noteName.length() <= 3){
+                        note = child;
+                        int[] xyPos = new int[2];
+                        note.getLocationOnScreen(xyPos);
+                        y = xyPos[1];
+                    }
+                }
 
                 View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
                 int height = content.getHeight();
@@ -156,14 +180,12 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 int actionAndNotBarHeight = fullHeight - height;
 
-                int[] xyPos = new int[2];
+               /* int[] xyPos = new int[2];
                 parentLayout.getLocationOnScreen(xyPos);
-                int y = xyPos[1];
-
+                int y = xyPos[1];*/
 
                 upSideDownNote = isNoteUpSideDown(parentLayout);
                 if(upSideDownNote) y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
-
 
                 /*int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
                 System.out.println("indrx-----  " + index);
@@ -171,16 +193,15 @@ public class MyTouchListener implements View.OnTouchListener {
                 float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);*/
 
                 int index = yValueSearch.returnNext(y - actionAndNotBarHeight);
+                float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index]);
 
-                float percent = FitToScreen.returnPercent(yValueSearch.yValues[index]);
+                System.out.println(index + " <-- index, percent --> " + percent + " DOWN --> " + yValueSearch.yValues[index]);
 
                 if(upSideDownNote) percent += FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
 
                 for(int i=0;i<parentLayout.getChildCount();i++) {
                     View child = parentLayout.getChildAt(i);
-                    if (child.getId() == R.id.flat) {
-                        child.setY(percent);
-                    }
+                    child.setY(percent);
                 }
 
                 vibIy(shortVib);

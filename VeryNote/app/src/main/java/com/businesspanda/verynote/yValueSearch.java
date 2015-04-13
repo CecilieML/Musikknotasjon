@@ -300,7 +300,8 @@ public class yValueSearch {
                 minDiff = diff;
             }
         }
-        return indexOfValueToFind - 1;
+        System.out.println(indexOfValueToFind + "  <--idx, idx+1-->  " + (indexOfValueToFind+1));
+        return (indexOfValueToFind + 1);
 
     }
 
@@ -318,7 +319,7 @@ public class yValueSearch {
                 minDiff = diff;
             }
         }
-        return indexOfValueToFind - 1;
+        return (indexOfValueToFind - 1);
     }
 
 
