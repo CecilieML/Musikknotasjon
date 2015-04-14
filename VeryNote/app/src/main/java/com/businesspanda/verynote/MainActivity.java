@@ -541,11 +541,11 @@ public class MainActivity extends ActionBarActivity  {
         tempo.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.tempolineY)));
         if(bass)tempo.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.bassTempolineY)));
 
-        //allNotes = allNotes + " |"; <--gammel pause for lagring xml
+        //allNotes = allNotes + " |"; <--gammel tempolinje for lagring xml
 
-        Note pauseNote = new Note(false, false, 0, "|", 0, 0, 0);
+        Note tempolineNote = new Note(false, false, 0, "|", 0, 0, 0);
 
-        allNotesForXML.add(pauseNote);
+        allNotesForXML.add(tempolineNote);
 
         linLayout.addView(tempo);
         lastTempolineWasWritten = System.nanoTime();
