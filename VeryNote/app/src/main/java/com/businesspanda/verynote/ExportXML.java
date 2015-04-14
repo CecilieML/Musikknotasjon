@@ -42,7 +42,7 @@ public class ExportXML implements Serializable {
 
         for (Note note : notesList) {
             String noteFromList = note.getName().replaceAll("s", "#");
-            allNotes = allNotes + " " + noteFromList;
+            allNotes = allNotes + " " + noteFromList + note.getDurationOfNote();
         }
 
         return allNotes;

@@ -130,7 +130,6 @@ public class MainActivity extends ActionBarActivity  {
 
         linLayout = new RelativeLayout(this);
         scrollView.addView(linLayout);
-        //scrollView.setScrollingEnabled(false);
 
         backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
 
@@ -264,6 +263,9 @@ public class MainActivity extends ActionBarActivity  {
 
         stringarray = stringarray + " " + pitchInt;
 
+        //SOMETHING OR OTHER TO FIX PAUSES
+        lastPauseWritten = System.nanoTime();
+        /***/
 
         changeFreq.setText(nearestNote.name); //remember to remove
 
@@ -271,15 +273,7 @@ public class MainActivity extends ActionBarActivity  {
 
         dur = (nowTime - lastNote) / 1000000;
 
-      //  System.out.println(dur + "   durrrrrrrrr " + fullBar/16 + "  " + fullBar*2);
-
-      /*  if(dur>(fullBar*2)){
-            lastNote = System.nanoTime();
-            useLastPauseWritten = false;
-        }*/
-
-
-        if (nearestNote == prevNote && !newNote){
+        if (nearestNote == prevNote && !newNote) {
             noteLength();
 
         }else if(dur>(fullBar/16)){
@@ -287,19 +281,12 @@ public class MainActivity extends ActionBarActivity  {
             lastNote = System.nanoTime();
             useLastPauseWritten = false;
 
+            /***/
             allNotesForXML.add(nearestNote);
-
-            //String arrayNote = nearestNote.getName().replaceAll("s","#");    <--gammel lagring for xml
-            //allNotes = allNotes + " " + arrayNote; <--gammel lagring for xml
-
-
-           /* for(int i = 0; i < allNotes.size();i++) {
-                System.out.println("All the notes  " + allNotes.get(i).getName());
-            }*/
+            /***/
 
             notesOnScreen(nearestNote);
             prevNote = nearestNote;
-
         }
 
     }
@@ -312,6 +299,7 @@ public class MainActivity extends ActionBarActivity  {
 
     boolean useLastPauseWritten;
     boolean setHalfRestX;
+    boolean addWholeRestToList;
     boolean newNote;
 
     public void writePause(){
@@ -348,29 +336,35 @@ public class MainActivity extends ActionBarActivity  {
                     }
                     if(setHalfRestX){
                         pauseImg.setX(linLayout.getLayoutParams().width -
-                                FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXHalfRest)));//fix repeated calls
+                                FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXHalfRest)));
+                        Note pauseNote = new Note(false, false, 0, "R", 0, 0, 0, "h");
+                        allNotesForXML.add(pauseNote);
                         setHalfRestX = false;
                     }
                 }
-
             } else if (durationOfPause > fullBar) {
+                Note pauseNote = new Note(false, false, 0, "R", 0, 0, 0, "w");
+                allNotesForXML.add(pauseNote);
                 if(pauseImg!=null) {
                     if(bass) {
                         pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseBassYWholeRest)));
                     }else{
                         pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYWholeRest)));
                     }
-
+                    if(addWholeRestToList){
+                        pauseImg.setX(linLayout.getLayoutParams().width -
+                                FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXWholeRest)));
+                        allNotesForXML.add(pauseNote);
+                        addWholeRestToList = false;
+                    }
                     lastPauseWritten = System.nanoTime();
-                    pauseImg.setX(linLayout.getLayoutParams().width -
-                            FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXWholeRest)));
+
                 }
 
 
             }
         }
     }
-
 
     public void notesOutOfBoundsLines(int nmbOfLines, int nmbOfBassLines, int height){
         FrameLayout.LayoutParams notelineParams= new FrameLayout.LayoutParams(
@@ -543,7 +537,7 @@ public class MainActivity extends ActionBarActivity  {
 
         //allNotes = allNotes + " |"; <--gammel tempolinje for lagring xml
 
-        Note tempolineNote = new Note(false, false, 0, "|", 0, 0, 0);
+        Note tempolineNote = new Note(false, false, 0, "|", 0, 0, 0, "");
 
         allNotesForXML.add(tempolineNote);
 
@@ -605,6 +599,7 @@ public class MainActivity extends ActionBarActivity  {
         if(dur >= (fullBar/16))sharpFlat(nearestNote);
 
         if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {               //= 1/16 of fullBar
+           nearestNote.setDurationOfNote("s");
             if (upSideDown) {
                 currentNote.setImageResource(R.drawable.upsidedowndoubletailnote);
             } else{
@@ -612,6 +607,7 @@ public class MainActivity extends ActionBarActivity  {
             }
 
         }else if(dur >= (fullBar*3/32) && dur < (fullBar/8)){        //= 3/32 of fullBar
+            nearestNote.setDurationOfNote("s.");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedowndoubletailnotewdot);
             }else {
@@ -619,6 +615,7 @@ public class MainActivity extends ActionBarActivity  {
             }
 
         }else if(dur >= (fullBar/8) && dur < (fullBar*3/16)){           //= 1/8 of fullBar
+            nearestNote.setDurationOfNote("i");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownsingeltailnote);
             }else {
@@ -626,6 +623,7 @@ public class MainActivity extends ActionBarActivity  {
             }
 
         }else if(dur >= (fullBar*3/16) && dur < (fullBar/4)){        //= 3/16 of fullBar
+            nearestNote.setDurationOfNote("i.");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownsingletaieotewdot);
             }else {
@@ -633,6 +631,7 @@ public class MainActivity extends ActionBarActivity  {
             }
 
         }else if(dur >= (fullBar/4) && dur < (fullBar*3/8)) {           //= 1/4 of fullBar
+            nearestNote.setDurationOfNote("q");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownnote);
             }else {
@@ -640,6 +639,7 @@ public class MainActivity extends ActionBarActivity  {
             }
 
         }else if(dur >= (fullBar*3/8) && dur < (fullBar/2)) {         //= 3/8 of fullBar
+            nearestNote.setDurationOfNote("q.");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownnotewdot);
             }else {
@@ -647,6 +647,7 @@ public class MainActivity extends ActionBarActivity  {
             }
 
         }else if(dur >= (fullBar/2) && dur < (fullBar*3/4)){            //= 2/4 of
+            nearestNote.setDurationOfNote("h");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownhollownote);
             }else {
@@ -654,6 +655,7 @@ public class MainActivity extends ActionBarActivity  {
             }
 
         }else if(dur >= (fullBar*3/4) && dur < (fullBar)){          //= 3/4 of fullBar
+            nearestNote.setDurationOfNote("h.");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownhollownotewdot);
             }else {
@@ -661,6 +663,7 @@ public class MainActivity extends ActionBarActivity  {
             }
 
         }else if(dur >= (fullBar) && dur < (fullBar*1.5)){              //= 4/4 of fullBar
+            nearestNote.setDurationOfNote("w");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownnotailhollownote);
             }else {
@@ -668,7 +671,7 @@ public class MainActivity extends ActionBarActivity  {
             }
 
         }else if(dur >= (fullBar*1.5) && dur < fullBar*1.6){          //= 1 1/2 of fullBar
-            currentNote.setImageResource(R.drawable.notailhollownotewdot);
+            nearestNote.setDurationOfNote("w.");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownnotailhollownotewdot);
             }else {
@@ -676,7 +679,7 @@ public class MainActivity extends ActionBarActivity  {
             }
 
         }else if(dur >= fullBar*1.6){              // randomly chosen...
-            prevNote = new Note(false, false, 0, " ",0 ,0, 0);
+            prevNote = new Note(false, false, 0, " ",0 ,0, 0, "");
         }
 
     }
@@ -906,7 +909,7 @@ public class MainActivity extends ActionBarActivity  {
                     scrollView.scrollTo(scrollWidth - xScroll, 0);
                     x = 0;
                     scrollView.setScrollingEnabled(true);
-                    prevNote = new Note(false, false, 0, " ", 0, 0, 0);
+                    prevNote = new Note(false, false, 0, " ", 0, 0, 0, "");
                     linLayMoving = false;
                     recording = false;
                     editable = true;

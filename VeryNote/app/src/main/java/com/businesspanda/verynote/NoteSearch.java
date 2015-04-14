@@ -23,10 +23,10 @@ public class NoteSearch {
         //Creates HashMap to hold note names and hertz values for searching.
 
         //C
-        Note C3 = new Note(false, false, 131, "C3", 47, 4, 0);
-        Note C4 = new Note(false, false, 262, "C4", 35, 1, 1);
-        Note C5 = new Note(false, false, 523, "C5", 23, 0, 4);
-        Note C6 = new Note(false, false, 1047, "C6", 11, 2, 8);
+        Note C3 = new Note(false, false, 131, "C3", 47, 4, 0, "");
+        Note C4 = new Note(false, false, 262, "C4", 35, 1, 1, "");
+        Note C5 = new Note(false, false, 523, "C5", 23, 0, 4, "");
+        Note C6 = new Note(false, false, 1047, "C6", 11, 2, 8, "");
 
         notes.put(131, C3);
         notes.put(262, C4);
@@ -34,10 +34,10 @@ public class NoteSearch {
         notes.put(1047, C6);
 
         //C#
-        Note C3s = new Note(true, false, 139, "Cs3", 46, 4, 0);
-        Note C4s = new Note(true, false, 277, "Cs4", 34, 1, 1);
-        Note C5s = new Note(true, false, 554, "Cs5", 22, 0, 4);
-        Note C6s = new Note(true, false, 1109, "Cs6", 10, 2, 8);
+        Note C3s = new Note(true, false, 139, "Cs3", 46, 4, 0, "");
+        Note C4s = new Note(true, false, 277, "Cs4", 34, 1, 1, "");
+        Note C5s = new Note(true, false, 554, "Cs5", 22, 0, 4, "");
+        Note C6s = new Note(true, false, 1109, "Cs6", 10, 2, 8, "");
 
         notes.put(139, C3s);
         notes.put(277, C4s);
@@ -45,10 +45,10 @@ public class NoteSearch {
         notes.put(1109, C6s);
 
         //D
-        Note D3 = new Note(false, false, 147, "D3", 45, 4, 0);
-        Note D4 = new Note(false, false, 294, "D4", 33, 0, 1);
-        Note D5 = new Note(false, false, 587, "D5", 21, 0, 5);
-        Note D6 = new Note(false, false, 1175, "D6", 9, 2, 8);
+        Note D3 = new Note(false, false, 147, "D3", 45, 4, 0, "");
+        Note D4 = new Note(false, false, 294, "D4", 33, 0, 1, "");
+        Note D5 = new Note(false, false, 587, "D5", 21, 0, 5, "");
+        Note D6 = new Note(false, false, 1175, "D6", 9, 2, 8, "");
 
         notes.put(147, D3);
         notes.put(294, D4);
@@ -56,10 +56,10 @@ public class NoteSearch {
         notes.put(1175, D6);
 
         //Eb
-        Note E3b = new Note(false, true, 156, "Eb3", 44, 3, 0);
-        Note E4b = new Note(false, true, 311, "Eb4", 32, 0, 2);
-        Note E5b = new Note(false, true, 622, "Eb5", 20, 0, 5);
-        Note E6b = new Note(false, true, 1245, "Eb6", 8, 3, 9);
+        Note E3b = new Note(false, true, 156, "Eb3", 44, 3, 0, "");
+        Note E4b = new Note(false, true, 311, "Eb4", 32, 0, 2, "");
+        Note E5b = new Note(false, true, 622, "Eb5", 20, 0, 5, "");
+        Note E6b = new Note(false, true, 1245, "Eb6", 8, 3, 9, "");
 
         notes.put(156, E3b);
         notes.put(311, E4b);
@@ -67,10 +67,10 @@ public class NoteSearch {
         notes.put(1245, E6b);
 
         //E
-        Note E3 = new Note(false, false, 165, "E3", 43, 3, 0);
-        Note E4 = new Note(false, false, 330, "E4", 31, 0, 2);
-        Note E5 = new Note(false, false, 659, "E5", 19, 0, 5);
-        Note E6 = new Note(false, false, 1319, "E6", 7, 3, 9);
+        Note E3 = new Note(false, false, 165, "E3", 43, 3, 0, "");
+        Note E4 = new Note(false, false, 330, "E4", 31, 0, 2, "");
+        Note E5 = new Note(false, false, 659, "E5", 19, 0, 5, "");
+        Note E6 = new Note(false, false, 1319, "E6", 7, 3, 9, "");
 
         notes.put(165, E3);
         notes.put(330, E4);
@@ -78,10 +78,10 @@ public class NoteSearch {
         notes.put(1319, E6);
 
         //F
-        Note F3 = new Note(false, false, 175, "F3", 42, 3, 0);
-        Note F4 = new Note(false, false, 349, "F4", 30, 0, 2);
-        Note F5 = new Note(false, false, 698, "F5", 18, 0, 6);
-        Note F6 = new Note(false, false, 1397, "F6", 6, 3, 9);
+        Note F3 = new Note(false, false, 175, "F3", 42, 3, 0, "");
+        Note F4 = new Note(false, false, 349, "F4", 30, 0, 2, "");
+        Note F5 = new Note(false, false, 698, "F5", 18, 0, 6, "");
+        Note F6 = new Note(false, false, 1397, "F6", 6, 3, 9, "");
 
         notes.put(175, F3);
         notes.put(349, F4);
@@ -89,10 +89,10 @@ public class NoteSearch {
         notes.put(1397, F6);
 
         //F#
-        Note F3s = new Note(true, false, 185, "Fs3", 41, 3, 0);
-        Note F4s = new Note(true, false, 370, "Fs4", 29, 0, 2);
-        Note F5s = new Note(true, false, 740, "Fs5", 17, 0, 6);
-        Note F6s = new Note(true, false, 1480, "Fs6", 5, 3, 9);
+        Note F3s = new Note(true, false, 185, "Fs3", 41, 3, 0, "");
+        Note F4s = new Note(true, false, 370, "Fs4", 29, 0, 2, "");
+        Note F5s = new Note(true, false, 740, "Fs5", 17, 0, 6, "");
+        Note F6s = new Note(true, false, 1480, "Fs6", 5, 3, 9, "");
 
         notes.put(185, F3s);
         notes.put(370, F4s);
@@ -100,10 +100,10 @@ public class NoteSearch {
         notes.put(1480, F6s);
 
         //G
-        Note G3 = new Note(false, false, 196, "G3", 40, 2, 0);
-        Note G4 = new Note(false, false, 392, "G4", 28, 0, 3);
-        Note G5 = new Note(false, false, 784, "G5", 16, 0, 6);
-        Note G6 = new Note(false, false, 1568, "G6", 4, 4, 10);
+        Note G3 = new Note(false, false, 196, "G3", 40, 2, 0, "");
+        Note G4 = new Note(false, false, 392, "G4", 28, 0, 3, "");
+        Note G5 = new Note(false, false, 784, "G5", 16, 0, 6, "");
+        Note G6 = new Note(false, false, 1568, "G6", 4, 4, 10, "");
 
         notes.put(196, G3);
         notes.put(392, G4);
@@ -111,10 +111,10 @@ public class NoteSearch {
         notes.put(1568, G6);
 
         //G#
-        Note G3s = new Note(true, false, 208, "Gs3", 39, 2, 0);
-        Note G4s = new Note(true, false, 415, "Gs4", 27, 0, 3);
-        Note G5s = new Note(true, false, 831, "Gs5", 15, 0, 6);
-        Note G6s = new Note(true, false, 1661, "Ds6", 3, 4, 10);
+        Note G3s = new Note(true, false, 208, "Gs3", 39, 2, 0, "");
+        Note G4s = new Note(true, false, 415, "Gs4", 27, 0, 3, "");
+        Note G5s = new Note(true, false, 831, "Gs5", 15, 0, 6, "");
+        Note G6s = new Note(true, false, 1661, "Ds6", 3, 4, 10, "");
 
         notes.put(208, G3s);
         notes.put(415, G4s);
@@ -122,10 +122,10 @@ public class NoteSearch {
         notes.put(1661, G6s);
 
         //A
-        Note A3 = new Note(false, false, 220, "A3", 38, 2, 0);
-        Note A4 = new Note(false, false, 440, "A4", 26, 0, 3);
-        Note A5 = new Note(false, false, 880, "A5", 14, 1, 7);
-        Note A6 = new Note(false, false, 1760, "A6", 2, 4, 10);
+        Note A3 = new Note(false, false, 220, "A3", 38, 2, 0, "");
+        Note A4 = new Note(false, false, 440, "A4", 26, 0, 3, "");
+        Note A5 = new Note(false, false, 880, "A5", 14, 1, 7, "");
+        Note A6 = new Note(false, false, 1760, "A6", 2, 4, 10, "");
 
         notes.put(220, A3);
         notes.put(440, A4);
@@ -133,10 +133,10 @@ public class NoteSearch {
         notes.put(1760, A6);
 
         //Bb
-        Note B3b = new Note(false, true, 233, "Bb3", 37, 1, 0);
-        Note B4b = new Note(false, true, 466, "Bb4", 25, 0, 4);
-        Note B5b = new Note(false, true, 932, "Bb5", 13, 1, 7);
-        Note B6b = new Note(false, true, 1864, "Bb6", 1, 5, 11);
+        Note B3b = new Note(false, true, 233, "Bb3", 37, 1, 0, "");
+        Note B4b = new Note(false, true, 466, "Bb4", 25, 0, 4, "");
+        Note B5b = new Note(false, true, 932, "Bb5", 13, 1, 7, "");
+        Note B6b = new Note(false, true, 1864, "Bb6", 1, 5, 11, "");
 
         notes.put(233, B3b);
         notes.put(466, B4b);
@@ -144,15 +144,18 @@ public class NoteSearch {
         notes.put(1864, B6b);
 
         //B
-        Note B3 = new Note(false, false, 247, "B3", 36, 1, 0);
-        Note B4 = new Note(false, false, 493, "B4", 24, 0, 4);
-        Note B5 = new Note(false, false, 988, "B5", 12, 1, 7);
-        Note B6 = new Note(false, false, 1976, "B6", 0, 5, 11);
+        Note B3 = new Note(false, false, 247, "B3", 36, 1, 0, "");
+        Note B4 = new Note(false, false, 493, "B4", 24, 0, 4, "");
+        Note B5 = new Note(false, false, 988, "B5", 12, 1, 7, "");
+        Note B6 = new Note(false, false, 1976, "B6", 0, 5, 11, "");
 
         notes.put(247, B3);
         notes.put(493, B4);
         notes.put(988, B5);
         notes.put(1976, B6);
+
+
+
 
     }
 
