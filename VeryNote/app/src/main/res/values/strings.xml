@@ -25,5 +25,6 @@
     <string name="metronome_speed">80</string>
     <string name="cleflabel_text">Clef:</string>
     <string name="clef_text">Treble</string>
+    <string name="warning_text">Warning: \n Changing clef will delete your current work.</string>
 
 </resources>

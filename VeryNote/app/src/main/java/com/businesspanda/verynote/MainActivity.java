@@ -946,6 +946,7 @@ public class MainActivity extends ActionBarActivity  {
                 final SeekBar seekBar = (SeekBar)popupView.findViewById(R.id.speedBar);
                 final TextView speedText = (TextView)popupView.findViewById(R.id.speedValue);
                 final TextView clefText = (TextView)popupView.findViewById(R.id.clef_text);
+                final TextView warningText = (TextView)popupView.findViewById(R.id.warning);
 
                 if (bass) {
                     clefText.setText("Bass");
@@ -982,6 +983,7 @@ public class MainActivity extends ActionBarActivity  {
                     @Override
                     public void onClick(View v) {
                         clefText.setText("Treble");
+                        warningText.setText(getResources().getString(R.string.warning_text));
                     }});
 
                 Button btnBass = (Button)popupView.findViewById(R.id.bass);
@@ -990,6 +992,7 @@ public class MainActivity extends ActionBarActivity  {
                     @Override
                     public void onClick(View v) {
                         clefText.setText("Bass");
+                        warningText.setText(getResources().getString(R.string.warning_text));
                     }
                 });
 
