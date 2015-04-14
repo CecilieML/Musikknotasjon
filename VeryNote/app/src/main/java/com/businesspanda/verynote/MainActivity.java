@@ -166,7 +166,6 @@ public class MainActivity extends ActionBarActivity  {
             }
         });
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE);
-
     }
 
     @Override
@@ -176,9 +175,10 @@ public class MainActivity extends ActionBarActivity  {
         if (hasFocus) {
 
             FrameLayout.LayoutParams paramsLinLayout = new FrameLayout.LayoutParams(
-                    FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)),
+                    FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth)),
                     FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
             linLayout.setLayoutParams(paramsLinLayout);
+            linLayout.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)));
 
             RelativeLayout.LayoutParams backgroundParams = new RelativeLayout.LayoutParams(
                     FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundWidth)),
@@ -195,11 +195,19 @@ public class MainActivity extends ActionBarActivity  {
             lowestLayerParams.gravity = Gravity.CENTER;
             lowestLayer.setLayoutParams(lowestLayerParams);
 
+            if(linLayout.getWidth()<lowestLayer.getWidth()){
+                linLayStartX = (int)linLayout.getX();
+            }else{
+                linLayStartX = 0;
+            }
+
             if(currentLinLayWidth>FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth))){
                 linLayout.getLayoutParams().width = currentLinLayWidth;
             }
         }
     }
+
+    int linLayStartX;
 
     @Override
     public void onStart() {
@@ -829,7 +837,9 @@ public class MainActivity extends ActionBarActivity  {
     private Runnable moveLinLay = new Runnable() {
         public void run() {
             LinearInterpolator interpolator = new LinearInterpolator();
-            linLayout.animate().x(x).setInterpolator(interpolator).setDuration(speed);
+            if(linLayout.getWidth() > lowestLayer.getWidth())linLayStartX = 0;
+            linLayout.animate().x(linLayStartX+x).setInterpolator(interpolator).setDuration(speed);
+            System.out.println( x + " <--x, linlaydfj--> " + linLayStartX + "   == " + (linLayStartX+x));
             x -= Offset();
             linLayout.getLayoutParams().width += Offset();
             linLayout.requestLayout();
@@ -900,9 +910,17 @@ public class MainActivity extends ActionBarActivity  {
                     tempolineHandler.removeCallbacks(writeTempoline);
                     tempoStop = System.nanoTime();
                     linLayHandler.removeCallbacks(moveLinLay);
-                    linLayout.getLayoutParams().width += 3*Offset();
+
+                    if(linLayout.getWidth() < lowestLayer.getWidth()) {
+                        linLayStartX = (int) linLayout.getX();
+                    }else{
+                        linLayStartX = 0;
+                    }
+
+                   // linLayout.getLayoutParams().width += FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth));
+
                     linLayout.clearAnimation();
-                    linLayout.animate().x(0).setDuration(10);
+                    linLayout.animate().x(linLayStartX).setDuration(10);
                     currentLinLayWidth = linLayout.getWidth();
                     xScroll += x;
                     int scrollWidth = scrollView.getWidth();
