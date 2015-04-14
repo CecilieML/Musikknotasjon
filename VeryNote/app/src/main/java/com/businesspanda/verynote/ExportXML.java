@@ -1,6 +1,6 @@
 package com.businesspanda.verynote;
 
-/** Copyright (C) 2015 by BusinessPanda.
+/** Copyright (C) 2015 by BusinessPanda - Cecilie M. Langfeldt, Helene H. Larsen.
  **
  ** Permission to use, copy, modify, and distribute this software and its
  ** documentation for any purpose and without fee is hereby granted, provided
@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import nu.xom.Serializer;
 
@@ -34,6 +35,17 @@ public class ExportXML implements Serializable {
 
     public void setFilename(String filename) {
         this.filename = filename + ".xml";
+    }
+
+    public String convertArrayListToString(ArrayList<Note> notesList) {
+        String allNotes = "";
+
+        for (Note note : notesList) {
+            String noteFromList = note.getName().replaceAll("s", "#");
+            allNotes = allNotes + " " + noteFromList;
+        }
+
+        return allNotes;
     }
 
     void saveToFile(Pattern pattern) {

@@ -17,16 +17,10 @@
           android:orderInCategory="200"
           app:showAsAction="never" />
 
-    <item android:id="@+id/action_playmidi"
-          android:title="@string/action_playmidi"
-          android:orderInCategory="400"
-          app:showAsAction="never" />
-
     <item android:id="@+id/action_new"
           android:title="@string/action_new"
           android:orderInCategory="500"
           app:showAsAction="never" />
-
 
 
     <item android:id="@+id/action_record"

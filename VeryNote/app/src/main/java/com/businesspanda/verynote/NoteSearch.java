@@ -1,6 +1,6 @@
 package com.businesspanda.verynote;
 
-/** Copyright (C) 2015 by BusinessPanda.
+/** Copyright (C) 2015 by BusinessPanda - Cecilie M. Langfeldt, Helene H. Larsen.
  **
  ** Permission to use, copy, modify, and distribute this software and its
  ** documentation for any purpose and without fee is hereby granted, provided

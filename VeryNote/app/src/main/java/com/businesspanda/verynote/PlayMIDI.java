@@ -1,22 +1,17 @@
 package com.businesspanda.verynote;
 
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Environment;
 import android.widget.Toast;
 
 import org.jfugue.Pattern;
 import org.jfugue.Player;
-import org.jfugue.*;
 
 import java.io.File;
 import java.io.IOException;
 
 import jp.kshoji.javax.sound.midi.InvalidMidiDataException;
 
-/**
- * Created by CecilieMarie on 23.03.2015.
- */
+
 public class PlayMIDI {
 
     public void playMIDI(Pattern pattern) {

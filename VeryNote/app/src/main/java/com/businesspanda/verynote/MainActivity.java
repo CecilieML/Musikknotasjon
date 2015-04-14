@@ -1,6 +1,6 @@
 package com.businesspanda.verynote;
 
-/** Copyright (C) 2015 by BusinessPanda.
+/** Copyright (C) 2015 by BusinessPanda - Cecilie M. Langfeldt, Helene H. Larsen.
  **
  ** Permission to use, copy, modify, and distribute this software and its
  ** documentation for any purpose and without fee is hereby granted, provided
@@ -11,6 +11,8 @@ package com.businesspanda.verynote;
  */
 
 import java.lang.Thread;
+import java.util.ArrayList;
+
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -48,14 +50,14 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import org.jfugue.*;
-import jp.kshoji.javax.sound.midi.UsbMidiSystem;
+
 
 public class MainActivity extends ActionBarActivity  {
 
     Thread pitch_detector_thread_;
 
-    //public ArrayList<String> allNotes = new ArrayList();
-    public String allNotes = "";
+    public ArrayList<Note> allNotesForXML = new ArrayList();
+    //public String allNotes = ""; <-gammel string for xml
 
     public int met_int = 1;
 
@@ -71,13 +73,11 @@ public class MainActivity extends ActionBarActivity  {
     private Handler tempolineHandler = new Handler();
     private Handler linLayHandler = new Handler();
 
-    UsbMidiSystem usbMidiSystem;
 
     RelativeLayout linLayout;
     MyTouchListener heyListen;
 
     public ExportXML exp;
-    public PlayMIDI mid;
 
     public String title = "Untitled";
 
@@ -118,7 +118,6 @@ public class MainActivity extends ActionBarActivity  {
         //fitToScreen();
 
         exp = new ExportXML();
-        mid = new PlayMIDI();
 
         Config.context = this;
 
@@ -227,10 +226,6 @@ public class MainActivity extends ActionBarActivity  {
         mHandler.removeCallbacks(mVibrations);
         //playHandler.removeCallbacks(playSoundLoop);
 
-        if (usbMidiSystem != null) {
-//            usbMidiSystem.terminate();
-        }
-
 
     }
 
@@ -292,10 +287,10 @@ public class MainActivity extends ActionBarActivity  {
             lastNote = System.nanoTime();
             useLastPauseWritten = false;
 
-            String arrayNote = nearestNote.getName().replaceAll("s","#");
+            allNotesForXML.add(nearestNote);
 
-            //allNotes.add(arrayNote);
-            allNotes = allNotes + " " + arrayNote;
+            //String arrayNote = nearestNote.getName().replaceAll("s","#");    <--gammel lagring for xml
+            //allNotes = allNotes + " " + arrayNote; <--gammel lagring for xml
 
 
            /* for(int i = 0; i < allNotes.size();i++) {
@@ -546,7 +541,12 @@ public class MainActivity extends ActionBarActivity  {
         tempo.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.tempolineY)));
         if(bass)tempo.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.bassTempolineY)));
 
-        allNotes = allNotes + " |";
+        //allNotes = allNotes + " |"; <--gammel pause for lagring xml
+
+        Note pauseNote = new Note(false, false, 0, "|", 0, 0, 0);
+
+        allNotesForXML.add(pauseNote);
+
         linLayout.addView(tempo);
         lastTempolineWasWritten = System.nanoTime();
 
@@ -842,7 +842,8 @@ public class MainActivity extends ActionBarActivity  {
         titleField.setText("Untitled");
         exp.setFilename("untitled");
 
-        allNotes = "";
+        //allNotes = ""; <--gammel sletting av string for xml
+        allNotesForXML.clear();
 
         linLayout.getLayoutParams().width = FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth));
 
@@ -913,52 +914,24 @@ public class MainActivity extends ActionBarActivity  {
                 return true;
 
             case R.id.action_play:
-                    playSound();
+                playSound();
                 return true;
 
             case R.id.action_new:
                 resetAll();
-                /*
-                EditText titleField = (EditText) findViewById(R.id.title_field);
-                titleField.setText("Untitled");
-                exp.setFilename("untitled");
-
-                allNotes = "";
-
-                linLayout.getLayoutParams().width = FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth));
-
-                TextView noteView = (TextView) findViewById(R.id.freqTextview);
-                noteView.setText("");
-
-                if(recording) {
-                    android.support.v7.internal.view.menu.ActionMenuItemView recBtn =(android.support.v7.internal.view.menu.ActionMenuItemView) findViewById(R.id.action_record);
-                    recBtn.setIcon(getResources().getDrawable(R.drawable.ic_action_mic));
-                    getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                    pitch_detector_thread_.interrupt();
-                    tempolineHandler.removeCallbacks(writeTempoline);
-                    linLayHandler.removeCallbacks(moveLinLay);
-                    recording = false;
-                }
-
-                scrollView.removeView(linLayout);
-                linLayout = new RelativeLayout(this);
-                scrollView.addView(linLayout);
-
-                //missing stuff..
-                */
                 return true;
-
 
             case R.id.action_save:
-                Pattern patternSD = new Pattern(allNotes);
+                Pattern patternSD = new Pattern(exp.convertArrayListToString(allNotesForXML));
                 exp.saveToSD(patternSD);
                 return true;
+
             case R.id.action_share:
-                //System.out.println(allNotes);
-                Pattern pattern = new Pattern(allNotes);
+                Pattern pattern = new Pattern(exp.convertArrayListToString(allNotesForXML));
                 exp.saveToFile(pattern);
                 exp.sendToEmail();
                 return true;
+
             case R.id.action_settings:
 
 
