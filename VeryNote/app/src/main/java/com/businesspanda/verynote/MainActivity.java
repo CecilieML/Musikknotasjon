@@ -195,11 +195,11 @@ public class MainActivity extends ActionBarActivity  {
             lowestLayerParams.gravity = Gravity.CENTER;
             lowestLayer.setLayoutParams(lowestLayerParams);
 
-            if(linLayout.getWidth()<lowestLayer.getWidth()){
+            //if(linLayout.getWidth()<lowestLayer.getWidth()){
                 linLayStartX = (int)linLayout.getX();
-            }else{
-                linLayStartX = 0;
-            }
+           // }else{
+            //    linLayStartX = 0;
+            //}
 
             if(currentLinLayWidth>FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth))){
                 linLayout.getLayoutParams().width = currentLinLayWidth;
@@ -837,7 +837,7 @@ public class MainActivity extends ActionBarActivity  {
     private Runnable moveLinLay = new Runnable() {
         public void run() {
             LinearInterpolator interpolator = new LinearInterpolator();
-            if(linLayout.getWidth() > lowestLayer.getWidth())linLayStartX = 0;
+            // if(linLayout.getWidth() > lowestLayer.getWidth())linLayStartX = 0;
             linLayout.animate().x(linLayStartX+x).setInterpolator(interpolator).setDuration(speed);
             System.out.println( x + " <--x, linlaydfj--> " + linLayStartX + "   == " + (linLayStartX+x));
             x -= Offset();
@@ -917,12 +917,16 @@ public class MainActivity extends ActionBarActivity  {
                         linLayStartX = 0;
                     }
 
-                   // linLayout.getLayoutParams().width += FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth));
+                   // int extraWidth = FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth));
+                   //linLayout.getLayoutParams().width += extraWidth;
 
                     linLayout.clearAnimation();
                     linLayout.animate().x(linLayStartX).setDuration(10);
                     currentLinLayWidth = linLayout.getWidth();
                     xScroll += x;
+
+                    //xScroll += extraWidth; This kinda works, but not quite right
+
                     int scrollWidth = scrollView.getWidth();
                     scrollView.scrollTo(scrollWidth - xScroll, 0);
                     x = 0;
