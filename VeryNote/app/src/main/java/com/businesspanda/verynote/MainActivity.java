@@ -102,6 +102,8 @@ public class MainActivity extends ActionBarActivity  {
     int addToY = 0;
     int addToSharpFlat = 0;
 
+    boolean clefChanged = false;
+
 
     /** Called when the activity is first created. */
     @Override
@@ -836,8 +838,35 @@ public class MainActivity extends ActionBarActivity  {
 
     public void resetAll(){
 
+        EditText titleField = (EditText) findViewById(R.id.title_field);
+        titleField.setText("Untitled");
+        exp.setFilename("untitled");
+
+        allNotes = "";
+
+        linLayout.getLayoutParams().width = FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth));
+
+        TextView noteView = (TextView) findViewById(R.id.freqTextview);
+        noteView.setText("");
+
+        if(recording) {
+            android.support.v7.internal.view.menu.ActionMenuItemView recBtn =(android.support.v7.internal.view.menu.ActionMenuItemView) findViewById(R.id.action_record);
+            recBtn.setIcon(getResources().getDrawable(R.drawable.ic_action_mic));
+            getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            pitch_detector_thread_.interrupt();
+            tempolineHandler.removeCallbacks(writeTempoline);
+            linLayHandler.removeCallbacks(moveLinLay);
+            recording = false;
+        }
+
+        scrollView.removeView(linLayout);
+        linLayout = new RelativeLayout(this);
+        scrollView.addView(linLayout);
+
+        //missing stuff..
 
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -888,6 +917,8 @@ public class MainActivity extends ActionBarActivity  {
                 return true;
 
             case R.id.action_new:
+                resetAll();
+                /*
                 EditText titleField = (EditText) findViewById(R.id.title_field);
                 titleField.setText("Untitled");
                 exp.setFilename("untitled");
@@ -914,12 +945,7 @@ public class MainActivity extends ActionBarActivity  {
                 scrollView.addView(linLayout);
 
                 //missing stuff..
-
-                return true;
-
-            case R.id.action_playmidi:
-                Pattern patternMIDI = new Pattern(allNotes);
-                mid.playMIDI(patternMIDI);
+                */
                 return true;
 
 
@@ -934,6 +960,8 @@ public class MainActivity extends ActionBarActivity  {
                 exp.sendToEmail();
                 return true;
             case R.id.action_settings:
+
+
                 LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 final View popupView = layoutInflater.inflate(R.layout.settings_popup, null);
 
@@ -983,7 +1011,10 @@ public class MainActivity extends ActionBarActivity  {
                     @Override
                     public void onClick(View v) {
                         clefText.setText("Treble");
-                        warningText.setText(getResources().getString(R.string.warning_text));
+                        if(bass) {
+                            clefChanged = true;
+                            warningText.setText(getResources().getString(R.string.warning_text));
+                        }
                     }});
 
                 Button btnBass = (Button)popupView.findViewById(R.id.bass);
@@ -992,7 +1023,10 @@ public class MainActivity extends ActionBarActivity  {
                     @Override
                     public void onClick(View v) {
                         clefText.setText("Bass");
-                        warningText.setText(getResources().getString(R.string.warning_text));
+                        if(!bass) {
+                            clefChanged = true;
+                            warningText.setText(getResources().getString(R.string.warning_text));
+                        }
                     }
                 });
 
@@ -1003,6 +1037,7 @@ public class MainActivity extends ActionBarActivity  {
                     @Override
                     public void onClick(View v) {
                         popupWindow.dismiss();
+                        clefChanged = false;
                     }});
 
                 Button btnOk = (Button)popupView.findViewById(R.id.ok);
@@ -1021,6 +1056,11 @@ public class MainActivity extends ActionBarActivity  {
                             backgroundImage.setImageResource(R.drawable.bassline);
                             backgroundImage.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.backgroundBassY)));
                             bass = true;
+                        }
+
+                        if(clefChanged) {
+                            resetAll();
+                            clefChanged = false;
                         }
 
                         popupWindow.dismiss();
