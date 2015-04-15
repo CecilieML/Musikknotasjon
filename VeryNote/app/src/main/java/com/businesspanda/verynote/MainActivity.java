@@ -145,6 +145,8 @@ public class MainActivity extends ActionBarActivity  {
 
         lowestLayer = (RelativeLayout) findViewById(R.id.lowestLayer);
 
+        onlyOnce = true;
+
         exp = new ExportXML();
 
         Config.context = this;
@@ -203,7 +205,9 @@ public class MainActivity extends ActionBarActivity  {
                     FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth)),
                     FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
             linLayout.setLayoutParams(paramsLinLayout);
-            linLayout.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)));
+
+            linLayout.setBackgroundColor(getResources().getColor(R.color.yellow));
+            lowestLayer.setBackgroundColor(getResources().getColor(R.color.cyan));
 
             RelativeLayout.LayoutParams backgroundParams = new RelativeLayout.LayoutParams(
                     FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundWidth)),
@@ -220,17 +224,24 @@ public class MainActivity extends ActionBarActivity  {
             lowestLayerParams.gravity = Gravity.CENTER;
             lowestLayer.setLayoutParams(lowestLayerParams);
 
-            //if(linLayout.getWidth()<lowestLayer.getWidth()){
+          //  if(linLayout.getWidth()<lowestLayer.getWidth()){
                 linLayStartX = (int)linLayout.getX();
-           // }else{
-            //    linLayStartX = 0;
-            //}
+        //    }else{
+        //        linLayStartX = 0;
+        //    }
 
             if(currentLinLayWidth>FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth))){
                 linLayout.getLayoutParams().width = currentLinLayWidth;
             }
+
+            if(onlyOnce){
+                linLayout.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)));
+                onlyOnce = false;
+            }
         }
     }
+
+    boolean onlyOnce;
 
     @Override
     public void onStart() {
@@ -857,14 +868,24 @@ public class MainActivity extends ActionBarActivity  {
 
         //missing stuff..
 
-        FrameLayout.LayoutParams paramsLinLayout = new FrameLayout.LayoutParams(
+       /* FrameLayout.LayoutParams paramsLinLayout = new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth)),
                 FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
-        linLayout.setLayoutParams(paramsLinLayout);
+        linLayout.setLayoutParams(paramsLinLayout);*/
+
+        linLayout.getLayoutParams().width =  FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth));
+
+        System.out.println(linLayout.getWidth() + " <--actW, supW --> " + FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth)));
         linLayout.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)));
         linLayStartX = (int)linLayout.getX();
+        int scrollWidth = scrollView.getWidth();
+        scrollView.scrollTo(scrollWidth - xScroll, 0);
 
-        heyListen.removeButtons();
+        try {
+            heyListen.removeButtons();
+        }catch(NullPointerException e){
+
+        }
 
     }
 

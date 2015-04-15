@@ -38,6 +38,7 @@ public class ExportXML implements Serializable {
     }
 
     public String convertArrayListToString(ArrayList<Note> notesList) {
+        //Converts the ArrayList
         String allNotes = "";
 
         for (Note note : notesList) {
