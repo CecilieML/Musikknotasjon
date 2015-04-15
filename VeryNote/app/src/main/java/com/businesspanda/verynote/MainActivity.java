@@ -206,8 +206,10 @@ public class MainActivity extends ActionBarActivity  {
                     FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
             linLayout.setLayoutParams(paramsLinLayout);
 
-            linLayout.setBackgroundColor(getResources().getColor(R.color.yellow));
-            lowestLayer.setBackgroundColor(getResources().getColor(R.color.cyan));
+            if(onlyOnce){
+                linLayout.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)));
+                onlyOnce = false;
+            }
 
             RelativeLayout.LayoutParams backgroundParams = new RelativeLayout.LayoutParams(
                     FitToScreen.returnViewWidth(getPercent(R.dimen.backgroundWidth)),
@@ -225,23 +227,20 @@ public class MainActivity extends ActionBarActivity  {
             lowestLayer.setLayoutParams(lowestLayerParams);
 
           //  if(linLayout.getWidth()<lowestLayer.getWidth()){
-                linLayStartX = (int)linLayout.getX();
+                linLayStartX = FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)); //(int)linLayout.getX();
         //    }else{
         //        linLayStartX = 0;
         //    }
 
-            if(currentLinLayWidth>FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth))){
+            if(currentLinLayWidth>FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)) && !brandNewPiece){
                 linLayout.getLayoutParams().width = currentLinLayWidth;
             }
-
-            if(onlyOnce){
-                linLayout.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)));
-                onlyOnce = false;
-            }
+            brandNewPiece = false;
         }
     }
 
     boolean onlyOnce;
+    boolean brandNewPiece;
 
     @Override
     public void onStart() {
@@ -252,6 +251,7 @@ public class MainActivity extends ActionBarActivity  {
     @Override
     public void onStop() {
         tempolineHandler.removeCallbacks(writeTempoline);
+        mHandler.removeCallbacks(mVibrations);
         runFFT = false;
         try {
             super.onStop();
@@ -259,10 +259,7 @@ public class MainActivity extends ActionBarActivity  {
         }catch (Exception e){
             Log.e("null pointer exception", "Didn't use pitch_detector");
         }
-
-        mHandler.removeCallbacks(mVibrations);
         //playHandler.removeCallbacks(playSoundLoop);
-
     }
 
     @Override
@@ -873,19 +870,21 @@ public class MainActivity extends ActionBarActivity  {
                 FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
         linLayout.setLayoutParams(paramsLinLayout);*/
 
-        linLayout.getLayoutParams().width =  FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth));
+        linLayout.getLayoutParams().width = FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth));
 
         System.out.println(linLayout.getWidth() + " <--actW, supW --> " + FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth)));
         linLayout.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)));
         linLayStartX = (int)linLayout.getX();
-        int scrollWidth = scrollView.getWidth();
-        scrollView.scrollTo(scrollWidth - xScroll, 0);
+        /*int scrollWidth = scrollView.getWidth();
+        scrollView.scrollTo(scrollWidth - xScroll, 0);*/
 
         try {
             heyListen.removeButtons();
         }catch(NullPointerException e){
 
         }
+
+        brandNewPiece = true;
 
     }
 
