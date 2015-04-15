@@ -15,7 +15,7 @@ import android.util.TypedValue;
 
 public class yValueSearch {
 
-    public static float[] yValues = new float[48];
+    public static float[] yValues = new float[28];
 
     public static void createYValues() {
 

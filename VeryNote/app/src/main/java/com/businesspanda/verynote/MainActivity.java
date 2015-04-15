@@ -104,6 +104,36 @@ public class MainActivity extends ActionBarActivity  {
 
     boolean clefChanged = false;
 
+    public static boolean runFFT = true;
+
+    long lastTempolineWasWritten = 0;
+    long tempoStop;
+
+    int x = 0;
+    int xScroll = 0;
+    int speed = 70;
+
+    RelativeLayout imgLayout;
+    ImageView sharp;
+    ImageView flat;
+
+    long durationOfPause;
+    long lastPauseWritten;
+    long firstPause;
+
+    ImageView pauseImg;
+
+    boolean useLastPauseWritten;
+    boolean setHalfRestX;
+    boolean addWholeRestToList;
+    boolean newNote;
+
+    long lastNote;
+    long nowTime;
+    long dur;
+
+
+    int linLayStartX;
 
     /** Called when the activity is first created. */
     @Override
@@ -114,8 +144,6 @@ public class MainActivity extends ActionBarActivity  {
         genTone();
 
         lowestLayer = (RelativeLayout) findViewById(R.id.lowestLayer);
-
-        //fitToScreen();
 
         exp = new ExportXML();
 
@@ -134,11 +162,9 @@ public class MainActivity extends ActionBarActivity  {
         backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
 
         metSwitch = (Switch) findViewById(R.id.metronomeswitch);
-
         metSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                 if (buttonView.isChecked()) {
                     mHandler.postDelayed(mVibrations, metronomNmb);
                 } else {
@@ -170,7 +196,6 @@ public class MainActivity extends ActionBarActivity  {
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus){
-
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
 
@@ -207,15 +232,9 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
-    int linLayStartX;
-
     @Override
     public void onStart() {
         super.onStart();
-        //pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
-        //pitch_detector_thread_.start();
-        //met_thread = new Thread(new Metronome(findViewById(R.id.metronomeswitch)));
-        //met_thread.start();
 
     }
 
@@ -233,7 +252,6 @@ public class MainActivity extends ActionBarActivity  {
         mHandler.removeCallbacks(mVibrations);
         //playHandler.removeCallbacks(playSoundLoop);
 
-
     }
 
     @Override
@@ -242,25 +260,12 @@ public class MainActivity extends ActionBarActivity  {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-
-
     public static float getPercent(int id){
         TypedValue outValue = new TypedValue();
         Config.context.getResources().getValue(id, outValue, true);
         float returnValue = outValue.getFloat();
         return returnValue;
     }
-
-
-
-   /* public static float getScrollViewTop(){
-        //int[] XYpos = new int[2];
-        return scrollY;
-    }*/
-
-    long lastNote;
-    long nowTime;
-    long dur;
 
     public void ShowPitchDetectionResult( final double pitch) {
 
@@ -299,17 +304,6 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
-    long durationOfPause;
-    long lastPauseWritten;
-    long firstPause;
-
-    ImageView pauseImg;
-
-    boolean useLastPauseWritten;
-    boolean setHalfRestX;
-    boolean addWholeRestToList;
-    boolean newNote;
-
     public void writePause(){
         if(linLayMoving) {
             newNote = true;
@@ -332,6 +326,7 @@ public class MainActivity extends ActionBarActivity  {
                 pauseImg.setLayoutParams(pauseParams);
                 linLayout.addView(pauseImg);
                setHalfRestX = true;
+               addWholeRestToList = true;
             }
 
             if (durationOfPause > fullBar / 2 && durationOfPause < fullBar) {
@@ -554,9 +549,6 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
-    long lastTempolineWasWritten = 0;
-    long tempoStop;
-
     public void firstTempoLine() {
         long usedTime = (tempoStop - lastTempolineWasWritten) / 1000000;
         long writeAt = fullBar - usedTime;
@@ -692,10 +684,6 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
-    RelativeLayout imgLayout;
-    ImageView sharp;
-    ImageView flat;
-
     public void sharpFlat(Note note) {
 
         String noteName = note.getName();
@@ -809,13 +797,8 @@ public class MainActivity extends ActionBarActivity  {
             // in 16 bit wav PCM, first byte is the low order byte
             generatedSnd[idx++] = (byte) (val & 0x00ff);
             generatedSnd[idx++] = (byte) ((val & 0xff00) >>> 8);
-
         }
     }
-
-
-
-
 
     void playSound(){
         final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
@@ -831,9 +814,6 @@ public class MainActivity extends ActionBarActivity  {
         return FitToScreen.returnViewWidth(getPercent(R.dimen.Offset));
     }
 
-    int x = 0;
-    int xScroll = 0;
-    int speed = 70;
     private Runnable moveLinLay = new Runnable() {
         public void run() {
             LinearInterpolator interpolator = new LinearInterpolator();
@@ -846,8 +826,6 @@ public class MainActivity extends ActionBarActivity  {
             linLayHandler.postDelayed(moveLinLay, speed);
         }
     };
-
-    public static boolean runFFT = true;
 
     public void resetAll(){
 
@@ -879,8 +857,15 @@ public class MainActivity extends ActionBarActivity  {
 
         //missing stuff..
 
-    }
+        FrameLayout.LayoutParams paramsLinLayout = new FrameLayout.LayoutParams(
+                FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth)),
+                FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
+        linLayout.setLayoutParams(paramsLinLayout);
+        linLayout.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)));
+        linLayStartX = (int)linLayout.getX();
 
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

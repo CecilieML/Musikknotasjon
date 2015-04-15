@@ -127,16 +127,17 @@ public class MyTouchListener implements View.OnTouchListener {
                     float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);*/
 
                 int index = yValueSearch.returnPrev(y - actionAndNotBarHeight);
+                if(index<0)index=0;
                 float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index]);
-
-                System.out.println(index + " <-- index, percent --> " + percent + " wat? --> " + yValueSearch.yValues[index]);
 
                 if(upSideDownNote) percent += FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
 
                     for(int i=0;i<parentLayout.getChildCount();i++) {
                         View child = parentLayout.getChildAt(i);
-                        child.setY(percent);
-                        System.out.println("did the thing!!");
+                        String childName = Config.context.getResources().getResourceEntryName(child.getId());
+                        if(childName.length()<4) {
+                            child.setY(percent);
+                        }
 
                     }
 
@@ -193,6 +194,7 @@ public class MyTouchListener implements View.OnTouchListener {
                 float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);*/
 
                 int index = yValueSearch.returnNext(y - actionAndNotBarHeight);
+                if(index>27)index=27;
                 float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index]);
 
                 System.out.println(index + " <-- index, percent --> " + percent + " DOWN --> " + yValueSearch.yValues[index]);
@@ -201,7 +203,12 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 for(int i=0;i<parentLayout.getChildCount();i++) {
                     View child = parentLayout.getChildAt(i);
-                    child.setY(percent);
+                    String childName = Config.context.getResources().getResourceEntryName(child.getId());
+                    if(childName.length()<4) {
+                        child.setY(percent);
+                    }else if(childName.length()>=4 && childName.length()<7){
+                       // child.setY(percent);
+                    }
                 }
 
                 vibIy(shortVib);
