@@ -864,6 +864,7 @@ public class MainActivity extends ActionBarActivity  {
         linLayout.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)));
         linLayStartX = (int)linLayout.getX();
 
+        heyListen.removeButtons();
 
     }
 
