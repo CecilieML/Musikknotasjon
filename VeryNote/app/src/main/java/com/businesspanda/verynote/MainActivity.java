@@ -395,47 +395,47 @@ public class MainActivity extends ActionBarActivity  {
                 lineForNote.setX(x);
                 if (i == 0) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYMiddleC)));
-                    lineForNote.setId(R.id.lineI);
+                    lineForNote.setId(R.id.notelineI);
                 }
                 if (i == 1) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmI)));
-                    lineForNote.setId(R.id.lineII);
+                    lineForNote.setId(R.id.notelineII);
                 }
                 if (i == 2) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmII)));
-                    lineForNote.setId(R.id.lineIII);
+                    lineForNote.setId(R.id.notelineIII);
                 }
                 if (i == 3) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmIII)));
-                    lineForNote.setId(R.id.lineIV);
+                    lineForNote.setId(R.id.notelineIV);
                 }
                 if (i == 4) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmIV)));
-                    lineForNote.setId(R.id.lineV);
+                    lineForNote.setId(R.id.notelineV);
                 }
                 if (i == 5) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmV)));
-                    lineForNote.setId(R.id.lineVI);
+                    lineForNote.setId(R.id.notelineVI);
                 }
                 if (i == 6) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmVI)));
-                    lineForNote.setId(R.id.lineVII);
+                    lineForNote.setId(R.id.notelineVII);
                 }
                 if (i == 7) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmVII)));
-                    lineForNote.setId(R.id.lineVIII);
+                    lineForNote.setId(R.id.notelineVIII);
                 }
                 if (i == 8) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmVIII)));
-                    lineForNote.setId(R.id.lineIX);
+                    lineForNote.setId(R.id.notelineIX);
                 }
                 if (i == 9) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmIX)));
-                    lineForNote.setId(R.id.lineX);
+                    lineForNote.setId(R.id.notelineX);
                 }
                 if (i == 10) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmX)));
-                    lineForNote.setId(R.id.lineXI);
+                    lineForNote.setId(R.id.notelineXI);
                 }
                 imgLayout.addView(lineForNote);
             }
@@ -450,39 +450,39 @@ public class MainActivity extends ActionBarActivity  {
                 lineForNote.setX(x);
                 if (i == 0) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmVI)));
-                    lineForNote.setId(R.id.lineI);
+                    lineForNote.setId(R.id.notelineI);
                 }
                 if (i == 1) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmVII)));
-                    lineForNote.setId(R.id.lineII);
+                    lineForNote.setId(R.id.notelineII);
                 }
                 if (i == 2) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmVIII)));
-                    lineForNote.setId(R.id.lineIII);
+                    lineForNote.setId(R.id.notelineIII);
                 }
                 if (i == 3) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmIX)));
-                    lineForNote.setId(R.id.lineIV);
+                    lineForNote.setId(R.id.notelineIV);
                 }
                 if (i == 4) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmX)));
-                    lineForNote.setId(R.id.lineV);
+                    lineForNote.setId(R.id.notelineV);
                 }
                 if (i == 5) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmXI)));
-                    lineForNote.setId(R.id.lineVI);
+                    lineForNote.setId(R.id.notelineVI);
                 }
                 if (i == 6) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmXII)));
-                    lineForNote.setId(R.id.lineVII);
+                    lineForNote.setId(R.id.notelineVII);
                 }
                 if (i == 7) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmXIII)));
-                    lineForNote.setId(R.id.lineVIII);
+                    lineForNote.setId(R.id.notelineVIII);
                 }
                 if (i == 8) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmXIV)));
-                    lineForNote.setId(R.id.lineIX);
+                    lineForNote.setId(R.id.notelineIX);
                 }
                 if (i>8)System.out.println("need moar lines -----");
                 imgLayout.addView(lineForNote);
@@ -498,27 +498,27 @@ public class MainActivity extends ActionBarActivity  {
                 lineForNote.setX(x);
                 if (i == 0) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYMiddleC)));
-                    lineForNote.setId(R.id.lineI);
+                    lineForNote.setId(R.id.notelineI);
                 }
                 if (i == 1) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYpI)));
-                    lineForNote.setId(R.id.lineII);
+                    lineForNote.setId(R.id.notelineII);
                 }
                 if (i == 2) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYpII)));
-                    lineForNote.setId(R.id.lineIII);
+                    lineForNote.setId(R.id.notelineIII);
                 }
                 if (i == 3) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYpIII)));
-                    lineForNote.setId(R.id.lineIV);
+                    lineForNote.setId(R.id.notelineIV);
                 }
                 if (i == 4) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYpIV)));
-                    lineForNote.setId(R.id.lineV);
+                    lineForNote.setId(R.id.notelineV);
                 }
                 if (i == 5) {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYpV)));
-                    lineForNote.setId(R.id.lineVI);
+                    lineForNote.setId(R.id.notelineVI);
                 }
                 if (i>5)System.out.println("need moar lines ++12");
                 imgLayout.addView(lineForNote);
@@ -592,13 +592,13 @@ public class MainActivity extends ActionBarActivity  {
         if(bass){
             if(height <= 37){
                 upSideDown=true;
-                currentNote.setId(R.id.upsideDown);
+                imgLayout.setId(R.id.upsideDown);
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
             }
         }else{
             if(height <= 20) {
                 upSideDown = true;
-                currentNote.setId(R.id.upsideDown);
+                imgLayout.setId(R.id.upsideDown);
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
             }
 
@@ -757,7 +757,6 @@ public class MainActivity extends ActionBarActivity  {
         float y = FitToScreen.returnViewHeight(getPercent(yID));
 
         imgLayout.setX(x);
-      //  imgLayout.setY(y + addToY);
 
         int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
         currentNote.setId(noteID);
@@ -827,7 +826,6 @@ public class MainActivity extends ActionBarActivity  {
             LinearInterpolator interpolator = new LinearInterpolator();
             // if(linLayout.getWidth() > lowestLayer.getWidth())linLayStartX = 0;
             linLayout.animate().x(linLayStartX+x).setInterpolator(interpolator).setDuration(speed);
-            System.out.println( x + " <--x, linlaydfj--> " + linLayStartX + "   == " + (linLayStartX+x));
             x -= Offset();
             linLayout.getLayoutParams().width += Offset();
             linLayout.requestLayout();

@@ -68,6 +68,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
     public boolean isNoteUpSideDown(RelativeLayout parentLayout){
         if(parentLayout.getId() == R.id.upsideDown){
+            System.out.println("*****************************************");
             return true;
         }else {
             return false;
@@ -103,6 +104,7 @@ public class MyTouchListener implements View.OnTouchListener {
                         int[] xyPos = new int[2];
                         note.getLocationOnScreen(xyPos);
                         y = xyPos[1];
+                       // upSideDownNote = isNoteUpSideDown((ImageView)note);
                     }
                 }
 
@@ -115,10 +117,10 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 int actionAndNotBarHeight = fullHeight - height;
 
-                /***/
-
-                upSideDownNote = isNoteUpSideDown(parentLayout);
-                if(upSideDownNote) y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
+                if(upSideDownNote) {
+                    y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
+                    System.out.println("-------------------------------------------------------------------");
+                }
 
 
                 /*int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
@@ -132,14 +134,21 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 if(upSideDownNote) percent += FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
 
-                    for(int i=0;i<parentLayout.getChildCount();i++) {
-                        View child = parentLayout.getChildAt(i);
-                        String childName = Config.context.getResources().getResourceEntryName(child.getId());
-                        if(childName.length()<4) {
-                            child.setY(percent);
-                        }
-
+                for(int i=0;i<parentLayout.getChildCount();i++) {
+                    View child = parentLayout.getChildAt(i);
+                    String childName = Config.context.getResources().getResourceEntryName(child.getId());
+                    if(childName.length() <= 3) {
+                        //note
+                        child.setY(percent);
+                    }else if(childName.length() == 4){
+                        //flat
+                        child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
+                    }else if(childName.length() > 4&& childName.length() < 7){
+                        //sharp and neutral
+                        child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
                     }
+
+                }
 
                 vibIy(shortVib);
 
@@ -185,7 +194,7 @@ public class MyTouchListener implements View.OnTouchListener {
                 parentLayout.getLocationOnScreen(xyPos);
                 int y = xyPos[1];*/
 
-                upSideDownNote = isNoteUpSideDown(parentLayout);
+               // upSideDownNote = isNoteUpSideDown(parentLayout);
                 if(upSideDownNote) y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
 
                 /*int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
@@ -204,10 +213,15 @@ public class MyTouchListener implements View.OnTouchListener {
                 for(int i=0;i<parentLayout.getChildCount();i++) {
                     View child = parentLayout.getChildAt(i);
                     String childName = Config.context.getResources().getResourceEntryName(child.getId());
-                    if(childName.length()<4) {
+                    if(childName.length() <= 3) {
                         child.setY(percent);
-                    }else if(childName.length()>=4 && childName.length()<7){
-                       // child.setY(percent);
+                        //upSideDownNote = isNoteUpSideDown((ImageView)child);
+                    }else if(childName.length() == 4){
+                        //flat
+                        child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
+                    }else if(childName.length() > 4&& childName.length() < 7){
+                        //sharp and neutral
+                        child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
                     }
                 }
 
@@ -230,6 +244,7 @@ public class MyTouchListener implements View.OnTouchListener {
                 boolean noteIsFlat = false;
 
                 int children = parentLayout.getChildCount();
+
 
                 for(int i=0;i<parentLayout.getChildCount();i++) {
                     View child = parentLayout.getChildAt(i);
@@ -455,6 +470,10 @@ public class MyTouchListener implements View.OnTouchListener {
         ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
 
         RelativeLayout parentLayout = (RelativeLayout) img.getParent();
+
+        upSideDownNote = isNoteUpSideDown(parentLayout);
+        upSideDownNote = isNoteUpSideDown(parentLayout);
+
         for(int i=0;i<parentLayout.getChildCount();i++){
             View child = parentLayout.getChildAt(i);
             ImageView childView = (ImageView) child;
@@ -502,12 +521,9 @@ public class MyTouchListener implements View.OnTouchListener {
                         onChosenNote(v);
                         oneIsCurrentlyChosen = true;
                     }
-
                 }else{
                     if(v==img) {
-
                         onUnChosenNote(img);
-
                         oneIsCurrentlyChosen = false;
                     }else {
                         onUnChosenNote(img);

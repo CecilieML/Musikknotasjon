@@ -63,8 +63,8 @@
     <item type="dimen" format="float" name="pauseHeight">0.02</item>
     <item type="dimen" format="float" name="pauseYHalfRest">0.37</item>
     <item type="dimen" format="float" name="pauseYWholeRest">0.385</item>
-    <item type="dimen" format="float" name="pauseBassYHalfRest">0.7</item>
-    <item type="dimen" format="float" name="pauseBassYWholeRest">0.6</item>
+    <item type="dimen" format="float" name="pauseBassYHalfRest">0.59</item>
+    <item type="dimen" format="float" name="pauseBassYWholeRest">0.61</item>
     <item type="dimen" format="float" name="pauseXHalfRest">0.15</item>
     <item type="dimen" format="float" name="pauseXWholeRest">0.22</item>
 
