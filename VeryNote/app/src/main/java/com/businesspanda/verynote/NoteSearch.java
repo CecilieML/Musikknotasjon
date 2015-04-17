@@ -154,9 +154,6 @@ public class NoteSearch {
         notes.put(988, B5);
         notes.put(1976, B6);
 
-
-
-
     }
 
     public static Note findNearestNote(Integer target) {
@@ -173,6 +170,17 @@ public class NoteSearch {
         }
         closestNote = notes.get(nearest);
         return closestNote;
+    }
+
+    public static Note findNoteByName(String noteName){
+        //Searches through HashMap to find the note with the same name as the input and returns it.
+        Note noteToReturn = null;
+        for(Note note : notes.values()){
+            if(note.getName().equals(noteName)){
+                noteToReturn = note;
+            }
+        }
+        return noteToReturn;
     }
 
 }

@@ -39,6 +39,7 @@ public class MyTouchListener implements View.OnTouchListener {
     boolean upSideDownNote; //true = note is flipped
     ImageView img;
     RelativeLayout really;
+    Note noteObject;
     Button btnUp;
     Button btnDown;
     Button btnFlat;
@@ -48,12 +49,13 @@ public class MyTouchListener implements View.OnTouchListener {
 
     int shortVib = 50;
     int longVib = 100;
+    int index;
 
     public MyTouchListener(RelativeLayout really) {
         this.really = really;
     }
 
-    public void vibIy(int dur) {
+    public void vibrate(int dur) {
         Vibrator vib = (Vibrator) Config.context.getSystemService(Context.VIBRATOR_SERVICE);
         vib.vibrate(dur);
     }
@@ -92,9 +94,9 @@ public class MyTouchListener implements View.OnTouchListener {
             @Override
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
-                View note;
+               // View note;
 
-                int y = 0;
+              /*  int y = 0;
 
                 for(int i=0;i<parentLayout.getChildCount();i++){
                     View child = parentLayout.getChildAt(i);
@@ -115,20 +117,17 @@ public class MyTouchListener implements View.OnTouchListener {
                 Display display = wm.getDefaultDisplay();
                 int fullHeight = display.getHeight();
 
-                int actionAndNotBarHeight = fullHeight - height;
+                int actionAndNotBarHeight = fullHeight - height;*/
 
-                if(upSideDownNote)y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
+               // if(upSideDownNote)y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
 
+               // int oldindex = yValueSearch.returnPrev(y - actionAndNotBarHeight);
+               // if(oldindex<0)oldindex=0;
+               // float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[oldindex]);
 
-
-                /*int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
-                System.out.println(index + "  index in mytouchlstener");
-                if(index>0){}
-                    float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);*/
-
-                int index = yValueSearch.returnPrev(y - actionAndNotBarHeight);
-                if(index<0)index=0;
-                float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index]);
+                if(index<0)index = 0;
+                float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
+               // float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index]);
 
                 if(upSideDownNote) percent += FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
 
@@ -136,19 +135,25 @@ public class MyTouchListener implements View.OnTouchListener {
                     View child = parentLayout.getChildAt(i);
                     String childName = Config.context.getResources().getResourceEntryName(child.getId());
                     if(childName.length() <= 3) {
-                        //note
                         child.setY(percent);
                     }else if(childName.length() == 4){
                         //flat
-                        child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
-                    }else if(childName.length() > 4&& childName.length() < 7){
+                        if(upSideDownNote){
+                            child.setY(percent - FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
+                        }else {
+                            child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
+                        }
+                    }else if(childName.length() > 4&& childName.length() < 8){
                         //sharp and neutral
-                        child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
+                        if(upSideDownNote) {
+                            child.setY(percent);
+                        }else{
+                            child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
+                        }
                     }
-
                 }
 
-                vibIy(shortVib);
+                vibrate(shortVib);
 
             }
         });
@@ -164,7 +169,7 @@ public class MyTouchListener implements View.OnTouchListener {
             @Override
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
-                View note;
+               /* View note;
 
                 int y = 0;
 
@@ -185,13 +190,16 @@ public class MyTouchListener implements View.OnTouchListener {
                 WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
                 Display display = wm.getDefaultDisplay();
                 int fullHeight = display.getHeight();
-                int actionAndNotBarHeight = fullHeight - height;
+                int actionAndNotBarHeight = fullHeight - height;*/
 
-                if(upSideDownNote) y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
+                //if(upSideDownNote) y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
 
-                int index = yValueSearch.returnNext(y - actionAndNotBarHeight);
+               /* int oldindex = yValueSearch.returnNext(y - actionAndNotBarHeight);
+                if(oldindex>27)oldindex=27;
+                float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[oldindex]);*/
+
                 if(index>27)index=27;
-                float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index]);
+                float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);
 
                 if(upSideDownNote) percent += FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
 
@@ -207,17 +215,17 @@ public class MyTouchListener implements View.OnTouchListener {
                         }else {
                             child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
                         }
-                    }else if(childName.length() > 4&& childName.length() < 7){
+                    }else if(childName.length() > 4&& childName.length() < 8){
                         //sharp and neutral
                         if(upSideDownNote) {
-                            child.setY(percent - FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
+                            child.setY(percent);
                         }else{
                             child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
                         }
                     }
                 }
 
-                vibIy(shortVib);
+                vibrate(shortVib);
             }
         });
 
@@ -275,11 +283,18 @@ public class MyTouchListener implements View.OnTouchListener {
 
                     ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
                     flat.setColorFilter(filter);
+                    /***/
+                    float noteHeight = FitToScreen.returnViewHeight(yValueSearch.yValues[index]);
 
-                    flat.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
+                    if(upSideDownNote){
+                        flat.setY(noteHeight - FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
+                    }else {
+                        flat.setY(noteHeight + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
+                    }
+                    /***/
                     parentLayout.addView(flat);
                 }
-                vibIy(shortVib);
+                vibrate(shortVib);
 
             }
         });
@@ -342,7 +357,7 @@ public class MyTouchListener implements View.OnTouchListener {
                     parentLayout.addView(sharp);
                 }
 
-                vibIy(shortVib);
+                vibrate(shortVib);
             }
         });
 
@@ -406,7 +421,7 @@ public class MyTouchListener implements View.OnTouchListener {
                     parentLayout.addView(neutral);
                 }
 
-                vibIy(shortVib);
+                vibrate(shortVib);
             }
         });
 
@@ -433,7 +448,7 @@ public class MyTouchListener implements View.OnTouchListener {
                 v.setSelected(false);
                 oneIsCurrentlyChosen = false;
 
-                vibIy(longVib);
+                vibrate(longVib);
             }
         });
 
@@ -456,7 +471,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
     public void onChosenNote(View v){
         img = (ImageView) v;
-        vibIy(70);
+        vibrate(70);
         createButtons(img);
 
         ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
@@ -472,22 +487,56 @@ public class MyTouchListener implements View.OnTouchListener {
             childView.setColorFilter(filter);
         }
 
+        /***/
+        String noteName = "";
+        View note;
+        int y = 0;
+        for(int i=0;i<parentLayout.getChildCount();i++){
+            View child = parentLayout.getChildAt(i);
+            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+            if(imgName.length() <= 3){
+                note = child;
+                noteName = imgName;
+                int[] xyPos = new int[2];
+                note.getLocationOnScreen(xyPos);
+                y = xyPos[1];
+            }
+        }
+
+        View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+        int height = content.getHeight();
+
+        WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        int fullHeight = display.getHeight();
+        int actionAndNotBarHeight = fullHeight - height;
+
+        if(upSideDownNote)y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
+        index = yValueSearch.returnIdx(y - actionAndNotBarHeight);
+        /***/
+
+        /**/
+        noteObject = NoteSearch.findNoteByName(noteName);
+        System.out.println(noteName + "<--notename, noteObject-->" + noteObject.getName());
+        /**/
+
+
         TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
         for(int i=0;i<parentLayout.getChildCount();i++){
             View child = parentLayout.getChildAt(i);
-            String noteName = Config.context.getResources().getResourceEntryName(child.getId());
-            if(noteName.length() <= 3){
-                noteName = noteName.replaceAll(""," ");
-                noteName = noteName.replaceAll(" s","#");
-                noteName = noteName.replaceAll(" b","b");
-                freqText.setText(noteName);
+            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+            if(imgName.length() <= 3){
+                imgName = imgName.replaceAll(""," ");
+                imgName = imgName.replaceAll(" s","#");
+                imgName = imgName.replaceAll(" b","b");
+                freqText.setText(imgName);
             }
         }
 
     }
 
     public void onUnChosenNote(View v){
-        vibIy(30);
+        vibrate(30);
         removeButtons();
         v.setSelected(false);
 

@@ -100,7 +100,6 @@ public class MainActivity extends ActionBarActivity  {
     boolean bass = false;
     int fullBar = metronomNmb*4; //4 = tempo;
     int addToY = 0;
-    int addToSharpFlat = 0;
 
     boolean clefChanged = false;
 
@@ -583,7 +582,6 @@ public class MainActivity extends ActionBarActivity  {
         int height = nearestNote.getNoteHeight();
         boolean upSideDown = false;
         addToY = 0;
-        addToSharpFlat = 0;
         if(bass){
             if(height <= 37){
                 upSideDown=true;
