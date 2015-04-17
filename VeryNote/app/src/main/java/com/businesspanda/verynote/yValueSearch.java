@@ -300,9 +300,7 @@ public class yValueSearch {
                 minDiff = diff;
             }
         }
-        System.out.println(indexOfValueToFind + "  <--idx, idx+1-->  " + (indexOfValueToFind+1));
         return (indexOfValueToFind + 1);
-
     }
 
     public static int returnPrev(float valueToFind){
@@ -322,31 +320,4 @@ public class yValueSearch {
         return (indexOfValueToFind - 1);
     }
 
-
-    public static int findYIndex(float valueToFind) {
-
-        float percentValue = FitToScreen.returnPercent(valueToFind);
-
-        System.out.println(valueToFind + "   valuetofind");
-
-        System.out.println(percentValue + "   percentvalue");
-
-        double minDiff = Double.MAX_VALUE;
-
-        int indexOfValueToFind = -1; //never return -1 I don't know how to fix this ...
-
-        //also this should be slightly different for notes that are up side down :(
-
-        for (int i = 0; i < yValues.length; i++) {
-            double diff = Math.abs(percentValue - yValues[i]);
-            if (diff < minDiff) {
-                indexOfValueToFind = i;
-                minDiff = diff;
-            }
-        }
-        System.out.println(yValues[22]  + "   is this 0?");
-        System.out.println(yValues[indexOfValueToFind] + " yvalues at index");
-        System.out.println(indexOfValueToFind + "  <--- index  " + minDiff);
-        return indexOfValueToFind;
-    }
 }

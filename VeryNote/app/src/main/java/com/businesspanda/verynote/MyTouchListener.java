@@ -117,10 +117,8 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 int actionAndNotBarHeight = fullHeight - height;
 
-                if(upSideDownNote) {
-                    y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
-                    System.out.println("-------------------------------------------------------------------");
-                }
+                if(upSideDownNote)y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
+
 
 
                 /*int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
