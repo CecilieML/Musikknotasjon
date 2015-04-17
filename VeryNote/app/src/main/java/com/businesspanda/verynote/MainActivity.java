@@ -205,8 +205,14 @@ public class MainActivity extends ActionBarActivity  {
                     FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
             linLayout.setLayoutParams(paramsLinLayout);
 
+            if(!onlyOnce && !brandNewPiece){
+                linLayout.getLayoutParams().width = currentLinLayWidth;
+                System.out.println("remaoin size");
+            }
+
             if(onlyOnce){
                 linLayout.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)));
+                linLayStartX = FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX));
                 onlyOnce = false;
             }
 
@@ -225,15 +231,10 @@ public class MainActivity extends ActionBarActivity  {
             lowestLayerParams.gravity = Gravity.CENTER;
             lowestLayer.setLayoutParams(lowestLayerParams);
 
-          //  if(linLayout.getWidth()<lowestLayer.getWidth()){
-                linLayStartX = FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)); //(int)linLayout.getX();
-        //    }else{
-        //        linLayStartX = 0;
-        //    }
+            /**/
+            linLayStartX = (int)linLayout.getX();
+            /**/
 
-            if(currentLinLayWidth>FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth)) && !brandNewPiece){
-                linLayout.getLayoutParams().width = currentLinLayWidth;
-            }
             brandNewPiece = false;
         }
     }
@@ -371,7 +372,7 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
-    public void notesOutOfBoundsLines(int nmbOfLines, int nmbOfBassLines, int height){
+    public void notesOutOfBoundsLines(int nmbOfLines, int nmbOfBassLines, int height, RelativeLayout imgLayout){
         FrameLayout.LayoutParams notelineParams= new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.noteLineWidth)),
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -435,6 +436,7 @@ public class MainActivity extends ActionBarActivity  {
             }
         }else if(height<26){
             for (int i = 0; i < nmbOfLines; i++) {
+
                 ImageView lineForNote = new ImageView(this);
 
                 lineForNote.setAdjustViewBounds(true);
@@ -754,7 +756,7 @@ public class MainActivity extends ActionBarActivity  {
         int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
         currentNote.setId(noteID);
 
-        notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNmbOfLinesBass(), nearestNote.getNoteHeight());
+        notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNmbOfLinesBass(), nearestNote.getNoteHeight(), imgLayout);
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
