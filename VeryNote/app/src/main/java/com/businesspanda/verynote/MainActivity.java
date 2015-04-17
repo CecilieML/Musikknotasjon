@@ -284,9 +284,7 @@ public class MainActivity extends ActionBarActivity  {
 
         stringarray = stringarray + " " + pitchInt;
 
-        //SOMETHING OR OTHER TO FIX PAUSES
         lastPauseWritten = System.nanoTime();
-        /***/
 
         changeFreq.setText(nearestNote.name); //remember to remove
 
@@ -354,8 +352,7 @@ public class MainActivity extends ActionBarActivity  {
                     }
                 }
             } else if (durationOfPause > fullBar) {
-                Note pauseNote = new Note(false, false, 0, "R", 0, 0, 0, "w");
-                allNotesForXML.add(pauseNote);
+
                 if(pauseImg!=null) {
                     if(bass) {
                         pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseBassYWholeRest)));
@@ -365,14 +362,12 @@ public class MainActivity extends ActionBarActivity  {
                     if(addWholeRestToList){
                         pauseImg.setX(linLayout.getLayoutParams().width -
                                 FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXWholeRest)));
-                        allNotesForXML.add(pauseNote);
+                        Note wholePauseNote = new Note(false, false, 0, "R", 0, 0, 0, "w");
+                        allNotesForXML.set(allNotesForXML.size()-1, wholePauseNote);
                         addWholeRestToList = false;
                     }
                     lastPauseWritten = System.nanoTime();
-
                 }
-
-
             }
         }
     }

@@ -187,26 +187,13 @@ public class MyTouchListener implements View.OnTouchListener {
                 WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
                 Display display = wm.getDefaultDisplay();
                 int fullHeight = display.getHeight();
-
                 int actionAndNotBarHeight = fullHeight - height;
 
-               /* int[] xyPos = new int[2];
-                parentLayout.getLocationOnScreen(xyPos);
-                int y = xyPos[1];*/
-
-               // upSideDownNote = isNoteUpSideDown(parentLayout);
                 if(upSideDownNote) y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
-
-                /*int index = yValueSearch.findYIndex(y-actionAndNotBarHeight);
-                System.out.println("indrx-----  " + index);
-
-                float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);*/
 
                 int index = yValueSearch.returnNext(y - actionAndNotBarHeight);
                 if(index>27)index=27;
                 float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index]);
-
-                System.out.println(index + " <-- index, percent --> " + percent + " DOWN --> " + yValueSearch.yValues[index]);
 
                 if(upSideDownNote) percent += FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
 
@@ -215,13 +202,20 @@ public class MyTouchListener implements View.OnTouchListener {
                     String childName = Config.context.getResources().getResourceEntryName(child.getId());
                     if(childName.length() <= 3) {
                         child.setY(percent);
-                        //upSideDownNote = isNoteUpSideDown((ImageView)child);
                     }else if(childName.length() == 4){
                         //flat
-                        child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
+                        if(upSideDownNote){
+                            child.setY(percent - FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
+                        }else {
+                            child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
+                        }
                     }else if(childName.length() > 4&& childName.length() < 7){
                         //sharp and neutral
-                        child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
+                        if(upSideDownNote) {
+                            child.setY(percent - FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
+                        }else{
+                            child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
+                        }
                     }
                 }
 
