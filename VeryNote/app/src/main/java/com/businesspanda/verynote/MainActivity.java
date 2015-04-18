@@ -233,10 +233,12 @@ public class MainActivity extends ActionBarActivity  {
 
             linLayStartX = (int)linLayout.getX();
 
-            linLayout.setBackgroundColor(getResources().getColor(R.color.yellow));
-            lowestLayer.setBackgroundColor(getResources().getColor(R.color.cyan));
+            //linLayout.setBackgroundColor(getResources().getColor(R.color.yellow));
+            //lowestLayer.setBackgroundColor(getResources().getColor(R.color.cyan));
 
             brandNewPiece = false;
+        }else{
+            //stop buttan
         }
     }
 

@@ -39,7 +39,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
     boolean oneIsCurrentlyChosen;
     boolean upSideDownNote; //true = note is flipped
-    ImageView img;
+    ImageView lastImg;
     RelativeLayout really;
     Note noteObject;
     Button btnUp;
@@ -149,9 +149,7 @@ public class MyTouchListener implements View.OnTouchListener {
                         }
                     }
                 }
-
                 vibrate(shortVib);
-
             }
         });
 
@@ -172,34 +170,6 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 findIndex(parentLayout);
                 fixLines(parentLayout);
-               /* View note;
-
-                int y = 0;
-
-                for(int i=0;i<parentLayout.getChildCount();i++){
-                    View child = parentLayout.getChildAt(i);
-                    String noteName = Config.context.getResources().getResourceEntryName(child.getId());
-                    if(noteName.length() <= 3){
-                        note = child;
-                        int[] xyPos = new int[2];
-                        note.getLocationOnScreen(xyPos);
-                        y = xyPos[1];
-                    }
-                }
-
-                View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
-                int height = content.getHeight();
-
-                WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
-                Display display = wm.getDefaultDisplay();
-                int fullHeight = display.getHeight();
-                int actionAndNotBarHeight = fullHeight - height;*/
-
-                //if(upSideDownNote) y -= FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.upSideDownNoteX));
-
-               /* int oldindex = yValueSearch.returnNext(y - actionAndNotBarHeight);
-                if(oldindex>27)oldindex=27;
-                float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[oldindex]);*/
 
                 if(index>26)index=26;
                 float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);
@@ -446,11 +416,24 @@ public class MyTouchListener implements View.OnTouchListener {
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
 
-                int idx = (int)img.getTag();
-                allNotes.get(idx).setDurationOfNote("lololololololol");
-                for(int i = 0; i<allNotes.size(); i++) {
-                    System.out.println(allNotes.get(i).getDurationOfNote() + ";  -->  "+ i + ", notename: " + allNotes.get(i).getName()+ ",  idx:  " + idx + ", tag: "+ (int)img.getTag() + "\n");
+                findNote:
+                for(int i=0; i<parentLayout.getChildCount(); i++) {
+                    View child = parentLayout.getChildAt(i);
+                    String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+                    if (imgName.length() <= 3) {
+
+                        int idx = (int)child.getTag();
+
+                        Note unnessesary = allNotes.get(idx);
+                        unnessesary.setDurationOfNote("GONE!!!"); //all with same name O.O
+
+                        System.out.println(unnessesary.toString() + " \n unnesssdwfa, idx--> " + idx + "  TAG: " + child.getTag() + "  ID: " + Config.context.getResources().getResourceEntryName(child.getId()));
+
+                        break  findNote;
+                    }
                 }
+
+
 
                 parentLayout.removeAllViews();
 
@@ -548,13 +531,13 @@ public class MyTouchListener implements View.OnTouchListener {
     }
 
     public void onChosenNote(View v){
-        img = (ImageView) v;
+        lastImg = (ImageView) v;
         vibrate(70);
-        createButtons(img);
+        createButtons((ImageView)v);
 
         ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
 
-        RelativeLayout parentLayout = (RelativeLayout) img.getParent();
+        RelativeLayout parentLayout = (RelativeLayout) v.getParent();
 
         upSideDownNote = isNoteUpSideDown(parentLayout);
         upSideDownNote = isNoteUpSideDown(parentLayout);
@@ -568,18 +551,20 @@ public class MyTouchListener implements View.OnTouchListener {
        findIndex(parentLayout);
 
         TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
-        freqText.setText(" Tag:  " + img.getTag());
+        freqText.setText(" Tag:  " + v.getTag());
 
         setNoteName(parentLayout, false, false);
-
+        for(int i = 0; i<allNotes.size(); i++) {
+            System.out.println(allNotes.get(i).getDurationOfNote() + ";  -->  " + i + ", notename: " + allNotes.get(i).getName() + "\n");
+        }
     }
 
-    public void onUnChosenNote(View v){
+    public void onUnChosenNote(){
         vibrate(30);
         removeButtons();
-        v.setSelected(false);
+        lastImg.setSelected(false);
 
-        RelativeLayout parentLayout = (RelativeLayout) v.getParent();
+        RelativeLayout parentLayout = (RelativeLayout) lastImg.getParent();
         for(int i=0;i<parentLayout.getChildCount();i++){
             View child = parentLayout.getChildAt(i);
             ImageView childView = (ImageView) child;
@@ -595,24 +580,21 @@ public class MyTouchListener implements View.OnTouchListener {
         {
             case MotionEvent.ACTION_DOWN: {
                 // Here u can write code which is executed after the user touch on the screen
-
                 if (!oneIsCurrentlyChosen){
                     if(MainActivity.editable) {
                         onChosenNote(v);
                         oneIsCurrentlyChosen = true;
                     }
                 }else{
-                    if(v==img) {
-                        onUnChosenNote(img);
+                    if(v==lastImg) {
+                        onUnChosenNote();
                         oneIsCurrentlyChosen = false;
                     }else {
-                        onUnChosenNote(img);
+                        onUnChosenNote();
                         onChosenNote(v);
                         oneIsCurrentlyChosen = true;
                     }
                 }
-
-
                 break;
             }
             case MotionEvent.ACTION_UP:

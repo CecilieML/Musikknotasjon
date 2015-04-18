@@ -56,4 +56,22 @@ public class Note {
     public void setDurationOfNote(String durationOfNote) {
         this.durationOfNote = durationOfNote;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "sharp=" + sharp +
+                ", flat=" + flat +
+                ", freq=" + freq +
+                ", name='" + name + '\'' +
+                ", height=" + height +
+                ", nmbOfLinesTreble=" + nmbOfLinesTreble +
+                ", nmbOfLinesBass=" + nmbOfLinesBass +
+                ", durationOfNote='" + durationOfNote + '\'' +
+                '}';
+    }
 }
