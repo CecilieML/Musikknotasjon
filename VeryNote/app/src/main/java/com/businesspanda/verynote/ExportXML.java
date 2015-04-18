@@ -41,7 +41,7 @@ public class ExportXML implements Serializable {
         //Converts the ArrayList
         String allNotes;
 
-        allNotes = "T[" + (60000/Config.context.metronomNmb) + "]";
+        allNotes = "T" + (60000/Config.context.metronomNmb);
         if(Config.context.bass) {
             allNotes = allNotes + " V1";
         } else {
