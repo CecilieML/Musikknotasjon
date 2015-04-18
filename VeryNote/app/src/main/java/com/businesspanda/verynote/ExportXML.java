@@ -42,6 +42,12 @@ public class ExportXML implements Serializable {
         String allNotes = "";
 
         for (Note note : notesList) {
+            allNotes = "T[" + (60000/Config.context.metronomNmb) + "]";
+            if(Config.context.bass) {
+                allNotes = allNotes + " V1";
+            } else {
+                allNotes = allNotes + " V0";
+            }
             if(note.getDurationOfNote() != "" ) {
                 String noteFromList = note.getName().replaceAll("s", "#");
                 allNotes = allNotes + " " + noteFromList + note.getDurationOfNote();
