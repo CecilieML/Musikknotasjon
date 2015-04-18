@@ -83,7 +83,7 @@ public class MainActivity extends ActionBarActivity  {
 
     ImageView currentNote;
     Note prevNote;
-    Note nearestNote;
+   // Note nearestNote;
 
     LockableScrollView scrollView;
 
@@ -125,12 +125,13 @@ public class MainActivity extends ActionBarActivity  {
     boolean useLastPauseWritten;
     boolean setHalfRestX;
     boolean addWholeRestToList;
-    boolean newNote;
+    boolean startNewNote;
 
     long lastNote;
     long nowTime;
     long dur;
 
+    int noteIdxInXMLArray = 0;
 
     int linLayStartX;
 
@@ -153,7 +154,7 @@ public class MainActivity extends ActionBarActivity  {
         yValueSearch.createYValues();
 
         RelativeLayout upperLayout = (RelativeLayout) findViewById(R.id.upperLayout);
-        heyListen = new MyTouchListener(upperLayout);
+        heyListen = new MyTouchListener(upperLayout, allNotesForXML);
 
         scrollView = (LockableScrollView) findViewById(R.id.scrollview);
 
@@ -207,7 +208,6 @@ public class MainActivity extends ActionBarActivity  {
 
             if(!onlyOnce && !brandNewPiece){
                 linLayout.getLayoutParams().width = currentLinLayWidth;
-                System.out.println("remaoin size");
             }
 
             if(onlyOnce){
@@ -231,9 +231,10 @@ public class MainActivity extends ActionBarActivity  {
             lowestLayerParams.gravity = Gravity.CENTER;
             lowestLayer.setLayoutParams(lowestLayerParams);
 
-            /**/
             linLayStartX = (int)linLayout.getX();
-            /**/
+
+            linLayout.setBackgroundColor(getResources().getColor(R.color.yellow));
+            lowestLayer.setBackgroundColor(getResources().getColor(R.color.cyan));
 
             brandNewPiece = false;
         }
@@ -275,44 +276,35 @@ public class MainActivity extends ActionBarActivity  {
         return returnValue;
     }
 
-    public void ShowPitchDetectionResult( final double pitch) {
-
-        final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
-
+    public void ShowPitchDetectionResult(final double pitch) {
         Integer pitchInt = (int) (pitch);
-        nearestNote = NoteSearch.findNearestNote(pitchInt);
+        Note nearestNote = NoteSearch.findNearestNote(pitchInt);
 
         stringarray = stringarray + " " + pitchInt;
 
-        lastPauseWritten = System.nanoTime();
-
+        final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
         changeFreq.setText(nearestNote.name); //remember to remove
 
+        lastPauseWritten = System.nanoTime();
         nowTime = System.nanoTime();
-
         dur = (nowTime - lastNote) / 1000000;
 
-        if (nearestNote == prevNote && !newNote) {
-            noteLength();
+        if (nearestNote == prevNote && !startNewNote) {
+            noteLength(nearestNote, currentNote);
 
-        }else if(dur>(fullBar/16)){
-            newNote = false;
+        }else {
+            startNewNote = false;
             lastNote = System.nanoTime();
             useLastPauseWritten = false;
-
-            /***/
-            allNotesForXML.add(nearestNote);
-            /***/
 
             notesOnScreen(nearestNote);
             prevNote = nearestNote;
         }
-
     }
 
     public void writePause(){
         if(linLayMoving) {
-            newNote = true;
+            startNewNote = true;
             FrameLayout.LayoutParams pauseParams = new FrameLayout.LayoutParams(
                     FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.pauseWidth)),
                     FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.pauseHeight)));
@@ -348,6 +340,7 @@ public class MainActivity extends ActionBarActivity  {
                                 FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXHalfRest)));
                         Note pauseNote = new Note(false, false, 0, "R", 0, 0, 0, "h");
                         allNotesForXML.add(pauseNote);
+                        noteIdxInXMLArray++;
                         setHalfRestX = false;
                     }
                 }
@@ -362,8 +355,17 @@ public class MainActivity extends ActionBarActivity  {
                     if(addWholeRestToList){
                         pauseImg.setX(linLayout.getLayoutParams().width -
                                 FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXWholeRest)));
-                        Note wholePauseNote = new Note(false, false, 0, "R", 0, 0, 0, "w");
-                        allNotesForXML.set(allNotesForXML.size()-1, wholePauseNote);
+                        //Note wholePauseNote = new Note(false, false, 0, "R", 0, 0, 0, "w");
+                        //allNotesForXML.set(allNotesForXML.size()-1, wholePauseNote);
+
+                      findLastPause:
+                        for(int i = 1; i<allNotesForXML.size(); i++) {
+                            if(allNotesForXML.get(allNotesForXML.size()-i).getName().equals("R")) {
+                                allNotesForXML.get(allNotesForXML.size() - i).setDurationOfNote("w");
+                                break findLastPause;
+                            }
+                        }
+
                         addWholeRestToList = false;
                     }
                     lastPauseWritten = System.nanoTime();
@@ -464,23 +466,6 @@ public class MainActivity extends ActionBarActivity  {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmX)));
                     lineForNote.setId(R.id.notelineV);
                 }
-                if (i == 5) {
-                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmXI)));
-                    lineForNote.setId(R.id.notelineVI);
-                }
-                if (i == 6) {
-                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmXII)));
-                    lineForNote.setId(R.id.notelineVII);
-                }
-                if (i == 7) {
-                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmXIII)));
-                    lineForNote.setId(R.id.notelineVIII);
-                }
-                if (i == 8) {
-                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYmXIV)));
-                    lineForNote.setId(R.id.notelineIX);
-                }
-                if (i>8)System.out.println("need moar lines -----");
                 imgLayout.addView(lineForNote);
             }
         }else if(height>26){
@@ -508,15 +493,6 @@ public class MainActivity extends ActionBarActivity  {
                     lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYpIII)));
                     lineForNote.setId(R.id.notelineIV);
                 }
-                if (i == 4) {
-                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYpIV)));
-                    lineForNote.setId(R.id.notelineV);
-                }
-                if (i == 5) {
-                    lineForNote.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.noteLineYpV)));
-                    lineForNote.setId(R.id.notelineVI);
-                }
-                if (i>5)System.out.println("need moar lines ++12");
                 imgLayout.addView(lineForNote);
             }
         }
@@ -547,18 +523,15 @@ public class MainActivity extends ActionBarActivity  {
         Note tempolineNote = new Note(false, false, 0, "|", 0, 0, 0, "");
 
         allNotesForXML.add(tempolineNote);
+        noteIdxInXMLArray++;
 
         linLayout.addView(tempo);
         lastTempolineWasWritten = System.nanoTime();
-
     }
 
     public void firstTempoLine() {
         long usedTime = (tempoStop - lastTempolineWasWritten) / 1000000;
         long writeAt = fullBar - usedTime;
-
-        //System.out.println(writeAt + " writeAt,   first tempo line,   usedTime " + usedTime);
-
         tempolineHandler.postDelayed(writeTempoline, writeAt);
     }
 
@@ -579,8 +552,7 @@ public class MainActivity extends ActionBarActivity  {
         }
     };
 
-    public void noteLength(){
-
+    public void noteLength(Note nearestNote, ImageView currentNote){
         int height = nearestNote.getNoteHeight();
         boolean upSideDown = false;
         addToY = 0;
@@ -601,7 +573,7 @@ public class MainActivity extends ActionBarActivity  {
 
         if(dur >= (fullBar/16))sharpFlat(nearestNote);
 
-        if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {               //= 1/16 of fullBar
+        if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {             //= 1/16 of fullBar
            nearestNote.setDurationOfNote("s");
             if (upSideDown) {
                 currentNote.setImageResource(R.drawable.upsidedowndoubletailnote);
@@ -617,7 +589,7 @@ public class MainActivity extends ActionBarActivity  {
                 currentNote.setImageResource(R.drawable.doubletailnotewdot);
             }
 
-        }else if(dur >= (fullBar/8) && dur < (fullBar*3/16)){           //= 1/8 of fullBar
+        }else if(dur >= (fullBar/8) && dur < (fullBar*3/16)){        //= 1/8 of fullBar
             nearestNote.setDurationOfNote("i");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownsingeltailnote);
@@ -633,7 +605,7 @@ public class MainActivity extends ActionBarActivity  {
                 currentNote.setImageResource(R.drawable.singeltailnaotewdot);
             }
 
-        }else if(dur >= (fullBar/4) && dur < (fullBar*3/8)) {           //= 1/4 of fullBar
+        }else if(dur >= (fullBar/4) && dur < (fullBar*3/8)) {        //= 1/4 of fullBar
             nearestNote.setDurationOfNote("q");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownnote);
@@ -641,7 +613,7 @@ public class MainActivity extends ActionBarActivity  {
                 currentNote.setImageResource(R.drawable.note);
             }
 
-        }else if(dur >= (fullBar*3/8) && dur < (fullBar/2)) {         //= 3/8 of fullBar
+        }else if(dur >= (fullBar*3/8) && dur < (fullBar/2)) {        //= 3/8 of fullBar
             nearestNote.setDurationOfNote("q.");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownnotewdot);
@@ -649,7 +621,7 @@ public class MainActivity extends ActionBarActivity  {
                 currentNote.setImageResource(R.drawable.notewdot);
             }
 
-        }else if(dur >= (fullBar/2) && dur < (fullBar*3/4)){            //= 2/4 of
+        }else if(dur >= (fullBar/2) && dur < (fullBar*3/4)){         //= 2/4 of fullBar
             nearestNote.setDurationOfNote("h");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownhollownote);
@@ -657,7 +629,7 @@ public class MainActivity extends ActionBarActivity  {
                 currentNote.setImageResource(R.drawable.holownote);
             }
 
-        }else if(dur >= (fullBar*3/4) && dur < (fullBar)){          //= 3/4 of fullBar
+        }else if(dur >= (fullBar*3/4) && dur < (fullBar)){           //= 3/4 of fullBar
             nearestNote.setDurationOfNote("h.");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownhollownotewdot);
@@ -665,7 +637,7 @@ public class MainActivity extends ActionBarActivity  {
                 currentNote.setImageResource(R.drawable.holownotewdot);
             }
 
-        }else if(dur >= (fullBar) && dur < (fullBar*1.5)){              //= 4/4 of fullBar
+        }else if(dur >= (fullBar) && dur < (fullBar*1.5)){           //= 4/4 of fullBar
             nearestNote.setDurationOfNote("w");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownnotailhollownote);
@@ -673,7 +645,7 @@ public class MainActivity extends ActionBarActivity  {
                 currentNote.setImageResource(R.drawable.notailhollownote);
             }
 
-        }else if(dur >= (fullBar*1.5) && dur < fullBar*1.6){          //= 1 1/2 of fullBar
+        }else if(dur >= (fullBar*1.5) && dur < fullBar*1.6){         //= 1 1/2 of fullBar
             nearestNote.setDurationOfNote("w.");
             if(upSideDown){
                 currentNote.setImageResource(R.drawable.upsidedownnotailhollownotewdot);
@@ -681,8 +653,8 @@ public class MainActivity extends ActionBarActivity  {
                 currentNote.setImageResource(R.drawable.notailhollownotewdot);
             }
 
-        }else if(dur >= fullBar*1.6){              // randomly chosen...
-            prevNote = new Note(false, false, 0, " ",0 ,0, 0, "");
+        }else if(dur >= fullBar*1.6){                                // randomly chosen...
+            prevNote = new Note(false, false, 0, " ",0 ,0, 0, "x");
         }
 
     }
@@ -731,9 +703,12 @@ public class MainActivity extends ActionBarActivity  {
         imgLayout = new RelativeLayout(this);
         currentNote = new ImageView(this);
 
-        /*FrameLayout.LayoutParams par = new FrameLayout.LayoutParams(
-                FitToScreen.returnViewWidth(getPercent(R.dimen.noteImgWidth)),
-                FitToScreen.returnViewHeight(getPercent(R.dimen.noteImgHeight))); this works (kinda)*/
+/**/
+        currentNote.setTag(noteIdxInXMLArray);
+        noteIdxInXMLArray++;
+
+        allNotesForXML.add(note);
+/**/
 
         FrameLayout.LayoutParams par = new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteImgWidth)),
@@ -742,7 +717,7 @@ public class MainActivity extends ActionBarActivity  {
         imgLayout.setLayoutParams(par);
         imgLayout.setFocusable(true);
 
-        noteLength();
+        noteLength(note, currentNote);
 
         int x = linLayout.getLayoutParams().width -
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos));
@@ -756,7 +731,7 @@ public class MainActivity extends ActionBarActivity  {
         int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
         currentNote.setId(noteID);
 
-        notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNmbOfLinesBass(), nearestNote.getNoteHeight(), imgLayout);
+        notesOutOfBoundsLines(note.getNmbOfLinesTreble(), note.getNmbOfLinesBass(), note.getNoteHeight(), imgLayout);
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -856,20 +831,11 @@ public class MainActivity extends ActionBarActivity  {
         linLayout = new RelativeLayout(this);
         scrollView.addView(linLayout);
 
-        //missing stuff..
-
-       /* FrameLayout.LayoutParams paramsLinLayout = new FrameLayout.LayoutParams(
-                FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth)),
-                FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
-        linLayout.setLayoutParams(paramsLinLayout);*/
+        //missing stuff...
 
         linLayout.getLayoutParams().width = FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth));
-
-        System.out.println(linLayout.getWidth() + " <--actW, supW --> " + FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth)));
         linLayout.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)));
         linLayStartX = (int)linLayout.getX();
-        /*int scrollWidth = scrollView.getWidth();
-        scrollView.scrollTo(scrollWidth - xScroll, 0);*/
 
         try {
             heyListen.removeButtons();
@@ -877,6 +843,7 @@ public class MainActivity extends ActionBarActivity  {
 
         }
 
+        noteIdxInXMLArray = 0;
         brandNewPiece = true;
 
     }
@@ -908,8 +875,8 @@ public class MainActivity extends ActionBarActivity  {
                     runFFT = false;
                     tempolineHandler.removeCallbacks(writeTempoline);
                     tempoStop = System.nanoTime();
-                    linLayHandler.removeCallbacks(moveLinLay);
 
+                    linLayHandler.removeCallbacks(moveLinLay);
                     if(linLayout.getWidth() < lowestLayer.getWidth()) {
                         linLayStartX = (int) linLayout.getX();
                     }else{

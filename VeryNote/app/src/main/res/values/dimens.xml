@@ -68,10 +68,6 @@
     <item type="dimen" format="float" name="pauseXHalfRest">0.15</item>
     <item type="dimen" format="float" name="pauseXWholeRest">0.22</item>
 
-    <item type="dimen" format="float" name="noteLineYmXIV">0.045</item>
-    <item type="dimen" format="float" name="noteLineYmXIII">0.08</item>
-    <item type="dimen" format="float" name="noteLineYmXII">0.115</item>
-    <item type="dimen" format="float" name="noteLineYmXI">0.255</item>
     <item type="dimen" format="float" name="noteLineYmX">0.15</item>
     <item type="dimen" format="float" name="noteLineYmIX">0.185</item>
     <item type="dimen" format="float" name="noteLineYmVIII">0.22</item>

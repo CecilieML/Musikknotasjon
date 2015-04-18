@@ -84,7 +84,7 @@ public class ExportXML implements Serializable {
     }
 
     void saveToSD(Pattern pattern) {
-        //Parses current pattern and temporarily saves to phone SD memory (either external or partition of internal memory).
+        //Parses current pattern and permanently saves to phone SD memory (either external or partition of internal memory).
 
         try {
             if(checkIfSDPresent()) {

@@ -26,6 +26,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 /************
  * http://www.shutterstock.com/cat.mhtml?pl=47643-42764&searchterm=panda
@@ -51,8 +53,11 @@ public class MyTouchListener implements View.OnTouchListener {
     int longVib = 100;
     int index;
 
-    public MyTouchListener(RelativeLayout really) {
+    ArrayList<Note> allNotes;
+
+    public MyTouchListener(RelativeLayout really, ArrayList<Note> allNotes) {
         this.really = really;
+        this.allNotes = allNotes;
     }
 
     public void vibrate(int dur) {
@@ -440,6 +445,13 @@ public class MyTouchListener implements View.OnTouchListener {
             @Override
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
+
+                int idx = (int)img.getTag();
+                allNotes.get(idx).setDurationOfNote("lololololololol");
+                for(int i = 0; i<allNotes.size(); i++) {
+                    System.out.println(allNotes.get(i).getDurationOfNote() + ";  -->  "+ i + ", notename: " + allNotes.get(i).getName()+ ",  idx:  " + idx + ", tag: "+ (int)img.getTag() + "\n");
+                }
+
                 parentLayout.removeAllViews();
 
                 TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
@@ -448,6 +460,8 @@ public class MyTouchListener implements View.OnTouchListener {
                 removeButtons();
                 v.setSelected(false);
                 oneIsCurrentlyChosen = false;
+
+
 
                 vibrate(longVib);
             }
@@ -512,7 +526,6 @@ public class MyTouchListener implements View.OnTouchListener {
                     String newNoteName = NoteNameSearch.NoteNames[index+1];
                     int noteID = Config.context.getResources().getIdentifier(newNoteName, "dimen", Config.context.getPackageName());
                     child.setId(noteID);
-                    System.out.println(imgName + "  NEXXXXXXXXXXXXXXXXXXXXXT  " + newNoteName);
                     imgName = newNoteName;
                 }else if(prev){
                     //up
@@ -520,14 +533,13 @@ public class MyTouchListener implements View.OnTouchListener {
                     String newNoteName = NoteNameSearch.NoteNames[index-1];
                     int noteID = Config.context.getResources().getIdentifier(newNoteName, "dimen", Config.context.getPackageName());
                     child.setId(noteID);
-                    System.out.println(imgName + "  PREEEEEEEEEEEEEEEEEEEEEEEEV  " + newNoteName);
                     imgName = newNoteName;
                 }
 
                 imgName = imgName.replaceAll(""," ");
                 imgName = imgName.replaceAll(" s","#");
                 imgName = imgName.replaceAll(" b","b");
-                freqText.setText(imgName);
+              // freqText.setText(imgName);
 
 
             }
@@ -555,10 +567,8 @@ public class MyTouchListener implements View.OnTouchListener {
 
        findIndex(parentLayout);
 
-        /**/
-      //  noteObject = NoteSearch.findNoteByName(noteName);
-        //System.out.println(noteName + "<--notename, noteObject-->" + noteObject.getName());
-        /**/
+        TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
+        freqText.setText(" Tag:  " + img.getTag());
 
         setNoteName(parentLayout, false, false);
 
