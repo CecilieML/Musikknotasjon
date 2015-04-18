@@ -33,45 +33,65 @@ public class Note {
         this.durationOfNote = durationOfNote;
     }
 
+
+
+    public boolean isSharp() {
+        return sharp;
+    }
+    public void setSharp(boolean sharp) {
+        this.sharp = sharp;
+    }
+
+    public boolean isFlat() {
+        return flat;
+    }
+
+    public int getFreq() {
+        return freq;
+    }
+    public void setFlat(boolean flat) {
+        this.flat = flat;
+    }
+
     public String getName() {
         return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getNoteHeight(){
         return height;
     }
+    public void setHeight(int height) {
+        this.height = height;
+    }
 
     public int getNmbOfLinesTreble() {
         return nmbOfLinesTreble;
+    }
+    public void setNmbOfLinesTreble(int nmbOfLinesTreble) {
+        this.nmbOfLinesTreble = nmbOfLinesTreble;
     }
 
     public int getNmbOfLinesBass() {
         return nmbOfLinesBass;
     }
+    public void setNmbOfLinesBass(int nmbOfLinesBass) {
+        this.nmbOfLinesBass = nmbOfLinesBass;
+    }
 
     public String getDurationOfNote() {
         return durationOfNote;
     }
-
     public void setDurationOfNote(String durationOfNote) {
         this.durationOfNote = durationOfNote;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    @Override
-    public String toString() {
-        return "Note{" +
-                "sharp=" + sharp +
-                ", flat=" + flat +
-                ", freq=" + freq +
-                ", name='" + name + '\'' +
-                ", height=" + height +
-                ", nmbOfLinesTreble=" + nmbOfLinesTreble +
-                ", nmbOfLinesBass=" + nmbOfLinesBass +
-                ", durationOfNote='" + durationOfNote + '\'' +
-                '}';
-    }
+
+
+
+
+
 }

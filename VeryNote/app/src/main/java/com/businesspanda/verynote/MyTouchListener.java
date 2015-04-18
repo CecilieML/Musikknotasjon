@@ -423,11 +423,11 @@ public class MyTouchListener implements View.OnTouchListener {
                     if (imgName.length() <= 3) {
 
                         int idx = (int)child.getTag();
-
-                        Note unnessesary = allNotes.get(idx);
-                        unnessesary.setDurationOfNote("GONE!!!"); //all with same name O.O
-
-                        System.out.println(unnessesary.toString() + " \n unnesssdwfa, idx--> " + idx + "  TAG: " + child.getTag() + "  ID: " + Config.context.getResources().getResourceEntryName(child.getId()));
+                        Note oldNote = allNotes.get(idx);
+                        Note replacementNote =  new Note(oldNote.isSharp(), oldNote.isFlat(),
+                                oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight() ,
+                                oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), "");
+                        allNotes.set(idx, replacementNote);
 
                         break  findNote;
                     }
