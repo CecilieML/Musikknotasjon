@@ -42,8 +42,10 @@ public class ExportXML implements Serializable {
         String allNotes = "";
 
         for (Note note : notesList) {
-            String noteFromList = note.getName().replaceAll("s", "#");
-            allNotes = allNotes + " " + noteFromList + note.getDurationOfNote();
+            if(note.getDurationOfNote() != "" ) {
+                String noteFromList = note.getName().replaceAll("s", "#");
+                allNotes = allNotes + " " + noteFromList + note.getDurationOfNote();
+            }
         }
 
         return allNotes;
