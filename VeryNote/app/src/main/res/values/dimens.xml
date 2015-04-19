@@ -3,63 +3,69 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <item type="dimen" format="float" name="sharpHeight">0.1</item>
+    <!-- Note, sharp and flat ImageView dimensions -->
     <item type="dimen" format="float" name="flatHeight">0.1</item>
-
+    <item type="dimen" format="float" name="sharpHeight">0.1</item>
     <item type="dimen" format="float" name="flatOffsetY">0.06</item>
     <item type="dimen" format="float" name="sharpOffsetY">0.08</item>
-
     <item type="dimen" format="float" name="noteHeight">0.15</item>
 
+    <!-- Dimension for relative layout containing note, note lines and sharp or flat -->
+    <item type="dimen" format="float" name="noteImgWidth">0.1</item>
+    <item type="dimen" format="float" name="noteImgFULLHeight">1</item>
+
+    <!-- Background image dimensions and positions -->
+    <item type="dimen" format="float" name="backgroundX">0.05</item>
     <item type="dimen" format="float" name="backgroundWidth">0.90</item>
     <item type="dimen" format="float" name="backgroundHeight">0.4</item>
-    <item type="dimen" format="float" name="backgroundX">0.05</item>
     <item type="dimen" format="float" name="backgroundBassY">0.423</item>
     <item type="dimen" format="float" name="backgroundTrebleY">0.2</item>
 
+    <!-- Note positions -->
     <item type="dimen" format="float" name="noteStartPos">0.15</item>
     <item type="dimen" format="float" name="noteX">0.02</item>
 
+    <!-- Dimensions for the "lowest layer" -->
     <item type="dimen" format="float" name="lowestLayerWidth">0.75</item>
     <item type="dimen" format="float" name="lowestLayerHeight">1</item>
 
+    <!-- Tempo line dimensions and positions-->
     <item type="dimen" format="float" name="tempolineWidth">0.005</item>
     <item type="dimen" format="float" name="tempolineHeight">0.15</item>
-
     <item type="dimen" format="float" name="tempolineY">0.33</item>
     <item type="dimen" format="float" name="bassTempolineY">0.552</item>
 
+    <!-- Used when animating "linLay" -->
     <item type="dimen" format="float" name="Offset">0.01</item>
 
-    <item type="dimen" format="float" name="noteImgWidth">0.1</item>
-    <item type="dimen" format="float" name="noteImgHeight">0.2</item>
-    <item type="dimen" format="float" name="noteImgFULLHeight">1</item>
+    <!-- Starting dimension and position for "linLay" -->
+    <item type="dimen" format="float" name="linLayoutStartWidth">0.2</item>
+    <item type="dimen" format="float" name="linLayoutStartX">0.55</item>
 
+    <!-- Button dimensions-->
+    <item type="dimen" format="float" name="btnHeight">0.18</item>
+    <item type="dimen" format="float" name="btnWidth">0.1</item>
+
+    <!-- Button positions -->
     <item type="dimen" format="float" name="btnDownX">0</item>
     <item type="dimen" format="float" name="btnDownY">0.68</item>
     <item type="dimen" format="float" name="btnUpX">0.15</item>
     <item type="dimen" format="float" name="btnUpY">0.68</item>
-
     <item type="dimen" format="float" name="btnFlatX">0.58</item>
     <item type="dimen" format="float" name="btnFlatY">0.68</item>
     <item type="dimen" format="float" name="btnSharpX">0.7</item>
     <item type="dimen" format="float" name="btnSharpY">0.68</item>
     <item type="dimen" format="float" name="btnNeutralX">0.82</item>
     <item type="dimen" format="float" name="btnNeutralY">0.68</item>
-
     <item type="dimen" format="float" name="btnRemoveAllX">0.0</item>
     <item type="dimen" format="float" name="btnRemoveAllY">0.0</item>
 
-    <item type="dimen" format="float" name="btnHeight">0.18</item>
-    <item type="dimen" format="float" name="btnWidth">0.1</item>
-
+    <!-- Position change for note and sharp/flat when note is flipped -->
     <item type="dimen" format="float" name="upSideDownNoteX">0.1159</item>
     <item type="dimen" format="float" name="upSideDownNoteSharpFlat">0.1155</item>
 
-    <item type="dimen" format="float" name="noteLineWidth">0.042</item> //
-    <item type="dimen" format="float" name="noteLineOffset">0.027</item> //
-
-    <item type="dimen" format="float" name="pauseWidth">0.04</item> <!--changed-->
+    <!-- Dimensions and positions for pauses/rests-->
+    <item type="dimen" format="float" name="pauseWidth">0.04</item>
     <item type="dimen" format="float" name="pauseHeight">0.02</item>
     <item type="dimen" format="float" name="pauseYHalfRest">0.37</item>
     <item type="dimen" format="float" name="pauseYWholeRest">0.385</item>
@@ -68,99 +74,98 @@
     <item type="dimen" format="float" name="pauseXHalfRest">0.15</item>
     <item type="dimen" format="float" name="pauseXWholeRest">0.22</item>
 
+    <!-- Dimension and offset in x direction for note lines -->
+    <item type="dimen" format="float" name="noteLineWidth">0.042</item>
+    <item type="dimen" format="float" name="noteLineOffset">0.027</item>
+
+    <!-- Positions for note lines (*p = plus, m = minus) -->
     <item type="dimen" format="float" name="noteLineYmX">0.15</item>
     <item type="dimen" format="float" name="noteLineYmIX">0.185</item>
     <item type="dimen" format="float" name="noteLineYmVIII">0.22</item>
     <item type="dimen" format="float" name="noteLineYmVII">0.255</item>
     <item type="dimen" format="float" name="noteLineYmVI">0.29</item>
-    <item type="dimen" format="float" name="noteLineYmV">0.325</item>       /*
-    <item type="dimen" format="float" name="noteLineYmIV">0.36</item>        *
-    <item type="dimen" format="float" name="noteLineYmIII">0.40</item>       *   tebleline lines
-    <item type="dimen" format="float" name="noteLineYmII">0.435</item>        *
-    <item type="dimen" format="float" name="noteLineYmI">0.475</item>        */
-    <item type="dimen" format="float" name="noteLineYMiddleC">0.51</item>       //middleC (*p = plus, m = minus)
-    <item type="dimen" format="float" name="noteLineYpI">0.545</item>       /*
-    <item type="dimen" format="float" name="noteLineYpII">0.58</item>        *
-    <item type="dimen" format="float" name="noteLineYpIII">0.617</item>      *   basslines
-    <item type="dimen" format="float" name="noteLineYpIV">0.65</item>        *
-    <item type="dimen" format="float" name="noteLineYpV">0.685</item>        */
+    <item type="dimen" format="float" name="noteLineYmV">0.325</item>       <!--*                 -->
+    <item type="dimen" format="float" name="noteLineYmIV">0.36</item>       <!--*                 -->
+    <item type="dimen" format="float" name="noteLineYmIII">0.40</item>      <!--* tebleline lines -->
+    <item type="dimen" format="float" name="noteLineYmII">0.435</item>      <!--*                 -->
+    <item type="dimen" format="float" name="noteLineYmI">0.475</item>       <!--*                 -->
+    <item type="dimen" format="float" name="noteLineYMiddleC">0.51</item>  <!-- middleC -->
+    <item type="dimen" format="float" name="noteLineYpI">0.545</item>       <!--*                 -->
+    <item type="dimen" format="float" name="noteLineYpII">0.58</item>       <!--*                 -->
+    <item type="dimen" format="float" name="noteLineYpIII">0.617</item>     <!--* bassline lines  -->
+    <item type="dimen" format="float" name="noteLineYpIV">0.65</item>       <!--*                 -->
+    <item type="dimen" format="float" name="noteLineYpV">0.685</item>       <!--*                 -->
 
-    <item type="dimen" format="float" name="linLayoutStartWidth">0.2</item>
-    <item type="dimen" format="float" name="linLayoutStartX">0.55</item>
-
-    //C
+    <!-- The C notes' positions-->
     <item name="C3" format="float" type="dimen">0.513</item>
     <item name="C4" format="float" type="dimen">0.385</item>
     <item name="C5" format="float" type="dimen">0.255</item>
     <item name="C6" format="float" type="dimen">0.13</item>
 
-    //C#
+    <!-- The C# notes' positions-->
     <item name="Cs3" format="float" type="dimen">0.514</item>
     <item name="Cs4" format="float" type="dimen">0.385</item>
     <item name="Cs5" format="float" type="dimen">0.255</item>
     <item name="Cs6" format="float" type="dimen">0.13</item>
 
-    //D
+    <!-- The D notes' positions-->
     <item name="D3" format="float" type="dimen">0.492</item>
     <item name="D4" format="float" type="dimen">0.364</item>
     <item name="D5" format="float" type="dimen">0.236</item>
     <item name="D6" format="float" type="dimen">0.115</item>
 
-    //Eb
+    <!-- The Eb notes' positions-->
     <item name="Eb3" format="float" type="dimen">0.475</item>
     <item name="Eb4" format="float" type="dimen">0.348</item>
     <item name="Eb5" format="float" type="dimen">0.214</item>
     <item name="Eb6" format="float" type="dimen">0.095</item>
 
-    //E
+    <!-- The E notes' positions-->
     <item name="E3" format="float" type="dimen">0.475</item>
     <item name="E4" format="float" type="dimen">0.348</item>
     <item name="E5" format="float" type="dimen">0.214</item>
     <item name="E6" format="float" type="dimen">0.095</item>
 
-    //F
+    <!-- The F notes' positions-->
     <item name="F3" format="float" type="dimen">0.458</item>
     <item name="F4" format="float" type="dimen">0.329</item>
     <item name="F5" format="float" type="dimen">0.196</item>
     <item name="F6" format="float" type="dimen">0.082</item>
 
-    //F#
+    <!-- The F# notes' positions-->
     <item name="Fs3" format="float" type="dimen">0.458</item>
     <item name="Fs4" format="float" type="dimen">0.329</item>
     <item name="Fs5" format="float" type="dimen">0.1955</item>
     <item name="Fs6" format="float" type="dimen">0.082</item>
 
-    //G
+    <!-- The G notes' positions-->
     <item name="G3" format="float" type="dimen">0.437</item>
     <item name="G4" format="float" type="dimen">0.31</item>
     <item name="G5" format="float" type="dimen">0.184</item>
     <item name="G6" format="float" type="dimen">0.06</item>
 
-    //G#
+    <!-- The G# notes' positions-->
     <item name="Gs3" format="float" type="dimen">0.437</item>
     <item name="Gs4" format="float" type="dimen">0.31</item>
     <item name="Gs5" format="float" type="dimen">0.184</item>
-    <item name="Gs6" format="float" type="dimen">0.06</item>       //wont register
+    <item name="Gs6" format="float" type="dimen">0.06</item>       <!--lowest that wont register-->
 
-    //A
+    <!-- The A notes' positions-->
     <item name="A3" format="float" type="dimen">0.42</item>
     <item name="A4" format="float" type="dimen">0.2915</item>
     <item name="A5" format="float" type="dimen">0.164</item>
-    <item name="A6" format="float" type="dimen">0.045</item>        //wont register
+    <item name="A6" format="float" type="dimen">0.045</item>
 
-    //Bb
+    <!-- The Bb notes' positions-->
     <item name="Bb3" format="float" type="dimen">0.404</item>
     <item name="Bb4" format="float" type="dimen">0.273</item>
     <item name="Bb5" format="float" type="dimen">0.149</item>
-    <item name="Bb6" format="float" type="dimen">0.025</item>       //wont register
+    <item name="Bb6" format="float" type="dimen">0.025</item>
 
-    //B
+    <!-- The B notes' positions-->//B
     <item name="B3" format="float" type="dimen">0.404</item>
     <item name="B4" format="float" type="dimen">0.273</item>
     <item name="B5" format="float" type="dimen">0.149</item>
-    <item name="B6" format="float" type="dimen">0.025</item>         //wont register
-
-
-    <!--important comment!-->
+    <item name="B6" format="float" type="dimen">0.025</item>
 
 </resources>

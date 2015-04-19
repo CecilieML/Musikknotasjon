@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <item name="frikafrak" type="id"/>
+    <!-- ids for the imageViews -->
 
     <item name="flat" type="id"/>
     <item name="sharp" type="id"/>

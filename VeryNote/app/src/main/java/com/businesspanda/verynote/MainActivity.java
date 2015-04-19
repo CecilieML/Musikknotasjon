@@ -56,6 +56,72 @@ public class MainActivity extends ActionBarActivity  {
 
     Thread pitch_detector_thread_;
 
+    MyTouchListener heyListen;
+
+    LockableScrollView scrollView;
+
+    Note prevNote;
+
+    ExportXML exp;
+
+    Switch metSwitch;
+
+    String stringarray;
+    String title = "Untitled";
+
+    ArrayList<Note> allNotesForXML = new ArrayList();
+    //public String allNotes = ""; <-gammel string for xml
+
+    private Handler mHandler = new Handler();
+    private Handler linLayHandler = new Handler();
+    private Handler tempolineHandler = new Handler();
+
+    ImageView flat;
+    ImageView sharp;
+    ImageView pauseImg;
+    ImageView currentNote;
+    ImageView backgroundImage;
+
+
+    RelativeLayout imgLayout;
+    RelativeLayout linLayout;
+    RelativeLayout lowestLayer;
+
+    int x = 0;
+    int speed = 70;
+    int addToY = 0;
+    int met_int = 1;
+    int xScroll = 0;
+    int linLayStartX;
+    int metronomNmb = 750;
+    int currentLinLayWidth;
+    int noteIdxInXMLArray = 0;
+    int fullBar = metronomNmb*4; //4 = tempo;
+
+    long dur;
+    long nowTime;
+    long lastNote;
+    long tempoStop;
+    long firstPause;
+    long durationOfPause;
+    long lastPauseWritten;
+    long lastTempolineWasWritten = 0;
+
+    boolean linLayMoving;
+    boolean startNewNote;
+    boolean setHalfRestX;
+    boolean addWholeRestToList;
+    boolean useLastPauseWritten;
+
+    boolean bass = false;
+    boolean recording = false;
+    boolean clefChanged = false;
+
+    public static boolean editable;
+    public static boolean runFFT = true;
+
+    /*Thread pitch_detector_thread_;
+
     public ArrayList<Note> allNotesForXML = new ArrayList();
     //public String allNotes = ""; <-gammel string for xml
 
@@ -133,7 +199,7 @@ public class MainActivity extends ActionBarActivity  {
 
     int noteIdxInXMLArray = 0;
 
-    int linLayStartX;
+    int linLayStartX;*/
 
     /** Called when the activity is first created. */
     @Override
@@ -357,8 +423,6 @@ public class MainActivity extends ActionBarActivity  {
                     if(addWholeRestToList){
                         pauseImg.setX(linLayout.getLayoutParams().width -
                                 FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXWholeRest)));
-                        //Note wholePauseNote = new Note(false, false, 0, "R", 0, 0, 0, "w");
-                        //allNotesForXML.set(allNotesForXML.size()-1, wholePauseNote);
 
                       findLastPause:
                         for(int i = 1; i<allNotesForXML.size(); i++) {
@@ -386,9 +450,7 @@ public class MainActivity extends ActionBarActivity  {
         if(bass) {
             for (int i = 0; i < nmbOfBassLines; i++) {
                 ImageView lineForNote = new ImageView(this);
-
                 lineForNote.setAdjustViewBounds(true);
-
                 lineForNote.setLayoutParams(notelineParams);
                 lineForNote.setImageResource(R.drawable.goodline);
                 lineForNote.setX(x);
@@ -442,9 +504,7 @@ public class MainActivity extends ActionBarActivity  {
             for (int i = 0; i < nmbOfLines; i++) {
 
                 ImageView lineForNote = new ImageView(this);
-
                 lineForNote.setAdjustViewBounds(true);
-
                 lineForNote.setLayoutParams(notelineParams);
                 lineForNote.setImageResource(R.drawable.goodline);
                 lineForNote.setX(x);
@@ -473,9 +533,7 @@ public class MainActivity extends ActionBarActivity  {
         }else if(height>26){
             for (int i = 0; i < nmbOfLines; i++) {
                 ImageView lineForNote = new ImageView(this);
-
                 lineForNote.setAdjustViewBounds(true);
-
                 lineForNote.setLayoutParams(notelineParams);
                 lineForNote.setImageResource(R.drawable.goodline);
                 lineForNote.setX(x);

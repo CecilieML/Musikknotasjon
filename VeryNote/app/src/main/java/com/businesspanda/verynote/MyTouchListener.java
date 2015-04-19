@@ -37,11 +37,12 @@ import java.util.ArrayList;
 
 public class MyTouchListener implements View.OnTouchListener {
 
-    boolean oneIsCurrentlyChosen;
-    boolean upSideDownNote; //true = note is flipped
+    ArrayList<Note> allNotes;
+
     ImageView lastImg;
-    RelativeLayout really;
     Note noteObject;
+    RelativeLayout really;
+
     Button btnUp;
     Button btnDown;
     Button btnFlat;
@@ -53,7 +54,8 @@ public class MyTouchListener implements View.OnTouchListener {
     int longVib = 100;
     int index;
 
-    ArrayList<Note> allNotes;
+    boolean oneIsCurrentlyChosen;
+    boolean upSideDownNote; //true = note is flipped
 
     public MyTouchListener(RelativeLayout really, ArrayList<Note> allNotes) {
         this.really = really;
@@ -231,19 +233,37 @@ public class MyTouchListener implements View.OnTouchListener {
                 if(noteIsFlat){
                     for(int i=0;i<parentLayout.getChildCount();i++){
                         View child = parentLayout.getChildAt(i);
+                        String imgName = Config.context.getResources().getResourceEntryName(child.getId());
                         if(child.getId() == R.id.flat){
                             parentLayout.removeView(child);
+                        }
+                        if (imgName.length() <= 3) {
+                            int idx = (int) child.getTag();
+                            Note oldNote = allNotes.get(idx);
+                            Note replacementNote = new Note(oldNote.isSharp(), false,
+                                    oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
+                                    oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
+                            allNotes.set(idx, replacementNote);
                         }
                     }
                 }else{
                     if(children>1){
                         for(int i=0;i<parentLayout.getChildCount();i++){
                             View child = parentLayout.getChildAt(i);
+                            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
                             if(child.getId() == R.id.sharp) {
                                 parentLayout.removeView(child);
                             }
                             if(child.getId() == R.id.neutral) {
                                 parentLayout.removeView(child);
+                            }
+                            if (imgName.length() <= 3) {
+                                int idx = (int) child.getTag();
+                                Note oldNote = allNotes.get(idx);
+                                Note replacementNote = new Note(oldNote.isSharp(), true,
+                                        oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
+                                        oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
+                                allNotes.set(idx, replacementNote);
                             }
                         }
                     }
@@ -296,19 +316,37 @@ public class MyTouchListener implements View.OnTouchListener {
                 if(noteIsSharp){
                     for(int i=0;i<parentLayout.getChildCount();i++){
                         View child = parentLayout.getChildAt(i);
+                        String imgName = Config.context.getResources().getResourceEntryName(child.getId());
                         if(child.getId() == R.id.sharp){
                             parentLayout.removeView(child);
+                        }
+                        if (imgName.length() <= 3) {
+                            int idx = (int) child.getTag();
+                            Note oldNote = allNotes.get(idx);
+                            Note replacementNote = new Note(false, oldNote.isFlat(),
+                                    oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
+                                    oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
+                            allNotes.set(idx, replacementNote);
                         }
                     }
                 }else{
                     if(children>1){
                         for(int i=0;i<parentLayout.getChildCount();i++){
                             View child = parentLayout.getChildAt(i);
+                            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
                             if(child.getId() == R.id.flat) {
                                 parentLayout.removeView(child);
                             }
                             if(child.getId() == R.id.neutral) {
                                 parentLayout.removeView(child);
+                            }
+                            if (imgName.length() <= 3) {
+                                int idx = (int) child.getTag();
+                                Note oldNote = allNotes.get(idx);
+                                Note replacementNote = new Note(true, oldNote.isFlat(),
+                                        oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
+                                        oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
+                                allNotes.set(idx, replacementNote);
                             }
                         }
                     }
@@ -498,7 +536,6 @@ public class MyTouchListener implements View.OnTouchListener {
     }
 
     public void setNoteName(RelativeLayout parentLayout, boolean next, boolean prev){
-        TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
         for(int i=0;i<parentLayout.getChildCount();i++){
             View child = parentLayout.getChildAt(i);
             String imgName = Config.context.getResources().getResourceEntryName(child.getId());
@@ -509,22 +546,13 @@ public class MyTouchListener implements View.OnTouchListener {
                     String newNoteName = NoteNameSearch.NoteNames[index+1];
                     int noteID = Config.context.getResources().getIdentifier(newNoteName, "dimen", Config.context.getPackageName());
                     child.setId(noteID);
-                    imgName = newNoteName;
                 }else if(prev){
                     //up
                     if(index<1)index=1;
                     String newNoteName = NoteNameSearch.NoteNames[index-1];
                     int noteID = Config.context.getResources().getIdentifier(newNoteName, "dimen", Config.context.getPackageName());
                     child.setId(noteID);
-                    imgName = newNoteName;
                 }
-
-                imgName = imgName.replaceAll(""," ");
-                imgName = imgName.replaceAll(" s","#");
-                imgName = imgName.replaceAll(" b","b");
-              // freqText.setText(imgName);
-
-
             }
         }
 
@@ -550,13 +578,10 @@ public class MyTouchListener implements View.OnTouchListener {
 
        findIndex(parentLayout);
 
-        TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
-        freqText.setText(" Tag:  " + v.getTag());
+        //TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
+        //freqText.setText(" Tag:  " + v.getTag());
 
         setNoteName(parentLayout, false, false);
-        for(int i = 0; i<allNotes.size(); i++) {
-            System.out.println(allNotes.get(i).getDurationOfNote() + ";  -->  " + i + ", notename: " + allNotes.get(i).getName() + "\n");
-        }
     }
 
     public void onUnChosenNote(){

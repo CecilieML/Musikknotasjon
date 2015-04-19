@@ -41,28 +41,6 @@ public class yValueSearch {
         yValues[13] = c5;
         yValues[6] = c6;
 
-        /*//C#
-        TypedValue cs3outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Cs3, cs3outValue, true);
-        float cs3 = cs3outValue.getFloat();
-
-        TypedValue cs4outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Cs4, cs4outValue, true);
-        float cs4 = cs4outValue.getFloat();
-
-        TypedValue cs5outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Cs5, cs5outValue, true);
-        float cs5 = cs5outValue.getFloat();
-
-        TypedValue cs6outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Cs6, cs6outValue, true);
-        float cs6 = cs6outValue.getFloat();
-
-        yValues[46] = cs3;
-        yValues[34] = cs4;
-        yValues[22] = cs5;
-        yValues[10] = cs6;*/
-
         //D
         TypedValue d3outValue = new TypedValue();
         Config.context.getResources().getValue(R.dimen.D3, d3outValue, true);
@@ -84,28 +62,6 @@ public class yValueSearch {
         yValues[19] = d4;
         yValues[12] = d5;
         yValues[5]  = d6;
-
-       /*//Eb
-        TypedValue eb3outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Eb3, eb3outValue, true);
-        float eb3 = eb3outValue.getFloat();
-
-        TypedValue eb4outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Eb4, eb4outValue, true);
-        float eb4 = eb4outValue.getFloat();
-
-        TypedValue eb5outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Eb5, eb5outValue, true);
-        float eb5 = eb5outValue.getFloat();
-
-        TypedValue eb6outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Eb6, eb6outValue, true);
-        float eb6 = eb6outValue.getFloat();
-
-        yValues[44] = eb3;
-        yValues[32] = eb4;
-        yValues[20] = eb5;
-        yValues[8]  = eb6;*/
 
         //E
         TypedValue e3outValue = new TypedValue();
@@ -151,28 +107,6 @@ public class yValueSearch {
         yValues[10] = f5;
         yValues[3]  = f6;
 
-        /*//F#
-        TypedValue fs3outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Fs3, fs3outValue, true);
-        float fs3 = fs3outValue.getFloat();
-
-        TypedValue fs4outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Fs4, fs4outValue, true);
-        float fs4 = fs4outValue.getFloat();
-
-        TypedValue fs5outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Fs5, fs5outValue, true);
-        float fs5 = fs5outValue.getFloat();
-
-        TypedValue fs6outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Fs6, fs6outValue, true);
-        float fs6 = fs6outValue.getFloat();
-
-        yValues[41] = fs3;
-        yValues[29] = fs4;
-        yValues[17] = fs5;
-        yValues[5]  = fs6;*/
-
         //G
         TypedValue g3outValue = new TypedValue();
         Config.context.getResources().getValue(R.dimen.G3, g3outValue, true);
@@ -194,28 +128,6 @@ public class yValueSearch {
         yValues[16] = g4;
         yValues[9]  = g5;
         yValues[2]  = g6;
-
-        /*//G#
-        TypedValue gs3outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Gs3, gs3outValue, true);
-        float gs3 = gs3outValue.getFloat();
-
-        TypedValue gs4outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Gs4, gs4outValue, true);
-        float gs4 = gs4outValue.getFloat();
-
-        TypedValue gs5outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Gs5, gs5outValue, true);
-        float gs5 = gs5outValue.getFloat();
-
-        TypedValue gs6outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Gs6, gs6outValue, true);
-        float gs6 = gs6outValue.getFloat();
-
-        yValues[39] = gs3;
-        yValues[27] = gs4;
-        yValues[15] = gs5;
-        yValues[3]  = gs6;*/
 
         //A
         TypedValue a3outValue = new TypedValue();
@@ -239,28 +151,6 @@ public class yValueSearch {
         yValues[8]  = a5;
         yValues[1]  = a6;
 
-       /* //Bb
-        TypedValue bb3outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Bb3, bb3outValue, true);
-        float bb3 = bb3outValue.getFloat();
-
-        TypedValue bb4outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Bb4, bb4outValue, true);
-        float bb4 = bb4outValue.getFloat();
-
-        TypedValue bb5outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Bb5, bb5outValue, true);
-        float bb5 = bb5outValue.getFloat();
-
-        TypedValue bb6outValue = new TypedValue();
-        Config.context.getResources().getValue(R.dimen.Bb6, bb6outValue, true);
-        float bb6 = bb6outValue.getFloat();
-
-        yValues[37] = bb3;
-        yValues[25] = bb4;
-        yValues[13] = bb5;
-        yValues[1]  = bb6;*/
-
         //B
         TypedValue b3outValue = new TypedValue();
         Config.context.getResources().getValue(R.dimen.B3, b3outValue, true);
@@ -283,41 +173,6 @@ public class yValueSearch {
         yValues[7] = b5;
         yValues[0]  = b6;
 
-    }
-
-
-    public static int returnNext(float valueToFind){
-        float percentValue = FitToScreen.returnPercent(valueToFind);
-
-        double minDiff = Double.MAX_VALUE;
-
-        int indexOfValueToFind = 0;
-
-        for (int i = 0; i < yValues.length; i++) {
-            double diff = Math.abs(percentValue - yValues[i]);
-            if (diff < minDiff) {
-                indexOfValueToFind = i;
-                minDiff = diff;
-            }
-        }
-        return (indexOfValueToFind + 1);
-    }
-
-    public static int returnPrev(float valueToFind){
-        float percentValue = FitToScreen.returnPercent(valueToFind);
-
-        double minDiff = Double.MAX_VALUE;
-
-        int indexOfValueToFind = 0;
-
-        for (int i = 0; i < yValues.length; i++) {
-            double diff = Math.abs(percentValue - yValues[i]);
-            if (diff < minDiff) {
-                indexOfValueToFind = i;
-                minDiff = diff;
-            }
-        }
-        return (indexOfValueToFind - 1);
     }
 
     public static int returnIdx(float valueToFind){

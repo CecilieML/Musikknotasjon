@@ -19,7 +19,6 @@ import android.view.WindowManager;
 public class FitToScreen {
 
     public static int returnViewHeight(double percentOfScreen) {
-
         View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
         int height = content.getHeight();
 
@@ -30,16 +29,14 @@ public class FitToScreen {
         WindowManager wm = (WindowManager) Config.context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         int width = display.getWidth();
+
         return (int)(width * percentOfScreen);
     }
 
     public static float returnPercent(float yValue){
         View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
         int height = content.getHeight();
-
         float percentValue = yValue/height;
-
-        //System.out.println(percentValue + " & = " + yValue + " / " + height);
 
         return percentValue;
     }

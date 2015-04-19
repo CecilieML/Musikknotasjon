@@ -21,7 +21,6 @@ public class Note {
     int nmbOfLinesBass;
     String durationOfNote;
 
-
     public Note(boolean sharp, boolean flat, int freq, String name, int height, int nmbOfLinesTreble, int nmbOfLinesBass, String durationOfNote){
         this.sharp = sharp;
         this.flat = flat;
