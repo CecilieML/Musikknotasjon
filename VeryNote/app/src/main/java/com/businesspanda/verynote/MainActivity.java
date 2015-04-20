@@ -492,7 +492,7 @@ public class MainActivity extends ActionBarActivity  {
         tempo.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.tempolineY)));
         if(bass)tempo.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.bassTempolineY)));
 
-        Note tempolineNote = new Note(false, false, 0, "|", 0, 0, 0, "");
+        Note tempolineNote = new Note(false, false, 0, "|", 0, 0, 0, "q");
 
         allNotesForXML.add(tempolineNote);
         noteIdxInXMLArray++;

@@ -64,18 +64,7 @@ public class PitchDec implements Runnable {
     private final static int MAX_FREQUENCY = 1568; // 1567.98 HZ of G6 - highest
     // demanded note in the classical repertoire
 
-    private final static int DRAW_FREQUENCY_STEP = 5;
-
-    int saveCounter = 0;
-    int filesToSave = 8;
-
-    //lowpassvariables
-    /*
-    public short[] a = new short[2];
-    public short[] b = new short[3];
-    public short[] mem= new short[4];
-    private final static short LOWPASSLIMIT = 1500;
-    */
+    int saveCounter = 0; //<-----------
 
     public PitchDec(MainActivity parent, Handler handler) {
         parent_ = parent;
@@ -83,7 +72,6 @@ public class PitchDec implements Runnable {
     }
 
     private static class FreqResult {
-        public HashMap<Double, Double> frequencies;
         public double best_frequency;
     }
 
@@ -137,7 +125,6 @@ public class PitchDec implements Runnable {
             data[i * 2 + 1] = 0;
         }
 
-
         if(MainActivity.runFFT)fft.complexForward(data);
 
         /*
@@ -146,12 +133,7 @@ public class PitchDec implements Runnable {
             saveCounter++;
         }*/
 
-
-
-
-        double best_frequency = min_frequency_fft;
-        HashMap<Double, Double> frequencies = new HashMap<Double, Double>();
-
+        double best_frequency;
         double best_amplitude = 0;
 
         List<Double> best_frequencies = new ArrayList<Double>();
@@ -159,38 +141,22 @@ public class PitchDec implements Runnable {
 
         for (int i = min_frequency_fft; i <= max_frequency_fft; i++) {
 
-            final double current_frequency = i * 1.0 * RATE
-                    / CHUNK_SIZE_IN_SAMPLES;
-            final double draw_frequency = Math
-                    .round((current_frequency - MIN_FREQUENCY)
-                            / DRAW_FREQUENCY_STEP)
-                    * DRAW_FREQUENCY_STEP + MIN_FREQUENCY;
+            final double current_frequency = i * 1.0 * RATE / CHUNK_SIZE_IN_SAMPLES;
 
             final double current_amplitude = Math.pow(Math.pow(data[i * 2], 2)
                     + Math.pow(data[i * 2 + 1], 2), 0.5);
 
-            frequencies.put(draw_frequency, current_amplitude);
-
             if (current_amplitude > best_amplitude) {
-                best_frequency = current_frequency;
                 best_amplitude = current_amplitude;
 
                 best_frequencies.add(current_frequency);
                 best_amps.add(best_amplitude);
             }
-            // test for harmonics
-            // e.g. 220 is a harmonic of 110, so the harmonic factor is 2.0
-            // and thus the decimal part is 0.0.
-            //		230 isn't a harmonic of 110, the harmonic_factor would be
-            //		2.09 and 0.09 > 0.05
-            //double harmonic_factor = current_frequency / best_frequency;
-            //if ((best_amplitude == 0) || (harmonic_factor - Math.floor(harmonic_factor) > 0.05)) {
         }
 
         List<FrequencyCluster> clusters = new ArrayList<FrequencyCluster>();
         FrequencyCluster currentCluster = new FrequencyCluster();
         clusters.add(currentCluster);
-
 
         if (best_frequencies.size() > 0)
         {
@@ -237,50 +203,10 @@ public class PitchDec implements Runnable {
         }
 
         fr.best_frequency = best_frequency;
-        fr.frequencies = frequencies;
 
         return fr;
     }
 
-    /*
-    void computeLowPassParameters( int rate, short f)
-    {
-        float a0;
-        float w0 = 2 * (float)Math.PI * f/rate;
-        float cosw0 = (short)Math.cos(w0);
-        float sinw0 = (short)Math.sin(w0);
-        float alpha = sinw0/2 * (float)Math.sqrt(2);
-
-        a0   = 1 + alpha;
-
-        float tempa0 = (-2*cosw0) / a0;
-        float tempa1 = (1 - alpha) / a0;
-        float tempb0 = ((1-cosw0)/2) / a0;
-        float tempb1 = ( 1-cosw0) / a0;
-
-        a[0] = (short)tempa0;
-        a[1] = (short)tempa1;
-        b[0] = (short)tempb0;
-        b[1] = (short)tempb1;
-        b[2] = b[0];
-    }
-
-    short processFilter( short x)
-    {
-        float tempret = b[0] * x + b[1] * mem[0] + b[2] * mem[1]
-                - a[0] * mem[2] - a[1] * mem[3] ;
-
-        short ret = (short)tempret;
-
-        mem[1] = mem[0];
-        mem[0] = x;
-        mem[3] = mem[2];
-        mem[2] = ret;
-
-        return ret;
-    }
-
-    */
 
     public void run() {
         Log.e(LOG_TAG, "starting to detect pitch");
@@ -302,24 +228,10 @@ public class PitchDec implements Runnable {
             audio_data = new short[BUFFERSIZE / 2];
             recorder_.read(audio_data, 0, CHUNK_SIZE_IN_BYTES / 2);
 
-            //lavpassfilter
-
-           /* computeLowPassParameters(RATE, LOWPASSLIMIT);
-            for( int j=0; j<audio_data.length; ++j ) {
-
-                    audio_data[j] = processFilter(audio_data[j]);
-
-            }*/
-
-            /*
-            if(saveCounter<filesToSave) {
-                saveAudiodata(audio_data); //saves audiodatafile to
-            }
-            */
-            //pitchdetector
             double volume = getAmplitude(audio_data);
 
             if(volume>4400) {
+                //pitchdetector
                 FreqResult fr = AnalyzeFrequencies(audio_data);
                 PostToUI(fr.best_frequency);
             }else{
@@ -421,4 +333,3 @@ public class PitchDec implements Runnable {
     private AudioRecord recorder_;
     private Handler handler_;
 }
-
