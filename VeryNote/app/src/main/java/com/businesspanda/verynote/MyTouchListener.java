@@ -548,7 +548,11 @@ public class MyTouchListener implements View.OnTouchListener {
                     String fullName = root + "b" + octave;
                     note.setName(fullName);
 
-                } else if (note.isSharp()) {
+                }
+                if (note.isSharp()) {
+                    
+                    System.out.println(imgName + " <--imgName, noteName-->" + note.getName());
+
                     String noteName = note.getName();
                     String root = noteName.substring(0, 1);
                     String octave = noteName.substring(1, 2);
