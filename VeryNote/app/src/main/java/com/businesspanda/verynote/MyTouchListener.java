@@ -68,7 +68,6 @@ public class MyTouchListener implements View.OnTouchListener {
     }
 
     public void fixLines(RelativeLayout parentLayout){
-
         for(int i=0;i<parentLayout.getChildCount();i++){
             View child = parentLayout.getChildAt(i);
             ImageView childView = (ImageView) child;
@@ -124,6 +123,8 @@ public class MyTouchListener implements View.OnTouchListener {
                 findIndex(parentLayout);
                 fixLines(parentLayout);
 
+                fixName(parentLayout, noteObject);
+
                 if(index<1)index = 1;
                 float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
 
@@ -172,6 +173,8 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 findIndex(parentLayout);
                 fixLines(parentLayout);
+
+                fixName(parentLayout, noteObject);
 
                 if(index>26)index=26;
                 float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);
@@ -240,9 +243,10 @@ public class MyTouchListener implements View.OnTouchListener {
                         if (imgName.length() <= 3) {
                             int idx = (int) child.getTag();
                             Note oldNote = allNotes.get(idx);
-                            Note replacementNote = new Note(oldNote.isSharp(), false,
+                            Note replacementNote = new Note(false, false,
                                     oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
                                     oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
+                            fixName(parentLayout, replacementNote);
                             allNotes.set(idx, replacementNote);
                         }
                     }
@@ -260,9 +264,10 @@ public class MyTouchListener implements View.OnTouchListener {
                             if (imgName.length() <= 3) {
                                 int idx = (int) child.getTag();
                                 Note oldNote = allNotes.get(idx);
-                                Note replacementNote = new Note(oldNote.isSharp(), true,
+                                Note replacementNote = new Note(false, true,
                                         oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
                                         oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
+                                fixName(parentLayout, replacementNote);
                                 allNotes.set(idx, replacementNote);
                             }
                         }
@@ -323,9 +328,10 @@ public class MyTouchListener implements View.OnTouchListener {
                         if (imgName.length() <= 3) {
                             int idx = (int) child.getTag();
                             Note oldNote = allNotes.get(idx);
-                            Note replacementNote = new Note(false, oldNote.isFlat(),
+                            Note replacementNote = new Note(false, false,
                                     oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
                                     oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
+                            fixName(parentLayout, replacementNote);
                             allNotes.set(idx, replacementNote);
                         }
                     }
@@ -343,9 +349,11 @@ public class MyTouchListener implements View.OnTouchListener {
                             if (imgName.length() <= 3) {
                                 int idx = (int) child.getTag();
                                 Note oldNote = allNotes.get(idx);
-                                Note replacementNote = new Note(true, oldNote.isFlat(),
-                                        oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
-                                        oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
+                                Note replacementNote = new Note(true, false, oldNote.getFreq(),
+                                        oldNote.getName(), oldNote.getNoteHeight(),
+                                        oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
+                                        oldNote.getDurationOfNote());
+                                fixName(parentLayout, replacementNote);
                                 allNotes.set(idx, replacementNote);
                             }
                         }
@@ -434,7 +442,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
                     parentLayout.addView(neutral);
                 }
-
+                //fixName(parentLayout, note);
                 vibrate(shortVib);
             }
         });
@@ -503,6 +511,34 @@ public class MyTouchListener implements View.OnTouchListener {
         btnSharp.setVisibility(View.GONE);
         btnNeutral.setVisibility(View.GONE);
         btnRemoveAll.setVisibility(View.GONE);
+    }
+
+    public void fixName(RelativeLayout parentLayout, Note note){
+        for(int i=0;i<parentLayout.getChildCount();i++) {
+            View child = parentLayout.getChildAt(i);
+            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+            if(imgName.length() <= 3){
+                note.setName(imgName);
+            }
+            if(note.isFlat()){
+                String noteName = note.getName();
+                String root = noteName.substring(0, 1);
+                String octave = noteName.substring(1, 2);
+
+                String fullName = root + "b" + octave;
+                note.setName(fullName);
+
+            }else if(note.isSharp()){
+                String noteName = note.getName();
+                String root = noteName.substring(0, 1);
+                String octave = noteName.substring(1, 2);
+
+                String fullName = root + "s" + octave;
+                note.setName(fullName);
+            }
+
+        }
+        System.out.println("in notename:  " + note.getName());
     }
 
     public void findIndex(RelativeLayout parentLayout){
@@ -578,10 +614,9 @@ public class MyTouchListener implements View.OnTouchListener {
 
        findIndex(parentLayout);
 
-        //TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
-        //freqText.setText(" Tag:  " + v.getTag());
+       setNoteName(parentLayout, false, false);
 
-        setNoteName(parentLayout, false, false);
+        System.out.println("on chosen  " + noteObject.getName());
     }
 
     public void onUnChosenNote(){
@@ -595,8 +630,8 @@ public class MyTouchListener implements View.OnTouchListener {
             ImageView childView = (ImageView) child;
             childView.clearColorFilter();
         }
-        TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
-        freqText.setText("");
+
+        System.out.println("on UNchosen  " + noteObject.getName());
     }
 
     public boolean onTouch(View v, MotionEvent event)
