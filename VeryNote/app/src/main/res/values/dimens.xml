@@ -162,7 +162,7 @@
     <item name="Bb5" format="float" type="dimen">0.149</item>
     <item name="Bb6" format="float" type="dimen">0.025</item>
 
-    <!-- The B notes' positions-->//B
+    <!-- The B notes' positions-->
     <item name="B3" format="float" type="dimen">0.404</item>
     <item name="B4" format="float" type="dimen">0.273</item>
     <item name="B5" format="float" type="dimen">0.149</item>

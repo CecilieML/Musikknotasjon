@@ -66,11 +66,9 @@ public class MainActivity extends ActionBarActivity  {
 
     Switch metSwitch;
 
-    String stringarray;
     String title = "Untitled";
 
     ArrayList<Note> allNotesForXML = new ArrayList();
-    //public String allNotes = ""; <-gammel string for xml
 
     private Handler mHandler = new Handler();
     private Handler linLayHandler = new Handler();
@@ -81,7 +79,6 @@ public class MainActivity extends ActionBarActivity  {
     ImageView pauseImg;
     ImageView currentNote;
     ImageView backgroundImage;
-
 
     RelativeLayout imgLayout;
     RelativeLayout linLayout;
@@ -348,8 +345,6 @@ public class MainActivity extends ActionBarActivity  {
         Integer pitchInt = (int) (pitch);
         Note nearestNote = NoteSearch.findNearestNote(pitchInt);
 
-        stringarray = stringarray + " " + pitchInt;
-
         final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
         changeFreq.setText(nearestNote.name); //remember to remove
 
@@ -577,8 +572,6 @@ public class MainActivity extends ActionBarActivity  {
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos)));
         tempo.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.tempolineY)));
         if(bass)tempo.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.bassTempolineY)));
-
-        //allNotes = allNotes + " |"; <--gammel tempolinje for lagring xml
 
         Note tempolineNote = new Note(false, false, 0, "|", 0, 0, 0, "");
 
@@ -868,8 +861,8 @@ public class MainActivity extends ActionBarActivity  {
         EditText titleField = (EditText) findViewById(R.id.title_field);
         titleField.setText("Untitled");
         exp.setFilename("untitled");
+        metronomNmb = 750;
 
-        //allNotes = ""; <--gammel sletting av string for xml
         allNotesForXML.clear();
 
         linLayout.getLayoutParams().width = FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth));
@@ -974,6 +967,7 @@ public class MainActivity extends ActionBarActivity  {
 
             case R.id.action_save:
                 Pattern patternSD = new Pattern(exp.convertArrayListToString(allNotesForXML));
+                System.out.println(patternSD);
                 exp.saveToSD(patternSD);
                 return true;
 
