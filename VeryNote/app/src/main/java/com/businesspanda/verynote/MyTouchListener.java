@@ -63,43 +63,6 @@ public class MyTouchListener implements View.OnTouchListener {
         this.allNotes = allNotes;
     }
 
-    public void vibrate(int dur) {
-        Vibrator vib = (Vibrator) Config.context.getSystemService(Context.VIBRATOR_SERVICE);
-        vib.vibrate(dur);
-    }
-
-    public void fixLines(RelativeLayout parentLayout){
-        for(int i=0;i<parentLayout.getChildCount();i++){
-            View child = parentLayout.getChildAt(i);
-            ImageView childView = (ImageView) child;
-            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
-            if(imgName.length() >= 8 ){
-                childView.setVisibility(View.GONE);
-            }
-        }
-
-        Config.context.notesOutOfBoundsLines(noteObject.getNmbOfLinesTreble(), noteObject.getNmbOfLinesBass(), noteObject.getNoteHeight(), parentLayout);
-
-        for(int i=0;i<parentLayout.getChildCount();i++){
-            View child = parentLayout.getChildAt(i);
-            ImageView childView = (ImageView) child;
-            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
-            if(imgName.length() >= 8 ){
-                ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
-                childView.setColorFilter(filter);
-            }
-        }
-
-    }
-
-    public boolean isNoteUpSideDown(RelativeLayout parentLayout){
-        if(parentLayout.getId() == R.id.upsideDown){
-            return true;
-        }else {
-            return false;
-        }
-    }
-
     public void createButtons(final ImageView imgView){
 
         FrameLayout.LayoutParams btnParams= new FrameLayout.LayoutParams(
@@ -137,7 +100,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
                         int idx = (int) child.getTag();
                         Note oldNote = allNotes.get(idx);
-                        Note replacementNote = new Note(oldNote.isSharp(), oldNote.isFlat(),
+                        Note replacementNote = new Note(false, false,
                                 oldNote.getFreq(), childName, oldNote.getNoteHeight(),
                                 oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
                                 oldNote.getDurationOfNote());
@@ -209,7 +172,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
                         int idx = (int) child.getTag();
                         Note oldNote = allNotes.get(idx);
-                        Note replacementNote = new Note(oldNote.isSharp(), oldNote.isFlat(),
+                        Note replacementNote = new Note(false, false,
                                 oldNote.getFreq(), childName, oldNote.getNoteHeight(),
                                 oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
                                 oldNote.getDurationOfNote());
@@ -256,6 +219,26 @@ public class MyTouchListener implements View.OnTouchListener {
         btnFlat.setVisibility(View.VISIBLE);
         btnFlat.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnFlatY)));
         btnFlat.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnFlatX)));
+
+        /***/
+        RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
+        int nameID = 0;
+        /***/
+
+        for (int i = 0; i < parentLayout.getChildCount(); i++) {
+            View child = parentLayout.getChildAt(i);
+            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+            if (imgName.length() <= 3) {
+                String root = imgName.substring(0, 1);
+                String octave = imgName.substring(imgName.length() - 1, imgName.length());
+
+                String fullName = root + "b" + octave;
+                nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
+            }
+        }
+
+        if(nameID==0)btnFlat.setEnabled(false);
+
         btnFlat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -292,20 +275,6 @@ public class MyTouchListener implements View.OnTouchListener {
                         }
                     }
                 }else {
-                    int nameID = 0;
-                    for (int i = 0; i < parentLayout.getChildCount(); i++) {
-                        View child = parentLayout.getChildAt(i);
-                        String imgName = Config.context.getResources().getResourceEntryName(child.getId());
-                        if (imgName.length() <= 3) {
-                            String root = imgName.substring(0, 1);
-                            String octave = imgName.substring(imgName.length() - 1, imgName.length());
-
-                            String fullName = root + "b" + octave;
-                            nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-                        }
-                    }
-
-                    if (nameID != 0) {
                         if (children > 1) {
                             for (int i = 0; i < parentLayout.getChildCount(); i++) {
                                 View child = parentLayout.getChildAt(i);
@@ -343,10 +312,9 @@ public class MyTouchListener implements View.OnTouchListener {
                         flat.setY(noteHeight + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
 
                         parentLayout.addView(flat);
-                    }else {
-                        btnFlat.setEnabled(false);
+
                     }
-                }
+
                 vibrate(shortVib);
 
             }
@@ -359,6 +327,22 @@ public class MyTouchListener implements View.OnTouchListener {
         btnSharp.setVisibility(View.VISIBLE);
         btnSharp.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnSharpY)));
         btnSharp.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnSharpX)));
+
+        //RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
+        //int nameID = 0;
+        for(int i=0;i<parentLayout.getChildCount();i++) {
+            View child = parentLayout.getChildAt(i);
+            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+            if (imgName.length() <= 3) {
+                String root = imgName.substring(0, 1);
+                String octave = imgName.substring(imgName.length()-1, imgName.length());
+
+                String fullName = root + "s" + octave;
+                nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
+            }
+        }
+        if(nameID == 0)btnSharp.setEnabled(false);
+
         btnSharp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -394,20 +378,6 @@ public class MyTouchListener implements View.OnTouchListener {
                         }
                     }
                 }else {
-                    int nameID = 0;
-                    for(int i=0;i<parentLayout.getChildCount();i++) {
-                        View child = parentLayout.getChildAt(i);
-                        String imgName = Config.context.getResources().getResourceEntryName(child.getId());
-                        if (imgName.length() <= 3) {
-                            String root = imgName.substring(0, 1);
-                            String octave = imgName.substring(imgName.length()-1, imgName.length());
-
-                            String fullName = root + "s" + octave;
-                            nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-                        }
-                    }
-
-                    if (nameID != 0) {
                         if (children > 1) {
                             for (int i = 0; i < parentLayout.getChildCount(); i++) {
                                 View child = parentLayout.getChildAt(i);
@@ -448,9 +418,7 @@ public class MyTouchListener implements View.OnTouchListener {
                         sharp.setY(noteHeight + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
 
                         parentLayout.addView(sharp);
-                    }else {
-                        btnSharp.setEnabled(false);
-                    }
+
                 }
 
                 vibrate(shortVib);
@@ -590,6 +558,44 @@ public class MyTouchListener implements View.OnTouchListener {
         btnRemoveAll.setVisibility(View.GONE);
     }
 
+
+    public void vibrate(int dur) {
+        Vibrator vib = (Vibrator) Config.context.getSystemService(Context.VIBRATOR_SERVICE);
+        vib.vibrate(dur);
+    }
+
+    public void fixLines(RelativeLayout parentLayout){
+        for(int i=0;i<parentLayout.getChildCount();i++){
+            View child = parentLayout.getChildAt(i);
+            ImageView childView = (ImageView) child;
+            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+            if(imgName.length() >= 8 ){
+                childView.setVisibility(View.GONE);
+            }
+        }
+
+        Config.context.notesOutOfBoundsLines(noteObject.getNmbOfLinesTreble(), noteObject.getNmbOfLinesBass(), noteObject.getNoteHeight(), parentLayout);
+
+        for(int i=0;i<parentLayout.getChildCount();i++){
+            View child = parentLayout.getChildAt(i);
+            ImageView childView = (ImageView) child;
+            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+            if(imgName.length() >= 8 ){
+                ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
+                childView.setColorFilter(filter);
+            }
+        }
+
+    }
+
+    public boolean isNoteUpSideDown(RelativeLayout parentLayout){
+        if(parentLayout.getId() == R.id.upsideDown){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     public void fixName(RelativeLayout parentLayout, Note note){
         for(int i=0;i<parentLayout.getChildCount();i++) {
             View child = parentLayout.getChildAt(i);
@@ -630,8 +636,6 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
                 child.setId(nameID);
-
-
             }
 
         }
