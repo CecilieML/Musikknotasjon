@@ -380,7 +380,7 @@ public class MyTouchListener implements View.OnTouchListener {
                             String root = imgName.substring(0, 1);
                             String octave = imgName.substring(imgName.length()-1, imgName.length());
 
-                            String fullName = root + "#" + octave;
+                            String fullName = root + "s" + octave;
                             nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
                         }
                     }
