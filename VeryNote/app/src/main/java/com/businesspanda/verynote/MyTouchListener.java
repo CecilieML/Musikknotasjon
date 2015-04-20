@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -268,44 +269,61 @@ public class MyTouchListener implements View.OnTouchListener {
                             allNotes.set(idx, replacementNote);
                         }
                     }
-                }else{
-                    if(children>1){
-                        for(int i=0;i<parentLayout.getChildCount();i++){
-                            View child = parentLayout.getChildAt(i);
-                            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
-                            if(child.getId() == R.id.sharp) {
-                                parentLayout.removeView(child);
-                            }
-                            if(child.getId() == R.id.neutral) {
-                                parentLayout.removeView(child);
-                            }
-                            if (imgName.length() <= 3) {
-                                int idx = (int) child.getTag();
-                                Note oldNote = allNotes.get(idx);
-                                Note replacementNote = new Note(false, true,
-                                        oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
-                                        oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
-                                fixName(parentLayout, replacementNote);
-                                allNotes.set(idx, replacementNote);
-                            }
+                }else {
+                    int nameID = 0;
+                    for (int i = 0; i < parentLayout.getChildCount(); i++) {
+                        View child = parentLayout.getChildAt(i);
+                        String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+                        if (imgName.length() <= 3) {
+                            String root = imgName.substring(0, 1);
+                            String octave = imgName.substring(imgName.length() - 1, imgName.length());
+
+                            String fullName = root + "b" + octave;
+                            nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
                         }
                     }
 
-                    ImageView flat = new ImageView(Config.context);
-                    flat.setImageResource(R.drawable.flatnotenew);
-                    flat.setId(R.id.flat);
-                    FrameLayout.LayoutParams paraFlat = new FrameLayout.LayoutParams(
-                            FrameLayout.LayoutParams.WRAP_CONTENT,
-                            FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatHeight)));
-                    flat.setLayoutParams(paraFlat);
+                    if (nameID != 0) {
+                        if (children > 1) {
+                            for (int i = 0; i < parentLayout.getChildCount(); i++) {
+                                View child = parentLayout.getChildAt(i);
+                                String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+                                if (child.getId() == R.id.sharp) {
+                                    parentLayout.removeView(child);
+                                }
+                                if (child.getId() == R.id.neutral) {
+                                    parentLayout.removeView(child);
+                                }
+                                if (imgName.length() <= 3) {
+                                    int idx = (int) child.getTag();
+                                    Note oldNote = allNotes.get(idx);
+                                    Note replacementNote = new Note(false, true,
+                                            oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
+                                            oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
+                                    fixName(parentLayout, replacementNote);
+                                    allNotes.set(idx, replacementNote);
+                                }
+                            }
+                        }
 
-                    ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
-                    flat.setColorFilter(filter);
+                        ImageView flat = new ImageView(Config.context);
+                        flat.setImageResource(R.drawable.flatnotenew);
+                        flat.setId(R.id.flat);
+                        FrameLayout.LayoutParams paraFlat = new FrameLayout.LayoutParams(
+                                FrameLayout.LayoutParams.WRAP_CONTENT,
+                                FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatHeight)));
+                        flat.setLayoutParams(paraFlat);
 
-                    float noteHeight = FitToScreen.returnViewHeight(yValueSearch.yValues[index]);
-                    flat.setY(noteHeight + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
+                        ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
+                        flat.setColorFilter(filter);
 
-                    parentLayout.addView(flat);
+                        float noteHeight = FitToScreen.returnViewHeight(yValueSearch.yValues[index]);
+                        flat.setY(noteHeight + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
+
+                        parentLayout.addView(flat);
+                    }else {
+                        Log.e("ERROR", "NOTE DOES NOT EXIXT");
+                    }
                 }
                 vibrate(shortVib);
 
@@ -353,45 +371,64 @@ public class MyTouchListener implements View.OnTouchListener {
                             allNotes.set(idx, replacementNote);
                         }
                     }
-                }else{
-                    if(children>1){
-                        for(int i=0;i<parentLayout.getChildCount();i++){
-                            View child = parentLayout.getChildAt(i);
-                            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
-                            if(child.getId() == R.id.flat) {
-                                parentLayout.removeView(child);
-                            }
-                            if(child.getId() == R.id.neutral) {
-                                parentLayout.removeView(child);
-                            }
-                            if (imgName.length() <= 3) {
-                                int idx = (int) child.getTag();
-                                Note oldNote = allNotes.get(idx);
-                                Note replacementNote = new Note(true, false, oldNote.getFreq(),
-                                        oldNote.getName(), oldNote.getNoteHeight(),
-                                        oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
-                                        oldNote.getDurationOfNote());
-                                fixName(parentLayout, replacementNote);
-                                allNotes.set(idx, replacementNote);
-                            }
+                }else {
+                    int nameID = 0;
+                    for(int i=0;i<parentLayout.getChildCount();i++) {
+                        View child = parentLayout.getChildAt(i);
+                        String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+                        if (imgName.length() <= 3) {
+                            String root = imgName.substring(0, 1);
+                            String octave = imgName.substring(imgName.length()-1, imgName.length());
+
+                            String fullName = root + "#" + octave;
+                            nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
                         }
                     }
 
-                    ImageView sharp = new ImageView(Config.context);
-                    sharp.setImageResource(R.drawable.sharpnotenew);
-                    sharp.setId(R.id.sharp);
-                    FrameLayout.LayoutParams paraSharp = new FrameLayout.LayoutParams(
-                            FrameLayout.LayoutParams.WRAP_CONTENT,
-                            FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpHeight)));
-                    sharp.setLayoutParams(paraSharp);
+                    if (nameID != 0) {
+                        if (children > 1) {
+                            for (int i = 0; i < parentLayout.getChildCount(); i++) {
+                                View child = parentLayout.getChildAt(i);
+                                String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+                                if (child.getId() == R.id.flat) {
+                                    parentLayout.removeView(child);
+                                }
+                                if (child.getId() == R.id.neutral) {
+                                    parentLayout.removeView(child);
+                                }
+                                if (imgName.length() <= 3) {
+                                    int idx = (int) child.getTag();
+                                    Note oldNote = allNotes.get(idx);
+                                    Note replacementNote = new Note(true, false, oldNote.getFreq(),
+                                            oldNote.getName(), oldNote.getNoteHeight(),
+                                            oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
+                                            oldNote.getDurationOfNote());
+                                    fixName(parentLayout, replacementNote);
+                                    allNotes.set(idx, replacementNote);
+                                }
+                            }
 
-                    ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
-                    sharp.setColorFilter(filter);
+                        }
 
-                    float noteHeight = FitToScreen.returnViewHeight(yValueSearch.yValues[index]);
-                    sharp.setY(noteHeight + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
 
-                    parentLayout.addView(sharp);
+                        ImageView sharp = new ImageView(Config.context);
+                        sharp.setImageResource(R.drawable.sharpnotenew);
+                        sharp.setId(R.id.sharp);
+                        FrameLayout.LayoutParams paraSharp = new FrameLayout.LayoutParams(
+                                FrameLayout.LayoutParams.WRAP_CONTENT,
+                                FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpHeight)));
+                        sharp.setLayoutParams(paraSharp);
+
+                        ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
+                        sharp.setColorFilter(filter);
+
+                        float noteHeight = FitToScreen.returnViewHeight(yValueSearch.yValues[index]);
+                        sharp.setY(noteHeight + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
+
+                        parentLayout.addView(sharp);
+                    }else {
+                        Log.e("ERROR", "NOTE DOES NOT EXIXT");
+                    }
                 }
 
                 vibrate(shortVib);
@@ -545,7 +582,6 @@ public class MyTouchListener implements View.OnTouchListener {
                     note.setName(fullName);
 
                     int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-                    System.out.println("******************************************* noteid   " + nameID);
                     child.setId(nameID);
 
                 }else if (note.isSharp()) {
@@ -559,7 +595,6 @@ public class MyTouchListener implements View.OnTouchListener {
                     note.setName(fullName);
 
                     int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-                    System.out.println("******************************************* noteid   " + nameID);
                     child.setId(nameID);
 
                 }
@@ -568,30 +603,19 @@ public class MyTouchListener implements View.OnTouchListener {
                 System.out.println(imgName + " <--imgName,  Before noteName-->" + note.getName());
 
                 String noteName = note.getName();
-              //  if(!note.isFlat()){
-                    String root = noteName.substring(0, 1);
-                    String octave = noteName.substring(2, 3);
 
-                    String fullName = root + octave;
-                    note.setName(fullName);
+                String root = noteName.substring(0, 1);
+                String octave = noteName.substring(2, 3);
 
-                    int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-                    System.out.println("******************************************* noteid   " + nameID);
-                    child.setId(nameID);
+                String fullName = root + octave;
+                note.setName(fullName);
 
-                    System.out.println(imgName + " <--imgName, After noteName-->" + note.getName());
-               /* }else if(!note.isSharp()){
-                    String root = noteName.substring(0, 1);
-                    String octave = noteName.substring(2, 3);
+                int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
+                System.out.println("******************************************* noteid   " + nameID);
+                child.setId(nameID);
 
-                    String fullName = root + octave;
-                    note.setName(fullName);
+                System.out.println(child.getId() + " <--imgName, After noteName-->" + note.getName());
 
-                    int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-                    child.setId(nameID);
-
-                    System.out.println(imgName + " <--imgName, After noteName-->" + note.getName());
-                }*/
             }
 
         }
