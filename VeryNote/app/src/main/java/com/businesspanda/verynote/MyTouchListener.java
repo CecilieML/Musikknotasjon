@@ -540,24 +540,31 @@ public class MyTouchListener implements View.OnTouchListener {
             View child = parentLayout.getChildAt(i);
             String imgName = Config.context.getResources().getResourceEntryName(child.getId());
             if(imgName.length() == 2){
+                String noteName = note.getName();
                 if (note.isFlat()) {
-                    String noteName = note.getName();
                     String root = noteName.substring(0, 1);
                     String octave = noteName.substring(1, 2);
 
                     String fullName = root + "b" + octave;
                     note.setName(fullName);
 
-                }
-                if (note.isSharp()) {
-                    
+                }else if (note.isSharp()) {
+
                     System.out.println(imgName + " <--imgName, noteName-->" + note.getName());
 
-                    String noteName = note.getName();
                     String root = noteName.substring(0, 1);
                     String octave = noteName.substring(1, 2);
 
                     String fullName = root + "s" + octave;
+                    note.setName(fullName);
+                }
+            }else if(imgName.length() == 3){
+                String noteName = note.getName();
+                if(!note.isFlat() && !note.isSharp()){
+                    String root = noteName.substring(0, 1);
+                    String octave = noteName.substring(2, 3);
+
+                    String fullName = root + octave;
                     note.setName(fullName);
                 }
             }
