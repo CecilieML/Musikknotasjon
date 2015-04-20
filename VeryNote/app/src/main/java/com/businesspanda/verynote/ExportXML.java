@@ -43,12 +43,6 @@ public class ExportXML implements Serializable {
 
         String allNotes = "T"+ (int)Math.ceil(60/((60000/Config.context.metronomNmb)* ppqCconversion)); //BPM -> PPQ conversion.
 
-        if(Config.context.bass) {
-            allNotes = allNotes + " V1";
-        } else {
-            allNotes = allNotes + " V0";
-        }
-
         for (Note note : notesList) {
             if(note.getDurationOfNote() != "" ) {
                 String noteFromList = note.getName().replaceAll("s", "#");
