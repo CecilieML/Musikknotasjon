@@ -40,9 +40,10 @@ public class MyTouchListener implements View.OnTouchListener {
 
     ArrayList<Note> allNotes;
 
-    ImageView lastImg;
     Note noteObject;
+    ImageView lastImg;
     RelativeLayout really;
+    RelativeLayout fullNoteLayout;
 
     Button btnUp;
     Button btnDown;
@@ -64,6 +65,8 @@ public class MyTouchListener implements View.OnTouchListener {
     }
 
     public void createButtons(final ImageView imgView){
+
+        fullNoteLayout = (RelativeLayout) imgView.getParent();
 
         FrameLayout.LayoutParams btnParams= new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnWidth)),
@@ -116,27 +119,13 @@ public class MyTouchListener implements View.OnTouchListener {
                             child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
                         }
 
-                    }else {
+                    }else if(child.getId() == R.id.flat || child.getId() == R.id.sharp){
                         parentLayout.removeView(child);
                     }
-                    /*if(childName.length() == 4){
-                        //flat
-                        if(upSideDownNote){
-                            child.setY(percent - FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
-                        }else {
-                            child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
-                        }
-                    }else if(childName.length() > 4&& childName.length() < 8){
-                        //sharp and neutral
-                        if(upSideDownNote) {
-                            float noteHeight = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
-                            child.setY(noteHeight + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
-                        }else{
-                            child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
-                        }
-                    }*/
 
                 }
+                if(disableButtons("b"))btnFlat.setEnabled(false);
+                if(disableButtons("s"))btnFlat.setEnabled(false);
                 vibrate(shortVib);
             }
         });
@@ -180,7 +169,7 @@ public class MyTouchListener implements View.OnTouchListener {
                         fixName(parentLayout, replacementNote);
                         allNotes.set(idx, replacementNote);
 
-                    }else if( child.getId() == R.id.neutral){
+                    }else if(child.getId() == R.id.neutral){
                         if(upSideDownNote) {
                             float noteHeight = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
                             child.setY(noteHeight + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
@@ -188,26 +177,12 @@ public class MyTouchListener implements View.OnTouchListener {
                             child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
                         }
 
-                    }else {
+                    }else if(child.getId() == R.id.flat || child.getId() == R.id.sharp){
                         parentLayout.removeView(child);
                     }
-                        //flat
-                        /*if(upSideDownNote){
-                            child.setY(percent - FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
-                        }else {
-                            child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
-                        }
-                    }else if(childName.length() > 4&& childName.length() < 8){
-                        //sharp and neutral
-                        if(upSideDownNote) {
-                            float noteHeight = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);
-                            child.setY(noteHeight + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
-                        }else{
-                            child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
-                        }
-                    }*/
                 }
-
+                if(disableButtons("b"))btnFlat.setEnabled(false);
+                if(disableButtons("s"))btnFlat.setEnabled(false);
                 vibrate(shortVib);
             }
         });
@@ -220,24 +195,7 @@ public class MyTouchListener implements View.OnTouchListener {
         btnFlat.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnFlatY)));
         btnFlat.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnFlatX)));
 
-        /***/
-        RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
-        int nameID = 0;
-        /***/
-
-        for (int i = 0; i < parentLayout.getChildCount(); i++) {
-            View child = parentLayout.getChildAt(i);
-            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
-            if (imgName.length() <= 3) {
-                String root = imgName.substring(0, 1);
-                String octave = imgName.substring(imgName.length() - 1, imgName.length());
-
-                String fullName = root + "b" + octave;
-                nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-            }
-        }
-
-        if(nameID==0)btnFlat.setEnabled(false);
+        if(disableButtons("b"))btnFlat.setEnabled(false);
 
         btnFlat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -328,20 +286,8 @@ public class MyTouchListener implements View.OnTouchListener {
         btnSharp.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnSharpY)));
         btnSharp.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnSharpX)));
 
-        //RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
-        //int nameID = 0;
-        for(int i=0;i<parentLayout.getChildCount();i++) {
-            View child = parentLayout.getChildAt(i);
-            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
-            if (imgName.length() <= 3) {
-                String root = imgName.substring(0, 1);
-                String octave = imgName.substring(imgName.length()-1, imgName.length());
 
-                String fullName = root + "s" + octave;
-                nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-            }
-        }
-        if(nameID == 0)btnSharp.setEnabled(false);
+        if(disableButtons("s"))btnSharp.setEnabled(false);
 
         btnSharp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -558,6 +504,26 @@ public class MyTouchListener implements View.OnTouchListener {
         btnRemoveAll.setVisibility(View.GONE);
     }
 
+    public boolean disableButtons(String x) {
+        int nameID = 0;
+        for (int i = 0; i < fullNoteLayout.getChildCount(); i++) {
+            View child = fullNoteLayout.getChildAt(i);
+            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+            if (imgName.length() <= 3) {
+                String root = imgName.substring(0, 1);
+                String octave = imgName.substring(imgName.length() - 1, imgName.length());
+
+                String fullName = root + x + octave;
+                nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
+            }
+        }
+
+        if (nameID == 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
 
     public void vibrate(int dur) {
         Vibrator vib = (Vibrator) Config.context.getSystemService(Context.VIBRATOR_SERVICE);
