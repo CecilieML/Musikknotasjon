@@ -543,7 +543,10 @@ public class MainActivity extends ActionBarActivity  {
 
         }
 
-        if(dur >= (fullBar/16))sharpFlat(nearestNote);
+        if(dur >= (fullBar/16)){
+            sharpFlat(nearestNote);
+            notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNmbOfLinesBass(), nearestNote.getNoteHeight(), imgLayout);
+        }
 
         if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {             //= 1/16 of fullBar
            nearestNote.setDurationOfNote("s");
@@ -703,7 +706,7 @@ public class MainActivity extends ActionBarActivity  {
         int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
         currentNote.setId(noteID);
 
-        notesOutOfBoundsLines(note.getNmbOfLinesTreble(), note.getNmbOfLinesBass(), note.getNoteHeight(), imgLayout);
+        //notesOutOfBoundsLines(note.getNmbOfLinesTreble(), note.getNmbOfLinesBass(), note.getNoteHeight(), imgLayout);
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,

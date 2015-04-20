@@ -381,6 +381,7 @@ public class MyTouchListener implements View.OnTouchListener {
         btnNeutral.setVisibility(View.VISIBLE);
         btnNeutral.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnNeutralY)));
         btnNeutral.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnNeutralX)));
+        btnNeutral.setTransformationMethod(null);
         btnNeutral.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
