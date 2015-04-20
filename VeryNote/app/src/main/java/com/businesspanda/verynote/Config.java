@@ -10,6 +10,7 @@ package com.businesspanda.verynote;
  ** implied warranty.
  */
 
+//Allows us to access main outside of main
 public class Config {
     public static MainActivity context = null;
 }

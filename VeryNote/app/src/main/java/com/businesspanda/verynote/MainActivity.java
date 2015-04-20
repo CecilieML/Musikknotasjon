@@ -782,8 +782,12 @@ public class MainActivity extends ActionBarActivity  {
         recBtn.setIcon(getResources().getDrawable(R.drawable.ic_action_mic));
         getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        pitch_detector_thread_.interrupt();
+        try {
+            pitch_detector_thread_.interrupt();
+        }catch(NullPointerException e){
+
+        }
+
         runFFT = false;
         tempolineHandler.removeCallbacks(writeTempoline);
         tempoStop = System.nanoTime();
@@ -829,17 +833,6 @@ public class MainActivity extends ActionBarActivity  {
 
         TextView noteView = (TextView) findViewById(R.id.freqTextview);
         noteView.setText("");
-
-        if(recording) {
-            /*android.support.v7.internal.view.menu.ActionMenuItemView recBtn =(android.support.v7.internal.view.menu.ActionMenuItemView) findViewById(R.id.action_record);
-            recBtn.setIcon(getResources().getDrawable(R.drawable.ic_action_mic));
-            getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);*/
-           /* pitch_detector_thread_.interrupt();
-            tempolineHandler.removeCallbacks(writeTempoline);
-            linLayHandler.removeCallbacks(moveLinLay);
-            recording = false;*/
-            stopRecording();
-        }
 
         scrollView.removeView(linLayout);
         linLayout = new RelativeLayout(this);

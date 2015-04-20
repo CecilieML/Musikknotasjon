@@ -195,6 +195,7 @@ public class MyTouchListener implements View.OnTouchListener {
         btnFlat.setVisibility(View.VISIBLE);
         btnFlat.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnFlatY)));
         btnFlat.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnFlatX)));
+        btnFlat.setTransformationMethod(null);
 
         setAbleButtons(btnFlat, "b");
 
