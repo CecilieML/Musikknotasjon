@@ -117,87 +117,6 @@ public class MainActivity extends ActionBarActivity  {
     public static boolean editable;
     public static boolean runFFT = true;
 
-    /*Thread pitch_detector_thread_;
-
-    public ArrayList<Note> allNotesForXML = new ArrayList();
-    //public String allNotes = ""; <-gammel string for xml
-
-    public int met_int = 1;
-
-    public boolean playing = false;
-    public boolean recording = false;
-    public boolean firstRecording = true;
-    boolean linLayMoving; //= false;
-    public static boolean editable;
-
-    public Switch metSwitch;
-
-    private Handler mHandler = new Handler();
-    private Handler tempolineHandler = new Handler();
-    private Handler linLayHandler = new Handler();
-
-
-    RelativeLayout linLayout;
-    MyTouchListener heyListen;
-
-    public ExportXML exp;
-
-    public String title = "Untitled";
-
-    ImageView currentNote;
-    Note prevNote;
-   // Note nearestNote;
-
-    LockableScrollView scrollView;
-
-    ImageView backgroundImage;
-
-    RelativeLayout lowestLayer;
-    //FrameLayout mainScreen;
-
-    String stringarray;
-
-    int metronomNmb = 750;
-    public int currentLinLayWidth;
-
-    boolean bass = false;
-    int fullBar = metronomNmb*4; //4 = tempo;
-    int addToY = 0;
-
-    boolean clefChanged = false;
-
-    public static boolean runFFT = true;
-
-    long lastTempolineWasWritten = 0;
-    long tempoStop;
-
-    int x = 0;
-    int xScroll = 0;
-    int speed = 70;
-
-    RelativeLayout imgLayout;
-    ImageView sharp;
-    ImageView flat;
-
-    long durationOfPause;
-    long lastPauseWritten;
-    long firstPause;
-
-    ImageView pauseImg;
-
-    boolean useLastPauseWritten;
-    boolean setHalfRestX;
-    boolean addWholeRestToList;
-    boolean startNewNote;
-
-    long lastNote;
-    long nowTime;
-    long dur;
-
-    int noteIdxInXMLArray = 0;
-
-    int linLayStartX;*/
-
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -301,7 +220,7 @@ public class MainActivity extends ActionBarActivity  {
 
             brandNewPiece = false;
         }else{
-            //stop buttan
+            stopRecording();
         }
     }
 
@@ -856,6 +775,47 @@ public class MainActivity extends ActionBarActivity  {
         }
     };
 
+    public void stopRecording(){
+        //item.setIcon(R.drawable.ic_action_mic);
+        android.support.v7.internal.view.menu.ActionMenuItemView recBtn =(android.support.v7.
+                internal.view.menu.ActionMenuItemView) findViewById(R.id.action_record);
+        recBtn.setIcon(getResources().getDrawable(R.drawable.ic_action_mic));
+        getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        pitch_detector_thread_.interrupt();
+        runFFT = false;
+        tempolineHandler.removeCallbacks(writeTempoline);
+        tempoStop = System.nanoTime();
+
+        linLayHandler.removeCallbacks(moveLinLay);
+        if(linLayout.getWidth() < lowestLayer.getWidth()) {
+            linLayStartX = (int) linLayout.getX();
+        }else{
+            linLayStartX = 0;
+        }
+
+        // int extraWidth = FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth));
+        //linLayout.getLayoutParams().width += extraWidth;
+
+        linLayout.clearAnimation();
+        linLayout.animate().x(linLayStartX).setDuration(10);
+        currentLinLayWidth = linLayout.getWidth();
+        xScroll += x;
+
+        //xScroll += extraWidth; This kinda works, but not quite right
+
+        int scrollWidth = scrollView.getWidth();
+        scrollView.scrollTo(scrollWidth - xScroll, 0);
+        x = 0;
+        scrollView.setScrollingEnabled(true);
+        prevNote = new Note(false, false, 0, " ", 0, 0, 0, "");
+        linLayMoving = false;
+        recording = false;
+        editable = true;
+    }
+
+
     public void resetAll(){
 
         EditText titleField = (EditText) findViewById(R.id.title_field);
@@ -871,20 +831,19 @@ public class MainActivity extends ActionBarActivity  {
         noteView.setText("");
 
         if(recording) {
-            android.support.v7.internal.view.menu.ActionMenuItemView recBtn =(android.support.v7.internal.view.menu.ActionMenuItemView) findViewById(R.id.action_record);
+            /*android.support.v7.internal.view.menu.ActionMenuItemView recBtn =(android.support.v7.internal.view.menu.ActionMenuItemView) findViewById(R.id.action_record);
             recBtn.setIcon(getResources().getDrawable(R.drawable.ic_action_mic));
-            getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-            pitch_detector_thread_.interrupt();
+            getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);*/
+           /* pitch_detector_thread_.interrupt();
             tempolineHandler.removeCallbacks(writeTempoline);
             linLayHandler.removeCallbacks(moveLinLay);
-            recording = false;
+            recording = false;*/
+            stopRecording();
         }
 
         scrollView.removeView(linLayout);
         linLayout = new RelativeLayout(this);
         scrollView.addView(linLayout);
-
-        //missing stuff...
 
         linLayout.getLayoutParams().width = FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth));
         linLayout.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)));
@@ -921,8 +880,11 @@ public class MainActivity extends ActionBarActivity  {
                     editable = false;
                     lastNote = System.nanoTime();
                     useLastPauseWritten = false;
+
                 } else {
-                    item.setIcon(R.drawable.ic_action_mic);
+                    stopRecording();
+
+                    /*item.setIcon(R.drawable.ic_action_mic);
                     getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     pitch_detector_thread_.interrupt();
                     runFFT = false;
@@ -953,7 +915,7 @@ public class MainActivity extends ActionBarActivity  {
                     prevNote = new Note(false, false, 0, " ", 0, 0, 0, "");
                     linLayMoving = false;
                     recording = false;
-                    editable = true;
+                    editable = true;*/
                 }
                 return true;
 

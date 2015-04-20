@@ -15,7 +15,6 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,6 +35,7 @@ import java.util.ArrayList;
  * panda picture site :D
  */
 
+//A class concerning what happens when you touch a note after recording
 public class MyTouchListener implements View.OnTouchListener {
 
     ArrayList<Note> allNotes;
@@ -64,6 +64,7 @@ public class MyTouchListener implements View.OnTouchListener {
         this.allNotes = allNotes;
     }
 
+    //Creates the buttons and their functionality
     public void createButtons(final ImageView imgView){
 
         fullNoteLayout = (RelativeLayout) imgView.getParent();
@@ -124,8 +125,8 @@ public class MyTouchListener implements View.OnTouchListener {
                     }
 
                 }
-                if(disableButtons("b"))btnFlat.setEnabled(false);
-                if(disableButtons("s"))btnFlat.setEnabled(false);
+                setAbleButtons(btnFlat, "b");
+                setAbleButtons(btnSharp, "s");
                 vibrate(shortVib);
             }
         });
@@ -181,8 +182,8 @@ public class MyTouchListener implements View.OnTouchListener {
                         parentLayout.removeView(child);
                     }
                 }
-                if(disableButtons("b"))btnFlat.setEnabled(false);
-                if(disableButtons("s"))btnFlat.setEnabled(false);
+                setAbleButtons(btnFlat, "b");
+                setAbleButtons(btnSharp, "s");
                 vibrate(shortVib);
             }
         });
@@ -195,7 +196,7 @@ public class MyTouchListener implements View.OnTouchListener {
         btnFlat.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnFlatY)));
         btnFlat.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnFlatX)));
 
-        if(disableButtons("b"))btnFlat.setEnabled(false);
+        setAbleButtons(btnFlat, "b");
 
         btnFlat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -286,8 +287,7 @@ public class MyTouchListener implements View.OnTouchListener {
         btnSharp.setY(FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.btnSharpY)));
         btnSharp.setX(FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.btnSharpX)));
 
-
-        if(disableButtons("s"))btnSharp.setEnabled(false);
+        setAbleButtons(btnSharp, "s");
 
         btnSharp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -495,6 +495,7 @@ public class MyTouchListener implements View.OnTouchListener {
         really.addView(btnRemoveAll);
     }
 
+    //Removes buttons from UI
     public void removeButtons(){
         btnDown.setVisibility(View.GONE);
         btnUp.setVisibility(View.GONE);
@@ -504,7 +505,8 @@ public class MyTouchListener implements View.OnTouchListener {
         btnRemoveAll.setVisibility(View.GONE);
     }
 
-    public boolean disableButtons(String x) {
+    //Checks to see if there exist an id for this note, if the is not the button is disabled
+    public void setAbleButtons(Button button, String x) {
         int nameID = 0;
         for (int i = 0; i < fullNoteLayout.getChildCount(); i++) {
             View child = fullNoteLayout.getChildAt(i);
@@ -517,19 +519,20 @@ public class MyTouchListener implements View.OnTouchListener {
                 nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
             }
         }
-
         if (nameID == 0) {
-            return true;
+            button.setEnabled(false);
         }else {
-            return false;
+            button.setEnabled(true);
         }
     }
 
+    //Called to make phone vibrate and let user know that their button press registered
     public void vibrate(int dur) {
         Vibrator vib = (Vibrator) Config.context.getSystemService(Context.VIBRATOR_SERVICE);
         vib.vibrate(dur);
     }
 
+    //Deletes all "note lines" and puts in the correct number of new ones
     public void fixLines(RelativeLayout parentLayout){
         for(int i=0;i<parentLayout.getChildCount();i++){
             View child = parentLayout.getChildAt(i);
@@ -539,7 +542,6 @@ public class MyTouchListener implements View.OnTouchListener {
                 childView.setVisibility(View.GONE);
             }
         }
-
         Config.context.notesOutOfBoundsLines(noteObject.getNmbOfLinesTreble(), noteObject.getNmbOfLinesBass(), noteObject.getNoteHeight(), parentLayout);
 
         for(int i=0;i<parentLayout.getChildCount();i++){
@@ -554,6 +556,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
     }
 
+    //Checks of note is flipped
     public boolean isNoteUpSideDown(RelativeLayout parentLayout){
         if(parentLayout.getId() == R.id.upsideDown){
             return true;
@@ -562,6 +565,8 @@ public class MyTouchListener implements View.OnTouchListener {
         }
     }
 
+    // Removes the "b"/"s" from the notes name
+    // of adds the "b"/"s" to the notes name
     public void fixName(RelativeLayout parentLayout, Note note){
         for(int i=0;i<parentLayout.getChildCount();i++) {
             View child = parentLayout.getChildAt(i);
@@ -608,6 +613,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
     }
 
+    // Finds the notes index in the array containing the note names
     public void findIndex(RelativeLayout parentLayout){
         String noteName = "";
         View note;
@@ -638,6 +644,7 @@ public class MyTouchListener implements View.OnTouchListener {
         noteObject = NoteSearch.findNoteByName(noteName);
     }
 
+    // Returns either the next or the previous name from the note name array
     public void setNoteName(RelativeLayout parentLayout, boolean next, boolean prev){
         for(int i=0;i<parentLayout.getChildCount();i++){
             View child = parentLayout.getChildAt(i);
@@ -661,6 +668,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
     }
 
+    // Called when a note is chosen
     public void onChosenNote(View v){
         lastImg = (ImageView) v;
         vibrate(70);
@@ -685,6 +693,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
     }
 
+    // Called on previous note when a new note is chosen or on current note when it is unselected
     public void onUnChosenNote(){
         vibrate(30);
         removeButtons();
@@ -699,6 +708,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
     }
 
+    // Called when note is pressed
     public boolean onTouch(View v, MotionEvent event)
     {
         switch (event.getAction())
