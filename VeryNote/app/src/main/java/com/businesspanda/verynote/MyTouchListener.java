@@ -135,6 +135,17 @@ public class MyTouchListener implements View.OnTouchListener {
                     String childName = Config.context.getResources().getResourceEntryName(child.getId());
                     if(childName.length() <= 3) {
                         child.setY(percent);
+
+                        int idx = (int) child.getTag();
+                        Note oldNote = allNotes.get(idx);
+                        Note replacementNote = new Note(oldNote.isSharp(), oldNote.isFlat(),
+                                oldNote.getFreq(), childName, oldNote.getNoteHeight(),
+                                oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
+                                oldNote.getDurationOfNote());
+
+                        fixName(parentLayout, replacementNote);
+                        allNotes.set(idx, replacementNote);
+
                     }else if(childName.length() == 4){
                         //flat
                         if(upSideDownNote){
@@ -174,7 +185,7 @@ public class MyTouchListener implements View.OnTouchListener {
                 findIndex(parentLayout);
                 fixLines(parentLayout);
 
-                fixName(parentLayout, noteObject);
+                //fixName(parentLayout, noteObject);
 
                 if(index>26)index=26;
                 float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);
@@ -186,6 +197,17 @@ public class MyTouchListener implements View.OnTouchListener {
                     String childName = Config.context.getResources().getResourceEntryName(child.getId());
                     if(childName.length() <= 3) {
                         child.setY(percent);
+
+                        int idx = (int) child.getTag();
+                        Note oldNote = allNotes.get(idx);
+                        Note replacementNote = new Note(oldNote.isSharp(), oldNote.isFlat(),
+                                oldNote.getFreq(), childName, oldNote.getNoteHeight(),
+                                oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
+                                oldNote.getDurationOfNote());
+
+                        fixName(parentLayout, replacementNote);
+                        allNotes.set(idx, replacementNote);
+
                     }else if(childName.length() == 4){
                         //flat
                         if(upSideDownNote){
@@ -517,24 +539,23 @@ public class MyTouchListener implements View.OnTouchListener {
         for(int i=0;i<parentLayout.getChildCount();i++) {
             View child = parentLayout.getChildAt(i);
             String imgName = Config.context.getResources().getResourceEntryName(child.getId());
-            if(imgName.length() <= 3){
-                note.setName(imgName);
-            }
-            if(note.isFlat()){
-                String noteName = note.getName();
-                String root = noteName.substring(0, 1);
-                String octave = noteName.substring(1, 2);
+            if(imgName.length() == 2){
+                if (note.isFlat()) {
+                    String noteName = note.getName();
+                    String root = noteName.substring(0, 1);
+                    String octave = noteName.substring(1, 2);
 
-                String fullName = root + "b" + octave;
-                note.setName(fullName);
+                    String fullName = root + "b" + octave;
+                    note.setName(fullName);
 
-            }else if(note.isSharp()){
-                String noteName = note.getName();
-                String root = noteName.substring(0, 1);
-                String octave = noteName.substring(1, 2);
+                } else if (note.isSharp()) {
+                    String noteName = note.getName();
+                    String root = noteName.substring(0, 1);
+                    String octave = noteName.substring(1, 2);
 
-                String fullName = root + "s" + octave;
-                note.setName(fullName);
+                    String fullName = root + "s" + octave;
+                    note.setName(fullName);
+                }
             }
 
         }
