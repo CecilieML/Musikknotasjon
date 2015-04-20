@@ -38,8 +38,10 @@ public class ExportXML implements Serializable {
     }
 
     public String convertArrayListToString(ArrayList<Note> notesList) {
-        //Converts the ArrayList
-        String allNotes = "T[Adagio]"; //+ (60000/Config.context.metronomNmb);
+        //Converts the ArrayList to a string the parser can read.
+        double ppqCconversion = 0.0041666667; //Constant for converting BPM -> PPQ.
+
+        String allNotes = "T"+ (int)Math.ceil(60/((60000/Config.context.metronomNmb)* ppqCconversion)); //BPM -> PPQ conversion.
 
         if(Config.context.bass) {
             allNotes = allNotes + " V1";

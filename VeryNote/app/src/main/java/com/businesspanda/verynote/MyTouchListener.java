@@ -123,8 +123,6 @@ public class MyTouchListener implements View.OnTouchListener {
                 findIndex(parentLayout);
                 fixLines(parentLayout);
 
-                fixName(parentLayout, noteObject);
-
                 if(index<1)index = 1;
                 float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
 
@@ -184,8 +182,6 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 findIndex(parentLayout);
                 fixLines(parentLayout);
-
-                //fixName(parentLayout, noteObject);
 
                 if(index>26)index=26;
                 float percent = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);
@@ -464,7 +460,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
                     parentLayout.addView(neutral);
                 }
-                //fixName(parentLayout, note);
+
                 vibrate(shortVib);
             }
         });
@@ -548,6 +544,10 @@ public class MyTouchListener implements View.OnTouchListener {
                     String fullName = root + "b" + octave;
                     note.setName(fullName);
 
+                    int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
+                    System.out.println("******************************************* noteid   " + nameID);
+                    child.setId(nameID);
+
                 }else if (note.isSharp()) {
 
                     System.out.println(imgName + " <--imgName, noteName-->" + note.getName());
@@ -557,20 +557,45 @@ public class MyTouchListener implements View.OnTouchListener {
 
                     String fullName = root + "s" + octave;
                     note.setName(fullName);
+
+                    int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
+                    System.out.println("******************************************* noteid   " + nameID);
+                    child.setId(nameID);
+
                 }
             }else if(imgName.length() == 3){
+
+                System.out.println(imgName + " <--imgName,  Before noteName-->" + note.getName());
+
                 String noteName = note.getName();
-                if(!note.isFlat() && !note.isSharp()){
+              //  if(!note.isFlat()){
                     String root = noteName.substring(0, 1);
                     String octave = noteName.substring(2, 3);
 
                     String fullName = root + octave;
                     note.setName(fullName);
-                }
+
+                    int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
+                    System.out.println("******************************************* noteid   " + nameID);
+                    child.setId(nameID);
+
+                    System.out.println(imgName + " <--imgName, After noteName-->" + note.getName());
+               /* }else if(!note.isSharp()){
+                    String root = noteName.substring(0, 1);
+                    String octave = noteName.substring(2, 3);
+
+                    String fullName = root + octave;
+                    note.setName(fullName);
+
+                    int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
+                    child.setId(nameID);
+
+                    System.out.println(imgName + " <--imgName, After noteName-->" + note.getName());
+                }*/
             }
 
         }
-        System.out.println("in notename:  " + note.getName());
+
     }
 
     public void findIndex(RelativeLayout parentLayout){
@@ -648,7 +673,6 @@ public class MyTouchListener implements View.OnTouchListener {
 
        setNoteName(parentLayout, false, false);
 
-        System.out.println("on chosen  " + noteObject.getName());
     }
 
     public void onUnChosenNote(){
@@ -663,7 +687,6 @@ public class MyTouchListener implements View.OnTouchListener {
             childView.clearColorFilter();
         }
 
-        System.out.println("on UNchosen  " + noteObject.getName());
     }
 
     public boolean onTouch(View v, MotionEvent event)
