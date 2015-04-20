@@ -145,7 +145,18 @@ public class MyTouchListener implements View.OnTouchListener {
                         fixName(parentLayout, replacementNote);
                         allNotes.set(idx, replacementNote);
 
-                    }else if(childName.length() == 4){
+                    }else if( child.getId() == R.id.neutral){
+                        if(upSideDownNote) {
+                            float noteHeight = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
+                            child.setY(noteHeight + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
+                        }else{
+                            child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
+                        }
+
+                    }else {
+                        parentLayout.removeView(child);
+                    }
+                    /*if(childName.length() == 4){
                         //flat
                         if(upSideDownNote){
                             child.setY(percent - FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
@@ -160,7 +171,8 @@ public class MyTouchListener implements View.OnTouchListener {
                         }else{
                             child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
                         }
-                    }
+                    }*/
+
                 }
                 vibrate(shortVib);
             }
@@ -205,9 +217,19 @@ public class MyTouchListener implements View.OnTouchListener {
                         fixName(parentLayout, replacementNote);
                         allNotes.set(idx, replacementNote);
 
-                    }else if(childName.length() == 4){
+                    }else if( child.getId() == R.id.neutral){
+                        if(upSideDownNote) {
+                            float noteHeight = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
+                            child.setY(noteHeight + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
+                        }else{
+                            child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
+                        }
+
+                    }else {
+                        parentLayout.removeView(child);
+                    }
                         //flat
-                        if(upSideDownNote){
+                        /*if(upSideDownNote){
                             child.setY(percent - FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
                         }else {
                             child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.flatOffsetY)));
@@ -220,7 +242,7 @@ public class MyTouchListener implements View.OnTouchListener {
                         }else{
                             child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
                         }
-                    }
+                    }*/
                 }
 
                 vibrate(shortVib);
@@ -322,7 +344,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
                         parentLayout.addView(flat);
                     }else {
-                        Log.e("ERROR", "NOTE DOES NOT EXIXT");
+                        btnFlat.setEnabled(false);
                     }
                 }
                 vibrate(shortVib);
@@ -427,7 +449,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
                         parentLayout.addView(sharp);
                     }else {
-                        Log.e("ERROR", "NOTE DOES NOT EXIXT");
+                        btnSharp.setEnabled(false);
                     }
                 }
 
@@ -586,8 +608,6 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 }else if (note.isSharp()) {
 
-                    System.out.println(imgName + " <--imgName, noteName-->" + note.getName());
-
                     String root = noteName.substring(0, 1);
                     String octave = noteName.substring(1, 2);
 
@@ -600,8 +620,6 @@ public class MyTouchListener implements View.OnTouchListener {
                 }
             }else if(imgName.length() == 3){
 
-                System.out.println(imgName + " <--imgName,  Before noteName-->" + note.getName());
-
                 String noteName = note.getName();
 
                 String root = noteName.substring(0, 1);
@@ -611,10 +629,8 @@ public class MyTouchListener implements View.OnTouchListener {
                 note.setName(fullName);
 
                 int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-                System.out.println("******************************************* noteid   " + nameID);
                 child.setId(nameID);
 
-                System.out.println(child.getId() + " <--imgName, After noteName-->" + note.getName());
 
             }
 
