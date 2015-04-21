@@ -3,6 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center">
+
+    <!-- Custom layout for EditText title-field in the actionbar-->
 <EditText
     android:id="@+id/title_field"
     android:layout_width="wrap_content"

@@ -2,22 +2,20 @@
 <resources>
 
     <string name="app_name">VeryNote</string>
-    <string name="hello_world">Hello world!</string>
+
+    <!-- String resources for the actionbar -->
     <string name="action_settings">Settings</string>
     <string name="action_save">Save MusicXML</string>
     <string name="action_share">Share MusicXML</string>
     <string name="record" size="2em">Record</string>
     <string name="play">Play</string>
-    <string name="stop">Stop</string>
-    <string name="action_playmidi">Play MIDI</string>
     <string name="action_new">New Masterpiece</string>
-
-    <string name="freq"> </string>
-    <string name="prevNoteString"> ... </string>
-    <string name="met_count">0</string>
-
     <string name="filename">Untitled</string>
 
+    <!-- String resources for metronome counter on main screen. -->
+    <string name="met_count">0</string>
+
+    <!--String resources for the settings menu. -->
     <string name="settings">Settings</string>
     <string name="action_ok">OK</string>
     <string name="action_cancel">Cancel</string>

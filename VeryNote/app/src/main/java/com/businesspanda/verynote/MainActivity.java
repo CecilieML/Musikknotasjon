@@ -842,7 +842,7 @@ public class MainActivity extends ActionBarActivity  {
         EditText titleField = (EditText) findViewById(R.id.title_field);
         titleField.setText("Untitled");
         exp.setFilename("untitled");
-        metronomNmb = 750;
+        if(brandNewPiece)metronomNmb = 750;
 
         allNotesForXML.clear();
 
@@ -866,7 +866,6 @@ public class MainActivity extends ActionBarActivity  {
         }
 
         noteIdxInXMLArray = 0;
-        brandNewPiece = true;
 
     }
 
@@ -934,6 +933,7 @@ public class MainActivity extends ActionBarActivity  {
                 return true;
 
             case R.id.action_new:
+                brandNewPiece = true;
                 resetAll();
                 return true;
 

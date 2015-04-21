@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Background color -->
     <color name="lightPurple">#aabfc0fd</color>
+
+    <!--Note highlight color -->
     <color name="cyan">#aa3ffff8</color>
-    <color name="red">#aafd0000</color>
-    <color name="pink">#aaf88fff</color>
-    <color name="yellow">#aaFFF97D</color>
-    <color name="darkPurple">#aaE28ECC</color>
-    <color name="lightERpurple">#aaFDD1FF</color>
+
+    <!--Settingsmenu colors-->
     <color name="lightGray">#aad2d3fd</color>
-    <color name="black">#ff000000</color>
-    <color name="white">#ffffffff</color>
     <color name="transp_white">#aaffffff</color>
+
+    <!--Buttoncolor-->
+    <color name="white">#ffffffff</color>
+
+    <!--Color for note lines-->
     <color name="lineColor">#aa59707e</color>
 </resources>

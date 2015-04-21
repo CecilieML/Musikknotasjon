@@ -49,7 +49,6 @@ public class ExportXML implements Serializable {
                 allNotes = allNotes + " " + noteFromList + note.getDurationOfNote();
             }
         }
-
         return allNotes;
     }
 

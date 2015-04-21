@@ -2,6 +2,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
+    <!-- Actionbar Items, these appear at the top of the screen as long as there is room for them,
+     if not they appear in the overflow menu. -->
+
+    <item android:id="@+id/action_record"
+          android:icon="@drawable/ic_action_mic"
+          android:title="@string/record"
+          app:showAsAction="ifRoom|withText" />
+
+    <item android:id="@+id/action_play"
+          android:icon="@drawable/a4"
+          android:title="@string/play"
+          app:showAsAction="ifRoom" />
+
+    <!-- Actionbar items, these always appear in overflow menu -->
+
     <item android:id="@+id/action_settings"
           android:title="@string/action_settings"
           android:orderInCategory="100"
@@ -21,17 +36,5 @@
           android:title="@string/action_new"
           android:orderInCategory="500"
           app:showAsAction="never" />
-
-
-    <item android:id="@+id/action_record"
-          android:icon="@drawable/ic_action_mic"
-          android:title="@string/record"
-          app:showAsAction="ifRoom|withText" />
-
-    <item android:id="@+id/action_play"
-          android:icon="@drawable/a4"
-          android:title="@string/play"
-          app:showAsAction="ifRoom" />
-
 
 </menu>

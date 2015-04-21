@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="400dp"
-    android:layout_height="200dp"
+    android:layout_height="250dp"
     android:orientation="horizontal"
     android:background="@android:color/background_light">
+
+    <!-- Layout for the Settings Pop-Up menu. -->
+
     <LinearLayout
         android:layout_width="400dp"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:orientation="vertical"
         android:layout_margin="1dp"
         android:background="@color/lightGray">
         <RelativeLayout
             android:id="@+id/textbox"
             android:layout_width="fill_parent"
-            android:layout_height="140dp"
+            android:layout_height="180dp"
             android:orientation="horizontal"
             android:layout_margin="10dp">
             <TextView
@@ -49,6 +52,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
+                android:layout_marginBottom="17dp"
                 android:progress="20"
                 android:max="60"/>
 
@@ -72,23 +76,23 @@
             <Button
                 android:id="@+id/treble"
                 android:background="@drawable/treble"
-                android:layout_width="14.2dp"
-                android:layout_height="40dp"
+                android:layout_width="22.427dp"
+                android:layout_height="63dp"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_below="@+id/cleflabel"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="25dp"
                 android:layout_marginTop="5dp"/>
 
             <Button
                 android:id="@+id/bass"
                 android:background="@drawable/bass"
-                android:layout_width="35.5dp"
-                android:layout_height="40dp"
+                android:layout_width="28.551dp"
+                android:layout_height="63dp"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_below="@+id/cleflabel"
                 android:layout_toRightOf="@+id/treble"
                 android:layout_toEndOf="@+id/treble"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="35dp"
                 android:layout_marginTop="5dp"/>
 
             <TextView
