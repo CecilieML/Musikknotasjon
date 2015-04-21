@@ -14,6 +14,7 @@ public class Note {
 
     boolean sharp;
     boolean flat;
+    boolean neutral;
     int freq;
     String name;
     int height;
@@ -21,9 +22,10 @@ public class Note {
     int nmbOfLinesBass;
     String durationOfNote;
 
-    public Note(boolean sharp, boolean flat, int freq, String name, int height, int nmbOfLinesTreble, int nmbOfLinesBass, String durationOfNote){
+    public Note(boolean sharp, boolean flat, boolean neutral, int freq, String name, int height, int nmbOfLinesTreble, int nmbOfLinesBass, String durationOfNote){
         this.sharp = sharp;
         this.flat = flat;
+        this.neutral = neutral;
         this.freq = freq;
         this.name = name;
         this.height = height;
@@ -44,12 +46,19 @@ public class Note {
     public boolean isFlat() {
         return flat;
     }
+    public void setFlat(boolean flat) {
+        this.flat = flat;
+    }
+
+    public boolean isNeutral() {
+        return neutral;
+    }
+    public void setNeutral(boolean neutral) {
+        this.neutral = neutral;
+    }
 
     public int getFreq() {
         return freq;
-    }
-    public void setFlat(boolean flat) {
-        this.flat = flat;
     }
 
     public String getName() {
@@ -62,22 +71,13 @@ public class Note {
     public int getNoteHeight(){
         return height;
     }
-    public void setHeight(int height) {
-        this.height = height;
-    }
 
     public int getNmbOfLinesTreble() {
         return nmbOfLinesTreble;
     }
-    public void setNmbOfLinesTreble(int nmbOfLinesTreble) {
-        this.nmbOfLinesTreble = nmbOfLinesTreble;
-    }
 
     public int getNmbOfLinesBass() {
         return nmbOfLinesBass;
-    }
-    public void setNmbOfLinesBass(int nmbOfLinesBass) {
-        this.nmbOfLinesBass = nmbOfLinesBass;
     }
 
     public String getDurationOfNote() {

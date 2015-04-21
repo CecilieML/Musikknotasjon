@@ -76,6 +76,7 @@ public class MainActivity extends ActionBarActivity  {
 
     ImageView flat;
     ImageView sharp;
+    ImageView neutral;
     ImageView pauseImg;
     ImageView currentNote;
     ImageView backgroundImage;
@@ -264,8 +265,8 @@ public class MainActivity extends ActionBarActivity  {
         Integer pitchInt = (int) (pitch);
         Note nearestNote = NoteSearch.findNearestNote(pitchInt);
 
-        final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
-        changeFreq.setText(nearestNote.name); //remember to remove
+       /** final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
+        changeFreq.setText(nearestNote.name); //remember to remove*/
 
         lastPauseWritten = System.nanoTime();
         nowTime = System.nanoTime();
@@ -320,7 +321,7 @@ public class MainActivity extends ActionBarActivity  {
                     if(setHalfRestX){
                         pauseImg.setX(linLayout.getLayoutParams().width -
                                 FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXHalfRest)));
-                        Note pauseNote = new Note(false, false, 0, "R", 0, 0, 0, "h");
+                        Note pauseNote = new Note(false, false, false, 0, "R", 0, 0, 0, "h");
                         allNotesForXML.add(pauseNote);
                         noteIdxInXMLArray++;
                         setHalfRestX = false;
@@ -488,11 +489,13 @@ public class MainActivity extends ActionBarActivity  {
         tempo.setBackgroundColor(getResources().getColor(R.color.lineColor));
 
         tempo.setX(linLayout.getLayoutParams().width -
-                FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos)));
+                FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos)) +
+                FitToScreen.returnViewWidth(getPercent(R.dimen.noteImgWidth)));
+
         tempo.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.tempolineY)));
         if(bass)tempo.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.bassTempolineY)));
 
-        Note tempolineNote = new Note(false, false, 0, "|", 0, 0, 0, "q");
+        Note tempolineNote = new Note(false, false, false, 0, "|", 0, 0, 0, "q");
 
         allNotesForXML.add(tempolineNote);
         noteIdxInXMLArray++;
@@ -629,7 +632,7 @@ public class MainActivity extends ActionBarActivity  {
             }
 
         }else if(dur >= fullBar*1.6){                                // randomly chosen...
-            prevNote = new Note(false, false, 0, " ",0 ,0, 0, "x");
+            prevNote = new Note(false, false, false, 0, " ",0 ,0, 0, "x");
         }
 
     }
@@ -652,6 +655,7 @@ public class MainActivity extends ActionBarActivity  {
 
             sharp.setImageResource(R.drawable.sharpnotenew);
             imgLayout.addView(sharp);
+
         } else if (note.flat) {
             flat = new ImageView(this);
             flat.setId(R.id.flat);
@@ -664,11 +668,23 @@ public class MainActivity extends ActionBarActivity  {
 
             flat.setImageResource(R.drawable.flatnotenew);
             imgLayout.addView(flat);
+
+        } else if (note.neutral) {
+            neutral = new ImageView(this);
+            neutral.setId(R.id.neutral);
+            FrameLayout.LayoutParams paraNeutral = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FitToScreen.returnViewHeight(getPercent(R.dimen.sharpHeight)));
+            neutral.setLayoutParams(paraNeutral);
+
+            neutral.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY))+ noteY);
+
+            neutral.setImageResource(R.drawable.naturalnote);
+            imgLayout.addView(neutral);
         }
     }
 
     public void notesOnScreen(Note note){
-
         if(!linLayMoving){
             linLayHandler.postDelayed(moveLinLay, 1);
             firstTempoLine();
@@ -678,12 +694,10 @@ public class MainActivity extends ActionBarActivity  {
         imgLayout = new RelativeLayout(this);
         currentNote = new ImageView(this);
 
-/**/
         currentNote.setTag(noteIdxInXMLArray);
         noteIdxInXMLArray++;
 
         allNotesForXML.add(note);
-/**/
 
         FrameLayout.LayoutParams par = new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteImgWidth)),
@@ -816,7 +830,7 @@ public class MainActivity extends ActionBarActivity  {
         scrollView.scrollTo(scrollWidth - xScroll, 0);
         x = 0;
         scrollView.setScrollingEnabled(true);
-        prevNote = new Note(false, false, 0, " ", 0, 0, 0, "");
+        prevNote = new Note(false, false, false, 0, " ", 0, 0, 0, "");
         linLayMoving = false;
         recording = false;
         editable = true;
@@ -834,8 +848,8 @@ public class MainActivity extends ActionBarActivity  {
 
         linLayout.getLayoutParams().width = FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth));
 
-        TextView noteView = (TextView) findViewById(R.id.freqTextview);
-        noteView.setText("");
+        /**TextView noteView = (TextView) findViewById(R.id.freqTextview);
+        noteView.setText("");*/
 
         scrollView.removeView(linLayout);
         linLayout = new RelativeLayout(this);

@@ -104,7 +104,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
                         int idx = (int) child.getTag();
                         Note oldNote = allNotes.get(idx);
-                        Note replacementNote = new Note(false, false,
+                        Note replacementNote = new Note(false, false, false,
                                 oldNote.getFreq(), childName, oldNote.getNoteHeight(),
                                 oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
                                 oldNote.getDurationOfNote());
@@ -162,7 +162,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
                         int idx = (int) child.getTag();
                         Note oldNote = allNotes.get(idx);
-                        Note replacementNote = new Note(false, false,
+                        Note replacementNote = new Note(false, false, false,
                                 oldNote.getFreq(), childName, oldNote.getNoteHeight(),
                                 oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
                                 oldNote.getDurationOfNote());
@@ -227,7 +227,7 @@ public class MyTouchListener implements View.OnTouchListener {
                         if (imgName.length() <= 3) {
                             int idx = (int) child.getTag();
                             Note oldNote = allNotes.get(idx);
-                            Note replacementNote = new Note(false, false,
+                            Note replacementNote = new Note(false, false, false,
                                     oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
                                     oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
                             fixName(parentLayout, replacementNote);
@@ -235,7 +235,7 @@ public class MyTouchListener implements View.OnTouchListener {
                         }
                     }
                 }else {
-                        if (children > 1) {
+                        //if (children > 1) {
                             for (int i = 0; i < parentLayout.getChildCount(); i++) {
                                 View child = parentLayout.getChildAt(i);
                                 String imgName = Config.context.getResources().getResourceEntryName(child.getId());
@@ -248,14 +248,14 @@ public class MyTouchListener implements View.OnTouchListener {
                                 if (imgName.length() <= 3) {
                                     int idx = (int) child.getTag();
                                     Note oldNote = allNotes.get(idx);
-                                    Note replacementNote = new Note(false, true,
+                                    Note replacementNote = new Note(false, true, false,
                                             oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
                                             oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
                                     fixName(parentLayout, replacementNote);
                                     allNotes.set(idx, replacementNote);
                                 }
                             }
-                        }
+                       // }
 
                         ImageView flat = new ImageView(Config.context);
                         flat.setImageResource(R.drawable.flatnotenew);
@@ -317,7 +317,7 @@ public class MyTouchListener implements View.OnTouchListener {
                         if (imgName.length() <= 3) {
                             int idx = (int) child.getTag();
                             Note oldNote = allNotes.get(idx);
-                            Note replacementNote = new Note(false, false,
+                            Note replacementNote = new Note(false, false, false,
                                     oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
                                     oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
                             fixName(parentLayout, replacementNote);
@@ -325,7 +325,7 @@ public class MyTouchListener implements View.OnTouchListener {
                         }
                     }
                 }else {
-                        if (children > 1) {
+                     //   if (children > 1) {
                             for (int i = 0; i < parentLayout.getChildCount(); i++) {
                                 View child = parentLayout.getChildAt(i);
                                 String imgName = Config.context.getResources().getResourceEntryName(child.getId());
@@ -338,7 +338,7 @@ public class MyTouchListener implements View.OnTouchListener {
                                 if (imgName.length() <= 3) {
                                     int idx = (int) child.getTag();
                                     Note oldNote = allNotes.get(idx);
-                                    Note replacementNote = new Note(true, false, oldNote.getFreq(),
+                                    Note replacementNote = new Note(true, false, false, oldNote.getFreq(),
                                             oldNote.getName(), oldNote.getNoteHeight(),
                                             oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
                                             oldNote.getDurationOfNote());
@@ -346,9 +346,7 @@ public class MyTouchListener implements View.OnTouchListener {
                                     allNotes.set(idx, replacementNote);
                                 }
                             }
-
-                        }
-
+                       // }
 
                         ImageView sharp = new ImageView(Config.context);
                         sharp.setImageResource(R.drawable.sharpnotenew);
@@ -365,9 +363,7 @@ public class MyTouchListener implements View.OnTouchListener {
                         sharp.setY(noteHeight + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
 
                         parentLayout.addView(sharp);
-
                 }
-
                 vibrate(shortVib);
             }
         });
@@ -402,22 +398,45 @@ public class MyTouchListener implements View.OnTouchListener {
                 if(noteIsNeutral){
                     for(int i=0;i<parentLayout.getChildCount();i++){
                         View child = parentLayout.getChildAt(i);
+                        String imgName = Config.context.getResources().getResourceEntryName(child.getId());
                         if(child.getId() == R.id.neutral){
                             parentLayout.removeView(child);
                         }
+                        if (imgName.length() <= 3) {
+                            int idx = (int) child.getTag();
+                            Note oldNote = allNotes.get(idx);
+                            Note replacementNote = new Note(false, false, false,
+                                    oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
+                                    oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
+                            fixName(parentLayout, replacementNote);
+                            allNotes.set(idx, replacementNote);
+                        }
                     }
                 }else{
-                    if(children>1){
+                  //  if(children>1){
                         for(int i=0;i<parentLayout.getChildCount();i++){
                             View child = parentLayout.getChildAt(i);
+                            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
                             if(child.getId() == R.id.flat) {
                                 parentLayout.removeView(child);
                             }
                             if(child.getId() == R.id.sharp) {
                                 parentLayout.removeView(child);
+                                System.out.println("DID ONLY THIS FOR SOME REASON!!!!");
+                            }
+                            if (imgName.length() <= 3) {
+                                int idx = (int) child.getTag();
+                                Note oldNote = allNotes.get(idx);
+                                Note replacementNote = new Note(false, false, true, oldNote.getFreq(),
+                                        oldNote.getName(), oldNote.getNoteHeight(),
+                                        oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
+                                        oldNote.getDurationOfNote());
+                                fixName(parentLayout, replacementNote);
+                                System.out.println("WHHHHHHHHHHHHHHHHAAAAAAAAAAAAAAAT!!!!!??????????");
+                                allNotes.set(idx, replacementNote);
                             }
                         }
-                    }
+                   // }
 
                     ImageView neutral = new ImageView(Config.context);
                     neutral.setImageResource(R.drawable.naturalnote);
@@ -463,7 +482,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
                         int idx = (int)child.getTag();
                         Note oldNote = allNotes.get(idx);
-                        Note replacementNote =  new Note(oldNote.isSharp(), oldNote.isFlat(),
+                        Note replacementNote =  new Note(oldNote.isSharp(), oldNote.isFlat(), oldNote.isNeutral(),
                                 oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight() ,
                                 oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), "");
                         allNotes.set(idx, replacementNote);
@@ -472,18 +491,14 @@ public class MyTouchListener implements View.OnTouchListener {
                     }
                 }
 
-
-
                 parentLayout.removeAllViews();
 
-                TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
-                freqText.setText("");
+                /**TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
+                freqText.setText("");*/
 
                 removeButtons();
                 v.setSelected(false);
                 oneIsCurrentlyChosen = false;
-
-
 
                 vibrate(longVib);
             }
@@ -570,34 +585,13 @@ public class MyTouchListener implements View.OnTouchListener {
     // Removes the "b"/"s" from the notes name
     // of adds the "b"/"s" to the notes name
     public void fixName(RelativeLayout parentLayout, Note note){
+        System.out.println(note.isNeutral() + "  <--NEUTRAL");
         for(int i=0;i<parentLayout.getChildCount();i++) {
             View child = parentLayout.getChildAt(i);
             String imgName = Config.context.getResources().getResourceEntryName(child.getId());
-            if(imgName.length() == 2){
-                String noteName = note.getName();
-                if (note.isFlat()) {
-                    String root = noteName.substring(0, 1);
-                    String octave = noteName.substring(1, 2);
+            if(imgName.length() == 3){
 
-                    String fullName = root + "b" + octave;
-                    note.setName(fullName);
-
-                    int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-                    child.setId(nameID);
-
-                }else if (note.isSharp()) {
-
-                    String root = noteName.substring(0, 1);
-                    String octave = noteName.substring(1, 2);
-
-                    String fullName = root + "s" + octave;
-                    note.setName(fullName);
-
-                    int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-                    child.setId(nameID);
-
-                }
-            }else if(imgName.length() == 3){
+                System.out.println("1FABLAGURGH  " + imgName);
 
                 String noteName = note.getName();
 
@@ -609,10 +603,52 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
                 child.setId(nameID);
+
+                imgName = Config.context.getResources().getResourceEntryName(child.getId());
+                System.out.println("2AFTERRGRTY  " + fullName  + "   ID: " + Config.context.getResources().getResourceEntryName(child.getId()));
+
             }
 
-        }
+            if(imgName.length() == 2){
+                String noteName = note.getName();
 
+                if (note.isFlat()) {
+                    String root = noteName.substring(0, 1);
+                    String octave = noteName.substring(1, 2);
+
+                    String fullName = root + "b" + octave;
+                    note.setName(fullName);
+
+                    int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
+                    child.setId(nameID);
+
+                }else if (note.isSharp()) {
+                    System.out.println("3NATRUBEROR  " + imgName);
+                    String root = noteName.substring(0, 1);
+                    String octave = noteName.substring(1, 2);
+
+                    String fullName = root + "s" + octave;
+                    note.setName(fullName);
+
+                    int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
+                    child.setId(nameID);
+                    System.out.println("3NATRUBEROR  " + fullName + "   ID: " + Config.context.getResources().getResourceEntryName(child.getId()));
+
+                }else if(note.isNeutral()) {
+                    System.out.println("3NATRUBEROR  " + imgName);
+                    String root = noteName.substring(0, 1);
+                    String octave = noteName.substring(1, 2);
+
+                    String fullName = root + "n" + octave;
+                    note.setName(fullName);
+
+                   int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
+                   //child.setId(nameID);
+
+                   System.out.println("4afternartu  " + fullName + "  ID: " + nameID + "  MORESTUFF  " + R.id.Cn3);
+                }
+            }
+        }
     }
 
     // Finds the notes index in the array containing the note names
@@ -692,7 +728,6 @@ public class MyTouchListener implements View.OnTouchListener {
        findIndex(parentLayout);
 
        setNoteName(parentLayout, false, false);
-
     }
 
     // Called on previous note when a new note is chosen or on current note when it is unselected
@@ -710,13 +745,12 @@ public class MyTouchListener implements View.OnTouchListener {
 
     }
 
-    // Called when note is pressed
+    // Called when note is touched
     public boolean onTouch(View v, MotionEvent event)
     {
         switch (event.getAction())
         {
             case MotionEvent.ACTION_DOWN: {
-                // Here u can write code which is executed after the user touch on the screen
                 if (!oneIsCurrentlyChosen){
                     if(MainActivity.editable) {
                         onChosenNote(v);
@@ -736,12 +770,10 @@ public class MyTouchListener implements View.OnTouchListener {
             }
             case MotionEvent.ACTION_UP:
             {
-                // Here u can write code which is executed after the user release the touch on the screen
                 break;
             }
             case MotionEvent.ACTION_MOVE:
             {
-                // Here u can write code which is executed when user move the finger on the screen
                 break;
             }
         }
