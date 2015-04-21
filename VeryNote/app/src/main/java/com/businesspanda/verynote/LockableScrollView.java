@@ -15,7 +15,7 @@ import android.view.MotionEvent;
 import android.util.AttributeSet;
 import android.widget.HorizontalScrollView;
 
-//Custom scrollView where scrolling can be disabled
+// Custom scrollView where scrolling can be disabled
 public class LockableScrollView extends HorizontalScrollView {
 
     private boolean Scrollable = true;

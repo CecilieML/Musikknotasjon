@@ -34,8 +34,6 @@ public class Note {
         this.durationOfNote = durationOfNote;
     }
 
-
-
     public boolean isSharp() {
         return sharp;
     }

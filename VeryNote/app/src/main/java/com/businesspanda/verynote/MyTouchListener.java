@@ -29,12 +29,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-/************
- * http://www.shutterstock.com/cat.mhtml?pl=47643-42764&searchterm=panda
- *
- * panda picture site :D
- */
-
 //A class concerning what happens when you touch a note after recording
 public class MyTouchListener implements View.OnTouchListener {
 

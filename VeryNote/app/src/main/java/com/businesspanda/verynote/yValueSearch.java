@@ -12,7 +12,7 @@ package com.businesspanda.verynote;
 
 import android.util.TypedValue;
 
-//Puts all height values in an array
+// Places all height values in an array in ascending order
 public class yValueSearch {
 
     public static float[] yValues = new float[28];
@@ -175,7 +175,7 @@ public class yValueSearch {
 
     }
 
-    //search for a //notes// index in this array based on a height value
+    // Returns the notes index in this array based on a height value
     public static int returnIdx(float valueToFind){
         float percentValue = FitToScreen.returnPercent(valueToFind);
 
