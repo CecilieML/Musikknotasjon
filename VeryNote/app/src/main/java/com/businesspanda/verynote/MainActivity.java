@@ -268,7 +268,7 @@ public class MainActivity extends ActionBarActivity  {
 
         if (nearestNote == prevNote && !startNewNote) {
             noteLength(nearestNote, currentNote);
-        }else if(dur>fullBar/16){
+        }else {
             startNewNote = false;
             lastNote = System.nanoTime();
             useLastPauseWritten = false;
@@ -287,10 +287,10 @@ public class MainActivity extends ActionBarActivity  {
             firstPause = System.nanoTime();
 
             if (!useLastPauseWritten) {
-                durationOfPause = (firstPause - lastNote) / 1000000; //change last note to last pasue written
+                durationOfPause = (firstPause - lastNote) / 1000000;
                 useLastPauseWritten = true;
             } else {
-                durationOfPause = (firstPause - lastPauseWritten) / 1000000; //change last note to last pasue written
+                durationOfPause = (firstPause - lastPauseWritten) / 1000000;
             }
 
             lastNote = System.nanoTime();
@@ -298,6 +298,7 @@ public class MainActivity extends ActionBarActivity  {
             if (durationOfPause < fullBar / 4) {
                 pauseImg = new ImageView(this);
                 pauseImg.setLayoutParams(pauseParams);
+                pauseImg.setAdjustViewBounds(true);
                 linLayout.addView(pauseImg);
                setHalfRestX = true;
                addWholeRestToList = true;
@@ -536,12 +537,12 @@ public class MainActivity extends ActionBarActivity  {
                 imgLayout.setId(R.id.upsideDown);
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
             }
-
         }
 
         if(dur >= (fullBar/16)){
             sharpFlat(nearestNote);
-            notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNmbOfLinesBass(), nearestNote.getNoteHeight(), imgLayout);
+            notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNmbOfLinesBass(),
+                    nearestNote.getNoteHeight(), imgLayout);
         }
 
         if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {             //= 1/16 of fullBar
@@ -719,13 +720,26 @@ public class MainActivity extends ActionBarActivity  {
 
         currentNote.setOnTouchListener(heyListen);
         imgLayout.addView(currentNote);
-        if(runFFT)linLayout.addView(imgLayout);
+        if(runFFT && addImgView(imgLayout))linLayout.addView(imgLayout);
 
         if(!recording){
             linLayHandler.removeCallbacks(moveLinLay);
             tempolineHandler.removeCallbacks(writeTempoline);
         }
 
+    }
+
+    public boolean addImgView(RelativeLayout imgLayout){
+        boolean addToView = true;
+        for(int i=0;i<imgLayout.getChildCount();i++) {
+            ImageView child = (ImageView) imgLayout.getChildAt(i);
+            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+            if (imgName.length() <= 3) {
+                if(child.getDrawable() == null)addToView = false;
+                System.out.println("*'''''***'''****''''***************************************'''");
+            }
+        }
+        return addToView;
     }
 
     private final int duration = 1; // seconds
@@ -874,38 +888,6 @@ public class MainActivity extends ActionBarActivity  {
                 } else {
                     stopRecording();
 
-                    /*item.setIcon(R.drawable.ic_action_mic);
-                    getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                    pitch_detector_thread_.interrupt();
-                    runFFT = false;
-                    tempolineHandler.removeCallbacks(writeTempoline);
-                    tempoStop = System.nanoTime();
-
-                    linLayHandler.removeCallbacks(moveLinLay);
-                    if(linLayout.getWidth() < lowestLayer.getWidth()) {
-                        linLayStartX = (int) linLayout.getX();
-                    }else{
-                        linLayStartX = 0;
-                    }
-
-                   // int extraWidth = FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth));
-                   //linLayout.getLayoutParams().width += extraWidth;
-
-                    linLayout.clearAnimation();
-                    linLayout.animate().x(linLayStartX).setDuration(10);
-                    currentLinLayWidth = linLayout.getWidth();
-                    xScroll += x;
-
-                    //xScroll += extraWidth; This kinda works, but not quite right
-
-                    int scrollWidth = scrollView.getWidth();
-                    scrollView.scrollTo(scrollWidth - xScroll, 0);
-                    x = 0;
-                    scrollView.setScrollingEnabled(true);
-                    prevNote = new Note(false, false, 0, " ", 0, 0, 0, "");
-                    linLayMoving = false;
-                    recording = false;
-                    editable = true;*/
                 }
                 return true;
 
