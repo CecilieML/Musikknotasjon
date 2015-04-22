@@ -95,6 +95,7 @@ public class MainActivity extends ActionBarActivity  {
     int currentLinLayWidth;
     int noteIdxInXMLArray = 0;
     int fullBar = metronomNmb*4; //4 = tempo;
+    final int numSamplesForGenA4 = 8000; //duration 1 second * sampleRate 8000
 
     long dur;
     long nowTime;
@@ -105,9 +106,11 @@ public class MainActivity extends ActionBarActivity  {
     long lastPauseWritten;
     long lastTempolineWasWritten = 0;
 
+    boolean onlyOnce;
     boolean linLayMoving;
     boolean startNewNote;
     boolean setHalfRestX;
+    boolean brandNewPiece;
     boolean addWholeRestToList;
     boolean useLastPauseWritten;
 
@@ -117,6 +120,9 @@ public class MainActivity extends ActionBarActivity  {
 
     public static boolean editable;
     public static boolean runFFT = true;
+
+    final byte generatedA4Snd[] = new byte[2 * numSamplesForGenA4];
+    final double sampleForGenA4[] = new double[numSamplesForGenA4];
 
     /** Called when the activity is first created. */
     @Override
@@ -162,7 +168,7 @@ public class MainActivity extends ActionBarActivity  {
         });
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        // add the custom view to the action bar
+        //Add the custom view to the action bar
         actionBar.setCustomView(R.layout.edit_text);
         EditText edit_title = (EditText) actionBar.getCustomView().findViewById(R.id.title_field);
         edit_title.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -171,7 +177,7 @@ public class MainActivity extends ActionBarActivity  {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 EditText titleField = (EditText) findViewById(R.id.title_field);
                 title = titleField.getText().toString();
-                //removes spaces from title
+                //Removes spaces from title
                 exp.setFilename(title.replaceAll(" ", ""));
                 return false;
             }
@@ -222,13 +228,9 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
-    boolean onlyOnce;
-    boolean brandNewPiece;
-
     @Override
     public void onStart() {
         super.onStart();
-
     }
 
     @Override
@@ -242,7 +244,6 @@ public class MainActivity extends ActionBarActivity  {
         }catch (Exception e){
             Log.e("null pointer exception", "Didn't use pitch_detector");
         }
-        //playHandler.removeCallbacks(playSoundLoop);
     }
 
     @Override
@@ -467,13 +468,6 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
-    private Runnable writeTempoline = new Runnable() {
-        public void run() {
-            tempolineOnScreen();
-            tempolineHandler.postDelayed(writeTempoline, fullBar);
-        }
-    };
-
     public void tempolineOnScreen(){
         ImageView tempo = new ImageView(this);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
@@ -503,23 +497,6 @@ public class MainActivity extends ActionBarActivity  {
         long writeAt = fullBar - usedTime;
         tempolineHandler.postDelayed(writeTempoline, writeAt);
     }
-
-    private Runnable mVibrations = new Runnable() {
-        public void run() {
-            TextView text = (TextView) findViewById(R.id.met_text);
-
-            String str_met = Integer.toString(met_int);
-            text.setText(str_met);
-            met_int++;
-            if(met_int>4)met_int=1;
-
-            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            //Vibrate for 50 milliseconds
-            v.vibrate(50);
-            //Wait for 750 ms
-            mHandler.postDelayed(mVibrations, metronomNmb);
-        }
-    };
 
     public void noteLength(Note nearestNote, ImageView currentNote){
         int height = nearestNote.getNoteHeight();
@@ -735,66 +712,45 @@ public class MainActivity extends ActionBarActivity  {
             ImageView child = (ImageView) imgLayout.getChildAt(i);
             String imgName = Config.context.getResources().getResourceEntryName(child.getId());
             if (imgName.length() <= 3) {
-                if(child.getDrawable() == null)addToView = false;
-                System.out.println("*'''''***'''****''''***************************************'''");
+                if(child.getDrawable() == null) {
+                    addToView = false;
+                }
             }
         }
         return addToView;
     }
 
-    private final int duration = 1; // seconds
-    private final int sampleRate = 8000;
-    private final int numSamples = duration * sampleRate;
-    private final double sample[] = new double[numSamples];
-    private final double freqOfTone = 440; // hz
-
-    private final byte generatedSnd[] = new byte[2 * numSamples];
-
     void genTone(){
-        // fill out the array
-        for (int i = 0; i < numSamples; ++i) {
-            sample[i] = Math.sin(2 * Math.PI * i / (sampleRate/freqOfTone));
+        //Fills out the array for the generated A4 sound.
+        for (int i = 0; i < numSamplesForGenA4; ++i) {
+            sampleForGenA4[i] = Math.sin(2 * Math.PI * i / (8000/440)); // samplerate 8000/frequency of A4 440hz
         }
 
         // convert to 16 bit pcm sound array
         // assumes the sample buffer is normalised.
         int idx = 0;
-        for (final double dVal : sample) {
+        for (final double dVal : sampleForGenA4) {
             // scale to maximum amplitude
             final short val = (short) ((dVal * 32767));
             // in 16 bit wav PCM, first byte is the low order byte
-            generatedSnd[idx++] = (byte) (val & 0x00ff);
-            generatedSnd[idx++] = (byte) ((val & 0xff00) >>> 8);
+            generatedA4Snd[idx++] = (byte) (val & 0x00ff);
+            generatedA4Snd[idx++] = (byte) ((val & 0xff00) >>> 8);
         }
     }
 
     void playSound(){
+        //Plays generated A4 sound from genTone().
         final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
-                sampleRate, AudioFormat.CHANNEL_OUT_MONO,
-                AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
+                8000, AudioFormat.CHANNEL_OUT_MONO,
+                AudioFormat.ENCODING_PCM_16BIT, generatedA4Snd.length,
                 AudioTrack.MODE_STATIC);
-        audioTrack.write(generatedSnd, 0, generatedSnd.length);
+        audioTrack.write(generatedA4Snd, 0, generatedA4Snd.length);
         audioTrack.play();
 
     }
 
-    public int Offset(){
-        return FitToScreen.returnViewWidth(getPercent(R.dimen.Offset));
-    }
-
-    private Runnable moveLinLay = new Runnable() {
-        public void run() {
-            LinearInterpolator interpolator = new LinearInterpolator();
-            linLayout.animate().x(linLayStartX+x).setInterpolator(interpolator).setDuration(speed);
-            x -= Offset();
-            linLayout.getLayoutParams().width += Offset();
-            linLayout.requestLayout();
-            linLayHandler.postDelayed(moveLinLay, speed);
-        }
-    };
-
     public void stopRecording(){
-        //item.setIcon(R.drawable.ic_action_mic);
+
         android.support.v7.internal.view.menu.ActionMenuItemView recBtn =(android.support.v7.
                 internal.view.menu.ActionMenuItemView) findViewById(R.id.action_record);
         recBtn.setIcon(getResources().getDrawable(R.drawable.ic_action_mic));
@@ -833,7 +789,6 @@ public class MainActivity extends ActionBarActivity  {
         editable = true;
     }
 
-
     public void resetAll(){
 
         EditText titleField = (EditText) findViewById(R.id.title_field);
@@ -863,10 +818,49 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
+    public int Offset(){
+        return FitToScreen.returnViewWidth(getPercent(R.dimen.Offset));
+    }
+
+    private Runnable moveLinLay = new Runnable() {
+        public void run() {
+            LinearInterpolator interpolator = new LinearInterpolator();
+            linLayout.animate().x(linLayStartX+x).setInterpolator(interpolator).setDuration(speed);
+            x -= Offset();
+            linLayout.getLayoutParams().width += Offset();
+            linLayout.requestLayout();
+            linLayHandler.postDelayed(moveLinLay, speed);
+        }
+    };
+
+    private Runnable mVibrations = new Runnable() {
+        public void run() {
+            TextView text = (TextView) findViewById(R.id.met_text);
+
+            String str_met = Integer.toString(met_int);
+            text.setText(str_met);
+            met_int++;
+            if(met_int>4)met_int=1;
+
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            //Vibrate for 50 milliseconds
+            v.vibrate(50);
+            //Wait for 750 ms
+            mHandler.postDelayed(mVibrations, metronomNmb);
+        }
+    };
+
+    private Runnable writeTempoline = new Runnable() {
+        public void run() {
+            tempolineOnScreen();
+            tempolineHandler.postDelayed(writeTempoline, fullBar);
+        }
+    };
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        // Handle presses on the action bar items
+        // Handles presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_record:
                 if(!recording) {
