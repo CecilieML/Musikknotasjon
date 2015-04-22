@@ -1,8 +1,15 @@
 package com.businesspanda.verynote;
 
-/**
- * Created by CecilieMarie on 17.04.2015.
+/** Copyright (C) 2015 by BusinessPanda - Cecilie M. Langfeldt, Helene H. Larsen.
+ **
+ ** Permission to use, copy, modify, and distribute this software and its
+ ** documentation for any purpose and without fee is hereby granted, provided
+ ** that the above copyright notice appear in all copies and that both that
+ ** copyright notice and this permission notice appear in supporting
+ ** documentation.  This software is provided "as is" without express or
+ ** implied warranty.
  */
+
 public class NoteNameSearch {
 
     // Sets all root note names in this array in ascending order
@@ -41,6 +48,5 @@ public class NoteNameSearch {
 
 
     };
-
 
 }

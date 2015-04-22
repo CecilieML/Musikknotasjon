@@ -928,7 +928,6 @@ public class MainActivity extends ActionBarActivity  {
 
             case R.id.action_save:
                 Pattern patternSD = new Pattern(exp.convertArrayListToString(allNotesForXML));
-                System.out.println(patternSD);
                 exp.saveToSD(patternSD);
                 return true;
 

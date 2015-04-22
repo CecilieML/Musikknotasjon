@@ -405,7 +405,6 @@ public class MyTouchListener implements View.OnTouchListener {
                             }
                             if(child.getId() == R.id.sharp) {
                                 parentLayout.removeView(child);
-                                System.out.println("DID ONLY THIS FOR SOME REASON!!!!");
                             }
                             if (imgName.length() <= 3) {
                                 int idx = (int) child.getTag();
@@ -563,13 +562,11 @@ public class MyTouchListener implements View.OnTouchListener {
     // Removes the "b"/"s" from the notes name
     // of adds the "b"/"s" to the notes name
     public void fixName(RelativeLayout parentLayout, Note note){
-        System.out.println(note.isNeutral() + "  <--NEUTRAL");
+
         for(int i=0;i<parentLayout.getChildCount();i++) {
             View child = parentLayout.getChildAt(i);
             String imgName = Config.context.getResources().getResourceEntryName(child.getId());
             if(imgName.length() == 3){
-
-                System.out.println("1FABLAGURGH  " + imgName);
 
                 String noteName = note.getName();
 
@@ -583,8 +580,6 @@ public class MyTouchListener implements View.OnTouchListener {
                 child.setId(nameID);
 
                 imgName = Config.context.getResources().getResourceEntryName(child.getId());
-                System.out.println("2AFTERRGRTY  " + fullName  + "   ID: " + Config.context.getResources().getResourceEntryName(child.getId()));
-
             }
 
             if(imgName.length() == 2){
@@ -601,7 +596,6 @@ public class MyTouchListener implements View.OnTouchListener {
                     child.setId(nameID);
 
                 }else if (note.isSharp()) {
-                    System.out.println("3NATRUBEROR  " + imgName);
                     String root = noteName.substring(0, 1);
                     String octave = noteName.substring(1, 2);
 
@@ -610,36 +604,31 @@ public class MyTouchListener implements View.OnTouchListener {
 
                     int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
                     child.setId(nameID);
-                    System.out.println("3NATRUBEROR  " + fullName + "   ID: " + Config.context.getResources().getResourceEntryName(child.getId()));
 
                 }else if(note.isNeutral()) {
-                    System.out.println("3NATRUBEROR  " + imgName + "   " + noteName);
                     String root = noteName.substring(0, 1);
                     String octave = noteName.substring(1, 2);
 
                     String fullName = root + "n" + octave;
                     note.setName(fullName);
 
-                    //THIS SHOULD WORK!
-                   //int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-                   //child.setId(nameID);
 
+                   int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
+                   if(nameID != 0) {
+                       child.setId(nameID);
+                   } else {
+                       /***/
+                       try {
+                           nameID = R.id.class.getField(fullName).getInt(null);
+                       } catch (NoSuchFieldException e) {
+
+                       } catch (IllegalAccessException f) {
+
+                       }
+                       child.setId(nameID);
+                       System.out.println("ITS HAPPENING!!!!!!!!!!!!!!!");
+                   }
                     /***/
-
-                    int nameID = 0;
-
-                    try {
-                        nameID = R.id.class.getField(fullName).getInt(null);
-                    } catch (NoSuchFieldException e) {
-
-                    } catch (IllegalAccessException f) {
-
-                    }
-                    child.setId(nameID);
-                    /***/
-
-
-                   System.out.println("4afternartu  " + fullName + "  ID: " + nameID + "  MORESTUFF   ");
                 }
             }
         }
