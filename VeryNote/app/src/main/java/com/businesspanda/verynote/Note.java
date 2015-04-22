@@ -10,6 +10,8 @@ package com.businesspanda.verynote;
  ** implied warranty.
  */
 
+
+// Note Object class
 public class Note {
 
     boolean sharp;
@@ -84,11 +86,5 @@ public class Note {
     public void setDurationOfNote(String durationOfNote) {
         this.durationOfNote = durationOfNote;
     }
-
-
-
-
-
-
 
 }

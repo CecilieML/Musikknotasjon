@@ -5,6 +5,7 @@ package com.businesspanda.verynote;
  */
 public class NoteNameSearch {
 
+    // Sets all root note names in this array in ascending order
     public static final String[] NoteNames = {
             "B6",
             "A6",
