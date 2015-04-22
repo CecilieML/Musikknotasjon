@@ -8,6 +8,7 @@
     <string name="action_save">Save MusicXML</string>
     <string name="action_share">Share MusicXML</string>
     <string name="record" size="2em">Record</string>
+    <string name="stop" size="2em">Stop</string>
     <string name="play">Play</string>
     <string name="action_new">New Masterpiece</string>
     <string name="filename">Untitled</string>

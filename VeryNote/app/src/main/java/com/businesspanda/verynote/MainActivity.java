@@ -797,6 +797,7 @@ public class MainActivity extends ActionBarActivity  {
         android.support.v7.internal.view.menu.ActionMenuItemView recBtn =(android.support.v7.
                 internal.view.menu.ActionMenuItemView) findViewById(R.id.action_record);
         recBtn.setIcon(getResources().getDrawable(R.drawable.ic_action_mic));
+        recBtn.setTitle(getResources().getString(R.string.record));
         getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         try {
@@ -877,6 +878,7 @@ public class MainActivity extends ActionBarActivity  {
             case R.id.action_record:
                 if(!recording) {
                     item.setIcon(R.drawable.ic_action_stop);
+                    item.setTitle(R.string.stop);
                     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     pitch_detector_thread_ = new Thread(new PitchDec(this, new Handler()));
                     pitch_detector_thread_.start();
