@@ -516,10 +516,14 @@ public class MainActivity extends ActionBarActivity  {
             }
         }
 
-        if(dur >= (fullBar/16)){
+      //  if(dur >= (fullBar/16)){
             sharpFlat(nearestNote);
             notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNmbOfLinesBass(),
                     nearestNote.getNoteHeight(), imgLayout);
+     //   }
+
+        if(dur<fullBar/16) {
+            currentNote.setImageResource(0);
         }
 
         if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {             //= 1/16 of fullBar
@@ -707,13 +711,13 @@ public class MainActivity extends ActionBarActivity  {
     }
 
     public boolean addImgView(RelativeLayout imgLayout){
-        boolean addToView = true;
+        boolean addToView = false;
         for(int i=0;i<imgLayout.getChildCount();i++) {
             ImageView child = (ImageView) imgLayout.getChildAt(i);
             String imgName = Config.context.getResources().getResourceEntryName(child.getId());
             if (imgName.length() <= 3) {
-                if(child.getDrawable() == null) {
-                    addToView = false;
+                if(child.getDrawable() != null) {
+                    addToView = true;
                 }
             }
         }
