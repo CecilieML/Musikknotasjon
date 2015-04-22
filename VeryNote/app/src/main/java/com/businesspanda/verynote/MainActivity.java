@@ -268,8 +268,7 @@ public class MainActivity extends ActionBarActivity  {
 
         if (nearestNote == prevNote && !startNewNote) {
             noteLength(nearestNote, currentNote);
-
-        }else {
+        }else if(dur>fullBar/16){
             startNewNote = false;
             lastNote = System.nanoTime();
             useLastPauseWritten = false;
@@ -625,14 +624,13 @@ public class MainActivity extends ActionBarActivity  {
                 currentNote.setImageResource(R.drawable.notailhollownotewdot);
             }
 
-        }else if(dur >= fullBar*1.6){                                // randomly chosen...
+        }else if(dur >= fullBar*1.6){
             prevNote = new Note(false, false, false, 0, " ",0 ,0, 0, "x");
         }
 
     }
 
     public void sharpFlat(Note note) {
-
         String noteName = note.getName();
         int yID = this.getResources().getIdentifier(noteName, "dimen", getPackageName());
         float noteY = FitToScreen.returnViewHeight(getPercent(yID));
@@ -721,7 +719,7 @@ public class MainActivity extends ActionBarActivity  {
 
         currentNote.setOnTouchListener(heyListen);
         imgLayout.addView(currentNote);
-        linLayout.addView(imgLayout);
+        if(runFFT)linLayout.addView(imgLayout);
 
         if(!recording){
             linLayHandler.removeCallbacks(moveLinLay);
@@ -773,7 +771,6 @@ public class MainActivity extends ActionBarActivity  {
     private Runnable moveLinLay = new Runnable() {
         public void run() {
             LinearInterpolator interpolator = new LinearInterpolator();
-            // if(linLayout.getWidth() > lowestLayer.getWidth())linLayStartX = 0;
             linLayout.animate().x(linLayStartX+x).setInterpolator(interpolator).setDuration(speed);
             x -= Offset();
             linLayout.getLayoutParams().width += Offset();
@@ -807,15 +804,10 @@ public class MainActivity extends ActionBarActivity  {
             linLayStartX = 0;
         }
 
-        // int extraWidth = FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth));
-        //linLayout.getLayoutParams().width += extraWidth;
-
         linLayout.clearAnimation();
         linLayout.animate().x(linLayStartX).setDuration(10);
         currentLinLayWidth = linLayout.getWidth();
         xScroll += x;
-
-        //xScroll += extraWidth; This kinda works, but not quite right
 
         int scrollWidth = scrollView.getWidth();
         scrollView.scrollTo(scrollWidth - xScroll, 0);
