@@ -24,7 +24,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -474,9 +473,6 @@ public class MyTouchListener implements View.OnTouchListener {
                 }
 
                 parentLayout.removeAllViews();
-
-                /**TextView freqText = (TextView) Config.context.findViewById(R.id.freqTextview);
-                freqText.setText("");*/
 
                 removeButtons();
                 v.setSelected(false);

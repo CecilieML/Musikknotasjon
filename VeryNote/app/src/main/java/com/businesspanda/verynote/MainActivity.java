@@ -216,9 +216,6 @@ public class MainActivity extends ActionBarActivity  {
 
             linLayStartX = (int)linLayout.getX();
 
-            //linLayout.setBackgroundColor(getResources().getColor(R.color.yellow));
-            //lowestLayer.setBackgroundColor(getResources().getColor(R.color.cyan));
-
             brandNewPiece = false;
         }else{
             stopRecording();
@@ -264,9 +261,6 @@ public class MainActivity extends ActionBarActivity  {
     public void ShowPitchDetectionResult(final double pitch) {
         Integer pitchInt = (int) (pitch);
         Note nearestNote = NoteSearch.findNearestNote(pitchInt);
-
-       /** final TextView changeFreq = (TextView) findViewById(R.id.freqTextview);
-        changeFreq.setText(nearestNote.name); //remember to remove*/
 
         lastPauseWritten = System.nanoTime();
         nowTime = System.nanoTime();
@@ -696,13 +690,11 @@ public class MainActivity extends ActionBarActivity  {
 
         currentNote.setTag(noteIdxInXMLArray);
         noteIdxInXMLArray++;
-
         allNotesForXML.add(note);
 
         FrameLayout.LayoutParams par = new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteImgWidth)),
                 FitToScreen.returnViewHeight(getPercent(R.dimen.noteImgFULLHeight)));
-
         imgLayout.setLayoutParams(par);
         imgLayout.setFocusable(true);
 
@@ -710,21 +702,19 @@ public class MainActivity extends ActionBarActivity  {
 
         int x = linLayout.getLayoutParams().width -
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos));
+        imgLayout.setX(x);
 
         String notename = note.getName();
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
         float y = FitToScreen.returnViewHeight(getPercent(yID));
 
-        imgLayout.setX(x);
-
         int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
         currentNote.setId(noteID);
-
-        //notesOutOfBoundsLines(note.getNmbOfLinesTreble(), note.getNmbOfLinesBass(), note.getNoteHeight(), imgLayout);
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FitToScreen.returnViewHeight(getPercent(R.dimen.noteHeight)));
+
         currentNote.setLayoutParams(params);
         currentNote.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.noteX)));
         currentNote.setY(y + addToY);
@@ -848,9 +838,6 @@ public class MainActivity extends ActionBarActivity  {
         allNotesForXML.clear();
 
         linLayout.getLayoutParams().width = FitToScreen.returnViewWidth(getPercent(R.dimen.lowestLayerWidth));
-
-        /**TextView noteView = (TextView) findViewById(R.id.freqTextview);
-        noteView.setText("");*/
 
         scrollView.removeView(linLayout);
         linLayout = new RelativeLayout(this);
