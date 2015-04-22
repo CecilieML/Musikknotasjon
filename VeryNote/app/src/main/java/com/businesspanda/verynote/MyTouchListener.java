@@ -201,9 +201,6 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 boolean noteIsFlat = false;
 
-                int children = parentLayout.getChildCount();
-
-
                 for(int i=0;i<parentLayout.getChildCount();i++) {
                     View child = parentLayout.getChildAt(i);
                     if (child.getId() == R.id.flat) {
@@ -229,7 +226,6 @@ public class MyTouchListener implements View.OnTouchListener {
                         }
                     }
                 }else {
-                        //if (children > 1) {
                             for (int i = 0; i < parentLayout.getChildCount(); i++) {
                                 View child = parentLayout.getChildAt(i);
                                 String imgName = Config.context.getResources().getResourceEntryName(child.getId());
@@ -249,7 +245,7 @@ public class MyTouchListener implements View.OnTouchListener {
                                     allNotes.set(idx, replacementNote);
                                 }
                             }
-                       // }
+
 
                         ImageView flat = new ImageView(Config.context);
                         flat.setImageResource(R.drawable.flatnotenew);
@@ -292,8 +288,6 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 boolean noteIsSharp = false;
 
-                int children = parentLayout.getChildCount();
-
                 for(int i=0;i<parentLayout.getChildCount();i++) {
                     View child = parentLayout.getChildAt(i);
                     if (child.getId() == R.id.sharp) {
@@ -319,7 +313,6 @@ public class MyTouchListener implements View.OnTouchListener {
                         }
                     }
                 }else {
-                     //   if (children > 1) {
                             for (int i = 0; i < parentLayout.getChildCount(); i++) {
                                 View child = parentLayout.getChildAt(i);
                                 String imgName = Config.context.getResources().getResourceEntryName(child.getId());
@@ -340,7 +333,6 @@ public class MyTouchListener implements View.OnTouchListener {
                                     allNotes.set(idx, replacementNote);
                                 }
                             }
-                       // }
 
                         ImageView sharp = new ImageView(Config.context);
                         sharp.setImageResource(R.drawable.sharpnotenew);
@@ -380,12 +372,10 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 boolean noteIsNeutral = false;
 
-                int children = parentLayout.getChildCount();
-
                 for(int i=0;i<parentLayout.getChildCount();i++) {
                     View child = parentLayout.getChildAt(i);
                     if (child.getId() == R.id.neutral) {
-                        noteIsNeutral=true;
+                        noteIsNeutral = true;
                     }
                 }
 
@@ -407,7 +397,7 @@ public class MyTouchListener implements View.OnTouchListener {
                         }
                     }
                 }else{
-                  //  if(children>1){
+
                         for(int i=0;i<parentLayout.getChildCount();i++){
                             View child = parentLayout.getChildAt(i);
                             String imgName = Config.context.getResources().getResourceEntryName(child.getId());
@@ -426,11 +416,9 @@ public class MyTouchListener implements View.OnTouchListener {
                                         oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
                                         oldNote.getDurationOfNote());
                                 fixName(parentLayout, replacementNote);
-                                System.out.println("WHHHHHHHHHHHHHHHHAAAAAAAAAAAAAAAT!!!!!??????????");
                                 allNotes.set(idx, replacementNote);
                             }
                         }
-                   // }
 
                     ImageView neutral = new ImageView(Config.context);
                     neutral.setImageResource(R.drawable.naturalnote);
@@ -629,17 +617,33 @@ public class MyTouchListener implements View.OnTouchListener {
                     System.out.println("3NATRUBEROR  " + fullName + "   ID: " + Config.context.getResources().getResourceEntryName(child.getId()));
 
                 }else if(note.isNeutral()) {
-                    System.out.println("3NATRUBEROR  " + imgName);
+                    System.out.println("3NATRUBEROR  " + imgName + "   " + noteName);
                     String root = noteName.substring(0, 1);
                     String octave = noteName.substring(1, 2);
 
                     String fullName = root + "n" + octave;
                     note.setName(fullName);
 
-                   int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
+                    //THIS SHOULD WORK!
+                   //int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
                    //child.setId(nameID);
 
-                   System.out.println("4afternartu  " + fullName + "  ID: " + nameID + "  MORESTUFF  " + R.id.Cn3);
+                    /***/
+
+                    int nameID = 0;
+
+                    try {
+                        nameID = R.id.class.getField(fullName).getInt(null);
+                    } catch (NoSuchFieldException e) {
+
+                    } catch (IllegalAccessException f) {
+
+                    }
+                    child.setId(nameID);
+                    /***/
+
+
+                   System.out.println("4afternartu  " + fullName + "  ID: " + nameID + "  MORESTUFF   ");
                 }
             }
         }
