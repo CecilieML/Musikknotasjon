@@ -517,11 +517,6 @@ public class MainActivity extends ActionBarActivity  {
             }
         }
 
-      //  if(dur >= (fullBar/16)){
-            sharpFlat(nearestNote);
-
-     //   }
-
         if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {             //= 1/16 of fullBar
            nearestNote.setDurationOfNote("s");
             if (upSideDown) {
@@ -674,8 +669,6 @@ public class MainActivity extends ActionBarActivity  {
         imgLayout.setLayoutParams(par);
         imgLayout.setFocusable(true);
 
-        noteLength(note, currentNote);
-
         int x = linLayout.getLayoutParams().width -
                 FitToScreen.returnViewWidth(getPercent(R.dimen.noteStartPos));
         imgLayout.setX(x);
@@ -687,6 +680,8 @@ public class MainActivity extends ActionBarActivity  {
         int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
         currentNote.setId(noteID);
 
+        noteLength(note, currentNote);
+        sharpFlat(note);
         notesOutOfBoundsLines(note.getNmbOfLinesTreble(), note.getNmbOfLinesBass(),
                 note.getNoteHeight(), imgLayout);
 
