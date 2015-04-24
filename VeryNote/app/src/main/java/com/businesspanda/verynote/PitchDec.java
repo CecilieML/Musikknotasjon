@@ -59,10 +59,9 @@ public class PitchDec implements Runnable {
 
     private final static int CHUNK_SIZE_IN_BYTES = RATE * CHUNK_SIZE_IN_MS / 1000 * 2;
 
-    private final static int MIN_FREQUENCY = 100; // 49.0 HZ of G1 - lowest note
-    // for crazy Russian choir.
-    private final static int MAX_FREQUENCY = 1568; // 1567.98 HZ of G6 - highest
-    // demanded note in the classical repertoire
+    private final static int MIN_FREQUENCY = 131; //C3
+
+    private final static int MAX_FREQUENCY = 1976; //B6
 
     int saveCounter = 0; //<-----------
 
