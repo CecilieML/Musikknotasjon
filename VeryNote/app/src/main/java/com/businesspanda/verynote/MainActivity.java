@@ -195,9 +195,10 @@ public class MainActivity extends ActionBarActivity  {
                     FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
             linLayout.setLayoutParams(paramsLinLayout);
 
-            if(!onlyOnce && !brandNewPiece){
+            if(!onlyOnce && !brandNewPiece && !clefChanged) {
                 linLayout.getLayoutParams().width = currentLinLayWidth;
             }
+            clefChanged = false;
 
             if(onlyOnce){
                 linLayout.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)));
@@ -518,13 +519,8 @@ public class MainActivity extends ActionBarActivity  {
 
       //  if(dur >= (fullBar/16)){
             sharpFlat(nearestNote);
-            notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNmbOfLinesBass(),
-                    nearestNote.getNoteHeight(), imgLayout);
-     //   }
 
-        if(dur<fullBar/16) {
-            currentNote.setImageResource(0);
-        }
+     //   }
 
         if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {             //= 1/16 of fullBar
            nearestNote.setDurationOfNote("s");
@@ -691,6 +687,9 @@ public class MainActivity extends ActionBarActivity  {
         int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
         currentNote.setId(noteID);
 
+        notesOutOfBoundsLines(note.getNmbOfLinesTreble(), note.getNmbOfLinesBass(),
+                note.getNoteHeight(), imgLayout);
+
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FitToScreen.returnViewHeight(getPercent(R.dimen.noteHeight)));
@@ -794,6 +793,8 @@ public class MainActivity extends ActionBarActivity  {
     }
 
     public void resetAll(){
+
+
 
         EditText titleField = (EditText) findViewById(R.id.title_field);
         titleField.setText("Untitled");
@@ -1010,7 +1011,6 @@ public class MainActivity extends ActionBarActivity  {
 
                         if(clefChanged) {
                             resetAll();
-                            clefChanged = false;
                         }
 
                         popupWindow.dismiss();
