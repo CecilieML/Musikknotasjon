@@ -559,8 +559,8 @@ public class MyTouchListener implements View.OnTouchListener {
         }
     }
 
-    // Removes the "b"/"s" from the notes name
-    // of adds the "b"/"s" to the notes name
+    // Removes the "b"/"s"/"n" from the notes name,
+    // and adds the "b"/"s"/"n"" to the notes name if necessary
     public void fixName(RelativeLayout parentLayout, Note note){
 
         for(int i=0;i<parentLayout.getChildCount();i++) {
