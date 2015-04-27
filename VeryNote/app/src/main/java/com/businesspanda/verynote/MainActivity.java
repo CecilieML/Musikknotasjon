@@ -189,7 +189,6 @@ public class MainActivity extends ActionBarActivity  {
     public void onWindowFocusChanged(boolean hasFocus){
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
-
             FrameLayout.LayoutParams paramsLinLayout = new FrameLayout.LayoutParams(
                     FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartWidth)),
                     FitToScreen.returnViewHeight(getPercent(R.dimen.lowestLayerHeight)));
@@ -198,7 +197,6 @@ public class MainActivity extends ActionBarActivity  {
             if(!onlyOnce && !brandNewPiece && !clefChanged) {
                 linLayout.getLayoutParams().width = currentLinLayWidth;
             }
-            clefChanged = false;
 
             if(onlyOnce){
                 linLayout.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.linLayoutStartX)));
@@ -224,6 +222,7 @@ public class MainActivity extends ActionBarActivity  {
             linLayStartX = (int)linLayout.getX();
 
             brandNewPiece = false;
+            clefChanged = false;
         }else{
             stopRecording();
         }
@@ -878,7 +877,6 @@ public class MainActivity extends ActionBarActivity  {
                     editable = false;
                     lastNote = System.nanoTime();
                     useLastPauseWritten = false;
-
                 } else {
                     stopRecording();
 
