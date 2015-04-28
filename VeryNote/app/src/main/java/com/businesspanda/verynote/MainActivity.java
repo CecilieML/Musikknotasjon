@@ -57,6 +57,7 @@ public class MainActivity extends ActionBarActivity  {
     Thread pitch_detector_thread_;
 
     MyTouchListener heyListen;
+    RestListener restListener;
 
     LockableScrollView scrollView;
 
@@ -144,6 +145,7 @@ public class MainActivity extends ActionBarActivity  {
 
         RelativeLayout upperLayout = (RelativeLayout) findViewById(R.id.upperLayout);
         heyListen = new MyTouchListener(upperLayout, allNotesForXML);
+        restListener = new RestListener(upperLayout, allNotesForXML);
 
         scrollView = (LockableScrollView) findViewById(R.id.scrollview);
 
@@ -320,6 +322,8 @@ public class MainActivity extends ActionBarActivity  {
                         allNotesForXML.add(pauseNote);
                         noteIdxInXMLArray++;
                         setHalfRestX = false;
+                        /***/
+                        pauseImg.setOnTouchListener(restListener);
                     }
                 }
             } else if (durationOfPause > fullBar) {
@@ -812,6 +816,13 @@ public class MainActivity extends ActionBarActivity  {
         }catch(NullPointerException e){
 
         }
+
+        try {
+            restListener.removeButton();
+        }catch(NullPointerException e){
+
+        }
+
 
         noteIdxInXMLArray = 0;
 

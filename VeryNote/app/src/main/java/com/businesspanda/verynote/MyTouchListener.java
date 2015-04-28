@@ -499,6 +499,12 @@ public class MyTouchListener implements View.OnTouchListener {
         btnRemoveAll.setVisibility(View.GONE);
     }
 
+    //Called to make phone vibrate and let user know that their button press registered
+    public void vibrate(int dur) {
+        Vibrator vib = (Vibrator) Config.context.getSystemService(Context.VIBRATOR_SERVICE);
+        vib.vibrate(dur);
+    }
+
     //Checks to see if there exist an id for this note, if the is not the button is disabled
     public void setAbleButtons(Button button, String x) {
         int nameID = 0;
@@ -518,12 +524,6 @@ public class MyTouchListener implements View.OnTouchListener {
         }else {
             button.setEnabled(true);
         }
-    }
-
-    //Called to make phone vibrate and let user know that their button press registered
-    public void vibrate(int dur) {
-        Vibrator vib = (Vibrator) Config.context.getSystemService(Context.VIBRATOR_SERVICE);
-        vib.vibrate(dur);
     }
 
     //Deletes all "note lines" and puts in the correct number of new ones
