@@ -24,6 +24,7 @@ public class RestListener implements View.OnTouchListener {
     RelativeLayout really;
     ArrayList<Note> allNotes;
     boolean oneIsCurrentlyChosen;
+    public static boolean restActive;
 
     public RestListener(RelativeLayout really, ArrayList<Note> allNotes) {
         this.really = really;
@@ -48,14 +49,12 @@ public class RestListener implements View.OnTouchListener {
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
-                parentLayout.removeAllViews();
 
-                int idx = (int)v.getTag();
-                Note oldNote = allNotes.get(idx);
-                Note replacementNote =  new Note(oldNote.isSharp(), oldNote.isFlat(), oldNote.isNeutral(),
-                             oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight() ,
-                             oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), "");
+                imgView.setVisibility(View.GONE);
+                System.out.println("HERE IT IS!!! " + imgView.getTag());
+                int idx = (int)imgView.getTag();
+
+                Note replacementNote =  new Note(false, false, false, 0, "R", 0 , 0, 0, "");
                 allNotes.set(idx, replacementNote);
 
                 removeButton();
@@ -80,11 +79,17 @@ public class RestListener implements View.OnTouchListener {
     }
     // Called when a note is chosen
     public void onChosenNote(View v){
+        if(Config.context.heyListen.touchActive){
+            Config.context.heyListen.onUnChosenNote();
+        }
+        restActive = true;
+
         vibrate(70);
         lastImg = (ImageView) v;
 
-        ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
-        lastImg.setColorFilter(filter);
+        /*ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
+        lastImg.setColorFilter(filter);*/
+        v.setBackgroundColor(Color.CYAN);
 
         createButton((ImageView)v);
     }
@@ -94,7 +99,9 @@ public class RestListener implements View.OnTouchListener {
         vibrate(30);
         removeButton();
         lastImg.setSelected(false);
-        lastImg.clearColorFilter();
+        lastImg.setBackgroundColor(Color.BLACK);
+        restActive = false;
+        oneIsCurrentlyChosen = false;
     }
 
     // Called when rest is touched

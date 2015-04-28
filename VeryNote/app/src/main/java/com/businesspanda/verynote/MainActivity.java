@@ -320,6 +320,8 @@ public class MainActivity extends ActionBarActivity  {
                                 FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXHalfRest)));
                         Note pauseNote = new Note(false, false, false, 0, "R", 0, 0, 0, "h");
                         allNotesForXML.add(pauseNote);
+                        pauseImg.setTag(noteIdxInXMLArray);
+                        System.out.println(noteIdxInXMLArray);
                         noteIdxInXMLArray++;
                         setHalfRestX = false;
                         /***/

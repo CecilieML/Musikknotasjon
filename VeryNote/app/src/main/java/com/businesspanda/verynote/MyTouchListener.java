@@ -51,6 +51,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
     boolean oneIsCurrentlyChosen;
     boolean upSideDownNote; //true = note is flipped
+    public static boolean touchActive;
 
     public MyTouchListener(RelativeLayout really, ArrayList<Note> allNotes) {
         this.really = really;
@@ -476,6 +477,7 @@ public class MyTouchListener implements View.OnTouchListener {
                 removeButtons();
                 v.setSelected(false);
                 oneIsCurrentlyChosen = false;
+                touchActive = false;
 
                 vibrate(longVib);
             }
@@ -692,6 +694,10 @@ public class MyTouchListener implements View.OnTouchListener {
     // Called when a note is chosen
     public void onChosenNote(View v){
         lastImg = (ImageView) v;
+        if(Config.context.restListener.restActive){
+            Config.context.restListener.onUnChosenNote();
+        }
+        touchActive = true;
         vibrate(70);
         createButtons((ImageView)v);
 
@@ -714,6 +720,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
     // Called on previous note when a new note is chosen or on current note when it is unselected
     public void onUnChosenNote(){
+        touchActive = false;
         vibrate(30);
         removeButtons();
         lastImg.setSelected(false);
@@ -724,7 +731,7 @@ public class MyTouchListener implements View.OnTouchListener {
             ImageView childView = (ImageView) child;
             childView.clearColorFilter();
         }
-
+        oneIsCurrentlyChosen = false;
     }
 
     // Called when note is touched
