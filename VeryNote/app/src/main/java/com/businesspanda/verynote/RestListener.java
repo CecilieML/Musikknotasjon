@@ -49,29 +49,17 @@ public class RestListener implements View.OnTouchListener {
             @Override
             public void onClick(View v) {
                 RelativeLayout parentLayout = (RelativeLayout) imgView.getParent();
-
-                findNote:
-                for(int i=0; i<parentLayout.getChildCount(); i++) {
-                    View child = parentLayout.getChildAt(i);
-                    String imgName = Config.context.getResources().getResourceEntryName(child.getId());
-                    if (imgName.length() <= 3) {
-
-                        int idx = (int)child.getTag();
-                        Note oldNote = allNotes.get(idx);
-                        Note replacementNote =  new Note(oldNote.isSharp(), oldNote.isFlat(), oldNote.isNeutral(),
-                                oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight() ,
-                                oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), "");
-                        allNotes.set(idx, replacementNote);
-
-                        break  findNote;
-                    }
-                }
-
                 parentLayout.removeAllViews();
+
+                int idx = (int)v.getTag();
+                Note oldNote = allNotes.get(idx);
+                Note replacementNote =  new Note(oldNote.isSharp(), oldNote.isFlat(), oldNote.isNeutral(),
+                             oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight() ,
+                             oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), "");
+                allNotes.set(idx, replacementNote);
 
                 removeButton();
                 v.setSelected(false);
-
                 oneIsCurrentlyChosen = false;
 
                 vibrate(70);
@@ -94,10 +82,11 @@ public class RestListener implements View.OnTouchListener {
     public void onChosenNote(View v){
         vibrate(70);
         lastImg = (ImageView) v;
-        createButton((ImageView)v);
 
         ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
         lastImg.setColorFilter(filter);
+
+        createButton((ImageView)v);
     }
 
     // Called on previous note when a new note is chosen or on current note when it is unselected

@@ -700,7 +700,6 @@ public class MyTouchListener implements View.OnTouchListener {
         RelativeLayout parentLayout = (RelativeLayout) v.getParent();
 
         upSideDownNote = isNoteUpSideDown(parentLayout);
-        upSideDownNote = isNoteUpSideDown(parentLayout);
 
         for(int i=0;i<parentLayout.getChildCount();i++){
             View child = parentLayout.getChildAt(i);
