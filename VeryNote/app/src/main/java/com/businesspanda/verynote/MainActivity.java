@@ -323,7 +323,6 @@ public class MainActivity extends ActionBarActivity  {
                         pauseImg.setTag(noteIdxInXMLArray);
                         noteIdxInXMLArray++;
                         setHalfRestX = false;
-                        /***/
                         pauseImg.setOnTouchListener(restListener);
                     }
                 }
@@ -503,25 +502,26 @@ public class MainActivity extends ActionBarActivity  {
         tempolineHandler.postDelayed(writeTempoline, writeAt);
     }
 
-    public void noteLength(Note nearestNote, ImageView currentNote){
+    public void noteLength(Note nearestNote, ImageView currentNote) {
         int height = nearestNote.getNoteHeight();
         boolean upSideDown = false;
         addToY = 0;
-        if(bass){
-            if(height <= 37){
-                upSideDown=true;
+        if (bass) {
+            if (height <= 37) {
+                upSideDown = true;
                 imgLayout.setId(R.id.upsideDown);
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
             }
-        }else{
-            if(height <= 20) {
+        } else {
+            if (height <= 20) {
                 upSideDown = true;
                 imgLayout.setId(R.id.upsideDown);
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
             }
         }
-
-        if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {             //= 1/16 of fullBar
+          if(dur < (fullBar/16) && dur < (fullBar*3/32)){
+            currentNote.setImageResource(R.drawable.emptynote);
+         }else if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {      //= 1/16 of fullBar
            nearestNote.setDurationOfNote("s");
             if (upSideDown) {
                 currentNote.setImageResource(R.drawable.upsidedowndoubletailnote);
@@ -685,6 +685,7 @@ public class MainActivity extends ActionBarActivity  {
         currentNote.setId(noteID);
 
         System.out.println(dur + " ddduuuurrrrr  " + fullBar/16);
+        dur = 0;
         noteLength(note, currentNote);
 
         sharpFlat(note);
