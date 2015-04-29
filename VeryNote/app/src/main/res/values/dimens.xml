@@ -10,7 +10,7 @@
     <item type="dimen" format="float" name="sharpOffsetY">0.08</item>
     <item type="dimen" format="float" name="noteHeight">0.15</item>
 
-    <!-- Dimension for relative layout containing note, note lines and sharp or flat -->
+    <!-- Dimension for relative layout containing note, note lines and sharp or flat or neutral -->
     <item type="dimen" format="float" name="noteImgWidth">0.1</item>
     <item type="dimen" format="float" name="noteImgFULLHeight">1</item>
 

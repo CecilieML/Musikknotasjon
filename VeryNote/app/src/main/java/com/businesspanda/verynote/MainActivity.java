@@ -272,9 +272,8 @@ public class MainActivity extends ActionBarActivity  {
         if (nearestNote == prevNote && !startNewNote) {
             noteLength(nearestNote, currentNote);
         }else {
-            startNewNote = false;
             lastNote = System.nanoTime();
-            dur = (nowTime - lastNote) / 1000000;
+            startNewNote = false;
             useLastPauseWritten = false;
 
             notesOnScreen(nearestNote);
@@ -322,7 +321,6 @@ public class MainActivity extends ActionBarActivity  {
                         Note pauseNote = new Note(false, false, false, 0, "R", 0, 0, 0, "h");
                         allNotesForXML.add(pauseNote);
                         pauseImg.setTag(noteIdxInXMLArray);
-                        System.out.println(noteIdxInXMLArray);
                         noteIdxInXMLArray++;
                         setHalfRestX = false;
                         /***/
@@ -686,7 +684,9 @@ public class MainActivity extends ActionBarActivity  {
         int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
         currentNote.setId(noteID);
 
+        System.out.println(dur + " ddduuuurrrrr  " + fullBar/16);
         noteLength(note, currentNote);
+
         sharpFlat(note);
         notesOutOfBoundsLines(note.getNmbOfLinesTreble(), note.getNmbOfLinesBass(),
                 note.getNoteHeight(), imgLayout);
@@ -694,7 +694,6 @@ public class MainActivity extends ActionBarActivity  {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FitToScreen.returnViewHeight(getPercent(R.dimen.noteHeight)));
-
         currentNote.setLayoutParams(params);
         currentNote.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.noteX)));
         currentNote.setY(y + addToY);

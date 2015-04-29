@@ -51,7 +51,6 @@ public class RestListener implements View.OnTouchListener {
             public void onClick(View v) {
 
                 imgView.setVisibility(View.GONE);
-                System.out.println("HERE IT IS!!! " + imgView.getTag());
                 int idx = (int)imgView.getTag();
 
                 Note replacementNote =  new Note(false, false, false, 0, "R", 0 , 0, 0, "");
