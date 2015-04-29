@@ -519,9 +519,20 @@ public class MainActivity extends ActionBarActivity  {
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
             }
         }
-          if(dur < (fullBar/16) && dur < (fullBar*3/32)){
+
+        if(dur >= (fullBar/16) && setSharpAndSuch){
+            sharpFlat(nearestNote);
+            notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNmbOfLinesBass(),
+                    nearestNote.getNoteHeight(), imgLayout);
+            currentNote.setOnTouchListener(heyListen);
+
+            
+            setSharpAndSuch = false;
+        }
+
+        if(dur < (fullBar/16)){
             currentNote.setImageResource(R.drawable.emptynote);
-         }else if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {      //= 1/16 of fullBar
+        }else if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {      //= 1/16 of fullBar
            nearestNote.setDurationOfNote("s");
             if (upSideDown) {
                 currentNote.setImageResource(R.drawable.upsidedowndoubletailnote);
@@ -686,11 +697,12 @@ public class MainActivity extends ActionBarActivity  {
 
         System.out.println(dur + " ddduuuurrrrr  " + fullBar/16);
         dur = 0;
+        setSharpAndSuch = true;
         noteLength(note, currentNote);
 
-        sharpFlat(note);
+       /* sharpFlat(note);
         notesOutOfBoundsLines(note.getNmbOfLinesTreble(), note.getNmbOfLinesBass(),
-                note.getNoteHeight(), imgLayout);
+                note.getNoteHeight(), imgLayout);*/
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -699,9 +711,9 @@ public class MainActivity extends ActionBarActivity  {
         currentNote.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.noteX)));
         currentNote.setY(y + addToY);
 
-        currentNote.setOnTouchListener(heyListen);
+        //currentNote.setOnTouchListener(heyListen);
         imgLayout.addView(currentNote);
-        if(runFFT && addImgView(imgLayout))linLayout.addView(imgLayout);
+        if(runFFT /*&& addImgView(imgLayout)*/)linLayout.addView(imgLayout);
 
         if(!recording){
             linLayHandler.removeCallbacks(moveLinLay);
@@ -710,6 +722,8 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
+    boolean setSharpAndSuch;
+/*
     public boolean addImgView(RelativeLayout imgLayout){
         boolean addToView = false;
         for(int i=0;i<imgLayout.getChildCount();i++) {
@@ -723,7 +737,7 @@ public class MainActivity extends ActionBarActivity  {
         }
         return addToView;
     }
-
+*/
     void genTone(){
         //Fills out the array for the generated A4 sound.
         for (int i = 0; i < numSamplesForGenA4; ++i) {
