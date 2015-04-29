@@ -274,6 +274,7 @@ public class MainActivity extends ActionBarActivity  {
         }else {
             startNewNote = false;
             lastNote = System.nanoTime();
+            dur = (nowTime - lastNote) / 1000000;
             useLastPauseWritten = false;
 
             notesOnScreen(nearestNote);
