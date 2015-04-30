@@ -526,7 +526,6 @@ public class MainActivity extends ActionBarActivity  {
                     nearestNote.getNoteHeight(), imgLayout);
             currentNote.setOnTouchListener(heyListen);
 
-            
             setSharpAndSuch = false;
         }
 
