@@ -112,6 +112,7 @@ public class MainActivity extends ActionBarActivity  {
     boolean startNewNote;
     boolean setHalfRestX;
     boolean brandNewPiece;
+    boolean setSharpAndSuch;
     boolean addWholeRestToList;
     boolean useLastPauseWritten;
 
@@ -284,6 +285,7 @@ public class MainActivity extends ActionBarActivity  {
     public void writePause(){
         if(linLayMoving) {
             startNewNote = true;
+            keepLatestNote();
             FrameLayout.LayoutParams pauseParams = new FrameLayout.LayoutParams(
                     FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.pauseWidth)),
                     FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.pauseHeight)));
@@ -530,7 +532,11 @@ public class MainActivity extends ActionBarActivity  {
         }
 
         if(dur < (fullBar/16)){
-            currentNote.setImageResource(R.drawable.emptynote);
+            if (upSideDown) {
+                currentNote.setImageResource(R.drawable.upsidedownmarknote);
+            } else{
+                currentNote.setImageResource(R.drawable.marknote);
+            }
         }else if(dur >= (fullBar/16) && dur < (fullBar*3/32)) {      //= 1/16 of fullBar
            nearestNote.setDurationOfNote("s");
             if (upSideDown) {
@@ -617,6 +623,21 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
+    public boolean keepLatestNote(){
+        if(currentNote==null){
+            return false;
+        }else {
+            if(currentNote.getDrawable().getConstantState() == MainActivity.this
+                    .getResources().getDrawable(R.drawable.marknote).getConstantState() ||
+                     currentNote.getDrawable().getConstantState() == MainActivity.this
+                    .getResources().getDrawable(R.drawable.upsidedownmarknote).getConstantState()){
+
+                currentNote.setImageResource(R.drawable.emptynote);
+            }
+            return true;
+        }
+    }
+
     public void sharpFlat(Note note) {
         String noteName = note.getName();
         int yID = this.getResources().getIdentifier(noteName, "dimen", getPackageName());
@@ -670,6 +691,8 @@ public class MainActivity extends ActionBarActivity  {
             linLayMoving = true;
         }
 
+        keepLatestNote();
+
         imgLayout = new RelativeLayout(this);
         currentNote = new ImageView(this);
 
@@ -694,14 +717,9 @@ public class MainActivity extends ActionBarActivity  {
         int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
         currentNote.setId(noteID);
 
-        System.out.println(dur + " ddduuuurrrrr  " + fullBar/16);
         dur = 0;
         setSharpAndSuch = true;
         noteLength(note, currentNote);
-
-       /* sharpFlat(note);
-        notesOutOfBoundsLines(note.getNmbOfLinesTreble(), note.getNmbOfLinesBass(),
-                note.getNoteHeight(), imgLayout);*/
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -721,22 +739,6 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
-    boolean setSharpAndSuch;
-/*
-    public boolean addImgView(RelativeLayout imgLayout){
-        boolean addToView = false;
-        for(int i=0;i<imgLayout.getChildCount();i++) {
-            ImageView child = (ImageView) imgLayout.getChildAt(i);
-            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
-            if (imgName.length() <= 3) {
-                if(child.getDrawable() != null) {
-                    addToView = true;
-                }
-            }
-        }
-        return addToView;
-    }
-*/
     void genTone(){
         //Fills out the array for the generated A4 sound.
         for (int i = 0; i < numSamplesForGenA4; ++i) {
@@ -784,6 +786,8 @@ public class MainActivity extends ActionBarActivity  {
         tempolineHandler.removeCallbacks(writeTempoline);
         tempoStop = System.nanoTime();
 
+        keepLatestNote();
+
         linLayHandler.removeCallbacks(moveLinLay);
         if(linLayout.getWidth() < lowestLayer.getWidth()) {
             linLayStartX = (int) linLayout.getX();
@@ -795,7 +799,6 @@ public class MainActivity extends ActionBarActivity  {
         linLayout.animate().x(linLayStartX).setDuration(10);
         currentLinLayWidth = linLayout.getWidth();
         xScroll += x;
-
         int scrollWidth = scrollView.getWidth();
         scrollView.scrollTo(scrollWidth - xScroll, 0);
         x = 0;
