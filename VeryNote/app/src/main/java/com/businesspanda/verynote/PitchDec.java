@@ -306,7 +306,7 @@ public class PitchDec implements Runnable {
     private void PostPauseToUI() {
         handler_.post(new Runnable() {
             public void run() {
-                parent_.writePause();
+                parent_.pause();
             }
         });
     }

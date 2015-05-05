@@ -70,7 +70,7 @@ public class MainActivity extends ActionBarActivity  {
     String title = "Untitled";
 
     ArrayList<Note> allNotesForXML = new ArrayList();
-    ArrayList<Integer> currentMeasure = new ArrayList();
+    ArrayList<String> currentMeasure = new ArrayList();
 
     private Handler mHandler = new Handler();
     private Handler linLayHandler = new Handler();
@@ -283,23 +283,27 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
-    public void writePause(){
-        if(linLayMoving) {
+    public void pause() {
+        if (linLayMoving) {
             startNewNote = true;
             keepLatestNote();
+        }
+    }
+
+    public void writePause(){
             FrameLayout.LayoutParams pauseParams = new FrameLayout.LayoutParams(
                     FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.pauseWidth)),
                     FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.pauseHeight)));
             firstPause = System.nanoTime();
 
-            if (!useLastPauseWritten) {
+          /*  if (!useLastPauseWritten) {
                 durationOfPause = (firstPause - lastNote) / 1000000;
                 useLastPauseWritten = true;
             } else {
                 durationOfPause = (firstPause - lastPauseWritten) / 1000000;
             }
 
-            lastNote = System.nanoTime();
+            lastNote = System.nanoTime();*/
 
             if (durationOfPause < fullBar / 4) {
                 pauseImg = new ImageView(this);
@@ -355,7 +359,7 @@ public class MainActivity extends ActionBarActivity  {
                 }
             }
         }
-    }
+
 
     public void notesOutOfBoundsLines(int nmbOfLines, int nmbOfBassLines, int height, RelativeLayout imgLayout){
         FrameLayout.LayoutParams notelineParams= new FrameLayout.LayoutParams(
@@ -532,6 +536,10 @@ public class MainActivity extends ActionBarActivity  {
                     nearestNote.getNoteHeight(), imgLayout);
             currentNote.setOnTouchListener(heyListen);
 
+            System.out.println(currentMeasure);
+            currentMeasure.add(nearestNote.getName());
+            System.out.println(currentMeasure);
+
             setSharpAndSuch = false;
         }
 
@@ -637,8 +645,6 @@ public class MainActivity extends ActionBarActivity  {
                     .getResources().getDrawable(R.drawable.upsidedownmarknote).getConstantState()){
 
                 currentNote.setImageResource(R.drawable.emptynote);
-            }else{
-                currentMeasure.add(currentNote.getId());
             }
             return true;
         }
