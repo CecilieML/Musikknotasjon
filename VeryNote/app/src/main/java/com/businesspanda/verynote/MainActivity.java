@@ -70,6 +70,7 @@ public class MainActivity extends ActionBarActivity  {
     String title = "Untitled";
 
     ArrayList<Note> allNotesForXML = new ArrayList();
+    ArrayList<Integer> currentMeasure = new ArrayList();
 
     private Handler mHandler = new Handler();
     private Handler linLayHandler = new Handler();
@@ -494,6 +495,8 @@ public class MainActivity extends ActionBarActivity  {
         allNotesForXML.add(tempolineNote);
         noteIdxInXMLArray++;
 
+        currentMeasure.clear();
+
         linLayout.addView(tempo);
         lastTempolineWasWritten = System.nanoTime();
     }
@@ -501,6 +504,7 @@ public class MainActivity extends ActionBarActivity  {
     public void firstTempoLine() {
         long usedTime = (tempoStop - lastTempolineWasWritten) / 1000000;
         long writeAt = fullBar - usedTime;
+        currentMeasure.clear();
         tempolineHandler.postDelayed(writeTempoline, writeAt);
     }
 
@@ -633,6 +637,8 @@ public class MainActivity extends ActionBarActivity  {
                     .getResources().getDrawable(R.drawable.upsidedownmarknote).getConstantState()){
 
                 currentNote.setImageResource(R.drawable.emptynote);
+            }else{
+                currentMeasure.add(currentNote.getId());
             }
             return true;
         }
@@ -682,6 +688,19 @@ public class MainActivity extends ActionBarActivity  {
             neutral.setImageResource(R.drawable.naturalnote);
             imgLayout.addView(neutral);
         }
+    }
+
+    public boolean markNote(ImageView currentNote){
+
+        for(int i = 0; i<currentMeasure.size(); i++){
+           /* if(currentMeasure.get(i)==currentNote.getId()){
+                return false;
+            }else {
+
+                return true;
+            }*/
+        }
+return true;
     }
 
     public void notesOnScreen(Note note){
