@@ -577,6 +577,7 @@ public class MyTouchListener implements View.OnTouchListener {
             if(imgName.length() == 3){
 
                 String noteName = note.getName();
+                System.out.println(noteName);
 
                 String root = noteName.substring(0, 1);
                 String octave = noteName.substring(2, 3);

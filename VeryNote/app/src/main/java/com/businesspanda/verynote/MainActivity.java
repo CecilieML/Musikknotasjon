@@ -703,41 +703,52 @@ public class MainActivity extends ActionBarActivity  {
 
         String root = fullName.substring(0, 1);
         String octave = fullName.substring(1, 2);
+        String nowMark = null;
         if(fullName.length() == 3){
+            nowMark = fullName.substring(1, 2);
             octave = fullName.substring(2, 3);
         }
 
-        String marking = null;
+        String nextMarking = null;
 
         for(int i = 0; i<currentMeasure.size(); i++){
             if(root.equals(currentMeasure.get(i).substring(0, 1))) {
                 if (currentMeasure.get(i).length() == 3) {
                     if(currentMeasure.get(i).substring(2, 3).equals(octave)) {
-                        marking = currentMeasure.get(i).substring(1, 2);
-                        System.out.println(marking + "  ooooooooooooooooooooooooooOOOOOOOOOOOOOOOooooooooo");
+                        nextMarking = currentMeasure.get(i).substring(1, 2);
+                        System.out.println(nextMarking + "  ooooooooooooooooooooooooooOOOOOOOOOOOOOOOooooooooo");
                     }
                 }
             }
         }
 
-        if(marking!=null){
-            if (marking.equals("n")) {
-                 if(fullName.length() == 3){
-                    return true;
-                 }
-            }else if (marking.equals("b") || marking.equals("s")){
-                 if(fullName.length() == 2){
-                     note.setNeutral(true);
-                     String neutralName = root + "n" + octave;
-                     note.setName(neutralName);
-                     int noteID = this.getResources().getIdentifier(neutralName, "dimen", getPackageName());
-                     noteImg.setId(noteID);
+
+
+        if(nextMarking!=null){
+            if(nowMark == null) {
+                note.setNeutral(true);
+                String neutralName = root + "n" + octave;
+                note.setName(neutralName);
+                int noteID = this.getResources().getIdentifier(neutralName, "dimen", getPackageName());
+                System.out.println(noteID + " id iiiiiiiiiiiiiiiiiiiiddddddddddddddddddd " );
+                if(noteID!=0)noteImg.setId(noteID);
+                currentMeasure.add(neutralName);
+                return true;
+            }else {
+                 if (nowMark.equals(nextMarking)) {
+
+                     return false;
+                 } else {
+
+                     System.out.println(nextMarking + " whatecerrrrrrrrrrrrrn " + nowMark);
                      return true;
+
                  }
+
             }
         }
-
-    return false;
+        System.out.println(nextMarking + " nononononon " + nowMark);
+        return true;
     }
 
     public void notesOnScreen(Note note){
