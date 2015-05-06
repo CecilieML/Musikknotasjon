@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -49,6 +50,7 @@ public class MyTouchListener implements View.OnTouchListener {
     int longVib = 100;
     int index;
 
+    boolean mismarked;
     boolean oneIsCurrentlyChosen;
     boolean upSideDownNote; //true = note is flipped
     public static boolean touchActive;
@@ -238,6 +240,7 @@ public class MyTouchListener implements View.OnTouchListener {
                                 if (imgName.length() <= 3) {
                                     int idx = (int) child.getTag();
                                     Note oldNote = allNotes.get(idx);
+                                    if(mismarked)resetMismarkedNote(oldNote);
                                     Note replacementNote = new Note(false, true, false,
                                             oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
                                             oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
@@ -325,6 +328,7 @@ public class MyTouchListener implements View.OnTouchListener {
                                 if (imgName.length() <= 3) {
                                     int idx = (int) child.getTag();
                                     Note oldNote = allNotes.get(idx);
+                                    if(mismarked)resetMismarkedNote(oldNote);
                                     Note replacementNote = new Note(true, false, false, oldNote.getFreq(),
                                             oldNote.getName(), oldNote.getNoteHeight(),
                                             oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
@@ -389,6 +393,7 @@ public class MyTouchListener implements View.OnTouchListener {
                         if (imgName.length() <= 3) {
                             int idx = (int) child.getTag();
                             Note oldNote = allNotes.get(idx);
+                            //if(mismarked)resetMismarkedNote(oldNote);
                             Note replacementNote = new Note(false, false, false,
                                     oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
                                     oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
@@ -410,6 +415,7 @@ public class MyTouchListener implements View.OnTouchListener {
                             if (imgName.length() <= 3) {
                                 int idx = (int) child.getTag();
                                 Note oldNote = allNotes.get(idx);
+                                // if(mismarked)resetMismarkedNote(oldNote);
                                 Note replacementNote = new Note(false, false, true, oldNote.getFreq(),
                                         oldNote.getName(), oldNote.getNoteHeight(),
                                         oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
@@ -691,6 +697,51 @@ public class MyTouchListener implements View.OnTouchListener {
 
     }
 
+    // checks if note is marked according to name or not
+    public boolean mismarkedNote(RelativeLayout parentLayout){
+        for(int i=0;i<parentLayout.getChildCount();i++){
+            View child = parentLayout.getChildAt(i);
+            ImageView childView = (ImageView) child;
+            if (childView.getId() == R.id.sharp ) {
+                System.out.println("marked #");
+                return false;
+            }else if(childView.getId() == R.id.flat) {
+                System.out.println("marked b");
+                return false;
+            }
+        }
+        for(int j=0;j<parentLayout.getChildCount();j++){
+            View child = parentLayout.getChildAt(j);
+            String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+            if(imgName.length() == 3) {
+                String marking = imgName.substring(1, 2);
+                System.out.println("ooooooooooooooooooooooooooooooo  " + marking + "  ooooooooooooooooooooooo");
+                if(marking.equals("n")){
+                    System.out.println("marked n");
+                    return false;
+                }else {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void resetMismarkedNote(Note note){
+        String noteName = note.getName();
+        TextView noter = new TextView(Config.context);
+        noter.setTextColor(Color.BLUE);
+        noter.setText(noteName);
+        String root = noteName.substring(0, 1);
+        String octave = noteName.substring(2, 3);
+        String resetName = root + octave;
+        note.setName(resetName);
+        TextView notename = new TextView(Config.context);
+        notename.setTextColor(Color.RED);
+        notename.setText(resetName);
+    }
+
+
     // Called when a note is chosen
     public void onChosenNote(View v){
         lastImg = (ImageView) v;
@@ -713,9 +764,12 @@ public class MyTouchListener implements View.OnTouchListener {
             childView.setColorFilter(filter);
         }
 
-       findIndex(parentLayout);
+        mismarked = mismarkedNote(parentLayout);
 
-       setNoteName(parentLayout, false, false);
+        findIndex(parentLayout);
+
+        setNoteName(parentLayout, false, false);
+
     }
 
     // Called on previous note when a new note is chosen or on current note when it is unselected

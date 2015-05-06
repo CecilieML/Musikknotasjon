@@ -500,6 +500,7 @@ public class MainActivity extends ActionBarActivity  {
         noteIdxInXMLArray++;
 
         currentMeasure.clear();
+        System.out.println("array cleard!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         linLayout.addView(tempo);
         lastTempolineWasWritten = System.nanoTime();
@@ -508,7 +509,6 @@ public class MainActivity extends ActionBarActivity  {
     public void firstTempoLine() {
         long usedTime = (tempoStop - lastTempolineWasWritten) / 1000000;
         long writeAt = fullBar - usedTime;
-        currentMeasure.clear();
         tempolineHandler.postDelayed(writeTempoline, writeAt);
     }
 
@@ -707,15 +707,14 @@ public class MainActivity extends ActionBarActivity  {
             octave = fullName.substring(2, 3);
         }
 
-        String lastMarkedNote;
         String marking = null;
 
         for(int i = 0; i<currentMeasure.size(); i++){
             if(root.equals(currentMeasure.get(i).substring(0, 1))) {
                 if (currentMeasure.get(i).length() == 3) {
                     if(currentMeasure.get(i).substring(2, 3).equals(octave)) {
-                        lastMarkedNote = currentMeasure.get(i);
                         marking = currentMeasure.get(i).substring(1, 2);
+                        System.out.println(marking + "  ooooooooooooooooooooooooooOOOOOOOOOOOOOOOooooooooo");
                     }
                 }
             }
@@ -723,19 +722,14 @@ public class MainActivity extends ActionBarActivity  {
 
         if(marking!=null){
             if (marking.equals("n")) {
-                if(fullName.length() == 3){
-                    System.out.println("ssssssssshhhhhhhhhh");
-                    return true;
-                }else{
-                    return false;
-                }
-            }else if (marking.equals("b") || marking.equals("s")){
                  if(fullName.length() == 3){
-                     System.out.println("ssssssssshhhhhhhhhh");
-                     return false;
-                 }else{
+                    return true;
+                 }
+            }else if (marking.equals("b") || marking.equals("s")){
+                 if(fullName.length() == 2){
                      note.setNeutral(true);
                      String neutralName = root + "n" + octave;
+                     note.setName(neutralName);
                      int noteID = this.getResources().getIdentifier(neutralName, "dimen", getPackageName());
                      noteImg.setId(noteID);
                      return true;
@@ -743,7 +737,7 @@ public class MainActivity extends ActionBarActivity  {
             }
         }
 
-return true;
+    return false;
     }
 
     public void notesOnScreen(Note note){
