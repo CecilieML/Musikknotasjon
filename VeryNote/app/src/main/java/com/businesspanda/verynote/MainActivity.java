@@ -531,7 +531,8 @@ public class MainActivity extends ActionBarActivity  {
         }
 
         if(dur >= (fullBar/16) && setSharpAndSuch){
-            sharpFlat(nearestNote);
+            if(markNote(nearestNote, currentNote))sharpFlat(nearestNote);
+
             notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNmbOfLinesBass(),
                     nearestNote.getNoteHeight(), imgLayout);
             currentNote.setOnTouchListener(heyListen);
@@ -696,16 +697,52 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
-    public boolean markNote(ImageView currentNote){
+    public boolean markNote(Note note, ImageView noteImg){
+
+        String fullName = note.getName();
+
+        String root = fullName.substring(0, 1);
+        String octave = fullName.substring(1, 2);
+        if(fullName.length() == 3){
+            octave = fullName.substring(2, 3);
+        }
+
+        String lastMarkedNote;
+        String marking = null;
 
         for(int i = 0; i<currentMeasure.size(); i++){
-           /* if(currentMeasure.get(i)==currentNote.getId()){
-                return false;
-            }else {
-
-                return true;
-            }*/
+            if(root.equals(currentMeasure.get(i).substring(0, 1))) {
+                if (currentMeasure.get(i).length() == 3) {
+                    if(currentMeasure.get(i).substring(2, 3).equals(octave)) {
+                        lastMarkedNote = currentMeasure.get(i);
+                        marking = currentMeasure.get(i).substring(1, 2);
+                    }
+                }
+            }
         }
+
+        if(marking!=null){
+            if (marking.equals("n")) {
+                if(fullName.length() == 3){
+                    System.out.println("ssssssssshhhhhhhhhh");
+                    return true;
+                }else{
+                    return false;
+                }
+            }else if (marking.equals("b") || marking.equals("s")){
+                 if(fullName.length() == 3){
+                     System.out.println("ssssssssshhhhhhhhhh");
+                     return false;
+                 }else{
+                     note.setNeutral(true);
+                     String neutralName = root + "n" + octave;
+                     int noteID = this.getResources().getIdentifier(neutralName, "dimen", getPackageName());
+                     noteImg.setId(noteID);
+                     return true;
+                 }
+            }
+        }
+
 return true;
     }
 
