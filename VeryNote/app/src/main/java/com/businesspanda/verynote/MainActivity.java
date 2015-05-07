@@ -283,46 +283,44 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
-    public void pause() {
+    public void writePause() {
         if (linLayMoving) {
             startNewNote = true;
             keepLatestNote();
-        }
-    }
 
-    public void writePause(){
+
             FrameLayout.LayoutParams pauseParams = new FrameLayout.LayoutParams(
                     FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.pauseWidth)),
                     FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.pauseHeight)));
             firstPause = System.nanoTime();
 
-          /*  if (!useLastPauseWritten) {
+            if (!useLastPauseWritten) {
                 durationOfPause = (firstPause - lastNote) / 1000000;
                 useLastPauseWritten = true;
             } else {
                 durationOfPause = (firstPause - lastPauseWritten) / 1000000;
             }
 
-            lastNote = System.nanoTime();*/
+            lastNote = System.nanoTime();
 
             if (durationOfPause < fullBar / 4) {
                 pauseImg = new ImageView(this);
                 pauseImg.setLayoutParams(pauseParams);
                 pauseImg.setAdjustViewBounds(true);
                 linLayout.addView(pauseImg);
-               setHalfRestX = true;
-               addWholeRestToList = true;
+                setHalfRestX = true;
+                addWholeRestToList = true;
             }
 
             if (durationOfPause > fullBar / 2 && durationOfPause < fullBar) {
-                if(pauseImg!=null) {
+                if (pauseImg != null) {
                     pauseImg.setBackgroundColor(Color.BLACK);
-                    if(bass) {
+                    if (bass) {
                         pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseBassYHalfRest)));
-                    }else{
+                    } else {
                         pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYHalfRest)));
                     }
-                    if(setHalfRestX){
+                    if (setHalfRestX) {
                         pauseImg.setX(linLayout.getLayoutParams().width -
                                 FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXHalfRest)));
                         Note pauseNote = new Note(false, false, false, 0, "R", 0, 0, 0, "h");
@@ -335,19 +333,19 @@ public class MainActivity extends ActionBarActivity  {
                 }
             } else if (durationOfPause > fullBar) {
 
-                if(pauseImg!=null) {
-                    if(bass) {
+                if (pauseImg != null) {
+                    if (bass) {
                         pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseBassYWholeRest)));
-                    }else{
+                    } else {
                         pauseImg.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.pauseYWholeRest)));
                     }
-                    if(addWholeRestToList){
+                    if (addWholeRestToList) {
                         pauseImg.setX(linLayout.getLayoutParams().width -
                                 FitToScreen.returnViewWidth(getPercent(R.dimen.pauseXWholeRest)));
 
-                      findLastPause:
-                        for(int i = 1; i<allNotesForXML.size(); i++) {
-                            if(allNotesForXML.get(allNotesForXML.size()-i).getName().equals("R")) {
+                        findLastPause:
+                        for (int i = 1; i < allNotesForXML.size(); i++) {
+                            if (allNotesForXML.get(allNotesForXML.size() - i).getName().equals("R")) {
                                 allNotesForXML.get(allNotesForXML.size() - i).setDurationOfNote("w");
                                 break findLastPause;
                             }
@@ -359,7 +357,7 @@ public class MainActivity extends ActionBarActivity  {
                 }
             }
         }
-
+    }
 
     public void notesOutOfBoundsLines(int nmbOfLines, int nmbOfBassLines, int height, RelativeLayout imgLayout){
         FrameLayout.LayoutParams notelineParams= new FrameLayout.LayoutParams(
