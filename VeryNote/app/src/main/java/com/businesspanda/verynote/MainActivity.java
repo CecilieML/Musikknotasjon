@@ -109,6 +109,7 @@ public class MainActivity extends ActionBarActivity  {
     long lastTempolineWasWritten = 0;
 
     boolean onlyOnce;
+    boolean newMeasure;
     boolean linLayMoving;
     boolean startNewNote;
     boolean setHalfRestX;
@@ -277,7 +278,7 @@ public class MainActivity extends ActionBarActivity  {
             lastNote = System.nanoTime();
             startNewNote = false;
             useLastPauseWritten = false;
-
+            clearNewMeasure();
             notesOnScreen(nearestNote);
             prevNote = nearestNote;
         }
@@ -287,7 +288,6 @@ public class MainActivity extends ActionBarActivity  {
         if (linLayMoving) {
             startNewNote = true;
             keepLatestNote();
-
 
             FrameLayout.LayoutParams pauseParams = new FrameLayout.LayoutParams(
                     FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.pauseWidth)),
@@ -497,11 +497,10 @@ public class MainActivity extends ActionBarActivity  {
         allNotesForXML.add(tempolineNote);
         noteIdxInXMLArray++;
 
-        currentMeasure.clear();
-        System.out.println("array cleard!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
         linLayout.addView(tempo);
         lastTempolineWasWritten = System.nanoTime();
+
+        newMeasure = true;
     }
 
     public void firstTempoLine() {
@@ -529,15 +528,15 @@ public class MainActivity extends ActionBarActivity  {
         }
 
         if(dur >= (fullBar/16) && setSharpAndSuch){
+
             if(markNote(nearestNote, currentNote))sharpFlat(nearestNote);
+            currentMeasure.add(nearestNote.getName());
+
+            System.out.println(currentMeasure + " <-- currentMeasure");
 
             notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNmbOfLinesBass(),
                     nearestNote.getNoteHeight(), imgLayout);
             currentNote.setOnTouchListener(heyListen);
-
-            System.out.println(currentMeasure);
-            currentMeasure.add(nearestNote.getName());
-            System.out.println(currentMeasure);
 
             setSharpAndSuch = false;
         }
@@ -652,7 +651,20 @@ public class MainActivity extends ActionBarActivity  {
     public void sharpFlat(Note note) {
         String noteName = note.getName();
         int yID = this.getResources().getIdentifier(noteName, "dimen", getPackageName());
-        float noteY = FitToScreen.returnViewHeight(getPercent(yID));
+        float noteY;
+        if(yID != 0) {
+            noteY = FitToScreen.returnViewHeight(getPercent(yID));
+        } else {
+            try {
+                yID = R.id.class.getField(noteName).getInt(null);
+            } catch (NoSuchFieldException e) {
+
+            } catch (IllegalAccessException f) {
+
+            }
+            noteY = FitToScreen.returnViewHeight(getPercent(yID));
+            System.out.println("ITS HAPPENING IN MAIN AS WELL!!!!!!!!!######!!!!!!" + yID);
+        }
 
         if (note.sharp) {
             sharp = new ImageView(this);
@@ -689,6 +701,8 @@ public class MainActivity extends ActionBarActivity  {
             neutral.setLayoutParams(paraNeutral);
 
             neutral.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY))+ noteY);
+            System.out.println(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY))+ noteY + "<-- neutral Y");
+            System.out.println(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY))+ noteY + "<-- neutral ");
 
             neutral.setImageResource(R.drawable.naturalnote);
             imgLayout.addView(neutral);
@@ -701,52 +715,77 @@ public class MainActivity extends ActionBarActivity  {
 
         String root = fullName.substring(0, 1);
         String octave = fullName.substring(1, 2);
+      //  System.out.println(root + octave + " <-- nowNote");
         String nowMark = null;
         if(fullName.length() == 3){
             nowMark = fullName.substring(1, 2);
             octave = fullName.substring(2, 3);
+          //  System.out.println(root + nowMark + octave + " <-- nowNoteREAL");
         }
 
-        String nextMarking = null;
+        String lastMark = null;
 
         for(int i = 0; i<currentMeasure.size(); i++){
             if(root.equals(currentMeasure.get(i).substring(0, 1))) {
                 if (currentMeasure.get(i).length() == 3) {
                     if(currentMeasure.get(i).substring(2, 3).equals(octave)) {
-                        nextMarking = currentMeasure.get(i).substring(1, 2);
-                        System.out.println(nextMarking + "  ooooooooooooooooooooooooooOOOOOOOOOOOOOOOooooooooo");
+                        lastMark = currentMeasure.get(i).substring(1, 2);
+                      //  System.out.println(lastMark + "  <--lastMark, latestMarkedNote? --> " +
+                       //         currentMeasure.get(i).substring(0, 1) + lastMark +currentMeasure.get(i).substring(2, 3));
                     }
                 }
             }
         }
 
-
-
-        if(nextMarking!=null){
+        if(lastMark!=null){
+         //   System.out.println(nowMark + " <-- nowMark" );
             if(nowMark == null) {
                 note.setNeutral(true);
                 String neutralName = root + "n" + octave;
                 note.setName(neutralName);
                 int noteID = this.getResources().getIdentifier(neutralName, "dimen", getPackageName());
-                System.out.println(noteID + " id iiiiiiiiiiiiiiiiiiiiddddddddddddddddddd " );
-                if(noteID!=0)noteImg.setId(noteID);
+                System.out.println(noteID + " id iiiiiiiiiiiiiiiBEFOREdddddddddddddddd " );
+                if(noteID != 0) {
+                    noteImg.setId(noteID);
+                } else {
+                    try {
+                        noteID = R.id.class.getField(root+octave).getInt(null);
+                    } catch (NoSuchFieldException e) {
+
+                    } catch (IllegalAccessException f) {
+
+                    }
+                    noteImg.setId(noteID);
+                    System.out.println("ITS HAPPENING IN MAIN AS WELL!!!!!!!!!!!!!!!" + noteID);
+                }
+                System.out.println(noteID + " id iiiddd AFTER " );
                 currentMeasure.add(neutralName);
                 return true;
             }else {
-                 if (nowMark.equals(nextMarking)) {
-
+                 if (nowMark.equals(lastMark)) {
+               //      System.out.println(lastMark + " <--lastMark, if nowMark==lastMark, nowMark--> " + nowMark);
                      return false;
                  } else {
 
-                     System.out.println(nextMarking + " whatecerrrrrrrrrrrrrn " + nowMark);
+                //     System.out.println(lastMark + " <--lastMark, if nowMark!=lastMark, nowMark--> " + nowMark);
                      return true;
 
                  }
 
             }
         }
-        System.out.println(nextMarking + " nononononon " + nowMark);
+     //   System.out.println(lastMark + " <--lastMark,bottom nowMark--> " + nowMark);
         return true;
+    }
+
+    public void clearNewMeasure(){
+        if(newMeasure){
+
+            currentMeasure.clear();
+           // System.out.println("array cleard!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+            newMeasure = false;
+        }
     }
 
     public void notesOnScreen(Note note){
@@ -777,7 +816,20 @@ public class MainActivity extends ActionBarActivity  {
 
         String notename = note.getName();
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
-        float y = FitToScreen.returnViewHeight(getPercent(yID));
+        float y;
+        if(yID != 0) {
+            y = FitToScreen.returnViewHeight(getPercent(yID));
+        } else {
+            try {
+                yID = R.id.class.getField(notename).getInt(null);
+            } catch (NoSuchFieldException e) {
+
+            } catch (IllegalAccessException f) {
+
+            }
+            y = FitToScreen.returnViewHeight(getPercent(yID));
+            System.out.println("ITS HAPPENING IN MAIN AS WELL!!!!!!!!!!!!!!!" + yID);
+        }
 
         int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
         currentNote.setId(noteID);
@@ -793,15 +845,13 @@ public class MainActivity extends ActionBarActivity  {
         currentNote.setX(FitToScreen.returnViewWidth(getPercent(R.dimen.noteX)));
         currentNote.setY(y + addToY);
 
-        //currentNote.setOnTouchListener(heyListen);
         imgLayout.addView(currentNote);
-        if(runFFT /*&& addImgView(imgLayout)*/)linLayout.addView(imgLayout);
+        if(runFFT)linLayout.addView(imgLayout);
 
         if(!recording){
             linLayHandler.removeCallbacks(moveLinLay);
             tempolineHandler.removeCallbacks(writeTempoline);
         }
-
     }
 
     void genTone(){
@@ -875,8 +925,6 @@ public class MainActivity extends ActionBarActivity  {
     }
 
     public void resetAll(){
-
-
 
         EditText titleField = (EditText) findViewById(R.id.title_field);
         titleField.setText("Untitled");

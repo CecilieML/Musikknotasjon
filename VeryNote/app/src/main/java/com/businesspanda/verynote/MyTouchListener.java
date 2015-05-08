@@ -415,6 +415,7 @@ public class MyTouchListener implements View.OnTouchListener {
                             if (imgName.length() <= 3) {
                                 int idx = (int) child.getTag();
                                 Note oldNote = allNotes.get(idx);
+                                System.out.println(oldNote.getName() + " <--NOTEoBJEKT Name, not IMG name--> " + imgName);
                                 // if(mismarked)resetMismarkedNote(oldNote);
                                 Note replacementNote = new Note(false, false, true, oldNote.getFreq(),
                                         oldNote.getName(), oldNote.getNoteHeight(),
@@ -525,6 +526,25 @@ public class MyTouchListener implements View.OnTouchListener {
 
                 String fullName = root + x + octave;
                 nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
+                if(nameID != 0) {
+                    child.setId(nameID);
+                } else {
+                    /***/
+                    try {
+                        nameID = R.id.class.getField(fullName).getInt(null);
+                    } catch (NoSuchFieldException e) {
+
+                    } catch (IllegalAccessException f) {
+
+                    }
+                    if(nameID!=0){
+                        child.setId(nameID);
+                    } else {
+                        System.out.println(x + "<-- X");
+                    }
+
+                    System.out.println("ITS HAPPENING!!!!!!!!!nnnnnnnnn!!!!!!" + nameID);
+                }
             }
         }
         if (nameID == 0) {
@@ -586,7 +606,20 @@ public class MyTouchListener implements View.OnTouchListener {
                 note.setName(fullName);
 
                 int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-                child.setId(nameID);
+                if(nameID != 0) {
+                    child.setId(nameID);
+                } else {
+                    /***/
+                    try {
+                        nameID = R.id.class.getField(fullName).getInt(null);
+                    } catch (NoSuchFieldException e) {
+
+                    } catch (IllegalAccessException f) {
+
+                    }
+                    child.setId(nameID);
+                    System.out.println("ITS HAPPENING!!!!!!!!!!oooooo!!!!!");
+                }
 
                 imgName = Config.context.getResources().getResourceEntryName(child.getId());
             }
@@ -602,7 +635,20 @@ public class MyTouchListener implements View.OnTouchListener {
                     note.setName(fullName);
 
                     int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-                    child.setId(nameID);
+                    if(nameID != 0) {
+                        child.setId(nameID);
+                    } else {
+                        /***/
+                        try {
+                            nameID = R.id.class.getField(fullName).getInt(null);
+                        } catch (NoSuchFieldException e) {
+
+                        } catch (IllegalAccessException f) {
+
+                        }
+                        child.setId(nameID);
+                        System.out.println("ITS HAPPENING!!!!!!!!!!!!!!!@@@@@@@@");
+                    }
 
                 }else if (note.isSharp()) {
                     String root = noteName.substring(0, 1);
@@ -612,7 +658,20 @@ public class MyTouchListener implements View.OnTouchListener {
                     note.setName(fullName);
 
                     int nameID = Config.context.getResources().getIdentifier(fullName, "dimen", Config.context.getPackageName());
-                    child.setId(nameID);
+                    if(nameID != 0) {
+                        child.setId(nameID);
+                    } else {
+                        /***/
+                        try {
+                            nameID = R.id.class.getField(fullName).getInt(null);
+                        } catch (NoSuchFieldException e) {
+
+                        } catch (IllegalAccessException f) {
+
+                        }
+                        child.setId(nameID);
+                        System.out.println("ITS HAPPENING!!!!!!!****************!!!!!!!!");
+                    }
 
                 }else if(note.isNeutral()) {
                     String root = noteName.substring(0, 1);
@@ -685,13 +744,39 @@ public class MyTouchListener implements View.OnTouchListener {
                     if(index>26)index=26;
                     String newNoteName = NoteNameSearch.NoteNames[index+1];
                     int noteID = Config.context.getResources().getIdentifier(newNoteName, "dimen", Config.context.getPackageName());
-                    child.setId(noteID);
+                    if(noteID != 0) {
+                        child.setId(noteID);
+                    } else {
+                        /***/
+                        try {
+                            noteID = R.id.class.getField(newNoteName).getInt(null);
+                        } catch (NoSuchFieldException e) {
+
+                        } catch (IllegalAccessException f) {
+
+                        }
+                        child.setId(noteID);
+                        System.out.println("ITS HAPPENING!!!!!!!wwwwwwwwwwwwwww!!!!!!!!");
+                    }
                 }else if(prev){
                     //up
                     if(index<1)index=1;
                     String newNoteName = NoteNameSearch.NoteNames[index-1];
                     int noteID = Config.context.getResources().getIdentifier(newNoteName, "dimen", Config.context.getPackageName());
-                    child.setId(noteID);
+                    if(noteID != 0) {
+                        child.setId(noteID);
+                    } else {
+                        /***/
+                        try {
+                            noteID = R.id.class.getField(newNoteName).getInt(null);
+                        } catch (NoSuchFieldException e) {
+
+                        } catch (IllegalAccessException f) {
+
+                        }
+                        child.setId(noteID);
+                        System.out.println("ITS HAPPENING!!!!!!!wwwwwwwwwwwwwww!!!!!!!!");
+                    }
                 }
             }
         }
@@ -704,10 +789,10 @@ public class MyTouchListener implements View.OnTouchListener {
             View child = parentLayout.getChildAt(i);
             ImageView childView = (ImageView) child;
             if (childView.getId() == R.id.sharp ) {
-                System.out.println("marked #");
+                System.out.println("marked # on screen");
                 return false;
             }else if(childView.getId() == R.id.flat) {
-                System.out.println("marked b");
+                System.out.println("marked b on screen");
                 return false;
             }
         }
@@ -716,9 +801,9 @@ public class MyTouchListener implements View.OnTouchListener {
             String imgName = Config.context.getResources().getResourceEntryName(child.getId());
             if(imgName.length() == 3) {
                 String marking = imgName.substring(1, 2);
-                System.out.println("ooooooooooooooooooooooooooooooo  " + marking + "  ooooooooooooooooooooooo");
+                System.out.println(marking + " <--marking, imgName-->" + imgName);
                 if(marking.equals("n")){
-                    System.out.println("marked n");
+                    System.out.println("marked n on screen");
                     return false;
                 }else {
                     return true;
