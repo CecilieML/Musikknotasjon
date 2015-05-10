@@ -278,7 +278,7 @@ public class MainActivity extends ActionBarActivity  {
             lastNote = System.nanoTime();
             startNewNote = false;
             useLastPauseWritten = false;
-            clearNewMeasure();
+            clearNewMeasure(); //<-- move
             notesOnScreen(nearestNote);
             prevNote = nearestNote;
         }
@@ -650,20 +650,16 @@ public class MainActivity extends ActionBarActivity  {
 
     public void sharpFlat(Note note) {
         String noteName = note.getName();
-        int yID = this.getResources().getIdentifier(noteName, "dimen", getPackageName());
+        //int yID = this.getResources().getIdentifier(noteName, "dimen", getPackageName());
         float noteY;
-        if(yID != 0) {
+        if(noteName.substring(1, 2).equals("n")) {
+            String nameFix = noteName.substring(0, 1) + noteName.substring(2, 3);
+            int yID = this.getResources().getIdentifier(nameFix, "dimen", getPackageName());
+            System.out.print(nameFix);
             noteY = FitToScreen.returnViewHeight(getPercent(yID));
-        } else {
-            try {
-                yID = R.id.class.getField(noteName).getInt(null);
-            } catch (NoSuchFieldException e) {
-
-            } catch (IllegalAccessException f) {
-
-            }
+        }else {
+            int yID = this.getResources().getIdentifier(noteName, "dimen", getPackageName());
             noteY = FitToScreen.returnViewHeight(getPercent(yID));
-            System.out.println("ITS HAPPENING IN MAIN AS WELL!!!!!!!!!######!!!!!!" + yID);
         }
 
         if (note.sharp) {
@@ -701,8 +697,8 @@ public class MainActivity extends ActionBarActivity  {
             neutral.setLayoutParams(paraNeutral);
 
             neutral.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY))+ noteY);
-            System.out.println(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY))+ noteY + "<-- neutral Y");
-            System.out.println(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY))+ noteY + "<-- neutral ");
+            System.out.println(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY))+ "  " + noteY + "  <-- neutral Y");
+            System.out.println(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY))+ "  " + noteY + "  <-- neutral ");
 
             neutral.setImageResource(R.drawable.naturalnote);
             imgLayout.addView(neutral);
