@@ -16,6 +16,7 @@ import java.util.HashMap;
 public class NoteSearch {
 
     public static HashMap<Integer, Note> notes = new HashMap<>();
+    public static HashMap<Integer, Note> neutralNotes = new HashMap<>();
 
     public static void createTable() {
 
@@ -154,6 +155,86 @@ public class NoteSearch {
         notes.put(988, B5);
         notes.put(1976, B6);
 
+
+    }
+
+    public static  void createNeutralNoteTable(){
+        //Cn
+        Note Cn3 = new Note(false, false, true, 131, "Cn3", 47, 4, 0, "");
+        Note Cn4 = new Note(false, false, true, 262, "Cn4", 35, 1, 1, "");
+        Note Cn5 = new Note(false, false, true, 523, "Cn5", 23, 0, 4, "");
+        Note Cn6 = new Note(false, false, true, 1047, "Cn6", 11, 2, 8, "");
+
+        neutralNotes.put(131, Cn3);
+        neutralNotes.put(262, Cn4);
+        neutralNotes.put(523, Cn5);
+        neutralNotes.put(1047, Cn6);
+
+        //Dn
+        Note Dn3 = new Note(false, false, true, 147, "Dn3", 45, 4, 0, "");
+        Note Dn4 = new Note(false, false, true, 294, "Dn4", 33, 0, 1, "");
+        Note Dn5 = new Note(false, false, true, 587, "Dn5", 21, 0, 5, "");
+        Note Dn6 = new Note(false, false, true, 1175, "Dn6", 9, 2, 8, "");
+
+        neutralNotes.put(147, Dn3);
+        neutralNotes.put(294, Dn4);
+        neutralNotes.put(587, Dn5);
+        neutralNotes.put(1175, Dn6);
+
+        //En
+        Note En3 = new Note(false, false, true, 165, "En3", 43, 3, 0, "");
+        Note En4 = new Note(false, false, true, 330, "En4", 31, 0, 2, "");
+        Note En5 = new Note(false, false, true, 659, "En5", 19, 0, 5, "");
+        Note En6 = new Note(false, false, true, 1319, "En6", 7, 3, 9, "");
+
+        neutralNotes.put(165, En3);
+        neutralNotes.put(330, En4);
+        neutralNotes.put(659, En5);
+        neutralNotes.put(1319, En6);
+
+        //Fn
+        Note Fn3 = new Note(false, false, true, 175, "Fn3", 42, 3, 0, "");
+        Note Fn4 = new Note(false, false, true, 349, "Fn4", 30, 0, 2, "");
+        Note Fn5 = new Note(false, false, true, 698, "Fn5", 18, 0, 6, "");
+        Note Fn6 = new Note(false, false, true, 1397, "Fn6", 6, 3, 9, "");
+
+        neutralNotes.put(175, Fn3);
+        neutralNotes.put(349, Fn4);
+        neutralNotes.put(698, Fn5);
+        neutralNotes.put(1397, Fn6);
+
+        //Gn
+        Note Gn3 = new Note(false, false, true, 196, "Gn3", 40, 2, 0, "");
+        Note Gn4 = new Note(false, false, true, 392, "Gn4", 28, 0, 3, "");
+        Note Gn5 = new Note(false, false, true, 784, "Gn5", 16, 0, 6, "");
+        Note Gn6 = new Note(false, false, true, 1568, "Gn6", 4, 4, 10, "");
+
+        neutralNotes.put(196, Gn3);
+        neutralNotes.put(392, Gn4);
+        neutralNotes.put(784, Gn5);
+        neutralNotes.put(1568, Gn6);
+
+        //An
+        Note An3 = new Note(false, false, true, 220, "An3", 38, 2, 0, "");
+        Note An4 = new Note(false, false, true, 440, "An4", 26, 0, 3, "");
+        Note An5 = new Note(false, false, true, 880, "An5", 14, 1, 7, "");
+        Note An6 = new Note(false, false, true, 1760, "An6", 2, 4, 10, "");
+
+        neutralNotes.put(220, An3);
+        neutralNotes.put(440, An4);
+        neutralNotes.put(880, An5);
+        neutralNotes.put(1760, An6);
+
+        //B
+        Note Bn3 = new Note(false, false, true, 247, "Bn3", 36, 1, 0, "");
+        Note Bn4 = new Note(false, false, true, 493, "Bn4", 24, 0, 4, "");
+        Note Bn5 = new Note(false, false, true, 988, "Bn5", 12, 1, 7, "");
+        Note Bn6 = new Note(false, false, true, 1976, "Bn6", 0, 5, 11, "");
+
+        neutralNotes.put(247, Bn3);
+        neutralNotes.put(493, Bn4);
+        neutralNotes.put(988, Bn5);
+        neutralNotes.put(1976, Bn6);
 
     }
 

@@ -12,6 +12,7 @@ package com.businesspanda.verynote;
 
 import java.lang.Thread;
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
 
 import android.app.ActionBar;
 import android.content.Context;
@@ -109,7 +110,6 @@ public class MainActivity extends ActionBarActivity  {
     long lastTempolineWasWritten = 0;
 
     boolean onlyOnce;
-    boolean newMeasure;
     boolean linLayMoving;
     boolean startNewNote;
     boolean setHalfRestX;
@@ -128,6 +128,10 @@ public class MainActivity extends ActionBarActivity  {
     final byte generatedA4Snd[] = new byte[2 * numSamplesForGenA4];
     final double sampleForGenA4[] = new double[numSamplesForGenA4];
 
+    /***/
+    TextView notenameText;
+    /***/
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -135,6 +139,13 @@ public class MainActivity extends ActionBarActivity  {
         setContentView(R.layout.activity_main);
         NoteSearch.createTable();
         genTone();
+
+        /***for debugging!!!*/
+        notenameText = new TextView(this);
+        RelativeLayout upLayout = (RelativeLayout) findViewById(R.id.upperLayout);
+        notenameText.setText("HELLO!!!!!");
+        upLayout.addView(notenameText);
+        /***/
 
         lowestLayer = (RelativeLayout) findViewById(R.id.lowestLayer);
 
@@ -264,6 +275,8 @@ public class MainActivity extends ActionBarActivity  {
         return returnValue;
     }
 
+    Note copyNote;
+
     public void ShowPitchDetectionResult(final double pitch) {
         Integer pitchInt = (int) (pitch);
         Note nearestNote = NoteSearch.findNearestNote(pitchInt);
@@ -273,13 +286,12 @@ public class MainActivity extends ActionBarActivity  {
         dur = (nowTime - lastNote) / 1000000;
 
         if (nearestNote == prevNote && !startNewNote) {
-            noteLength(nearestNote, currentNote);
+            noteLength(copyNote, currentNote);
         }else {
             lastNote = System.nanoTime();
             startNewNote = false;
             useLastPauseWritten = false;
-            clearNewMeasure(); //<-- move
-            notesOnScreen(nearestNote);
+            copyNote = notesOnScreen(nearestNote);
             prevNote = nearestNote;
         }
     }
@@ -497,10 +509,12 @@ public class MainActivity extends ActionBarActivity  {
         allNotesForXML.add(tempolineNote);
         noteIdxInXMLArray++;
 
-        linLayout.addView(tempo);
-        lastTempolineWasWritten = System.nanoTime();
+        synchronized (this) {
+            linLayout.addView(tempo);
+            currentMeasure.clear();
+            lastTempolineWasWritten = System.nanoTime();
+        }
 
-        newMeasure = true;
     }
 
     public void firstTempoLine() {
@@ -655,7 +669,6 @@ public class MainActivity extends ActionBarActivity  {
         if(noteName.substring(1, 2).equals("n")) {
             String nameFix = noteName.substring(0, 1) + noteName.substring(2, 3);
             int yID = this.getResources().getIdentifier(nameFix, "dimen", getPackageName());
-            System.out.print(nameFix);
             noteY = FitToScreen.returnViewHeight(getPercent(yID));
         }else {
             int yID = this.getResources().getIdentifier(noteName, "dimen", getPackageName());
@@ -697,8 +710,6 @@ public class MainActivity extends ActionBarActivity  {
             neutral.setLayoutParams(paraNeutral);
 
             neutral.setY(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY))+ noteY);
-            System.out.println(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY))+ "  " + noteY + "  <-- neutral Y");
-            System.out.println(FitToScreen.returnViewHeight(getPercent(R.dimen.sharpOffsetY))+ "  " + noteY + "  <-- neutral ");
 
             neutral.setImageResource(R.drawable.naturalnote);
             imgLayout.addView(neutral);
@@ -716,7 +727,10 @@ public class MainActivity extends ActionBarActivity  {
         if(fullName.length() == 3){
             nowMark = fullName.substring(1, 2);
             octave = fullName.substring(2, 3);
-          //  System.out.println(root + nowMark + octave + " <-- nowNoteREAL");
+            System.out.println(root + nowMark + octave + " <-- nowNoteREAL");
+            if(nowMark.equals("n"))System.out.println("WHAT THE HELL!!!!!!!!!!!");
+        }else {
+            System.out.println(root + octave + " 2 legth");
         }
 
         String lastMark = null;
@@ -726,65 +740,51 @@ public class MainActivity extends ActionBarActivity  {
                 if (currentMeasure.get(i).length() == 3) {
                     if(currentMeasure.get(i).substring(2, 3).equals(octave)) {
                         lastMark = currentMeasure.get(i).substring(1, 2);
-                      //  System.out.println(lastMark + "  <--lastMark, latestMarkedNote? --> " +
-                       //         currentMeasure.get(i).substring(0, 1) + lastMark +currentMeasure.get(i).substring(2, 3));
+                        System.out.println(lastMark + "  <--lastMark, latestMarkedNote? --> " +
+                               currentMeasure.get(i).substring(0, 1) + lastMark +currentMeasure.get(i).substring(2, 3));
                     }
                 }
             }
         }
 
         if(lastMark!=null){
-         //   System.out.println(nowMark + " <-- nowMark" );
             if(nowMark == null) {
-                note.setNeutral(true);
-                String neutralName = root + "n" + octave;
-                note.setName(neutralName);
-                int noteID = this.getResources().getIdentifier(neutralName, "dimen", getPackageName());
-                System.out.println(noteID + " id iiiiiiiiiiiiiiiBEFOREdddddddddddddddd " );
-                if(noteID != 0) {
-                    noteImg.setId(noteID);
-                } else {
-                    try {
-                        noteID = R.id.class.getField(root+octave).getInt(null);
-                    } catch (NoSuchFieldException e) {
+                if(!lastMark.equals("n")){
+System.out.println(lastMark + "<-- lastmark (PS: shuold NOT be n!!!!");
+                    note.setNeutral(true);
+                    String neutralName = root + "n" + octave;
+                    note.setName(neutralName);
+                    int noteID = this.getResources().getIdentifier(neutralName, "dimen", getPackageName());
+                    if (noteID != 0) {
+                        noteImg.setId(noteID);
+                    } else {
+                        try {
+                            noteID = R.id.class.getField(root + octave).getInt(null);
+                        } catch (NoSuchFieldException e) {
 
-                    } catch (IllegalAccessException f) {
+                        } catch (IllegalAccessException f) {
 
+                        }
+                        noteImg.setId(noteID);
                     }
-                    noteImg.setId(noteID);
-                    System.out.println("ITS HAPPENING IN MAIN AS WELL!!!!!!!!!!!!!!!" + noteID);
+                    return true;
+                }else {
+                    System.out.println(lastMark + "<-- lastmark (PS: shuold BE n!!!!");
                 }
-                System.out.println(noteID + " id iiiddd AFTER " );
-                currentMeasure.add(neutralName);
-                return true;
             }else {
                  if (nowMark.equals(lastMark)) {
-               //      System.out.println(lastMark + " <--lastMark, if nowMark==lastMark, nowMark--> " + nowMark);
                      return false;
                  } else {
-
-                //     System.out.println(lastMark + " <--lastMark, if nowMark!=lastMark, nowMark--> " + nowMark);
                      return true;
-
                  }
 
             }
         }
-     //   System.out.println(lastMark + " <--lastMark,bottom nowMark--> " + nowMark);
+        System.out.println("lastmark == null");
         return true;
     }
 
-    public void clearNewMeasure(){
-        if(newMeasure){
-
-            currentMeasure.clear();
-           // System.out.println("array cleard!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-            newMeasure = false;
-        }
-    }
-
-    public void notesOnScreen(Note note){
+    public Note notesOnScreen(Note inNote){
         if(!linLayMoving){
             linLayHandler.postDelayed(moveLinLay, 1);
             firstTempoLine();
@@ -795,6 +795,13 @@ public class MainActivity extends ActionBarActivity  {
 
         imgLayout = new RelativeLayout(this);
         currentNote = new ImageView(this);
+
+        Note note = null;
+        try{
+           note = (Note) inNote.clone();
+       }catch (CloneNotSupportedException e){
+           //
+       }
 
         currentNote.setTag(noteIdxInXMLArray);
         noteIdxInXMLArray++;
@@ -811,6 +818,14 @@ public class MainActivity extends ActionBarActivity  {
         imgLayout.setX(x);
 
         String notename = note.getName();
+        if(notename.substring(1, 2).equals("n")){
+            notename = notename.substring(0, 1) + notename.substring(2, 3);
+        }
+
+        /***/
+        notenameText.setText(notename);
+        /***/
+
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
         float y;
         if(yID != 0) {
@@ -819,12 +834,12 @@ public class MainActivity extends ActionBarActivity  {
             try {
                 yID = R.id.class.getField(notename).getInt(null);
             } catch (NoSuchFieldException e) {
-
+                System.out.println("HELLOOOO I'M THE NO SUCH FIELD!!!!");
             } catch (IllegalAccessException f) {
-
+                System.out.println("IT IS I; THE ILLEGAL EXCEPTION!");
             }
+            System.out.println(inNote.getName() + " <-- innotename,--> yID" + yID + " notename-->" + notename);
             y = FitToScreen.returnViewHeight(getPercent(yID));
-            System.out.println("ITS HAPPENING IN MAIN AS WELL!!!!!!!!!!!!!!!" + yID);
         }
 
         int noteID = this.getResources().getIdentifier(notename, "id", getPackageName());
@@ -848,6 +863,7 @@ public class MainActivity extends ActionBarActivity  {
             linLayHandler.removeCallbacks(moveLinLay);
             tempolineHandler.removeCallbacks(writeTempoline);
         }
+        return note;
     }
 
     void genTone(){
@@ -1033,6 +1049,7 @@ public class MainActivity extends ActionBarActivity  {
 
             case R.id.action_save:
                 Pattern patternSD = new Pattern(exp.convertArrayListToString(allNotesForXML));
+                System.out.println(exp.convertArrayListToString(allNotesForXML));
                 exp.saveToSD(patternSD);
                 return true;
 

@@ -618,7 +618,6 @@ public class MyTouchListener implements View.OnTouchListener {
 
                     }
                     child.setId(nameID);
-                    System.out.println("ITS HAPPENING!!!!!!!!!!oooooo!!!!!");
                 }
 
                 imgName = Config.context.getResources().getResourceEntryName(child.getId());

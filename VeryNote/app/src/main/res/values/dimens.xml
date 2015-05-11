@@ -71,8 +71,8 @@
     <item type="dimen" format="float" name="pauseYWholeRest">0.37</item>
     <item type="dimen" format="float" name="pauseBassYHalfRest">0.61</item>
     <item type="dimen" format="float" name="pauseBassYWholeRest">0.59</item>
-    <item type="dimen" format="float" name="pauseXHalfRest">0.15</item>
-    <item type="dimen" format="float" name="pauseXWholeRest">0.22</item>
+    <item type="dimen" format="float" name="pauseXHalfRest">0.22</item>
+    <item type="dimen" format="float" name="pauseXWholeRest">0.25</item>
 
     <!-- Dimension and offset in x direction for note lines -->
     <item type="dimen" format="float" name="noteLineWidth">0.0405</item>
