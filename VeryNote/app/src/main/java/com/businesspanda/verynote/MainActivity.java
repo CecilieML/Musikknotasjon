@@ -546,8 +546,6 @@ public class MainActivity extends ActionBarActivity  {
             if(markNote(nearestNote, currentNote))sharpFlat(nearestNote);
             currentMeasure.add(nearestNote.getName());
 
-            System.out.println(currentMeasure + " <-- currentMeasure");
-
             notesOutOfBoundsLines(nearestNote.getNmbOfLinesTreble(), nearestNote.getNmbOfLinesBass(),
                     nearestNote.getNoteHeight(), imgLayout);
             currentNote.setOnTouchListener(heyListen);
@@ -722,26 +720,18 @@ public class MainActivity extends ActionBarActivity  {
 
         String root = fullName.substring(0, 1);
         String octave = fullName.substring(1, 2);
-      //  System.out.println(root + octave + " <-- nowNote");
         String nowMark = null;
         if(fullName.length() == 3){
             nowMark = fullName.substring(1, 2);
             octave = fullName.substring(2, 3);
-            System.out.println(root + nowMark + octave + " <-- nowNoteREAL");
-            if(nowMark.equals("n"))System.out.println("WHAT THE HELL!!!!!!!!!!!");
-        }else {
-            System.out.println(root + octave + " 2 legth");
         }
 
         String lastMark = null;
-
         for(int i = 0; i<currentMeasure.size(); i++){
             if(root.equals(currentMeasure.get(i).substring(0, 1))) {
                 if (currentMeasure.get(i).length() == 3) {
                     if(currentMeasure.get(i).substring(2, 3).equals(octave)) {
                         lastMark = currentMeasure.get(i).substring(1, 2);
-                        System.out.println(lastMark + "  <--lastMark, latestMarkedNote? --> " +
-                               currentMeasure.get(i).substring(0, 1) + lastMark +currentMeasure.get(i).substring(2, 3));
                     }
                 }
             }
@@ -750,7 +740,6 @@ public class MainActivity extends ActionBarActivity  {
         if(lastMark!=null){
             if(nowMark == null) {
                 if(!lastMark.equals("n")){
-System.out.println(lastMark + "<-- lastmark (PS: shuold NOT be n!!!!");
                     note.setNeutral(true);
                     String neutralName = root + "n" + octave;
                     note.setName(neutralName);
@@ -768,8 +757,6 @@ System.out.println(lastMark + "<-- lastmark (PS: shuold NOT be n!!!!");
                         noteImg.setId(noteID);
                     }
                     return true;
-                }else {
-                    System.out.println(lastMark + "<-- lastmark (PS: shuold BE n!!!!");
                 }
             }else {
                  if (nowMark.equals(lastMark)) {
@@ -780,7 +767,6 @@ System.out.println(lastMark + "<-- lastmark (PS: shuold NOT be n!!!!");
 
             }
         }
-        System.out.println("lastmark == null");
         return true;
     }
 
@@ -834,11 +820,10 @@ System.out.println(lastMark + "<-- lastmark (PS: shuold NOT be n!!!!");
             try {
                 yID = R.id.class.getField(notename).getInt(null);
             } catch (NoSuchFieldException e) {
-                System.out.println("HELLOOOO I'M THE NO SUCH FIELD!!!!");
+                System.out.println("HELLOOOO I'M THE NO SUCH FIELD!!!!  " + notename);
             } catch (IllegalAccessException f) {
-                System.out.println("IT IS I; THE ILLEGAL EXCEPTION!");
+                System.out.println("IT IS I; THE ILLEGAL EXCEPTION!   " + notename);
             }
-            System.out.println(inNote.getName() + " <-- innotename,--> yID" + yID + " notename-->" + notename);
             y = FitToScreen.returnViewHeight(getPercent(yID));
         }
 
@@ -1049,7 +1034,6 @@ System.out.println(lastMark + "<-- lastmark (PS: shuold NOT be n!!!!");
 
             case R.id.action_save:
                 Pattern patternSD = new Pattern(exp.convertArrayListToString(allNotesForXML));
-                System.out.println(exp.convertArrayListToString(allNotesForXML));
                 exp.saveToSD(patternSD);
                 return true;
 
