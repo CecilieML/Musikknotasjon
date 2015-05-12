@@ -128,9 +128,6 @@ public class MainActivity extends ActionBarActivity  {
     final byte generatedA4Snd[] = new byte[2 * numSamplesForGenA4];
     final double sampleForGenA4[] = new double[numSamplesForGenA4];
 
-    /***/
-    TextView notenameText;
-    /***/
 
     /** Called when the activity is first created. */
     @Override
@@ -139,13 +136,6 @@ public class MainActivity extends ActionBarActivity  {
         setContentView(R.layout.activity_main);
         NoteSearch.createTable();
         genTone();
-
-        /***for debugging!!!*/
-        notenameText = new TextView(this);
-        RelativeLayout upLayout = (RelativeLayout) findViewById(R.id.upperLayout);
-        notenameText.setText("HELLO!!!!!");
-        upLayout.addView(notenameText);
-        /***/
 
         lowestLayer = (RelativeLayout) findViewById(R.id.lowestLayer);
 
@@ -808,9 +798,6 @@ public class MainActivity extends ActionBarActivity  {
             notename = notename.substring(0, 1) + notename.substring(2, 3);
         }
 
-        /***/
-        notenameText.setText(notename);
-        /***/
 
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
         float y;
