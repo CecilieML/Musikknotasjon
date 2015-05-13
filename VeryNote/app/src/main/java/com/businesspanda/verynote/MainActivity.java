@@ -776,7 +776,7 @@ public class MainActivity extends ActionBarActivity  {
         try{
            note = (Note) inNote.clone();
        }catch (CloneNotSupportedException e){
-           //
+
        }
 
         currentNote.setTag(noteIdxInXMLArray);
