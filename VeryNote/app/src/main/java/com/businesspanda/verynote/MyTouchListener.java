@@ -14,6 +14,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
+import android.os.NetworkOnMainThreadException;
 import android.os.Vibrator;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -168,7 +169,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
                     }else if(child.getId() == R.id.neutral){
                         if(upSideDownNote) {
-                            float noteHeight = FitToScreen.returnViewHeight(yValueSearch.yValues[index-1]);
+                            float noteHeight = FitToScreen.returnViewHeight(yValueSearch.yValues[index+1]);
                             child.setY(noteHeight + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
                         }else{
                             child.setY(percent + FitToScreen.returnViewHeight(MainActivity.getPercent(R.dimen.sharpOffsetY)));
@@ -240,7 +241,7 @@ public class MyTouchListener implements View.OnTouchListener {
                                 if (imgName.length() <= 3) {
                                     int idx = (int) child.getTag();
                                     Note oldNote = allNotes.get(idx);
-                                    if(mismarked)resetMismarkedNote(oldNote, (ImageView)v);
+                                  //  if(mismarked)resetMismarkedNote(oldNote, imgView);
                                     Note replacementNote = new Note(false, true, false,
                                             oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
                                             oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
@@ -328,7 +329,7 @@ public class MyTouchListener implements View.OnTouchListener {
                                 if (imgName.length() <= 3) {
                                     int idx = (int) child.getTag();
                                     Note oldNote = allNotes.get(idx);
-                                    if(mismarked)resetMismarkedNote(oldNote,  (ImageView)v);
+                              //      if(mismarked)resetMismarkedNote(oldNote,  imgView);
                                     Note replacementNote = new Note(true, false, false, oldNote.getFreq(),
                                             oldNote.getName(), oldNote.getNoteHeight(),
                                             oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
@@ -393,7 +394,7 @@ public class MyTouchListener implements View.OnTouchListener {
                         if (imgName.length() <= 3) {
                             int idx = (int) child.getTag();
                             Note oldNote = allNotes.get(idx);
-                            if(mismarked)resetMismarkedNote(oldNote,  (ImageView)v);
+                      //      if(mismarked)resetMismarkedNote(oldNote, imgView);
                             Note replacementNote = new Note(false, false, false,
                                     oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
                                     oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
@@ -415,8 +416,6 @@ public class MyTouchListener implements View.OnTouchListener {
                             if (imgName.length() <= 3) {
                                 int idx = (int) child.getTag();
                                 Note oldNote = allNotes.get(idx);
-                                System.out.println(oldNote.getName() + " <--NOTEoBJEKT Name, not IMG name--> " + imgName);
-                                // if(mismarked)resetMismarkedNote(oldNote);
                                 Note replacementNote = new Note(false, false, true, oldNote.getFreq(),
                                         oldNote.getName(), oldNote.getNoteHeight(),
                                         oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
@@ -529,7 +528,6 @@ public class MyTouchListener implements View.OnTouchListener {
                 if(nameID != 0) {
                     child.setId(nameID);
                 } else {
-                    /***/
                     try {
                         nameID = R.id.class.getField(fullName).getInt(null);
                     } catch (NoSuchFieldException e) {
@@ -537,13 +535,7 @@ public class MyTouchListener implements View.OnTouchListener {
                     } catch (IllegalAccessException f) {
 
                     }
-                    if(nameID!=0){
-                        child.setId(nameID);
-                    } else {
-                        System.out.println(x + "<-- X");
-                    }
-
-                    System.out.println("ITS HAPPENING!!!!!!!!!nnnnnnnnn!!!!!!" + nameID);
+                    if(nameID!=0) child.setId(nameID);
                 }
             }
         }
@@ -595,12 +587,10 @@ public class MyTouchListener implements View.OnTouchListener {
             View child = parentLayout.getChildAt(i);
             String imgName = Config.context.getResources().getResourceEntryName(child.getId());
             if(imgName.length() == 3){
-
                 String noteName = note.getName();
-                System.out.println(noteName);
-
                 String root = noteName.substring(0, 1);
-                String octave = noteName.substring(2, 3);
+                String octave = "4";
+/***/if(noteName.length()==3) octave = noteName.substring(2, 3);
 
                 String fullName = root + octave;
                 note.setName(fullName);
@@ -701,6 +691,7 @@ public class MyTouchListener implements View.OnTouchListener {
         for(int i=0;i<parentLayout.getChildCount();i++){
             View child = parentLayout.getChildAt(i);
             String imgName = Config.context.getResources().getResourceEntryName(child.getId());
+
             if(imgName.length() <= 3){
                 note = child;
                 noteName = imgName;
@@ -775,27 +766,19 @@ public class MyTouchListener implements View.OnTouchListener {
         for(int i=0;i<parentLayout.getChildCount();i++){
             View child = parentLayout.getChildAt(i);
             ImageView childView = (ImageView) child;
-            if (childView.getId() == R.id.sharp ) {
-                System.out.println("marked # on screen");
-                return false;
-            }else if(childView.getId() == R.id.flat) {
-                System.out.println("marked b on screen");
-                return false;
-            }else if(childView.getId() == R.id.neutral){
-                System.out.println("marked n on screen");
+            if (childView.getId() == R.id.sharp || childView.getId() == R.id.flat || childView.getId() == R.id.neutral) {
                 return false;
             }
         }
         for(int j=0;j<parentLayout.getChildCount();j++){
             View child = parentLayout.getChildAt(j);
             String imgName = Config.context.getResources().getResourceEntryName(child.getId());
-            if(imgName.length() == 3) {
-                String marking = imgName.substring(1, 2);
-                System.out.println(marking + " <--marking, imgName-->" + imgName);
-                if(marking.equals("n")){
-                    System.out.println("marked n on screen");
-                    return false;
-                }else {
+
+            if(imgName.length()<=3) {
+                int idx = (int)child.getTag();
+                Note note = allNotes.get(idx);
+                if(note.getName().length()==3) {
+                    resetMismarkedNote(note, (ImageView) child);
                     return true;
                 }
             }
@@ -806,16 +789,11 @@ public class MyTouchListener implements View.OnTouchListener {
     public void resetMismarkedNote(Note note, ImageView noteImg){
 
         String noteName = note.getName();
-        TextView noter = new TextView(Config.context);
-        noter.setTextColor(Color.BLUE);
-        noter.setText(noteName + " noteName");
-
         String root = noteName.substring(0, 1);
-        String octave = "NaN... JK";
+        String octave = noteName.substring(1, 2);
         if(noteName.length()==3)octave = noteName.substring(2, 3);
         String resetName = root + octave;
         note.setName(resetName);
-
 
         int nameID = Config.context.getResources().getIdentifier(noteName, "dimen", Config.context.getPackageName());
         if(nameID != 0) {
@@ -828,21 +806,8 @@ public class MyTouchListener implements View.OnTouchListener {
             } catch (IllegalAccessException f) {
 
             }
-            System.out.println(nameID + " <--nameID!!!");
             noteImg.setId(nameID);
         }
-
-
-
-        TextView notename = new TextView(Config.context);
-        notename.setTextColor(Color.RED);
-        notename.setText(resetName + " resetName");
-        notename.setTextSize(30);
-
-        RelativeLayout back = (RelativeLayout) Config.context.findViewById(R.id.backgroundLayer);
-        back.addView(notename);
-        back.addView(noter);
-
 
     }
 
@@ -872,7 +837,6 @@ public class MyTouchListener implements View.OnTouchListener {
         mismarked = mismarkedNote(parentLayout);
 
         findIndex(parentLayout);
-
         setNoteName(parentLayout, false, false);
 
     }
