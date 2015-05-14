@@ -518,13 +518,13 @@ public class MainActivity extends ActionBarActivity  {
         boolean upSideDown = false;
         addToY = 0;
         if (bass) {
-            if (height <= 37) {
+            if (height <= 44) {
                 upSideDown = true;
                 imgLayout.setId(R.id.upsideDown);
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
             }
         } else {
-            if (height <= 20) {
+            if (height <= 23) {
                 upSideDown = true;
                 imgLayout.setId(R.id.upsideDown);
                 addToY = FitToScreen.returnViewHeight(getPercent(R.dimen.upSideDownNoteX));
@@ -794,12 +794,6 @@ public class MainActivity extends ActionBarActivity  {
         imgLayout.setX(x);
 
         String notename = note.getName();
-        if(notename.substring(1, 2).equals("n")){
-            notename = notename.substring(0, 1) + notename.substring(2, 3);
-            System.out.println("code shoud never be read!!!!!!!!!!!!!!!!!!!");
-        }
-
-
         int yID = this.getResources().getIdentifier(notename, "dimen", getPackageName());
         float y;
         if(yID != 0) {
@@ -808,9 +802,9 @@ public class MainActivity extends ActionBarActivity  {
             try {
                 yID = R.id.class.getField(notename).getInt(null);
             } catch (NoSuchFieldException e) {
-                System.out.println("HELLOOOO I'M THE NO SUCH FIELD!!!!  " + notename);
+
             } catch (IllegalAccessException f) {
-                System.out.println("IT IS I; THE ILLEGAL EXCEPTION!   " + notename);
+
             }
             y = FitToScreen.returnViewHeight(getPercent(yID));
         }
