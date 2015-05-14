@@ -796,6 +796,7 @@ public class MainActivity extends ActionBarActivity  {
         String notename = note.getName();
         if(notename.substring(1, 2).equals("n")){
             notename = notename.substring(0, 1) + notename.substring(2, 3);
+            System.out.println("code shoud never be read!!!!!!!!!!!!!!!!!!!");
         }
 
 
