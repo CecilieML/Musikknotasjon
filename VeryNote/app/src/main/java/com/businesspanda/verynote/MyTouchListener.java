@@ -14,7 +14,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
-import android.os.NetworkOnMainThreadException;
 import android.os.Vibrator;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -25,8 +24,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import java.util.ArrayList;
 
 
@@ -51,7 +48,6 @@ public class MyTouchListener implements View.OnTouchListener {
     int longVib = 100;
     int index;
 
-    boolean mismarked;
     boolean oneIsCurrentlyChosen;
     boolean upSideDownNote; //true = note is flipped
     public static boolean touchActive;
@@ -241,7 +237,6 @@ public class MyTouchListener implements View.OnTouchListener {
                                 if (imgName.length() <= 3) {
                                     int idx = (int) child.getTag();
                                     Note oldNote = allNotes.get(idx);
-                                  //  if(mismarked)resetMismarkedNote(oldNote, imgView);
                                     Note replacementNote = new Note(false, true, false,
                                             oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
                                             oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
@@ -329,7 +324,6 @@ public class MyTouchListener implements View.OnTouchListener {
                                 if (imgName.length() <= 3) {
                                     int idx = (int) child.getTag();
                                     Note oldNote = allNotes.get(idx);
-                              //      if(mismarked)resetMismarkedNote(oldNote,  imgView);
                                     Note replacementNote = new Note(true, false, false, oldNote.getFreq(),
                                             oldNote.getName(), oldNote.getNoteHeight(),
                                             oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(),
@@ -394,7 +388,6 @@ public class MyTouchListener implements View.OnTouchListener {
                         if (imgName.length() <= 3) {
                             int idx = (int) child.getTag();
                             Note oldNote = allNotes.get(idx);
-                      //      if(mismarked)resetMismarkedNote(oldNote, imgView);
                             Note replacementNote = new Note(false, false, false,
                                     oldNote.getFreq(), oldNote.getName(), oldNote.getNoteHeight(),
                                     oldNote.getNmbOfLinesTreble(), oldNote.getNmbOfLinesBass(), oldNote.getDurationOfNote());
@@ -761,7 +754,7 @@ public class MyTouchListener implements View.OnTouchListener {
 
     }
 
-    // checks if note is marked according to name or not
+    // Checks if note is marked according to name or not
     public boolean mismarkedNote(RelativeLayout parentLayout){
         for(int i=0;i<parentLayout.getChildCount();i++){
             View child = parentLayout.getChildAt(i);
@@ -786,8 +779,8 @@ public class MyTouchListener implements View.OnTouchListener {
         return false;
     }
 
+    // Changes the name to root note if unmarked on screen
     public void resetMismarkedNote(Note note, ImageView noteImg){
-
         String noteName = note.getName();
         String root = noteName.substring(0, 1);
         String octave = noteName.substring(1, 2);
@@ -811,7 +804,6 @@ public class MyTouchListener implements View.OnTouchListener {
 
     }
 
-
     // Called when a note is chosen
     public void onChosenNote(View v){
         lastImg = (ImageView) v;
@@ -834,7 +826,7 @@ public class MyTouchListener implements View.OnTouchListener {
             childView.setColorFilter(filter);
         }
 
-        mismarked = mismarkedNote(parentLayout);
+        mismarkedNote(parentLayout);
 
         findIndex(parentLayout);
         setNoteName(parentLayout, false, false);

@@ -12,8 +12,6 @@ package com.businesspanda.verynote;
 
 import java.lang.Thread;
 import java.util.ArrayList;
-import java.util.concurrent.locks.Lock;
-
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -26,7 +24,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -49,7 +46,6 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import org.jfugue.*;
 
 
@@ -62,6 +58,7 @@ public class MainActivity extends ActionBarActivity  {
 
     LockableScrollView scrollView;
 
+    Note copyNote;
     Note prevNote;
 
     ExportXML exp;
@@ -192,6 +189,7 @@ public class MainActivity extends ActionBarActivity  {
     }
 
     @Override
+    //Called when main screen receives or loses focus
     public void onWindowFocusChanged(boolean hasFocus){
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
@@ -248,7 +246,7 @@ public class MainActivity extends ActionBarActivity  {
             super.onStop();
             pitch_detector_thread_.interrupt();
         }catch (Exception e){
-            Log.e("null pointer exception", "Didn't use pitch_detector");
+
         }
     }
 
@@ -258,6 +256,7 @@ public class MainActivity extends ActionBarActivity  {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
+    // Takes in id of percent value, and returns that percent value
     public static float getPercent(int id){
         TypedValue outValue = new TypedValue();
         Config.context.getResources().getValue(id, outValue, true);
@@ -265,8 +264,7 @@ public class MainActivity extends ActionBarActivity  {
         return returnValue;
     }
 
-    Note copyNote;
-
+    // Called form PitchDec, calls notesOnScreen or noteLength
     public void ShowPitchDetectionResult(final double pitch) {
         Integer pitchInt = (int) (pitch);
         Note nearestNote = NoteSearch.findNearestNote(pitchInt);
@@ -286,6 +284,7 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
+    // Called from PitchDec, writes pause to screen
     public void writePause() {
         if (linLayMoving) {
             startNewNote = true;
@@ -361,6 +360,7 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
+    // Creates ImageViews for the notes helplines
     public void notesOutOfBoundsLines(int nmbOfLines, int nmbOfBassLines, int height, RelativeLayout imgLayout){
         FrameLayout.LayoutParams notelineParams= new FrameLayout.LayoutParams(
                 FitToScreen.returnViewWidth(MainActivity.getPercent(R.dimen.noteLineWidth)),
@@ -479,6 +479,7 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
+    // Called with handler, wries tempo lines to screen
     public void tempolineOnScreen(){
         ImageView tempo = new ImageView(this);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
@@ -507,12 +508,14 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
+    // Called from notesOnScreen, writes first tempo line and starts tempolineHandler
     public void firstTempoLine() {
         long usedTime = (tempoStop - lastTempolineWasWritten) / 1000000;
         long writeAt = fullBar - usedTime;
         tempolineHandler.postDelayed(writeTempoline, writeAt);
     }
 
+    // Determines what picture to use for note and if helplines and markings should be added to screen yet
     public void noteLength(Note nearestNote, ImageView currentNote) {
         int height = nearestNote.getNoteHeight();
         boolean upSideDown = false;
@@ -635,6 +638,7 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
+    // Checks if latest note was long enough to keep, if not it is discarded
     public boolean keepLatestNote(){
         if(currentNote==null){
             return false;
@@ -650,6 +654,7 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
+    // Creates ImageViews for the notes marking
     public void sharpFlat(Note note) {
         String noteName = note.getName();
         //int yID = this.getResources().getIdentifier(noteName, "dimen", getPackageName());
@@ -704,8 +709,8 @@ public class MainActivity extends ActionBarActivity  {
         }
     }
 
+    // Determins if note should be marked or not
     public boolean markNote(Note note, ImageView noteImg){
-
         String fullName = note.getName();
 
         String root = fullName.substring(0, 1);
@@ -760,6 +765,7 @@ public class MainActivity extends ActionBarActivity  {
         return true;
     }
 
+    // Creates ImageView and RelativeLayout for note
     public Note notesOnScreen(Note inNote){
         if(!linLayMoving){
             linLayHandler.postDelayed(moveLinLay, 1);
@@ -833,26 +839,21 @@ public class MainActivity extends ActionBarActivity  {
         return note;
     }
 
+    // Generates tone of A4 (samplerate 8000/frequency of A4 440hz)
     void genTone(){
-        //Fills out the array for the generated A4 sound.
         for (int i = 0; i < numSamplesForGenA4; ++i) {
-            sampleForGenA4[i] = Math.sin(2 * Math.PI * i / (8000/440)); // samplerate 8000/frequency of A4 440hz
+            sampleForGenA4[i] = Math.sin(2 * Math.PI * i / (8000/440));
         }
-
-        // convert to 16 bit pcm sound array
-        // assumes the sample buffer is normalised.
         int idx = 0;
         for (final double dVal : sampleForGenA4) {
-            // scale to maximum amplitude
             final short val = (short) ((dVal * 32767));
-            // in 16 bit wav PCM, first byte is the low order byte
             generatedA4Snd[idx++] = (byte) (val & 0x00ff);
             generatedA4Snd[idx++] = (byte) ((val & 0xff00) >>> 8);
         }
     }
 
+    //Plays generated A4 sound from genTone().
     void playSound(){
-        //Plays generated A4 sound from genTone().
         final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
                 8000, AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_16BIT, generatedA4Snd.length,
@@ -863,7 +864,6 @@ public class MainActivity extends ActionBarActivity  {
     }
 
     public void stopRecording(){
-
         android.support.v7.internal.view.menu.ActionMenuItemView recBtn =(android.support.v7.
                 internal.view.menu.ActionMenuItemView) findViewById(R.id.action_record);
         recBtn.setIcon(getResources().getDrawable(R.drawable.ic_action_mic));
@@ -904,7 +904,6 @@ public class MainActivity extends ActionBarActivity  {
     }
 
     public void resetAll(){
-
         EditText titleField = (EditText) findViewById(R.id.title_field);
         titleField.setText("Untitled");
         exp.setFilename("untitled");
@@ -939,10 +938,12 @@ public class MainActivity extends ActionBarActivity  {
 
     }
 
+    // Returns offset used to animate linLayout
     public int Offset(){
         return FitToScreen.returnViewWidth(getPercent(R.dimen.Offset));
     }
 
+    // Animates linLayout
     private Runnable moveLinLay = new Runnable() {
         public void run() {
             LinearInterpolator interpolator = new LinearInterpolator();
@@ -954,6 +955,7 @@ public class MainActivity extends ActionBarActivity  {
         }
     };
 
+    //  Metronome, changes number and vibrates
     private Runnable mVibrations = new Runnable() {
         public void run() {
             TextView text = (TextView) findViewById(R.id.met_text);
@@ -964,13 +966,12 @@ public class MainActivity extends ActionBarActivity  {
             if(met_int>4)met_int=1;
 
             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            //Vibrate for 50 milliseconds
             v.vibrate(50);
-            //Wait for 750 ms
             mHandler.postDelayed(mVibrations, metronomNmb);
         }
     };
 
+    // Runnable that calls tempolineOnScreen
     private Runnable writeTempoline = new Runnable() {
         public void run() {
             tempolineOnScreen();
@@ -979,9 +980,8 @@ public class MainActivity extends ActionBarActivity  {
     };
 
     @Override
+    // Handles presses on the action bar items
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        // Handles presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_record:
                 if(!recording) {
@@ -1138,8 +1138,8 @@ public class MainActivity extends ActionBarActivity  {
     }
 
     @Override
+    // Inflate the menu items for use in the action bar
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);

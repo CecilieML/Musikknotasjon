@@ -15,17 +15,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.widget.Toast;
-
 import org.jfugue.MusicStringParser;
 import org.jfugue.MusicXmlRenderer;
 import org.jfugue.Pattern;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import nu.xom.Serializer;
 
 
@@ -37,8 +34,8 @@ public class ExportXML implements Serializable {
         this.filename = filename + ".xml";
     }
 
+    //Converts the ArrayList to a string the parser can read.
     public String convertArrayListToString(ArrayList<Note> notesList) {
-        //Converts the ArrayList to a string the parser can read.
         double ppqCconversion = 0.0041666667; //Constant for converting BPM -> PPQ.
 
         String allNotes = "T"+ (int)Math.ceil(60/((60000/Config.context.metronomNmb)* ppqCconversion)); //BPM -> PPQ conversion.
@@ -58,11 +55,9 @@ public class ExportXML implements Serializable {
         return allNotes;
     }
 
+    //Parses current pattern and temporarily saves to phone internal memory.
     void saveToFile(Pattern pattern) {
-        //Parses current pattern and temporarily saves to phone internal memory.
-
         try {
-
             FileOutputStream fos = Config.context.openFileOutput(filename, Context.MODE_WORLD_READABLE);
 
             MusicXmlRenderer renderer = new MusicXmlRenderer();
@@ -83,9 +78,8 @@ public class ExportXML implements Serializable {
         }
     }
 
+    //Parses current pattern and permanently saves to phone SD memory (either external or partition of internal memory).
     void saveToSD(Pattern pattern) {
-        //Parses current pattern and permanently saves to phone SD memory (either external or partition of internal memory).
-
         try {
             if(checkIfSDPresent()) {
                 String filepath = Environment.getExternalStorageDirectory().toString();
@@ -124,10 +118,9 @@ public class ExportXML implements Serializable {
         return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
     }
 
+    //Opens the dialog to share the XML-file via mainly email, but other channels such as GoogleDisk will
+    //appear if installed on phone.
     void sendToEmail() {
-        //Opens the dialog to share the XML-file via mainly email, but other channels such as GoogleDisk will
-        //appear if installed on phone.
-
         File path = Config.context.getFileStreamPath(filename);
 
         Intent sendIntent = new Intent();

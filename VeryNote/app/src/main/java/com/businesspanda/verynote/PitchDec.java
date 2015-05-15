@@ -17,22 +17,17 @@ import java.io.PrintWriter;
 import java.lang.Runnable;
 import java.lang.Thread;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
 import android.app.AlertDialog;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
-
 import org.jtransforms.fft.DoubleFFT_1D;
 
-public class PitchDec implements Runnable {
 
-    private static String LOG_TAG = "PitchDetector";
+public class PitchDec implements Runnable {
 
     /* Numbers that work:
         RATE: 8000      BUFFERSIZE: 4096        CHUNK_SIZE_IN_SAMPLES: 1024 (128)
@@ -208,8 +203,6 @@ public class PitchDec implements Runnable {
 
 
     public void run() {
-        Log.e(LOG_TAG, "starting to detect pitch");
-
         android.os.Process
                 .setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
 
@@ -242,10 +235,8 @@ public class PitchDec implements Runnable {
         recorder_.release();
     }
 
-
+    //Returns amplitude of sound from recorder reading, used to avoid picking up background noise.
     public double getAmplitude(short[] audio_data) {
-
-        //Returns amplitude of sound from recorder reading, used to avoid picking up background noise.
         recorder_.read(audio_data, 0, BUFFERSIZE);
 
         int max = 0;
@@ -257,10 +248,8 @@ public class PitchDec implements Runnable {
         return max;
     }
 
+    //Saves a file of audiodata read to phone memory.
     void saveAudiodata(short[] audio_datas_for_saving) {
-
-        //Saves a file of audiodata read to phone memory.
-
         try {
 
             File file = new File(Environment.getExternalStorageDirectory(),"audiodata" + saveCounter + ".txt");
@@ -280,10 +269,9 @@ public class PitchDec implements Runnable {
         }
     }
 
+
+    //Saves a file of audiodata read to phone memory.
     void saveAudiodata_afterFFT (double[] audio_datas_for_saving) {
-
-        //Saves a file of audiodata read to phone memory.
-
         try {
 
             File file = new File(Environment.getExternalStorageDirectory(),"audiodata_afterFFT" + saveCounter + ".txt");

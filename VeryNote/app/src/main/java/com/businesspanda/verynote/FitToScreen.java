@@ -35,7 +35,7 @@ public class FitToScreen {
         return (int)(width * percentOfScreen);
     }
 
-    // Returns the percent of the screen height the pixel value it get in represents
+    // Returns the percent of the screen height that the pixel value it get in represents
     public static float returnPercent(float yValue){
         View content = Config.context.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
         int height = content.getHeight();

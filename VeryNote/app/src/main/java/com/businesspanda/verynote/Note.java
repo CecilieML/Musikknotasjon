@@ -1,7 +1,5 @@
 package com.businesspanda.verynote;
 
-import java.util.Objects;
-
 /** Copyright (C) 2015 by BusinessPanda - Cecilie M. Langfeldt, Helene H. Larsen.
  **
  ** Permission to use, copy, modify, and distribute this software and its
@@ -45,15 +43,9 @@ public class Note implements Cloneable {
     public boolean isSharp() {
         return sharp;
     }
-    public void setSharp(boolean sharp) {
-        this.sharp = sharp;
-    }
 
     public boolean isFlat() {
         return flat;
-    }
-    public void setFlat(boolean flat) {
-        this.flat = flat;
     }
 
     public boolean isNeutral() {

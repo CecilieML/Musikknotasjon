@@ -16,12 +16,10 @@ import java.util.HashMap;
 public class NoteSearch {
 
     public static HashMap<Integer, Note> notes = new HashMap<>();
-    public static HashMap<Integer, Note> neutralNotes = new HashMap<>();
 
+    //Creates note objects to hold sharp/flat value, frequency in hertz, name, height on screen and values for lines.
+    //Creates HashMap to hold note names and hertz values for searching.
     public static void createTable() {
-
-        //Creates note objects to hold sharp/flat value, frequency in hertz, name, height on screen and values for lines.
-        //Creates HashMap to hold note names and hertz values for searching.
 
         //C
         Note C3 = new Note(false, false, false, 131, "C3", 47, 4, 0, "");
@@ -157,8 +155,8 @@ public class NoteSearch {
 
     }
 
+    //Searches through HashMap to find the note with the least difference between input hertz value and note hertz value.
     public static Note findNearestNote(Integer target) {
-        //Searches through HashMap to find the note with the least difference between input hertz value and note hertz value.
         Note closestNote;
         double minDiff = Double.MAX_VALUE;
         int nearest = 0;
@@ -173,8 +171,8 @@ public class NoteSearch {
         return closestNote;
     }
 
+    //Searches through HashMap to find the note with the same name as the input and returns it.
     public static Note findNoteByName(String noteName){
-        //Searches through HashMap to find the note with the same name as the input and returns it.
         Note noteToReturn = null;
         for(Note note : notes.values()){
             if(note.getName().equals(noteName)){

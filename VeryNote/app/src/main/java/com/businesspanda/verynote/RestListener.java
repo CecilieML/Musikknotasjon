@@ -1,9 +1,17 @@
 package com.businesspanda.verynote;
 
+/** Copyright (C) 2009 by Aleksey Surkov.
+ **
+ ** Permission to use, copy, modify, and distribute this software and its
+ ** documentation for any purpose and without fee is hereby granted, provided
+ ** that the above copyright notice appear in all copies and that both that
+ ** copyright notice and this permission notice appear in supporting
+ ** documentation.  This software is provided "as is" without express or
+ ** implied warranty.
+ */
+
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
 import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,12 +19,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import java.util.ArrayList;
 
-/**
- * Created by CecilieMarie on 28.04.2015.
- */
+
 public class RestListener implements View.OnTouchListener {
 
     Button btnRemove;
@@ -31,7 +36,7 @@ public class RestListener implements View.OnTouchListener {
         this.allNotes = allNotes;
     }
 
-    //Creates the buttons and their functionality
+    // Creates the buttons and their functionality
     public void createButton(final ImageView imgView){
         btnRemove = new Button(Config.context);
         btnRemove.setText("Delete rest");
@@ -67,33 +72,30 @@ public class RestListener implements View.OnTouchListener {
         really.addView(btnRemove);
     }
 
+    // Removes button from UI
     public void removeButton(){
         btnRemove.setVisibility(View.GONE);
     }
 
-    //Called to make phone vibrate and let user know that their button press registered
+    // Called to make phone vibrate and let user know that their button press registered
     public void vibrate(int dur) {
         Vibrator vib = (Vibrator) Config.context.getSystemService(Context.VIBRATOR_SERVICE);
         vib.vibrate(dur);
     }
-    // Called when a note is chosen
+
+    // Called when a rest is chosen
     public void onChosenNote(View v){
         if(Config.context.heyListen.touchActive){
             Config.context.heyListen.onUnChosenNote();
         }
         restActive = true;
-
         vibrate(70);
         lastImg = (ImageView) v;
-
-        /*ColorFilter filter = new LightingColorFilter(Color.CYAN, Color.CYAN);
-        lastImg.setColorFilter(filter);*/
         v.setBackgroundColor(Color.CYAN);
-
         createButton((ImageView)v);
     }
 
-    // Called on previous note when a new note is chosen or on current note when it is unselected
+    // Called on previous rest when a new rest or note is chosen or on current rest when it is unselected
     public void onUnChosenNote(){
         vibrate(30);
         removeButton();

@@ -45,8 +45,6 @@ public class NoteNameSearch {
             "E3",
             "D3",
             "C3",
-
-
     };
 
 }
