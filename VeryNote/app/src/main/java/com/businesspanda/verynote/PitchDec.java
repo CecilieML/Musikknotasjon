@@ -10,10 +10,6 @@ package com.businesspanda.verynote;
  ** implied warranty.
  */
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.lang.Runnable;
 import java.lang.Thread;
 import java.util.ArrayList;
@@ -22,7 +18,6 @@ import android.app.AlertDialog;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.Environment;
 import android.os.Handler;
 import org.jtransforms.fft.DoubleFFT_1D;
 
@@ -57,8 +52,6 @@ public class PitchDec implements Runnable {
     private final static int MIN_FREQUENCY = 131; //C3
 
     private final static int MAX_FREQUENCY = 1976; //B6
-
-    int saveCounter = 0; //<-----------
 
     public PitchDec(MainActivity parent, Handler handler) {
         parent_ = parent;
@@ -104,6 +97,7 @@ public class PitchDec implements Runnable {
         }
     }
 
+    //Analyzes sound from microphone, does FFT.
     public FreqResult AnalyzeFrequencies(short[] audio_data) {
         fft = new DoubleFFT_1D(CHUNK_SIZE_IN_SAMPLES);
         FreqResult fr = new FreqResult();
@@ -201,7 +195,7 @@ public class PitchDec implements Runnable {
         return fr;
     }
 
-
+    //Starts recording and pitchdetector
     public void run() {
         android.os.Process
                 .setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
@@ -246,49 +240,6 @@ public class PitchDec implements Runnable {
             }
         }
         return max;
-    }
-
-    //Saves a file of audiodata read to phone memory.
-    void saveAudiodata(short[] audio_datas_for_saving) {
-        try {
-
-            File file = new File(Environment.getExternalStorageDirectory(),"audiodata" + saveCounter + ".txt");
-
-            if (!file.exists()) {
-                PrintWriter pw = new PrintWriter(new FileWriter(file));
-
-                for (int i = 0; i < audio_datas_for_saving.length; i++) {
-                    pw.print(audio_datas_for_saving[i]);
-                    pw.print("\n");
-                }
-
-                pw.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    //Saves a file of audiodata read to phone memory.
-    void saveAudiodata_afterFFT (double[] audio_datas_for_saving) {
-        try {
-
-            File file = new File(Environment.getExternalStorageDirectory(),"audiodata_afterFFT" + saveCounter + ".txt");
-
-            if (!file.exists()) {
-                PrintWriter pw = new PrintWriter(new FileWriter(file));
-
-                for (int i = 0; i < audio_datas_for_saving.length; i++) {
-                    pw.print(audio_datas_for_saving[i]);
-                    pw.print("\n");
-                }
-
-                pw.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void PostPauseToUI() {
